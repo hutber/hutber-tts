@@ -2,11 +2,10 @@
 
 local RedControlBoard = {
     VortexGUID = "be2cdb",
-    CustomDiceRollerGUID = "acae21",
-    DiceRollerGUID = "c57d70",
+    CustomDiceMat_GUID = "acae21",
+    DiceMat_GUID = "c57d70",
     SelectionHighlighterGUID = "27de4f",
     options = {
-        {name = "Injector Control", state = true},
         {name = "Custom Dice Roller", state = true},
         {name = "Selection Highlight", state = true},
         {name = "Vortex", state = true},
@@ -15,11 +14,10 @@ local RedControlBoard = {
 
 local BlueControlBoard = {
     VortexGUID = "4b1a7b",
-    CustomDiceRollerGUID = "839fcc",
-    DiceRollerGUID = "4e0e0b",
+    CustomDiceMat_GUID = "839fcc",
+    DiceMat_GUID = "a84ed2",
     SelectionHighlighterGUID = "84c3a4",
     options = {
-        {name = "Injector Control", state = true},
         {name = "Custom Dice Roller", state = true},
         {name = "Selection Highlight", state = true},
         {name = "Vortex", state = true},
@@ -40,15 +38,15 @@ function onLoad()
 
     -- Hide and disable DiceRollers initially for both colors
     for color, board in pairs(boards) do
-        local diceRoller = getObjectFromGUID(board.DiceRollerGUID)
+        local diceRoller = getObjectFromGUID(board.DiceMat_GUID)
         if diceRoller then
-            if not originalPositions[board.DiceRollerGUID] then
-                originalPositions[board.DiceRollerGUID] = diceRoller.getPosition()
+            if not originalPositions[board.DiceMat_GUID] then
+                originalPositions[board.DiceMat_GUID] = diceRoller.getPosition()
             end
             local hiddenPosition = {
-                originalPositions[board.DiceRollerGUID][1],
-                originalPositions[board.DiceRollerGUID][2] - 3,
-                originalPositions[board.DiceRollerGUID][3]
+                originalPositions[board.DiceMat_GUID][1],
+                originalPositions[board.DiceMat_GUID][2] - 3,
+                originalPositions[board.DiceMat_GUID][3]
             }
             diceRoller.setPosition(hiddenPosition)
             diceRoller.setLock(true)
@@ -225,9 +223,9 @@ function toggleOption(player, index)
             print("Highlighter object not found for " .. expectedColor)
         end
     elseif option.name == "Custom Dice Roller" then
-        toggleObjectState(board.CustomDiceRollerGUID, option.state)
+        toggleObjectState(board.CustomDiceMat_GUID, option.state)
     elseif option.name == "Dice Roller" then
-        toggleObjectState(board.DiceRollerGUID, option.state)
+        toggleObjectState(board.DiceMat_GUID, option.state)
     elseif option.name == "Vortex" then
         toggleObjectState(board.VortexGUID, option.state)
     end
