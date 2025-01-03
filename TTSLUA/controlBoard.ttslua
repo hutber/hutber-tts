@@ -154,7 +154,7 @@ function toggleObjectState(objectGUID, state)
         if state then
             -- Move back & enable
             obj.setPosition(originalPositions[objectGUID])
-            obj.setLock(false)
+            obj.setLock(true)
             obj.interactable = true
             print("Object " .. objectGUID .. " moved back & re-enabled")
         else
