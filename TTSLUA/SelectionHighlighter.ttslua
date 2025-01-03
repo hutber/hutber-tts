@@ -1,0 +1,101 @@
+-- FTC-GUID: 27de4f,84c3a4
+
+-- This script highlights objects in green when they are selected by a player.
+local selectedObjects = {}
+local checkInterval = 0.1
+
+function onLoad()
+    -- Just destroy it (if it exists). If it doesn't exist, TTS won't error out.
+    Timer.destroy("checkSelections")
+
+    -- Wait 30 frames, then move ourselves below the table
+    Wait.frames(function()
+        self.setPosition({-5, -5, -5})
+        self.setLock(true)
+        self.interactable = false
+    end, 30)
+
+    -- Create the timer
+    Timer.create({
+        identifier    = "checkSelections",
+        function_name = "checkSelections",
+        delay         = checkInterval,
+        repetitions   = 0
+    })
+end
+
+function getHighlightColorForPlayer(playerColor)
+    local colorMapping = {
+        Red = {1, 0, 0}, -- Red
+        Blue = {0, 0, 1}, -- Blue
+        Green = {0, 1, 0}, -- Green
+        Yellow = {1, 1, 0}, -- Yellow
+        Purple = {0.5, 0, 0.5}, -- Purple
+        Orange = {1, 0.5, 0}, -- Orange
+        White = {1, 1, 1}, -- White
+        Black = {0, 0, 0} -- Black
+    }
+
+    return colorMapping[playerColor] or {0.5, 0.5, 0.5} -- Default to gray if color not found
+end
+
+function onDestroy()
+    print("Selection Highlighter script is being destroyed.")
+    Timer.destroy("checkSelections")
+    clearAllHighlights()
+end
+
+function checkSelections()
+    local currentSelections = {}
+
+    for _, player in ipairs(Player.getPlayers()) do
+        local selected = player.getSelectedObjects() or {}
+        local playerColor = player.color
+        local highlightColor = getHighlightColorForPlayer(playerColor) -- Get color based on player
+
+        for _, obj in ipairs(selected) do
+            local guid = obj.getGUID()
+
+            if (obj.tag == "Figurine" or obj.tag == "Generic" or obj.tag == "Custom_Model") and not selectedObjects[guid] then
+                selectedObjects[guid] = {
+                    object = obj,
+                    originalColor = obj.getHighlightColor()
+                }
+                obj.highlightOn(highlightColor) -- Highlight in player's color
+            end
+
+            currentSelections[guid] = true
+        end
+    end
+
+    for guid, data in pairs(selectedObjects) do
+        if not currentSelections[guid] then
+            local obj = data.object
+            if obj then
+                if data.originalColor then
+                    obj.highlightOn(data.originalColor)
+                else
+                    obj.highlightOff()
+                end
+            end
+            selectedObjects[guid] = nil
+        end
+    end
+end
+
+
+
+function clearAllHighlights()
+    for guid, data in pairs(selectedObjects) do
+        local obj = data.object
+        if obj then
+            -- If it had an original color, restore it
+            if data.originalColor then
+                obj.highlightOn(data.originalColor)
+            else
+                obj.highlightOff()
+            end
+        end
+    end
+    selectedObjects = {}
+end
