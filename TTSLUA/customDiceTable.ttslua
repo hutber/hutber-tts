@@ -148,9 +148,9 @@ selectedColor = "White"
 diceType = "Die_6_Rounded"
 customDiceImage = nil
 
-rollerGUID = Global.getVar("redDiceCustomRoller_GUID")
-if self.guid == Global.getVar("blueDiceCustomRoller_GUID") then
-    rollerGUID = Global.getVar("blueDiceCustomRoller_GUID")
+rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
+if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
+    rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
 end
 roller = getObjectFromGUID(rollerGUID)
 
@@ -327,23 +327,14 @@ function SelectDeleteDiceX(action, n, selectOthers, lowUp, color)
 end
 
 function moveDiceToRoller(color, dice)
-    if not roller then
-        print("Roller is nil!")
-        return
-    end
-
     roller.call("setPlayerColor", {color=color})
 
     for _, die in ipairs(dice) do
-        if die then
-            print("Moving die:", die)
-            roller.call("setLastHolder", {obj=die, color=color})
-            roller.putObject(die)
-        else
-            print("Invalid die!")
-        end
+        roller.call("setLastHolder", {obj=die, color=color})
+        roller.putObject(die)
     end
 end
+
 
 
 function clearDiceAll(obj, color, alt)
@@ -415,7 +406,7 @@ end
 
 function spawnDice(n,player)
     local currentTime = os.time()
-    local disableTime=0.6
+    local disableTime=0.2
     --if n>9 then disableTime=disableTime+0.3 end
     if currentTime-lastClick<disableTime then
         printToColor("Wait a bit!", player, "Yellow")
@@ -575,7 +566,7 @@ end
 
 function setDefaultState()
 	self.setDescription(JSON.encode_pretty({
-		Cumulative = 'no',Update_Frequency = '0.2'
+		Cumulative = 'no',Update_Frequency = '0.1'
 	}))
 end
 
