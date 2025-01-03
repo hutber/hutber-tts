@@ -7356,7 +7356,7 @@
       "Name": "Custom_Model_Bag",
       "Transform": {
         "posX": 21.4298363,
-        "posY": 0.957778037,
+        "posY": -0.957778037,
         "posZ": 25.84738,
         "rotX": -1.02551053E-06,
         "rotY": 359.969971,
@@ -7417,7 +7417,137 @@
       "XmlUI": ""
     },
     {
+      "GUID": "17ca2b",
+      "Name": "Custom_Model_Bag",
+      "Transform": {
+        "posX": 21.4298363,
+        "posY": 0.957778037,
+        "posZ": 25.84738,
+        "rotX": -1.02551053E-06,
+        "rotY": 359.969971,
+        "rotZ": -1.71391818E-07,
+        "scaleX": 0.55000037,
+        "scaleY": 0.55000037,
+        "scaleZ": 0.55000037
+      },
+      "Nickname": "Red Custom Kustom 40k Dice Roller Mk3",
+      "Description": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
+      "GMNotes": "",
+      "ColorDiffuse": {
+        "r": 0.9999998,
+        "g": 0.992160261,
+        "b": 0.9999998
+      },
+      "LayoutGroupSortIndex": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": false,
+      "Tooltip": false,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "MaterialIndex": -1,
+      "MeshIndex": -1,
+      "Number": 0,
+      "CustomMesh": {
+        "MeshURL": "http://cloud-3.steamusercontent.com/ugc/94979895601488369/894F4E9B36D9116E12A24DAAFE1B4FD26A1880D2/",
+        "DiffuseURL": "http://cloud-3.steamusercontent.com/ugc/784124162959095290/7FB95A71D31DE2FF8B3C4FC16B21492B99CE0533/",
+        "NormalURL": "",
+        "ColliderURL": "",
+        "Convex": true,
+        "MaterialIndex": 3,
+        "TypeIndex": 6,
+        "CustomShader": {
+          "SpecularColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0
+          },
+          "SpecularIntensity": 0.0,
+          "SpecularSharpness": 2.0,
+          "FresnelStrength": 0.0
+        },
+        "CastShadows": true
+      },
+      "Bag": {
+        "Order": 0
+      },
+      "LuaScript": "",
+      "LuaScriptState": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
+      "XmlUI": ""
+    },
+    {
       "GUID": "4e0e0b",
+      "Name": "Custom_Model_Bag",
+      "Transform": {
+        "posX": -21.4298363,
+        "posY": -0.9577779,
+        "posZ": -25.8473778,
+        "rotX": 2.8297805E-07,
+        "rotY": 180.002823,
+        "rotZ": -7.116862E-08,
+        "scaleX": 0.55000037,
+        "scaleY": 0.55000037,
+        "scaleZ": 0.55000037
+      },
+      "Nickname": "Blue Kustom 40k Dice Roller Mk3",
+      "Description": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
+      "GMNotes": "",
+      "ColorDiffuse": {
+        "r": 0.9999998,
+        "g": 0.992160261,
+        "b": 0.9999998
+      },
+      "LayoutGroupSortIndex": 0,
+      "Locked": true,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": false,
+      "Tooltip": false,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "MaterialIndex": -1,
+      "MeshIndex": -1,
+      "Number": 0,
+      "CustomMesh": {
+        "MeshURL": "http://cloud-3.steamusercontent.com/ugc/94979895601488369/894F4E9B36D9116E12A24DAAFE1B4FD26A1880D2/",
+        "DiffuseURL": "http://cloud-3.steamusercontent.com/ugc/784124162959095290/7FB95A71D31DE2FF8B3C4FC16B21492B99CE0533/",
+        "NormalURL": "",
+        "ColliderURL": "",
+        "Convex": true,
+        "MaterialIndex": 3,
+        "TypeIndex": 6,
+        "CustomShader": {
+          "SpecularColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0
+          },
+          "SpecularIntensity": 0.0,
+          "SpecularSharpness": 2.0,
+          "FresnelStrength": 0.0
+        },
+        "CastShadows": true
+      },
+      "Bag": {
+        "Order": 0
+      },
+      "LuaScript": "",
+      "LuaScriptState": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "927ca1",
       "Name": "Custom_Model_Bag",
       "Transform": {
         "posX": -21.4298363,
@@ -7430,7 +7560,7 @@
         "scaleY": 0.55000037,
         "scaleZ": 0.55000037
       },
-      "Nickname": "Blue Kustom 40k Dice Roller Mk3",
+      "Nickname": "Blue Custom Kustom 40k Dice Roller Mk3",
       "Description": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
       "GMNotes": "",
       "ColorDiffuse": {

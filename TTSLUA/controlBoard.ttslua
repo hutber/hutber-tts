@@ -173,55 +173,65 @@ function toggleObjectState(objectGUID, state)
         print("Object not found: " .. objectGUID)
     end
 end
+
 function toggleOption(player, index)
     local playerColor = player.color -- Get the color of the player interacting
     local expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue" -- Match GUID to expected color
 
-    -- Ensure only the correct player can interact with the board
+    print("Player color: " .. playerColor .. ", Expected color: " .. expectedColor)
+
     if playerColor ~= expectedColor then
         print("Access denied: " .. playerColor .. " tried to use the " .. expectedColor .. " control board.")
         return
     end
 
-    print(index, playerColor, tonumber(index), tostring(expectedColor))
     if expectedColor ~= "Red" and expectedColor ~= "Blue" then
         print("Invalid color in toggleOption: " .. expectedColor)
         return
     end
 
-    -- Retrieve the board associated with the color
     local board = boards[expectedColor]
     if not board then
         print("No board configuration found for color: " .. expectedColor)
         return
     end
 
-    -- Retrieve the option based on the index
     local option = board.options[tonumber(index)]
     if not option then
         print("No option found for index: " .. tonumber(index))
         return
     end
 
-    -- Toggle the state
     option.state = not option.state
 
-    -- Update the UI
     local statusId = expectedColor .. "_status_" .. index
     local newText = option.state and "ON" or "OFF"
     local newColor = option.state and "Green" or "Red"
     self.UI.setAttributes(statusId, { text = newText, color = newColor })
 
-    -- Take action based on the toggle state and the option name
-    if option.name == "Custom Dice Roller" then
+    if option.name == "Selection Highlight" then
+        local highlighterGUID = board.SelectionHighlighterGUID
+        local highlighter = getObjectFromGUID(highlighterGUID)
+
+        if highlighter then
+            if option.state then
+                highlighter.call("onLoad") -- Restart the highlighter script
+                print(expectedColor .. " Selection Highlighter is now ON")
+            else
+                highlighter.call("onDestroy") -- Stop the highlighter script
+                print(expectedColor .. " Selection Highlighter is now OFF")
+            end
+        else
+            print("Highlighter object not found for " .. expectedColor)
+        end
+    elseif option.name == "Custom Dice Roller" then
         toggleObjectState(board.CustomDiceRollerGUID, option.state)
     elseif option.name == "Dice Roller" then
         toggleObjectState(board.DiceRollerGUID, option.state)
-    elseif option.name == "Selection Highlight" then
-        toggleObjectState(board.SelectionHighlighterGUID, option.state)
     elseif option.name == "Vortex" then
         toggleObjectState(board.VortexGUID, option.state)
     end
 
     print("Option " .. option.name .. " for " .. expectedColor .. " is now " .. newText)
 end
+
