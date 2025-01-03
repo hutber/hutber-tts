@@ -12,16 +12,30 @@ centerCircle_GUID = "51ee2f"
 quarterCircle_GUID = "51ee3f"
 templateObjective_GUID = "573333"
 startMenu_GUID = "738804"
-redDiceMat_GUID = "c57d70"
-blueDiceMat_GUID = "a84ed2"
-redDiceRoller_GUID = "beae28"
-blueDiceRoller_GUID = "4e0e0b"
-redDiceCustomRoller_GUID = "acae21"
-blueDiceCustomRoller_GUID = "839fcc"
+redDiceMat_GUID = "c57d70" -- diceTable
+blueDiceMat_GUID = "a84ed2" -- diceTable
+redDiceRoller_GUID = "beae28" -- kustom40kDiceRoller
+blueDiceRoller_GUID = "4e0e0b" -- kustom40kDiceRoller
 redMissionManager_GUID = "cff35b"
 blueMissionManager_GUID = "471de1"
+
+-- Hutber IDs
 redControlBoard_GUID = "5a328f"
 blueControlBoard_GUID = "32ed4c"
+
+RedSelectionHighlighter = "27de4f"
+BlueSelectionHighlighter = "84c3a4"
+
+redCustomDiceMat_GUID = "acae21" -- diceTable
+blueCustomDiceMat_GUID = "839fcc" -- diceTable
+
+redCustomDiceRoller_GUID = "17ca2b" -- kustom40kDiceRoller
+blueCustomDiceRoller_GUID = "927ca1" -- kustom40kDiceRoller
+
+RedVortexGUID = "be2cdb"
+BlueVortexGUID = "4b1a7b"
+
+-- End Hutber IDS
 redVPCounter_GUID = "8b0541"
 blueVPCounter_GUID = "a77a54"
 redCPCounter_GUID = "e446f7"
