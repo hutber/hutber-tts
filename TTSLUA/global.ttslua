@@ -456,7 +456,7 @@ function closeMenu(player, value, id)
 end
 
 backPosition={{0,0,0},{0,0,0},{0,0,0},{0,0,0}}
-function goToDiceRoller(player, value, id)
+function goToDiceRoller(player)
     local matPositionOffset=12
     local color=player.color
     local diceMatGUID=redDiceMat_GUID
@@ -485,8 +485,15 @@ function goToDiceRoller(player, value, id)
     matPos.x=matPos.x+matPositionOffset
     moveCameraTo(matPos,30,color)
 end
+function goToScoreBoard(player)
+    local matPositionOffset = 0 -- Define matPositionOffset with a default value
+    local color = player.color
+    local matPos = getObjectFromGUID("06d627").getPosition()
+    matPos.x = matPos.x + matPositionOffset
+     moveCameraTo(matPos, 30, color, 90)
+end
 
-function goToSquad(player, value, id)
+function goToSquad(player)
     local i = 1
     local color=player.color
     if color == "Red" then
@@ -503,21 +510,28 @@ function goToSquad(player, value, id)
     end
     moveCameraTo(backPosition[i], 20, color)
 end
-function moveCameraTo(pos, dist, color)
-    if color == "Red" then
-        rot = {0,180,0}
+
+function moveCameraTo(pos, dist, color, pitchOverride)
+    local rot = {0, 0, 0} -- Default rotation
+
+    if color == "Red" or color == "Orange" then
+        rot = {0, 180, 0}
+    elseif color == "Blue" or color == "Teal" then
+        rot = {0, 0, 0}
     end
-    if color == "Orange" then
-        rot = {0,180,0}
+
+    if pos[2] == 0 then
+        dist = dist + 30
     end
-    if color == "Blue" then
-        rot = {0,0,0}
-    end
-    if color == "Teal" then
-        rot = {0,0,0}
-    end
-    if pos[2]==0 then dist=dist+30 end
-    Player[color].lookAt({position=pos, pitch=90, yaw=rot[2], distance=dist})
+
+    local yaw = pitchOverride or rot[2]
+
+    Player[color].lookAt({
+        position = pos,
+        pitch = 90,
+        yaw = yaw,
+        distance = dist
+    })
 end
 
 function moveAllFromZoneToDeck(params)

@@ -82,10 +82,11 @@ end
 
 function makeAnnouncement()
     local features={
-    "2.58: added alternative objective layouts for Hidden Supplies, auto un-hide locked-in secondaries, plus minor fixes",
-    "2.59: shuffle secondaries before drawing; remove tablet and datasheet bags",
-    "2.60: Pariah Nexus support; allow DZ/objective height control during game",
-    "2.61: Pariah Nexus day 1 card errata and tournament missions; fix pack selection before both players seated; Pariah Nexus reference sheet; Containment area lines"
+    "0.05: Add new button to top left that allows you to click directly to the board and the score board, fix Del(-) issue",
+    "0.04: Added UKTC maps",
+    "0.03: Added GW/WTC maps",
+    "0.02: Added control board to control feature",
+    "0.01: Injection detaction and general quality of life improvements",
     }
     printToAll("NEW FEATURES:", "Yellow")
     for i, new in ipairs(features) do
@@ -1618,8 +1619,7 @@ IncrementBlueCpBtn = {
     font_size = 600, color = {0, 0, 1}, font_color = {1, 1, 1}
 }
 
-notePadTxt = "This is the Forty Thousand Collection 'FTC' gaming template for Warhammer 40k, version 2.0+, competitive fork. Only Grand Tournament play is supported.\n\nPlease raise issues at https://github.com/hutber/hutber-tts-comp-ftc-base-lua-scripts/issues.\n\nInstructions can be found in the Notebook.\n\nSearch for FTC or BCB Map Additive Load on the workshop for maps to load!\n\n\nJoin the TTS 40K Discord server: https://discord.gg/2ST7xyWgEa"
-
+notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/FDv42GsRnk"
 quartersPlaced = false
 quartersLblOpen = "Hide\nTable Quarters"
 quartersLblClosed = "Show\nTable Quarters"

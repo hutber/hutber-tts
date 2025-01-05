@@ -52,4 +52,4 @@ function objectCheck()
 end
 
 -- Periodically check
-Wait.time(objectCheck, 2, -1) -- 15 seconds, can modify here.
+Wait.time(objectCheck, 10, -1) -- 15 seconds, can modify here.

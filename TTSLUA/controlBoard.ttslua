@@ -51,7 +51,6 @@ function onLoad()
             diceRoller.setPosition(hiddenPosition)
             diceRoller.setLock(true)
             diceRoller.interactable = false
-            print(color .. " DiceRoller hidden & disabled by default on load")
         else
             print(color .. " DiceRoller object not found during onLoad")
         end
@@ -70,7 +69,7 @@ function buildControlPanel(color)
             id = color .. "_controlPanel",
             width = "390",
             height = "520",
-            position = "0 6 -3",
+            position = "0 0 -3",
             color = "Black",
             padding = "13",
         },

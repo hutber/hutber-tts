@@ -76,6 +76,7 @@ add25d6Btn={
     position={2.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
+
 colorBtnDimension=150
 colorBtnOffset=3.0
 color1Btn={
@@ -148,9 +149,9 @@ selectedColor = "White"
 diceType = "Die_6_Rounded"
 customDiceImage = nil
 
-rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
-if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
-    rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
+rollerGUID = Global.getVar("redDiceRoller_GUID")
+if self.guid == Global.getVar("blueDiceMat_GUID") then
+    rollerGUID = Global.getVar("blueDiceRoller_GUID")
 end
 roller = getObjectFromGUID(rollerGUID)
 
@@ -335,8 +336,6 @@ function moveDiceToRoller(color, dice)
     end
 end
 
-
-
 function clearDiceAll(obj, color, alt)
     if not alt then printToColor("Use right click!", color, "Orange") return end
     clearDiceX(6, true, color)
@@ -499,8 +498,6 @@ function onload()
     self.createButton(orderedRollGroup3Btn)
     self.createButton(add1d6Btn)
     self.createButton(add2d6Btn)
-    self.createButton(add3d6Btn)
-    self.createButton(add4d6Btn)
     self.createButton(add5d6Btn)
     self.createButton(add10d6Btn)
     self.createButton(add25d6Btn)
@@ -526,6 +523,8 @@ function onload()
     end
     self.createButton(lowerUpperBtn)
     self.createButton(customDiceBtn)
+    self.createButton(add3d6Btn)
+    self.createButton(add4d6Btn)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 end
 
@@ -550,8 +549,8 @@ function modifyMenu(color)
     self.editButton({index=9, color=color})
     self.editButton({index=10, color=color})
     self.editButton({index=11, color=color})
-    self.editButton({index=12, color=color})
-    self.editButton({index=13, color=color})
+    self.editButton({index=32, color=color})
+    self.editButton({index=33, color=color})
 end
 
 function setDiceType()
@@ -566,7 +565,7 @@ end
 
 function setDefaultState()
 	self.setDescription(JSON.encode_pretty({
-		Cumulative = 'no',Update_Frequency = '0.1'
+		Cumulative = 'no',Update_Frequency = '0.2'
 	}))
 end
 
