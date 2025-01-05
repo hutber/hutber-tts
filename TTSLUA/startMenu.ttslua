@@ -1618,7 +1618,7 @@ IncrementBlueCpBtn = {
     font_size = 600, color = {0, 0, 1}, font_color = {1, 1, 1}
 }
 
-notePadTxt = "This is the Forty Thousand Collection 'FTC' gaming template for Warhammer 40k, version 2.0+, competitive fork. Only Grand Tournament play is supported.\n\nPlease raise issues at https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts/issues.\n\nInstructions can be found in the Notebook.\n\nSearch for FTC or BCB Map Additive Load on the workshop for maps to load!\n\n\nJoin the TTS 40K Discord server: https://discord.gg/2ST7xyWgEa"
+notePadTxt = "This is the Forty Thousand Collection 'FTC' gaming template for Warhammer 40k, version 2.0+, competitive fork. Only Grand Tournament play is supported.\n\nPlease raise issues at https://github.com/hutber/hutber-tts-comp-ftc-base-lua-scripts/issues.\n\nInstructions can be found in the Notebook.\n\nSearch for FTC or BCB Map Additive Load on the workshop for maps to load!\n\n\nJoin the TTS 40K Discord server: https://discord.gg/2ST7xyWgEa"
 
 quartersPlaced = false
 quartersLblOpen = "Hide\nTable Quarters"
