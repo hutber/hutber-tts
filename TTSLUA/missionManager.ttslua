@@ -89,7 +89,7 @@ function onLoad(saved_data)
 
     if self.getGUID() == Global.getVar("redMissionManager_GUID") then
         self.setName("Mission Manager Red")
-        self.setPosition({-19,-5,35.25})
+        self.setPosition({-27,-5,35.25})
         self.setRotation({0,0,0})
         playerColor = "Red"
         handZone = getObjectFromGUID(Global.getVar("redHandZone_GUID"))
@@ -102,8 +102,8 @@ function onLoad(saved_data)
         secondaryDeckPosition = { x = 74.75, y = 0.94, z = 8.05 }
     else
         self.setName("Mission Manager Blue")
-        self.setPosition({-40,-5,-35.25})
-        self.setRotation({0,180,0})
+        self.setPosition({-27,-5,-70.5})
+        self.setRotation({0,0,0})
         playerColor = "Blue"
         handZone = getObjectFromGUID(Global.getVar("blueHandZone_GUID"))
         secondary1Zone = getObjectFromGUID(Global.getVar("secondary21CardZone_GUID"))
