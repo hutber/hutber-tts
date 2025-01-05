@@ -70,7 +70,7 @@ function buildControlPanel(color)
             id = color .. "_controlPanel",
             width = "390",
             height = "520",
-            position = "0 0 -3",
+            position = "0 6 -3",
             color = "Black",
             padding = "13",
         },
