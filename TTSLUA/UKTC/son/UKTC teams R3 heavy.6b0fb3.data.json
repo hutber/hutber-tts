@@ -1,0 +1,58 @@
+{
+  "GUID": "6b0fb3",
+  "Name": "CardCustom",
+  "Transform": {
+    "posX": -24.644804,
+    "posY": 0.9751034,
+    "posZ": 3.36057544,
+    "rotX": -3.3500978e-8,
+    "rotY": 180.00853,
+    "rotZ": -2.970502e-8,
+    "scaleX": 1.5,
+    "scaleY": 1,
+    "scaleZ": 1.5
+  },
+  "Nickname": "UKTC teams R3 heavy",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "ColorDiffuse": {
+    "r": 0.713235259,
+    "g": 0.713235259,
+    "b": 0.713235259
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": true,
+  "Hands": true,
+  "CardID": 1700,
+  "SidewaysCard": false,
+  "CustomDeck": {
+    "17": {
+      "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880672775/D47B4C02EEC4F52F6FBD45B4ECDDCAA523138876/",
+      "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
+      "NumWidth": 1,
+      "NumHeight": 1,
+      "BackIsHidden": true,
+      "UniqueBack": false,
+      "Type": 1
+    }
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}
