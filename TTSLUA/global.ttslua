@@ -242,8 +242,8 @@ missionPackData = {
 
 turnOrder = {}
 nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
-allowMenu = false
-allowAutoSeat = false
+allowMenu = true
+allowAutoSeat = true
 redPlayerID = ""
 bluePlayerID = ""
 
