@@ -40,7 +40,6 @@ function getHighlightColorForPlayer(playerColor)
 end
 
 function onDestroy()
-    print("Selection Highlighter script is being destroyed.")
     Timer.destroy("checkSelections")
     clearAllHighlights()
 end

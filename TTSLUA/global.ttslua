@@ -242,8 +242,8 @@ missionPackData = {
 
 turnOrder = {}
 nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
-allowMenu = true
-allowAutoSeat = true
+allowMenu = false
+allowAutoSeat = false
 redPlayerID = ""
 bluePlayerID = ""
 
@@ -444,12 +444,16 @@ function placeToBlue(player, value, id)
     --player.changeColor("Blue")
     --player.team="None"
 end
-
 function placeToGray(player, value, id)
     placeToColor(player, "Grey")
-    --player.changeColor("Grey")
-    --player.team="None"
+    local selectPariahNexus = Global.getVar("selectPariahNexus")
+    if selectPariahNexus then
+        selectPariahNexus()
+    else
+        print("Error: selectPariahNexus function not found!")
+    end
 end
+
 function closeMenu(player, value, id)
     player.team="None"
     broadcastToColor("READ INSTRUCTIONS FIRST!\n(Click Notebook at the top)", player.color, "Purple")
