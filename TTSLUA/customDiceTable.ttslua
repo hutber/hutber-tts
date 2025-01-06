@@ -3,6 +3,13 @@ function none()
 end
 Yoffset=0.1
 
+local currentMat
+if self.getPosition().z < 0 then
+    currentMat="Blue"
+else
+    currentMat="Red"
+end
+
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
     position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
@@ -26,6 +33,7 @@ orderedRollBtn={
     position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
+
 orderedRollGroup2Label = "In 2s"
 orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
 orderedRollGroup2Btn={
@@ -105,10 +113,19 @@ pipColorBtn=
   position={colorBtnOffset + 0.35 * 4 + 0.1, Yoffset, -0.87}, rotation={0, 0, 0}, height=50, width=250,
   font_size=60, color="White", font_color="Black"
 }
+
 customDiceBtn={
     label="Custom Dice", click_function="customDice", function_owner=self,
     position={colorBtnOffset+0.35*9, Yoffset ,-0.85}, rotation={0,0,0}, height=50, width=420,
     font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+
+lowerUpper=true
+oneTimeUpper=true
+lethalHitsBtn={
+    label="Lethal Hits 6+", tooltip="Automatically Move Sixes", click_function="lethalHitsAction", function_owner=self,
+    position={-4.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3300, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
 }
 
 clearDiceBtnIncrement=0.28
@@ -149,9 +166,9 @@ selectedColor = "White"
 diceType = "Die_6_Rounded"
 customDiceImage = nil
 
-rollerGUID = Global.getVar("redDiceRoller_GUID")
-if self.guid == Global.getVar("blueDiceMat_GUID") then
-    rollerGUID = Global.getVar("blueDiceRoller_GUID")
+rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
+if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
+    rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
 end
 roller = getObjectFromGUID(rollerGUID)
 
@@ -366,7 +383,8 @@ function clearDiceX(n, deleteLower, color)
     local numberName={"ones", "twos", "threes", "fours", "fives", "sixes"}
     local text = Player[color].steam_name .. " deleted "
     local somethingToPrint=false
-    for i, die in ipairs(getDice()) do
+    createLethalText(true)
+        for i, die in ipairs(getDice()) do
         if die.getValue() == n or (deleteLower and die.getValue()< n) then
             die.destroy()
             counter[die.getValue()]=counter[die.getValue()]+1
@@ -525,7 +543,204 @@ function onload()
     self.createButton(customDiceBtn)
     self.createButton(add3d6Btn)
     self.createButton(add4d6Btn)
+    self.createButton(lethalHitsBtn)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
+end
+
+-- Variables for the Lethal Hits object GUIDs
+local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/34438955573517849/113D79186FC9E0B9769DB8D5D480D0B0842974DF"
+-- Table to track spawned lethal hits objects and text objects
+local spawnedObjects = {
+    Red = {},
+    Blue = {}
+}
+
+function ensureLethalHitsObjects()
+    if currentMat == "Red" then
+        if not spawnedObjects.Red.lethalHits then
+            local redLethalHitsObject = spawnObject({
+                type = "Custom_Token",
+                position = {21.2, 0.87, 23.5}, -- Default position for Red
+                rotation = {0, 0, 180},
+                scale = {0.7, 0.7, 0.7},
+                nickname = "Red Lethal Hits",
+                description = "This is the area for lethal hits (Red)."
+            })
+            redLethalHitsObject.setCustomObject({
+                image = lethalHitsImageURL,
+                thickness = 0.2,
+                merge_distance_pixels = 15,
+                stand_up = false,
+                stackable = false
+            })
+            redLethalHitsObject.setLock(true) -- Lock the object in place
+            spawnedObjects.Red.lethalHits = redLethalHitsObject -- Store the object
+        end
+    elseif currentMat == "Blue" then
+        if not spawnedObjects.Blue.lethalHits then
+            local blueLethalHitsObject = spawnObject({
+                type = "Custom_Token",
+                position = {-21.5, 0.97, -23.5}, -- Default position for Blue
+                rotation = {0, 180, 180},
+                scale = {0.7, 0.7, 0.7},
+                nickname = "Blue Lethal Hits",
+                description = "This is the area for lethal hits (Blue)."
+            })
+            blueLethalHitsObject.setCustomObject({
+                image = lethalHitsImageURL,
+                thickness = 0.2,
+                merge_distance_pixels = 15,
+                stand_up = false,
+                stackable = false
+            })
+            blueLethalHitsObject.setLock(true) -- Lock the object in place
+            spawnedObjects.Blue.lethalHits = blueLethalHitsObject -- Store the object
+        end
+    else
+        print("Error: Unknown mat type '" .. tostring(currentMat) .. "'.")
+    end
+end
+function moveLethalHits()
+    -- Ensure lethal hits objects exist for the currentMat
+    if not currentMat then
+        print("Error: currentMat is nil.")
+        return
+    end
+
+    ensureLethalHitsObjects()
+
+    -- Debug: Ensure lethal hits object exists
+    if not spawnedObjects[currentMat].lethalHits then
+        print("Error: Lethal Hits object not found for " .. currentMat)
+        return
+    end
+
+    local lethalHitAreaBounds = spawnedObjects[currentMat].lethalHits.getBounds()
+
+    -- Move all dice with value 6 to the lethal hits area
+    local dice = getDice()
+    local lethalDiceCount = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() == 6 then
+            lethalDiceCount = lethalDiceCount + 1
+            local newPos = {
+                x = lethalHitAreaBounds.center.x + math.random(-2, 2) * 0.1,
+                y = lethalHitAreaBounds.center.y,
+                z = lethalHitAreaBounds.center.z + math.random(-2, 2) * 0.1,
+            }
+            die.setPosition(newPos)
+        end
+    end
+
+    -- Update the lethal hits text with the count
+    updateLethalHitsText(lethalDiceCount)
+end
+function checkLethalHitArea()
+    if not currentMat then
+        print("Error: currentMat is nil.")
+        return
+    end
+
+    local lethalHitsObject = spawnedObjects[currentMat].lethalHits
+    if not lethalHitsObject then
+        print("Error: No lethal hits object found for " .. currentMat)
+        return
+    end
+
+    local lethalHitAreaBounds = lethalHitsObject.getBounds()
+    local dice = getAllObjects()
+    local lethalDiceCount = 0
+
+    for _, die in ipairs(dice) do
+        if die.tag == "Dice" then
+            local objPos = die.getPosition()
+            if objPos.x > lethalHitAreaBounds.center.x - (lethalHitAreaBounds.size.x / 2) and
+               objPos.x < lethalHitAreaBounds.center.x + (lethalHitAreaBounds.size.x / 2) and
+               objPos.z > lethalHitAreaBounds.center.z - (lethalHitAreaBounds.size.z / 2) and
+               objPos.z < lethalHitAreaBounds.center.z + (lethalHitAreaBounds.size.z / 2) then
+                lethalDiceCount = lethalDiceCount + 1
+            end
+        end
+    end
+
+    updateLethalHitsText(lethalDiceCount)
+end
+
+function startLethalHitCheck()
+    -- Periodically check the lethal hit area for dice updates
+    Wait.time(checkLethalHitArea, 0.5, -1) -- Adjust frequency as needed
+end
+
+function updateLethalHitsText(count)
+    if not currentMat then
+        print("Error: currentMat is nil.")
+        return
+    end
+
+    local lethalHitsObject = spawnedObjects[currentMat].text
+    if lethalHitsObject then
+        lethalHitsObject.TextTool.setValue("Lethal Hits (" .. tostring(count) .. ")")
+    else
+        print("Error: No lethal hits text object found for " .. currentMat)
+    end
+end
+
+function createLethalText(remove)
+    local position = {}
+    local rotation = {90, 180, 0}
+
+    -- Define positions and rotations for the players
+    if currentMat == "Red" then
+        position = {18, 0.97, 22.5531769} -- Position for Red player
+    elseif currentMat == "Blue" then
+        rotation = {90, 0, 0}
+        position = {-18, 0.97, -22.5531769} -- Position for Blue player (opposite side)
+    else
+        print("Invalid player. Use 'Red' or 'Blue'.")
+        return
+    end
+
+    -- Check if we want to remove the objects
+    if remove then
+        -- Remove text object
+        if spawnedObjects[currentMat].text then
+            spawnedObjects[currentMat].text.destroy()
+            spawnedObjects[currentMat].text = nil
+            print(currentMat .. " text removed.")
+        end
+
+        -- Remove lethal hits object
+        if spawnedObjects[currentMat].lethalHits then
+            spawnedObjects[currentMat].lethalHits.destroy()
+            spawnedObjects[currentMat].lethalHits = nil
+            print(currentMat .. " lethal hits object removed.")
+        else
+            print("No lethal hits object found for " .. currentMat)
+        end
+        return
+    end
+
+    -- If not removing, create the text object
+    local textObject = spawnObject({
+        type = "3DText",
+        position = position,
+        rotation = rotation,
+        scale = {1, 1, 1}
+    })
+
+    -- Customize the text
+    textObject.TextTool.setValue("Lethal Hits (0)")
+    textObject.TextTool.setFontSize(50) -- Font size
+    textObject.TextTool.setFontColor({1, 1, 1}) -- White font
+
+    -- Store the text object for later removal
+    spawnedObjects[currentMat].text = textObject
+    print(currentMat .. " text created.")
+end
+function lethalHitsAction()
+    moveLethalHits()       -- Move the dice with value 6
+    createLethalText(false) -- Create text and lethal hits object
+    startLethalHitCheck()
 end
 
 function modifyMenu1()
@@ -541,6 +756,7 @@ function modifyMenu4()
     modifyMenu("Green")
 end
 function modifyMenu(color)
+    print(color)
     customDiceImage = nil
     selectedColor = color
     setDiceType()
@@ -551,6 +767,7 @@ function modifyMenu(color)
     self.editButton({index=11, color=color})
     self.editButton({index=32, color=color})
     self.editButton({index=33, color=color})
+    self.editButton({index=34, color="White"})
 end
 
 function setDiceType()
