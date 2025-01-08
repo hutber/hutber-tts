@@ -9539,16 +9539,16 @@ objectJSONs = {
     }
   ]
 }]],
-  [[{
+[[{
   "GUID": "7729ec",
   "Name": "Custom_Model",
   "Transform": {
-    "posX": -7.19947338,
-    "posY": 1.04767656,
-    "posZ": 11.6898384,
-    "rotX": 0.4590719,
-    "rotY": 179.996246,
-    "rotZ": 179.999512,
+    "posX": -7.25587654,
+    "posY": 1.04885864,
+    "posZ": 9.563915,
+    "rotX": -0.000008423719,
+    "rotY": 224.979492,
+    "rotZ": 179.9909,
     "scaleX": 0.6000085,
     "scaleY": 0.5000148,
     "scaleZ": 1.653981
@@ -9557,9 +9557,9 @@ objectJSONs = {
   "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
   "GMNotes": "",
   "AltLookAngle": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "ColorDiffuse": {
     "r": 0.588850141,
@@ -9601,7 +9601,7 @@ objectJSONs = {
         "posX": 13.3165016,
         "posY": 1.0284729,
         "posZ": 9.099796,
-        "rotX": -3.36631956E-06,
+        "rotX": -0.00000336631956,
         "rotY": 90.01519,
         "rotZ": 179.990875,
         "scaleX": 0.6000085,
@@ -9612,9 +9612,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -9658,7 +9658,7 @@ objectJSONs = {
             "posZ": 1.4966507,
             "rotX": 0.0161545184,
             "rotY": 89.98724,
-            "rotZ": 180.0,
+            "rotZ": 180,
             "scaleX": 0.906903446,
             "scaleY": 2.65991235,
             "scaleZ": 0.416661084
@@ -9667,14 +9667,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -9700,13 +9700,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -9732,14 +9732,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -9765,13 +9765,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -9786,9 +9786,9 @@ objectJSONs = {
             "posX": -6.218871,
             "posY": -4.244426,
             "posZ": -2.07383776,
-            "rotX": 270.0,
+            "rotX": 270,
             "rotY": 359.9419,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 3.155345,
             "scaleY": 0.030230118,
             "scaleZ": 1.97994208
@@ -9797,9 +9797,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.9999998,
@@ -9830,13 +9830,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -9851,7 +9851,7 @@ objectJSONs = {
             "posX": -7.781809,
             "posY": 0.115202859,
             "posZ": -2.05956,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 2.4999702,
@@ -9862,14 +9862,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -9895,13 +9895,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -9916,9 +9916,9 @@ objectJSONs = {
             "posX": -5.65072,
             "posY": 0.0019668045,
             "posZ": -2.03356957,
-            "rotX": 8.028016E-06,
+            "rotX": 0.000008028016,
             "rotY": 89.99993,
-            "rotZ": 3.10674153E-07,
+            "rotZ": 3.10674153e-7,
             "scaleX": 0.362766534,
             "scaleY": 1.000051,
             "scaleZ": 4.76615667
@@ -9927,9 +9927,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.588850141,
@@ -9982,14 +9982,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10015,13 +10015,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10036,7 +10036,7 @@ objectJSONs = {
             "posX": -4.47936869,
             "posY": 0.114082471,
             "posZ": -2.05929375,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 1.66664743,
@@ -10047,14 +10047,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10080,13 +10080,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10112,14 +10112,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10145,13 +10145,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10177,14 +10177,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10210,13 +10210,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10231,9 +10231,9 @@ objectJSONs = {
             "posX": 0.135974452,
             "posY": -4.092412,
             "posZ": -0.2777693,
-            "rotX": 270.0,
+            "rotX": 270,
             "rotY": 90.01591,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 0.8032065,
             "scaleY": 0.08333573,
             "scaleZ": 1.96369
@@ -10242,9 +10242,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.9999998,
@@ -10275,13 +10275,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10296,7 +10296,7 @@ objectJSONs = {
             "posX": 0.1697353,
             "posY": 0.120743878,
             "posZ": -2.05930686,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 2.33087325,
@@ -10307,14 +10307,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10340,13 +10340,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10372,14 +10372,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10405,13 +10405,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10437,14 +10437,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10470,13 +10470,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10491,7 +10491,7 @@ objectJSONs = {
             "posX": 0.180470183,
             "posY": -8.152623,
             "posZ": -2.05885267,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 2.33749938,
@@ -10502,14 +10502,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10535,13 +10535,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10556,9 +10556,9 @@ objectJSONs = {
             "posX": 0.8058867,
             "posY": -3.923003,
             "posZ": -2.09391332,
-            "rotX": 270.0,
+            "rotX": 270,
             "rotY": 180.126617,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 0.268311322,
             "scaleY": 0.0604619868,
             "scaleZ": 1.86739552
@@ -10567,9 +10567,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.27700296,
@@ -10600,13 +10600,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10623,7 +10623,7 @@ objectJSONs = {
             "posZ": -2.29622579,
             "rotX": 270.034271,
             "rotY": 90.0087051,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 0.101869158,
             "scaleY": 0.166665882,
             "scaleZ": 1.8673737
@@ -10632,9 +10632,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.27700296,
@@ -10665,13 +10665,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10688,7 +10688,7 @@ objectJSONs = {
             "posZ": -0.309417218,
             "rotX": 0.0161545184,
             "rotY": 89.98724,
-            "rotZ": 180.0,
+            "rotZ": 180,
             "scaleX": 0.906903446,
             "scaleY": 2.65991235,
             "scaleZ": 0.416661084
@@ -10697,14 +10697,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -10730,13 +10730,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -10766,14 +10766,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -10799,13 +10799,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -10820,7 +10820,7 @@ objectJSONs = {
         "posX": 0.180469,
         "posY": -8.152621,
         "posZ": -2.05885243,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 2.33749914,
@@ -10831,14 +10831,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -10864,13 +10864,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -10885,9 +10885,9 @@ objectJSONs = {
         "posX": 0.805886149,
         "posY": -3.92300224,
         "posZ": -2.09391356,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 180.108475,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 0.26831165,
         "scaleY": 0.0604619645,
         "scaleZ": 1.86739564
@@ -10896,9 +10896,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.27700302,
@@ -10929,13 +10929,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -10950,9 +10950,9 @@ objectJSONs = {
         "posX": 0.102318928,
         "posY": -3.92913032,
         "posZ": -2.29622555,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 90.00798,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 0.101869106,
         "scaleY": 0.166665852,
         "scaleZ": 1.86737311
@@ -10961,9 +10961,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.27700302,
@@ -10994,13 +10994,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11015,7 +11015,7 @@ objectJSONs = {
         "posX": 0.169734418,
         "posY": 0.120743841,
         "posZ": -2.059307,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 2.330873,
@@ -11026,14 +11026,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11059,13 +11059,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11091,14 +11091,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11124,13 +11124,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11147,7 +11147,7 @@ objectJSONs = {
         "posZ": -0.3094169,
         "rotX": 0.0161688831,
         "rotY": 89.987236,
-        "rotZ": 180.0,
+        "rotZ": 180,
         "scaleX": 0.9069036,
         "scaleY": 2.659913,
         "scaleZ": 0.416661173
@@ -11156,14 +11156,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11189,13 +11189,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11221,14 +11221,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11254,13 +11254,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11275,9 +11275,9 @@ objectJSONs = {
         "posX": 0.1359743,
         "posY": -4.09241152,
         "posZ": -0.277769476,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 90.01519,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 0.8032061,
         "scaleY": 0.08333572,
         "scaleZ": 1.9636898
@@ -11286,9 +11286,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.9999998,
@@ -11319,13 +11319,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11351,14 +11351,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11384,13 +11384,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11416,14 +11416,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11449,13 +11449,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11470,7 +11470,7 @@ objectJSONs = {
         "posX": -4.479368,
         "posY": 0.114082456,
         "posZ": -2.05929422,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 1.66664732,
@@ -11481,14 +11481,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11514,13 +11514,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11546,14 +11546,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11579,13 +11579,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11602,7 +11602,7 @@ objectJSONs = {
         "posZ": -1.59966552,
         "rotX": 0.01616888,
         "rotY": 89.9875641,
-        "rotZ": 3.621868E-06,
+        "rotZ": 0.000003621868,
         "scaleX": 0.333354235,
         "scaleY": 1.00009632,
         "scaleZ": 4.310087
@@ -11611,9 +11611,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -11655,9 +11655,9 @@ objectJSONs = {
         "posX": -6.21887064,
         "posY": -4.2444253,
         "posZ": -2.07383823,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 359.960052,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 3.155346,
         "scaleY": 0.0302301142,
         "scaleZ": 1.97994173
@@ -11666,9 +11666,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.9999998,
@@ -11699,13 +11699,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11720,9 +11720,9 @@ objectJSONs = {
         "posX": -5.65072,
         "posY": 0.001966692,
         "posZ": -2.03356957,
-        "rotX": 2.357988E-05,
+        "rotX": 0.00002357988,
         "rotY": 89.99993,
-        "rotZ": 3.11152667E-06,
+        "rotZ": 0.00000311152667,
         "scaleX": 0.362766474,
         "scaleY": 1.000051,
         "scaleZ": 4.76615667
@@ -11731,9 +11731,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -11775,7 +11775,7 @@ objectJSONs = {
         "posX": -7.78180742,
         "posY": 0.1152028,
         "posZ": -2.0595603,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 2.4999702,
@@ -11786,14 +11786,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11819,13 +11819,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11840,7 +11840,7 @@ objectJSONs = {
         "posX": -1.24063551,
         "posY": -8.114133,
         "posZ": 0.190157741,
-        "rotX": 1.773248E-06,
+        "rotX": 0.000001773248,
         "rotY": 359.9811,
         "rotZ": 359.983856,
         "scaleX": 0.9093427,
@@ -11851,9 +11851,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -11897,7 +11897,7 @@ objectJSONs = {
         "posZ": 1.49665093,
         "rotX": 0.0161688831,
         "rotY": 89.987236,
-        "rotZ": 180.0,
+        "rotZ": 180,
         "scaleX": 0.9069036,
         "scaleY": 2.659913,
         "scaleZ": 0.416661173
@@ -11906,14 +11906,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -11939,13 +11939,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -11955,16 +11955,16 @@ objectJSONs = {
     }
   ]
 }]],
-  [[{
+[[{
   "GUID": "b3181e",
   "Name": "Custom_Model",
   "Transform": {
-    "posX": 7.19942236,
-    "posY": 1.04002333,
-    "posZ": -11.6900673,
-    "rotX": 0.018322397,
-    "rotY": 359.9939,
-    "rotZ": 180.730469,
+    "posX": 7.275132,
+    "posY": 1.04886055,
+    "posZ": -9.486088,
+    "rotX": 3.39758571e-7,
+    "rotY": 45.0031967,
+    "rotZ": 179.990875,
     "scaleX": 0.6000085,
     "scaleY": 0.5000148,
     "scaleZ": 1.653981
@@ -11973,9 +11973,9 @@ objectJSONs = {
   "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
   "GMNotes": "",
   "AltLookAngle": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "ColorDiffuse": {
     "r": 0.588850141,
@@ -12017,7 +12017,7 @@ objectJSONs = {
         "posX": 13.3165016,
         "posY": 1.0284729,
         "posZ": 9.099796,
-        "rotX": -3.36631956E-06,
+        "rotX": -0.00000336631956,
         "rotY": 90.01519,
         "rotZ": 179.990875,
         "scaleX": 0.6000085,
@@ -12028,9 +12028,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -12074,7 +12074,7 @@ objectJSONs = {
             "posZ": 1.4966507,
             "rotX": 0.0161545184,
             "rotY": 89.98724,
-            "rotZ": 180.0,
+            "rotZ": 180,
             "scaleX": 0.906903446,
             "scaleY": 2.65991235,
             "scaleZ": 0.416661084
@@ -12083,14 +12083,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12116,13 +12116,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12148,14 +12148,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12181,13 +12181,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12202,9 +12202,9 @@ objectJSONs = {
             "posX": -6.218871,
             "posY": -4.244426,
             "posZ": -2.07383776,
-            "rotX": 270.0,
+            "rotX": 270,
             "rotY": 359.9419,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 3.155345,
             "scaleY": 0.030230118,
             "scaleZ": 1.97994208
@@ -12213,9 +12213,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.9999998,
@@ -12246,13 +12246,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12267,7 +12267,7 @@ objectJSONs = {
             "posX": -7.781809,
             "posY": 0.115202859,
             "posZ": -2.05956,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 2.4999702,
@@ -12278,14 +12278,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12311,13 +12311,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12332,9 +12332,9 @@ objectJSONs = {
             "posX": -5.65072,
             "posY": 0.0019668045,
             "posZ": -2.03356957,
-            "rotX": 8.028016E-06,
+            "rotX": 0.000008028016,
             "rotY": 89.99993,
-            "rotZ": 3.10674153E-07,
+            "rotZ": 3.10674153e-7,
             "scaleX": 0.362766534,
             "scaleY": 1.000051,
             "scaleZ": 4.76615667
@@ -12343,9 +12343,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.588850141,
@@ -12398,14 +12398,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12431,13 +12431,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12452,7 +12452,7 @@ objectJSONs = {
             "posX": -4.47936869,
             "posY": 0.114082471,
             "posZ": -2.05929375,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 1.66664743,
@@ -12463,14 +12463,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12496,13 +12496,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12528,14 +12528,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12561,13 +12561,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12593,14 +12593,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12626,13 +12626,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12647,9 +12647,9 @@ objectJSONs = {
             "posX": 0.135974452,
             "posY": -4.092412,
             "posZ": -0.2777693,
-            "rotX": 270.0,
+            "rotX": 270,
             "rotY": 90.01591,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 0.8032065,
             "scaleY": 0.08333573,
             "scaleZ": 1.96369
@@ -12658,9 +12658,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.9999998,
@@ -12691,13 +12691,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12712,7 +12712,7 @@ objectJSONs = {
             "posX": 0.1697353,
             "posY": 0.120743878,
             "posZ": -2.05930686,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 2.33087325,
@@ -12723,14 +12723,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12756,13 +12756,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12788,14 +12788,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12821,13 +12821,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12853,14 +12853,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12886,13 +12886,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12907,7 +12907,7 @@ objectJSONs = {
             "posX": 0.180470183,
             "posY": -8.152623,
             "posZ": -2.05885267,
-            "rotX": -4.54100427E-06,
+            "rotX": -0.00000454100427,
             "rotY": 179.987228,
             "rotZ": 180.01619,
             "scaleX": 2.33749938,
@@ -12918,14 +12918,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -12951,13 +12951,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -12972,9 +12972,9 @@ objectJSONs = {
             "posX": 0.8058867,
             "posY": -3.923003,
             "posZ": -2.09391332,
-            "rotX": 270.0,
+            "rotX": 270,
             "rotY": 180.126617,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 0.268311322,
             "scaleY": 0.0604619868,
             "scaleZ": 1.86739552
@@ -12983,9 +12983,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.27700296,
@@ -13016,13 +13016,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -13039,7 +13039,7 @@ objectJSONs = {
             "posZ": -2.29622579,
             "rotX": 270.034271,
             "rotY": 90.0087051,
-            "rotZ": 0.0,
+            "rotZ": 0,
             "scaleX": 0.101869158,
             "scaleY": 0.166665882,
             "scaleZ": 1.8673737
@@ -13048,9 +13048,9 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
             "r": 0.27700296,
@@ -13081,13 +13081,13 @@ objectJSONs = {
             "TypeIndex": 4,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -13104,7 +13104,7 @@ objectJSONs = {
             "posZ": -0.309417218,
             "rotX": 0.0161545184,
             "rotY": 89.98724,
-            "rotZ": 180.0,
+            "rotZ": 180,
             "scaleX": 0.906903446,
             "scaleY": 2.65991235,
             "scaleZ": 0.416661084
@@ -13113,14 +13113,14 @@ objectJSONs = {
           "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0,
+            "y": 0,
+            "z": 0
           },
           "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
           "LayoutGroupSortIndex": 0,
           "Value": 0,
@@ -13146,13 +13146,13 @@ objectJSONs = {
             "TypeIndex": 0,
             "CustomShader": {
               "SpecularColor": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1
               },
-              "SpecularIntensity": 0.0,
-              "SpecularSharpness": 2.0,
-              "FresnelStrength": 0.0
+              "SpecularIntensity": 0,
+              "SpecularSharpness": 2,
+              "FresnelStrength": 0
             },
             "CastShadows": true
           },
@@ -13182,14 +13182,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13215,13 +13215,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13236,7 +13236,7 @@ objectJSONs = {
         "posX": 0.180469,
         "posY": -8.152621,
         "posZ": -2.05885243,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 2.33749914,
@@ -13247,14 +13247,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13280,13 +13280,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13301,9 +13301,9 @@ objectJSONs = {
         "posX": 0.805886149,
         "posY": -3.92300224,
         "posZ": -2.09391356,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 180.108475,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 0.26831165,
         "scaleY": 0.0604619645,
         "scaleZ": 1.86739564
@@ -13312,9 +13312,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.27700302,
@@ -13345,13 +13345,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13366,9 +13366,9 @@ objectJSONs = {
         "posX": 0.102318928,
         "posY": -3.92913032,
         "posZ": -2.29622555,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 90.00798,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 0.101869106,
         "scaleY": 0.166665852,
         "scaleZ": 1.86737311
@@ -13377,9 +13377,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.27700302,
@@ -13410,13 +13410,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13431,7 +13431,7 @@ objectJSONs = {
         "posX": 0.169734418,
         "posY": 0.120743841,
         "posZ": -2.059307,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 2.330873,
@@ -13442,14 +13442,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13475,13 +13475,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13507,14 +13507,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13540,13 +13540,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13563,7 +13563,7 @@ objectJSONs = {
         "posZ": -0.3094169,
         "rotX": 0.0161688831,
         "rotY": 89.987236,
-        "rotZ": 180.0,
+        "rotZ": 180,
         "scaleX": 0.9069036,
         "scaleY": 2.659913,
         "scaleZ": 0.416661173
@@ -13572,14 +13572,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13605,13 +13605,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13637,14 +13637,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13670,13 +13670,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13691,9 +13691,9 @@ objectJSONs = {
         "posX": 0.1359743,
         "posY": -4.09241152,
         "posZ": -0.277769476,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 90.01519,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 0.8032061,
         "scaleY": 0.08333572,
         "scaleZ": 1.9636898
@@ -13702,9 +13702,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.9999998,
@@ -13735,13 +13735,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13767,14 +13767,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13800,13 +13800,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13832,14 +13832,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13865,13 +13865,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13886,7 +13886,7 @@ objectJSONs = {
         "posX": -4.479368,
         "posY": 0.114082456,
         "posZ": -2.05929422,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 1.66664732,
@@ -13897,14 +13897,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13930,13 +13930,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -13962,14 +13962,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13995,13 +13995,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -14018,7 +14018,7 @@ objectJSONs = {
         "posZ": -1.59966552,
         "rotX": 0.01616888,
         "rotY": 89.9875641,
-        "rotZ": 3.621868E-06,
+        "rotZ": 0.000003621868,
         "scaleX": 0.333354235,
         "scaleY": 1.00009632,
         "scaleZ": 4.310087
@@ -14027,9 +14027,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -14071,9 +14071,9 @@ objectJSONs = {
         "posX": -6.21887064,
         "posY": -4.2444253,
         "posZ": -2.07383823,
-        "rotX": 270.0,
+        "rotX": 270,
         "rotY": 359.960052,
-        "rotZ": 0.0,
+        "rotZ": 0,
         "scaleX": 3.155346,
         "scaleY": 0.0302301142,
         "scaleZ": 1.97994173
@@ -14082,9 +14082,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.9999998,
@@ -14115,13 +14115,13 @@ objectJSONs = {
         "TypeIndex": 4,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -14136,9 +14136,9 @@ objectJSONs = {
         "posX": -5.65072,
         "posY": 0.001966692,
         "posZ": -2.03356957,
-        "rotX": 2.357988E-05,
+        "rotX": 0.00002357988,
         "rotY": 89.99993,
-        "rotZ": 3.11152667E-06,
+        "rotZ": 0.00000311152667,
         "scaleX": 0.362766474,
         "scaleY": 1.000051,
         "scaleZ": 4.76615667
@@ -14147,9 +14147,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -14191,7 +14191,7 @@ objectJSONs = {
         "posX": -7.78180742,
         "posY": 0.1152028,
         "posZ": -2.0595603,
-        "rotX": -4.54198425E-06,
+        "rotX": -0.00000454198425,
         "rotY": 179.987228,
         "rotZ": 180.01619,
         "scaleX": 2.4999702,
@@ -14202,14 +14202,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -14235,13 +14235,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },
@@ -14256,7 +14256,7 @@ objectJSONs = {
         "posX": -1.24063551,
         "posY": -8.114133,
         "posZ": 0.190157741,
-        "rotX": 1.773248E-06,
+        "rotX": 0.000001773248,
         "rotY": 359.9811,
         "rotZ": 359.983856,
         "scaleX": 0.9093427,
@@ -14267,9 +14267,9 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
         "r": 0.588850141,
@@ -14313,7 +14313,7 @@ objectJSONs = {
         "posZ": 1.49665093,
         "rotX": 0.0161688831,
         "rotY": 89.987236,
-        "rotZ": 180.0,
+        "rotZ": 180,
         "scaleX": 0.9069036,
         "scaleY": 2.659913,
         "scaleZ": 0.416661173
@@ -14322,14 +14322,14 @@ objectJSONs = {
       "Description": "Floors at:\n- Ground Level\n- 4\"\n\n[00BFFF]Scalable\nBreachable\nLight Cover\nDefensible\nObscuring",
       "GMNotes": "",
       "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -14355,13 +14355,13 @@ objectJSONs = {
         "TypeIndex": 0,
         "CustomShader": {
           "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
+            "r": 1,
+            "g": 1,
+            "b": 1
           },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
+          "SpecularIntensity": 0,
+          "SpecularSharpness": 2,
+          "FresnelStrength": 0
         },
         "CastShadows": true
       },

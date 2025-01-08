@@ -55,7 +55,6 @@ function onLoad()
             diceRoller.setPosition(hiddenPosition)
             diceRoller.setLock(true)
             diceRoller.interactable = false
-            print(color .. " DiceRoller hidden & disabled by default on load")
         else
             print(color .. " DiceRoller object not found during onLoad")
         end

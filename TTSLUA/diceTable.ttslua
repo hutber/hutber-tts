@@ -26,6 +26,7 @@ orderedRollBtn={
     position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
+
 orderedRollGroup2Label = "In 2s"
 orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
 orderedRollGroup2Btn={

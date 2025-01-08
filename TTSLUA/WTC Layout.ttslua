@@ -111,7 +111,6 @@ function getAllObjectsInMemory()
   local curObj = {}
 
   for guid in pairs(memoryListBackup) do
-    print(guid)
     curObj = getObjectFromGUID(guid)
     table.insert(objTable, curObj)
   end

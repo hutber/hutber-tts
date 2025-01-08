@@ -1,0 +1,227 @@
+-- FTC-GUID: 32ed4c,83ab2a
+local RedControlBoard = {
+    VortexGUID = "be2cdb",
+    CustomDiceMat_GUID = "acae21",
+    DiceMat_GUID = "c57d70",
+    SelectionHighlighterGUID = "27de4f",
+    ReservesBoardGUID = "fe7926",
+    ReservesOldBoardGUID = "128a11",
+    options = {
+        {name = "Custom Dice Roller", state = true},
+        {name = "Selection Highlight", state = true},
+        {name = "Vortex", state = true},
+        {name = "Reserves Board", state = true},
+    }
+}
+
+local BlueControlBoard = {
+    VortexGUID = "4b1a7b",
+    CustomDiceMat_GUID = "839fcc",
+    DiceMat_GUID = "a84ed2",
+    SelectionHighlighterGUID = "84c3a4",
+    ReservesBoardGUID = "85f0cf",
+    ReservesOldBoardGUID = "25d021",
+    options = {
+        {name = "Custom Dice Roller", state = true},
+        {name = "Selection Highlight", state = true},
+        {name = "Vortex", state = true},
+        {name = "Reserves Board", state = true},
+    }
+}
+
+local boards = {
+    Red = RedControlBoard,
+    Blue = BlueControlBoard,
+}
+
+local originalPositions = {}
+
+function onLoad()
+    buildControlPanel("Red")
+    buildControlPanel("Blue")
+
+    -- Hide and disable DiceRollers initially for both colors
+    for color, board in pairs(boards) do
+        local diceRoller = getObjectFromGUID(board.DiceMat_GUID)
+        if diceRoller then
+            if not originalPositions[board.DiceMat_GUID] then
+                originalPositions[board.DiceMat_GUID] = diceRoller.getPosition()
+            end
+            local hiddenPosition = {
+                originalPositions[board.DiceMat_GUID][1],
+                originalPositions[board.DiceMat_GUID][2] - 3,
+                originalPositions[board.DiceMat_GUID][3]
+            }
+            diceRoller.setPosition(hiddenPosition)
+            diceRoller.setLock(true)
+            diceRoller.interactable = false
+        else
+            print(color .. " DiceRoller object not found during onLoad")
+        end
+    end
+end
+function buildControlPanel(color)
+    local board = boards[color]
+    if not board then
+        print("Invalid color: " .. tostring(color))
+        return
+    end
+
+    local panel = {
+        tag = "VerticalLayout",
+        attributes = {
+            id = color .. "_controlPanel",
+            width = "390",
+            height = "520",
+            position = "0 0 -3",
+            color = "Black",
+            padding = "13",
+        },
+        children = {
+            {
+                tag = "Text",
+                attributes = {
+                    text = color .. " Control Board",
+                    fontSize = "31",
+                    alignment = "MiddleCenter",
+                    color = "White",
+                    fontStyle = "Bold",
+                    padding = "6",
+                },
+            },
+            {
+                tag = "VerticalLayout",
+                attributes = {
+                    id = color .. "_borderPanel",
+                    color = "Grey",
+                    padding = "13",
+                    childForceExpandHeight = true,
+                    childForceExpandWidth = true,
+                },
+                children = {},
+            },
+        },
+    }
+
+    for i, option in ipairs(board.options) do
+        table.insert(panel.children[2].children, {
+            tag = "HorizontalLayout",
+            children = {
+                {
+                    tag = "Button",
+                    attributes = {
+                        text = option.name,
+                        onClick = "toggleOption(" .. i .. ", '" .. color .. "')",
+                        fontSize = "18",
+                        width = "200",
+                        height = "40",
+                    },
+                },
+                {
+                    tag = "Text",
+                    attributes = {
+                        id = color .. "_status_" .. i,
+                        text = option.state and "ON" or "OFF",
+                        fontSize = "18",
+                        width = "60",
+                        height = "40",
+                        color = option.state and "Green" or "Red",
+                    },
+                },
+            },
+        })
+    end
+
+    local boardObjectGUID = (color == "Red") and "32ed4c" or "83ab2a"
+    local boardObject = getObjectFromGUID(boardObjectGUID)
+    if boardObject then
+        boardObject.UI.setXmlTable({panel})
+    else
+        print("Failed to find object for color: " .. color)
+    end
+end
+
+function toggleObjectState(objectGUID, state)
+    local obj = getObjectFromGUID(objectGUID)
+    if obj then
+        if not originalPositions[objectGUID] then
+            originalPositions[objectGUID] = obj.getPosition()
+        end
+
+        if state then
+            local originalPosition = {
+                originalPositions[objectGUID][1],
+                0.87,
+                originalPositions[objectGUID][3]
+            }
+            obj.setPosition(originalPosition)
+            obj.setLock(true)
+            obj.interactable = true
+        else
+            local hiddenPosition = {
+                originalPositions[objectGUID][1],
+                originalPositions[objectGUID][2] - 3,
+                originalPositions[objectGUID][3]
+            }
+            obj.setPosition(hiddenPosition)
+            obj.setLock(true)
+            obj.interactable = false
+        end
+    else
+        print("Object not found: " .. objectGUID)
+    end
+end
+
+function toggleOption(player, index)
+    local playerColor = player.color
+    local expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
+
+    if playerColor ~= expectedColor then
+        print("Access denied: " .. playerColor .. " tried to use the " .. expectedColor .. " control board.")
+        return
+    end
+
+    local board = boards[expectedColor]
+    local option = board.options[tonumber(index)]
+    option.state = not option.state
+
+    local statusId = expectedColor .. "_status_" .. index
+    local newText = option.state and "ON" or "OFF"
+    local newColor = option.state and "Green" or "Red"
+    self.UI.setAttributes(statusId, { text = newText, color = newColor })
+
+
+    if option.name == "Selection Highlight" then
+        local highlighterGUID = board.SelectionHighlighterGUID
+        local highlighter = getObjectFromGUID(highlighterGUID)
+
+        if highlighter then
+            if option.state then
+                highlighter.call("onLoad") -- Restart the highlighter script
+            else
+                highlighter.call("onDestroy") -- Stop the highlighter script
+            end
+        else
+            print("Highlighter object not found for " .. expectedColor)
+        end
+    elseif option.name == "Custom Dice Roller" then
+        if option.state then
+            -- Enable custom keyboard, hide original keyboard
+            toggleObjectState(board.CustomDiceMat_GUID, true)
+            toggleObjectState(board.DiceMat_GUID, false)
+        else
+            -- Enable original keyboard, hide custom keyboard
+            toggleObjectState(board.CustomDiceMat_GUID, false)
+            toggleObjectState(board.DiceMat_GUID, true)
+        end
+    elseif option.name == "Selection Highlight" then
+        toggleObjectState(board.SelectionHighlighterGUID, option.state)
+    elseif option.name == "Dice Roller" then
+        toggleObjectState(board.DiceMat_GUID, option.state)
+    elseif option.name == "Vortex" then
+        toggleObjectState(board.VortexGUID, option.state)
+    elseif option.name == "Reserves Board" then
+        toggleObjectState(board.ReservesBoardGUID, option.state)
+        toggleObjectState(board.ReservesOldBoardGUID, not option.state)
+    end
+end

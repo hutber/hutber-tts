@@ -187,9 +187,7 @@ function getDice()
     local ylowerBound =  BoundsNormalized.center.y-(BoundsNormalized.size.y/2)
 
     for _, obj in pairs(getAllObjects()) do
-        -- Fetch resting dices
         if obj != nil and obj.tag == 'Dice' and obj.resting then
-            -- Only use objects inside the zone
             local objPos = obj.getPosition()
             if objPos['x'] > leftBound and objPos['x'] < rightBound and objPos['z'] > lowerBound and objPos['z'] < upperBound and objPos['y'] < yupperBound and objPos['y'] > ylowerBound then
                 table.insert(dice, #dice+1, obj)
@@ -214,8 +212,6 @@ function customDice(obj, player, alt)
             printToColor("You have set a custom die!", player, "Yellow")
             break
         else
-            -- We've found *a* die, but we should keep going looking for a truly
-            -- custom one, and use this only if we don't find any better ones.
             found = true
             newTint = die.getColorTint()
             printToColor("You have set a custom colour!", player, "Yellow")
@@ -291,7 +287,7 @@ function RollDiceOrderedGroup3(obj, player, alt)
 end
 
 function RollOrSelectDeleteDice1(obj, color, alt)
-    SelectDeleteDiceX("Sel", 1, alt, lowerUpper, color) -- action, n, selectOthers, upLow, color
+    SelectDeleteDiceX("Sel", 1, alt, lowerUpper, color)
 end
 function RollOrSelectDeleteDice2(obj, color, alt)
     SelectDeleteDiceX("Sel", 2, alt, lowerUpper, color)
@@ -354,12 +350,18 @@ function moveDiceToRoller(color, dice)
 end
 
 function clearDiceAll(obj, color, alt)
-    if not alt then printToColor("Use right click!", color, "Orange") return end
+    if not alt then
+        printToColor("Use right click!", color, "Orange")
+        return
+    end
+    createLethalText(true)
+    cleanupLethalHits()
     clearDiceX(6, true, color)
+    moveDiceBackToBoard(color)
 end
 
 function clearDice1(obj, color, alt)
-    SelectDeleteDiceX("Del", 1, alt, lowerUpper, color) -- action, n, selectOthers, upLow, color
+    SelectDeleteDiceX("Del", 1, alt, lowerUpper, color)
 end
 function clearDice2(obj, color, alt)
     SelectDeleteDiceX("Del", 2, alt, lowerUpper, color)
@@ -377,13 +379,11 @@ function clearDice6(obj, color, alt)
     SelectDeleteDiceX("Del", 6, alt, lowerUpper, color)
 end
 
-
 function clearDiceX(n, deleteLower, color)
     local counter={0,0,0,0,0,0}
     local numberName={"ones", "twos", "threes", "fours", "fives", "sixes"}
     local text = Player[color].steam_name .. " deleted "
     local somethingToPrint=false
-    createLethalText(true)
         for i, die in ipairs(getDice()) do
         if die.getValue() == n or (deleteLower and die.getValue()< n) then
             die.destroy()
@@ -424,7 +424,6 @@ end
 function spawnDice(n,player)
     local currentTime = os.time()
     local disableTime=0.2
-    --if n>9 then disableTime=disableTime+0.3 end
     if currentTime-lastClick<disableTime then
         printToColor("Wait a bit!", player, "Yellow")
         return
@@ -482,9 +481,7 @@ function onload()
     defaultFontSize=500
     fontSize=defaultFontSize
     lineCount=0
-    --defaultDivisionLabel="|\n|\n|\n|\n|\n|\n|"
     defaultDivisionLabel="|\n|"
-    --defaultDivisionLabel="|"
     self.createButton({
         label="---", click_function="none", function_owner=Global,
         position={-6.4,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=fontSize,
@@ -496,7 +493,6 @@ function onload()
         label="", click_function="none", function_owner=Global,
         position={0.75,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=500,
         font_color={1, 1, 1},
-        --scale={0.25, 0.25, 0.25},
         scale={0.25,2,1},
 		alignment=2
     })
@@ -545,22 +541,31 @@ function onload()
     self.createButton(add4d6Btn)
     self.createButton(lethalHitsBtn)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
+
 end
 
--- Variables for the Lethal Hits object GUIDs
 local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/34438955573517849/113D79186FC9E0B9769DB8D5D480D0B0842974DF"
--- Table to track spawned lethal hits objects and text objects
+
 local spawnedObjects = {
-    Red = {},
-    Blue = {}
+    Red = {
+        lethalHits = nil,
+        text = nil
+    },
+    Blue = {
+        lethalHits = nil,
+        text = nil
+    }
 }
+
+local RED_LETHAL_HITS_GUID = "7ac8ba"
+local BLUE_LETHAL_HITS_GUID = "71ab21"
 
 function ensureLethalHitsObjects()
     if currentMat == "Red" then
         if not spawnedObjects.Red.lethalHits then
             local redLethalHitsObject = spawnObject({
                 type = "Custom_Token",
-                position = {21.2, 0.87, 23.5}, -- Default position for Red
+                position = {21.1, 0.87, 23.5},
                 rotation = {0, 0, 180},
                 scale = {0.7, 0.7, 0.7},
                 nickname = "Red Lethal Hits",
@@ -573,14 +578,14 @@ function ensureLethalHitsObjects()
                 stand_up = false,
                 stackable = false
             })
-            redLethalHitsObject.setLock(true) -- Lock the object in place
-            spawnedObjects.Red.lethalHits = redLethalHitsObject -- Store the object
+            redLethalHitsObject.setLock(true)
+            spawnedObjects.Red.lethalHits = redLethalHitsObject
         end
     elseif currentMat == "Blue" then
         if not spawnedObjects.Blue.lethalHits then
             local blueLethalHitsObject = spawnObject({
                 type = "Custom_Token",
-                position = {-21.5, 0.97, -23.5}, -- Default position for Blue
+                position = {-21.1, 0.97, -23.5},
                 rotation = {0, 180, 180},
                 scale = {0.7, 0.7, 0.7},
                 nickname = "Blue Lethal Hits",
@@ -593,154 +598,339 @@ function ensureLethalHitsObjects()
                 stand_up = false,
                 stackable = false
             })
-            blueLethalHitsObject.setLock(true) -- Lock the object in place
-            spawnedObjects.Blue.lethalHits = blueLethalHitsObject -- Store the object
+            blueLethalHitsObject.setLock(true)
+            spawnedObjects.Blue.lethalHits = blueLethalHitsObject
         end
     else
         print("Error: Unknown mat type '" .. tostring(currentMat) .. "'.")
     end
 end
-function moveLethalHits()
-    -- Ensure lethal hits objects exist for the currentMat
-    if not currentMat then
-        print("Error: currentMat is nil.")
-        return
-    end
 
+
+function startLethalHitCheck()
+    Wait.time(checkLethalHitArea, 0.5, -1)
+end
+
+local RED_LETHAL_HITS_GUID = "7ac8ba"
+local BLUE_LETHAL_HITS_GUID = "71ab21"
+local updateInterval = 1
+local lethalHitsObjects = {
+    Red = nil,
+    Blue = nil
+}
+local textDisplays = {
+    Red = nil,
+    Blue = nil
+}
+
+function initializeLethalHits()
     ensureLethalHitsObjects()
 
-    -- Debug: Ensure lethal hits object exists
-    if not spawnedObjects[currentMat].lethalHits then
-        print("Error: Lethal Hits object not found for " .. currentMat)
-        return
-    end
-
-    local lethalHitAreaBounds = spawnedObjects[currentMat].lethalHits.getBounds()
-
-    -- Move all dice with value 6 to the lethal hits area
-    local dice = getDice()
-    local lethalDiceCount = 0
-    for _, die in ipairs(dice) do
-        if die.getValue() == 6 then
-            lethalDiceCount = lethalDiceCount + 1
-            local newPos = {
-                x = lethalHitAreaBounds.center.x + math.random(-2, 2) * 0.1,
-                y = lethalHitAreaBounds.center.y,
-                z = lethalHitAreaBounds.center.z + math.random(-2, 2) * 0.1,
-            }
-            die.setPosition(newPos)
+    if currentMat == "Red" then
+        lethalHitsObjects.Red = getObjectFromGUID(RED_LETHAL_HITS_GUID)
+        if lethalHitsObjects.Red then
+            setupLethalHitsDisplay("Red", lethalHitsObjects.Red)
+        else
+            print("Error: Red Lethal Hits object not found! Check the GUID.")
+        end
+    elseif currentMat == "Blue" then
+        lethalHitsObjects.Blue = getObjectFromGUID(BLUE_LETHAL_HITS_GUID)
+        if lethalHitsObjects.Blue then
+            setupLethalHitsDisplay("Blue", lethalHitsObjects.Blue)
+        else
+            print("Error: Blue Lethal Hits object not found! Check the GUID.")
         end
     end
 
-    -- Update the lethal hits text with the count
-    updateLethalHitsText(lethalDiceCount)
+    Wait.time(updateLethalHits, updateInterval, -1)
 end
-function checkLethalHitArea()
-    if not currentMat then
-        print("Error: currentMat is nil.")
-        return
-    end
 
-    local lethalHitsObject = spawnedObjects[currentMat].lethalHits
-    if not lethalHitsObject then
-        print("Error: No lethal hits object found for " .. currentMat)
-        return
-    end
+function updateLethalHits()
+    for zone, lethalHitsObject in pairs(lethalHitsObjects) do
+        if lethalHitsObject then
+            local bounds = lethalHitsObject.getBounds()
+            local diceCount = 0
 
-    local lethalHitAreaBounds = lethalHitsObject.getBounds()
-    local dice = getAllObjects()
-    local lethalDiceCount = 0
+            for _, obj in ipairs(getAllObjects()) do
+                if obj.tag == "Dice" and obj.resting then
+                    local objPos = obj.getPosition()
+                    if objPos.x > bounds.center.x - (bounds.size.x / 2) and
+                       objPos.x < bounds.center.x + (bounds.size.x / 2) and
+                       objPos.z > bounds.center.z - (bounds.size.z / 2) and
+                       objPos.z < bounds.center.z + (bounds.size.z / 2) then
+                        diceCount = diceCount + 1
+                    end
+                end
+            end
 
-    for _, die in ipairs(dice) do
-        if die.tag == "Dice" then
-            local objPos = die.getPosition()
-            if objPos.x > lethalHitAreaBounds.center.x - (lethalHitAreaBounds.size.x / 2) and
-               objPos.x < lethalHitAreaBounds.center.x + (lethalHitAreaBounds.size.x / 2) and
-               objPos.z > lethalHitAreaBounds.center.z - (lethalHitAreaBounds.size.z / 2) and
-               objPos.z < lethalHitAreaBounds.center.z + (lethalHitAreaBounds.size.z / 2) then
-                lethalDiceCount = lethalDiceCount + 1
+            if textDisplays[zone] then
+                textDisplays[zone].TextTool.setValue(" Lethal Hits (" .. tostring(diceCount) .. ")")
+            elseif textDisplays[zone] then
+                print("Error: Text display is missing for " .. zone .. ".")
             end
         end
     end
-
-    updateLethalHitsText(lethalDiceCount)
 end
 
-function startLethalHitCheck()
-    -- Periodically check the lethal hit area for dice updates
-    Wait.time(checkLethalHitArea, 0.5, -1) -- Adjust frequency as needed
+function cleanupLethalHits()
+    print('cleanupLethalHits')
+    originalPositions = {}
+    for zone, textDisplay in pairs(textDisplays) do
+        if textDisplay then
+            textDisplay.destruct()
+            textDisplays[zone] = nil
+        end
+    end
 end
 
-function updateLethalHitsText(count)
-    if not currentMat then
-        print("Error: currentMat is nil.")
+function setupLethalHitsDisplay(zone, lethalHitsObject)
+    local position = {}
+    local rotation = {90, 180, 0}
+
+    if zone == "Red" then
+        position = {18, 0.97, 22.1}
+    elseif zone == "Blue" then
+        rotation = {90, 0, 0}
+        position = {-18, 0.97, -22.}
+    else
+        print("Invalid player. Use 'Red' or 'Blue'.")
         return
     end
 
-    local lethalHitsObject = spawnedObjects[currentMat].text
-    if lethalHitsObject then
-        lethalHitsObject.TextTool.setValue("Lethal Hits (" .. tostring(count) .. ")")
-    else
-        print("Error: No lethal hits text object found for " .. currentMat)
-    end
+    local textDisplay = spawnObject({
+        type = "3DText",
+        position = position,
+        rotation = rotation,
+        scale = {1, 1, 1},
+        nickname = "LethalHitsText" .. zone
+    })
+
+    textDisplay.TextTool.setValue("Lethal Hits (0)")
+    textDisplay.TextTool.setFontSize(50)
+    textDisplay.TextTool.setFontColor({1, 1, 1})
+
+    textDisplays[zone] = textDisplay
 end
 
 function createLethalText(remove)
     local position = {}
     local rotation = {90, 180, 0}
 
-    -- Define positions and rotations for the players
     if currentMat == "Red" then
-        position = {18, 0.97, 22.5531769} -- Position for Red player
+        position = {18, 0.97, 22.5531769}
     elseif currentMat == "Blue" then
         rotation = {90, 0, 0}
-        position = {-18, 0.97, -22.5531769} -- Position for Blue player (opposite side)
+        position = {-18, 0.97, -22.5531769}
     else
         print("Invalid player. Use 'Red' or 'Blue'.")
         return
     end
 
-    -- Check if we want to remove the objects
     if remove then
-        -- Remove text object
         if spawnedObjects[currentMat].text then
             spawnedObjects[currentMat].text.destroy()
             spawnedObjects[currentMat].text = nil
-            print(currentMat .. " text removed.")
         end
 
-        -- Remove lethal hits object
         if spawnedObjects[currentMat].lethalHits then
             spawnedObjects[currentMat].lethalHits.destroy()
             spawnedObjects[currentMat].lethalHits = nil
-            print(currentMat .. " lethal hits object removed.")
         else
             print("No lethal hits object found for " .. currentMat)
         end
         return
     end
-
-    -- If not removing, create the text object
-    local textObject = spawnObject({
-        type = "3DText",
-        position = position,
-        rotation = rotation,
-        scale = {1, 1, 1}
-    })
-
-    -- Customize the text
-    textObject.TextTool.setValue("Lethal Hits (0)")
-    textObject.TextTool.setFontSize(50) -- Font size
-    textObject.TextTool.setFontColor({1, 1, 1}) -- White font
-
-    -- Store the text object for later removal
-    spawnedObjects[currentMat].text = textObject
-    print(currentMat .. " text created.")
 end
+
+local config = {
+    shiftX = 10,
+    spacing = 1.1,
+    desiredMinCols = 2,
+    minSizeX = 10,
+    minSizeZ = 5,
+    fallbackSize = { x = 15, y = 1, z = 1.5 },
+    yOffset = 0.5
+}
+
+local resetButtonName = "da3319"
+local resetPositions = {
+    { x = 0, y = 1, z = 0 },
+    { x = 1, y = 1, z = 0 },
+    { x = 2, y = 1, z = 0 },
+    { x = 3, y = 1, z = 0 },
+}
+
+local originalPositions = {}
+
+local isMoving = false
+
+local initialLethalHitBounds = nil
+function moveLethalHits()
+    if isMoving then
+        print("Error: moveLethalHits function is already running.")
+        return
+    end
+    isMoving = true
+    if not currentMat then
+        print("Error: currentMat is nil.")
+        isMoving = false
+        return
+    end
+    ensureLethalHitsObjects()
+    if not spawnedObjects[currentMat].lethalHits then
+        print("Error: Lethal Hits object not found for " .. currentMat)
+        isMoving = false
+        return
+    end
+    local lethalHitsObject = spawnedObjects[currentMat].lethalHits
+    local lethalHitAreaBounds = lethalHitsObject.getBounds()
+    if not lethalHitAreaBounds or not lethalHitAreaBounds.center then
+        print("Error: Invalid lethal hit area bounds.")
+        isMoving = false
+        return
+    end
+    if not lethalHitAreaBounds.size or
+       lethalHitAreaBounds.size.x == 0 or
+       lethalHitAreaBounds.size.z == 0 then
+        lethalHitAreaBounds.size = config.fallbackSize
+    end
+    if lethalHitAreaBounds.size.x < config.minSizeX or lethalHitAreaBounds.size.z < config.minSizeZ then
+        lethalHitAreaBounds.size = config.fallbackSize
+    end
+    if not initialLethalHitBounds then
+        initialLethalHitBounds = {
+            center = {
+                x = lethalHitAreaBounds.center.x,
+                y = lethalHitAreaBounds.center.y,
+                z = lethalHitAreaBounds.center.z
+            },
+            size = {
+                x = lethalHitAreaBounds.size.x,
+                y = lethalHitAreaBounds.size.y,
+                z = lethalHitAreaBounds.size.z
+            }
+        }
+    end
+    lethalHitAreaBounds = initialLethalHitBounds
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    local rowLimit = 18
+    local spacing = config.spacing
+    local startX = lethalHitAreaBounds.center.x + (lethalHitAreaBounds.size.x / 2) - 0.5 + (directionMultiplier * config.shiftX)
+    if currentMat == "Blue" then
+        startX = startX - 15
+    end
+    local startZ = lethalHitAreaBounds.center.z - (lethalHitAreaBounds.size.z / 2) + 0.5
+    local yPosition = lethalHitAreaBounds.center.y + config.yOffset
+    local diceInZone = 0
+    for guid, _ in pairs(originalPositions) do  -- Count only the dice that were previously moved
+        diceInZone = diceInZone + 1
+    end
+
+    local currentRow = math.floor(diceInZone / rowLimit)
+    local currentCol = diceInZone % rowLimit
+    local dice = getDice()
+    for _, die in ipairs(dice) do
+        if die.getValue() == 6 then
+            if not originalPositions[die.getGUID()] then
+                originalPositions[die.getGUID()] = die.getPosition()
+            end
+            local newPos = {
+                x = startX + (currentCol * spacing * directionMultiplier),
+                y = yPosition,
+                z = startZ + (currentRow * spacing),
+            }
+            die.setPosition(newPos)
+            currentCol = currentCol + 1
+            if currentCol >= rowLimit then
+                currentCol = 0
+                currentRow = currentRow + 1
+            end
+        end
+    end
+    isMoving = false
+end
+
+function onObjectClicked(clicked_object, player_color, alt_click)
+    local nickname = clicked_object.getNickname()
+    if nickname == "Red Lethal Hits" then
+        print(player_color .. " clicked on Red Lethal Hits")
+        moveDiceBackToBoard("Red")
+    elseif nickname == "Blue Lethal Hits" then
+        print(player_color .. " clicked on Blue Lethal Hits")
+        moveDiceBackToBoard("Blue")
+    elseif clicked_object.getName() == resetButtonName then
+        moveDiceBackToBoard()
+    end
+end
+
+function moveDiceBackToBoard(color)
+    if color then
+        moveDiceForColor(color)
+    else
+        moveDiceForColor("Red")
+        moveDiceForColor("Blue")
+    end
+    originalPositions = {}  -- Add this line to clear the originalPositions table
+end
+
+function moveDiceForColor(color)
+    local dice = getDiceInZone(color)
+
+    for i, die in ipairs(dice) do
+        local originalPos = originalPositions[die.getGUID()]
+        if originalPos then
+            die.setPositionSmooth(originalPos)
+            print(string.format("Moved die #%d to its original position at (%.2f, %.2f, %.2f) for %s",
+                i, originalPos.x, originalPos.y, originalPos.z, color))
+
+            originalPositions[die.getGUID()] = nil
+        else
+            local targetPos = resetPositions[i] or resetPositions[1]
+            die.setPositionSmooth(targetPos)
+            print(string.format("Moved die #%d to default reset position at (%.2f, %.2f, %.2f) for %s",
+                i, targetPos.x, targetPos.y, targetPos.z, color))
+        end
+    end
+end
+
+function getDiceInZone(color)
+    local diceInZone = {}
+    local lethalHitsObject = spawnedObjects[color] and spawnedObjects[color].lethalHits
+
+    if not lethalHitsObject then
+        print("Warning: Lethal Hits object not found for " .. tostring(color))
+        return diceInZone
+    end
+
+    local bounds = lethalHitsObject.getBounds()
+
+    for _, obj in ipairs(getAllObjects()) do
+        if obj.tag == "Dice" and obj.resting then
+            local objPos = obj.getPosition()
+            if objPos.x > (bounds.center.x - (bounds.size.x / 2)) and
+               objPos.x < (bounds.center.x + (bounds.size.x / 2)) and
+               objPos.z > (bounds.center.z - (bounds.size.z / 2)) and
+               objPos.z < (bounds.center.z + (bounds.size.z / 2)) then
+                table.insert(diceInZone, obj)
+            end
+        end
+    end
+
+    return diceInZone
+end
+
 function lethalHitsAction()
-    moveLethalHits()       -- Move the dice with value 6
-    createLethalText(false) -- Create text and lethal hits object
-    startLethalHitCheck()
+    moveLethalHits()
+
+    if not spawnedObjects[currentMat].lethalHits then
+        createLethalText(false)
+    elseif not spawnedObjects[currentMat].text then
+        createLethalText(false)
+    end
+
+    if not textDisplays[currentMat] then
+        initializeLethalHits()
+    end
 end
 
 function modifyMenu1()
@@ -756,7 +946,6 @@ function modifyMenu4()
     modifyMenu("Green")
 end
 function modifyMenu(color)
-    print(color)
     customDiceImage = nil
     selectedColor = color
     setDiceType()
@@ -787,7 +976,6 @@ function setDefaultState()
 end
 
 function checkDice ()
-	--Reset description on null
 	data = JSON.decode(self.getDescription())
 	if data==nil then
 		setDefaultState()
@@ -795,7 +983,6 @@ function checkDice ()
 		printToAll('Warning - invalid description. Restored default configuration.', {0.8,0.5,0})
 	end
 
-    -- If the zone is moving, wait
     if not self.resting then
         return
     end
@@ -817,22 +1004,17 @@ function checkDice ()
 	totaldice=0
     diceSum = 0
 
-    -- Iterate all objects in the zone
     for _, obj in pairs(getAllObjects()) do
-        -- Fetch resting dices
         if obj != nil and obj.tag == 'Dice' and obj.resting then
-            -- Only use objects inside the zone
             local objPos = obj.getPosition()
             if objPos['x'] > leftBound and objPos['x'] < rightBound and objPos['z'] > lowerBound and objPos['z'] < upperBound and objPos['y'] < yupperBound and objPos['y'] > ylowerBound then
                 local value = obj.getValue()
                 if value ~= nil then
                     local counter = valueToCounter[value]
-                    -- First occurrence of this value
                     if counter == nil then
                         counter = 0
                         valuesToSort[#valuesToSort + 1] = value
                     end
-                    -- Increase the occurrence of this value
                     diceSum = diceSum + value
                     counter = counter + 1
                     totaldice=totaldice+1
@@ -842,8 +1024,7 @@ function checkDice ()
         end
     end
 
-    -- Process the tracked values, sorted and build the lines to display
-	local textLines = {}
+    local textLines = {}
     lineCount=0
 	if data.Cumulative == 'yes' then
 		table.sort(valuesToSort)
@@ -888,10 +1069,8 @@ function checkDice ()
             textLines[#textLines + 1] = " "
         end
     end
-    -- Display the text
     local text = table.concat(textLines, '\n')
     if text == '' then
-        -- Suppress the default text 'Type Here'
         text = emptyText
     end
     if totaldice==0
