@@ -426,6 +426,18 @@ function setViewForPlayer(player, color)
         })
 end
 
+function onScriptingButtonDown(index, playerColor)
+    if index == 1 then
+        -- If '=' is bound to scripting button 1
+        local diceMat = getObjectFromGUID(redCustomDiceMat_GUID)
+        diceMat.call("changeSustainedHitsThreshold", { 1 })
+    elseif index == 2 then
+        -- If '-' is bound to scripting button 2
+        local diceMat = getObjectFromGUID(redCustomDiceMat_GUID)
+        diceMat.call("changeSustainedHitsThreshold", { -1 })
+    end
+end
+
 function placeToColor(player, color)
     player.changeColor(color)
     player.team="None"

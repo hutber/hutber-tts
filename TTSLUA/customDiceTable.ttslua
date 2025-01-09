@@ -33,7 +33,6 @@ orderedRollBtn={
     position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
-
 orderedRollGroup2Label = "In 2s"
 orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
 orderedRollGroup2Btn={
@@ -120,14 +119,6 @@ customDiceBtn={
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
-lowerUpper=true
-oneTimeUpper=true
-lethalHitsBtn={
-    label="Lethal Hits 6+", tooltip="Automatically Move Sixes", click_function="lethalHitsAction", function_owner=self,
-    position={-4.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3300, scale={0.1,0.1,0.1},
-    font_size=500, color="White", font_color={0,0,0}
-}
-
 clearDiceBtnIncrement=0.28
 clearDiceBtnLabel="Del\n"
 clearDiceBtntooltip="LMB Delete this row\nRMB Delete this row and lowers/uppers"
@@ -161,11 +152,49 @@ warningBtn={
     font_size=50, color="White", font_color="Red"
 }
 
+lowerUpper=true
+oneTimeUpper=true
+
+
+lethal6Label = "Lethal Hits 6+"
+lethal6Tip   = "Left-click to move dice >= 6. Right-click to switch to 5+."
+lethal5Label = "Lethal Hits 5+"
+lethal5Tip   = "Left-click to move dice >= 5. Right-click to switch back to 6+."
+lethalHitsBtn={
+    label=lethal6Label, tooltip=lethal6Tip, click_function="lethalHitsAction", function_owner=self,
+    position={-4.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3300, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+
+sus6Label = "Sustained Hits 6+"
+sus5Label = "Sustained Hits 5+"
+sus6tip = "Left-click to roll do Sustained Hits at 6+. Right-click to switch to 5+."
+sus5Tooltip = "Left-click to roll do Sustained at 5+. Right-click to switch to 6+."
+sustainedHitsBtn={
+    label=sus6Label, tooltip=sus6tip, click_function="sustainedHitsAction", function_owner=self,
+    position={-3.7, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=4200, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+
+sustainedLethal6Label = "Sustained & Lethals 6+"
+sustainedLethal5Label = "Sustained & Lethals 5+"
+sustainedLethal6Tip   = "Left-click: For Sustained and Letahls on 5+."
+sustainedLethal5Tip   = "Left-click: For Sustained and Letahls on 6+."
+
+sustainedLethalHitsBtn = {
+    label=sustainedLethal6Label, tooltip=sustainedLethal6Tip, click_function="sustainedLethalHitsAction", function_owner=self,
+    position={-2.6, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+
+lethalHitsThreshold = 6
+sustainedHitsThreshold = 6
+sustainedLethalHitsThreshold = 6
+
 rollMode = true
 selectedColor = "White"
 diceType = "Die_6_Rounded"
 customDiceImage = nil
-
 rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
 if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
     rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
@@ -476,6 +505,98 @@ function spawnDice(n,player)
     end
 end
 
+-- function toggleSustainedHitsThreshold()
+--     if sustainedHitsThreshold == 6 then
+--         sustainedHitsThreshold = 5
+--         self.editButton({
+--             index = 35,
+--             label = selectAllLabel,  -- "Sustained Hits 5+"
+--             tooltip = selectAllTooltip  -- "Left-click to copy dice >= 5+. Right-click to switch to 6+."
+--         })
+--         print("DEBUG: Sustained Hits threshold set to 5+")
+--     else
+--         sustainedHitsThreshold = 6
+--         -- Update button label and tooltip for 6+ threshold
+--         self.editButton({
+--             index = 35,
+--             label = rollAllLabel,  -- "Sustained Hits 6+"
+--             tooltip = rollAllTooltip  -- "Left-click to copy dice >= 6+. Right-click to switch to 5+."
+--         })
+--         print("DEBUG: Sustained Hits threshold set to 6+")
+--     end
+-- end
+
+
+function sustainedHitsAction(_, color, alt)
+    if not alt then
+        local diceToClone = {}
+        for _, die in ipairs(getDice()) do
+            if die.getValue() >= sustainedHitsThreshold then
+                table.insert(diceToClone, die)
+            end
+        end
+
+        local directionMultiplier = (currentMat == "Blue") and 1 or -1
+        for index, die in ipairs(diceToClone) do
+            local p = die.getPosition()
+            p.x = p.x + (8.5 * directionMultiplier)
+            die.clone({position = p, snap_to_grid = false})
+        end
+    else
+        if sustainedHitsThreshold == 6 then
+            sustainedHitsThreshold = 5
+            self.editButton({
+                index   = 35,
+                label   = sus5Label,
+                tooltip = sus5Tooltip
+            })
+        else
+            sustainedHitsThreshold = 6
+            self.editButton({index=35, label=sus6Label, tooltip=sus6tip})
+        end
+    end
+end
+
+
+-- New function for combined action
+function sustainedLethalHitsAction(_, color, alt)
+    if alt then
+        -- Toggle threshold from 6 <-> 5
+        if sustainedLethalHitsThreshold == 6 then
+            sustainedLethalHitsThreshold = 5
+            self.editButton({
+                index   = 36,
+                label   = sustainedLethal5Label,
+                tooltip = sustainedLethal5Tip
+            })
+        else
+            sustainedLethalHitsThreshold = 6
+            self.editButton({
+                index   = 36,
+                label   = sustainedLethal6Label,
+                tooltip = sustainedLethal6Tip
+            })
+        end
+        return
+    end
+    local sixPositions={}
+    local sixDice={}
+    for _,die in ipairs(getDice()) do
+        if die.getValue() >= sustainedLethalHitsThreshold then
+            table.insert(sixDice,die)
+            table.insert(sixPositions,die.getPosition())
+        end
+    end
+    lethalHitsAction('sustainedAndLethal', color, alt)
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    for i,die in ipairs(sixDice) do
+        local p=sixPositions[i]
+        p.x = p.x + (8.5 * directionMultiplier)
+        die.clone({position=p,snap_to_grid=false})
+    end
+end
+
+
 function onload()
     lastClick=os.time()
     defaultFontSize=500
@@ -540,6 +661,8 @@ function onload()
     self.createButton(add3d6Btn)
     self.createButton(add4d6Btn)
     self.createButton(lethalHitsBtn)
+    self.createButton(sustainedHitsBtn)
+    self.createButton(sustainedLethalHitsBtn)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
 end
@@ -673,7 +796,6 @@ function updateLethalHits()
 end
 
 function cleanupLethalHits()
-    print('cleanupLethalHits')
     originalPositions = {}
     for zone, textDisplay in pairs(textDisplays) do
         if textDisplay then
@@ -765,7 +887,8 @@ local originalPositions = {}
 local isMoving = false
 
 local initialLethalHitBounds = nil
-function moveLethalHits()
+
+function moveLethalHits(isSustainedAndLethal)
     if isMoving then
         print("Error: moveLethalHits function is already running.")
         return
@@ -829,8 +952,9 @@ function moveLethalHits()
     local currentRow = math.floor(diceInZone / rowLimit)
     local currentCol = diceInZone % rowLimit
     local dice = getDice()
+    local threshold = isSustainedAndLethal and sustainedLethalHitsThreshold or lethalHitsThreshold
     for _, die in ipairs(dice) do
-        if die.getValue() == 6 then
+        if die.getValue() >= threshold then
             if not originalPositions[die.getGUID()] then
                 originalPositions[die.getGUID()] = die.getPosition()
             end
@@ -847,6 +971,7 @@ function moveLethalHits()
             end
         end
     end
+
     isMoving = false
 end
 
@@ -919,17 +1044,42 @@ function getDiceInZone(color)
     return diceInZone
 end
 
-function lethalHitsAction()
-    moveLethalHits()
-
-    if not spawnedObjects[currentMat].lethalHits then
-        createLethalText(false)
-    elseif not spawnedObjects[currentMat].text then
-        createLethalText(false)
+function lethalHitsAction(lethalHits, color, alt)
+    local lethalNumbers = false
+    if lethalHits == 'sustainedAndLethal' then
+        lethalNumbers = true
     end
+    if not alt then
+        moveLethalHits(lethalNumbers)
+        if not spawnedObjects[currentMat].lethalHits then
+            createLethalText(false)
+        elseif not spawnedObjects[currentMat].text then
+            createLethalText(false)
+        end
 
-    if not textDisplays[currentMat] then
-        initializeLethalHits()
+        if not textDisplays[currentMat] then
+            initializeLethalHits()
+        end
+    else
+        -- Toggle threshold
+        if lethalHitsThreshold == 6 then
+            lethalHitsThreshold = 5
+            self.editButton({
+                -- The index below must match the index you used when creating lethalHitsBtn
+                -- If lethalHitsBtn was created last, and is the 34th or 35th, adjust accordingly.
+                index    = 34,
+                label    = lethal5Label,
+                tooltip  = lethal5Tip
+            })
+        else
+            lethalHitsThreshold = 6
+            self.editButton({
+                index   = 34,
+                label   = lethal6Label,
+                tooltip = lethal6Tip
+            })
+        end
+        return
     end
 end
 
@@ -957,6 +1107,8 @@ function modifyMenu(color)
     self.editButton({index=32, color=color})
     self.editButton({index=33, color=color})
     self.editButton({index=34, color="White"})
+    self.editButton({index=35, color="White"})
+    self.editButton({index=36, color="White"})
 end
 
 function setDiceType()
