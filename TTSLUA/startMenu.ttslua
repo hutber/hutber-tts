@@ -82,6 +82,7 @@ end
 
 function makeAnnouncement()
     local features={
+    "0.15: Feat: Dice tracking added with Stats & Chances Buttons\n                                    Fix: corrected GW map 6, moved vortex into table.\n                                    Feat: Added in stats checker with toggle.",
     "0.14: Feat: Sustained and lethal buttons added.",
     "0.13: Fix: UKTC maps 2 & 5 terrain updated & GW map 4 error fixed.",
     "0.12: Fix: the lethal hits now stack in order rather than on top of each other.",
