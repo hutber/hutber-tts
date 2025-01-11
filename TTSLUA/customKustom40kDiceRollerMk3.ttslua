@@ -3,16 +3,92 @@
 --Link for this mod: https://steamcommunity.com/sharedfiles/filedetails/?id=959360907
 lastRolls={}
 scaleBtn=3
+rolledFaces = {}
+
 printLastBtn={
     label="Last roll", click_function="printLast", function_owner=self,
-    position={-2.5,0.1,-0.87}, rotation={0,0,0}, height=50, width=400,
+    position={-2.5,0.1,-0.57}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
 printLast5Btn={
     label="Last 5 rolls", click_function="printLast5", function_owner=self,
-    position={2.5,0.1,-0.87}, rotation={0,0,0}, height=50, width=400,
+    position={2.5,0.1,-0.57}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
+printDiceChancesBtn={
+    label="Chances", click_function="printChances", function_owner=self,
+    position={2.5,0.1,0.5}, rotation={0,0,0}, height=50, width=400,
+    font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
+}
+
+-- NEW CODE START
+-- (1) Define a new button for "Show Stats"
+showStatsBtn={
+    label="Stats", click_function="showStats", function_owner=self,
+    position={-2.5,0.1,0.5}, rotation={0,0,0}, height=50, width=400,
+    font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
+}
+
+-- (2) Implement showStats() function to calculate min, max, average, etc.
+-- Replace your existing showStats() with this:
+function showStats()
+    local totalRolls = #rolledFaces
+    if totalRolls == 0 then
+        printToAll("No dice have been rolled yet!", "Yellow")
+        return
+    end
+
+    local sumOfAll = 0
+    local totalBadRolls = 0
+    local currentBadStreak = 0
+    local maxBadStreak = 0
+
+    -- Loop through every face rolled in chronological order
+    for i, face in ipairs(rolledFaces) do
+        sumOfAll = sumOfAll + face
+
+        -- Check if it’s a “bad” roll (i.e. face <= 3)
+        if face <= 3 then
+            totalBadRolls = totalBadRolls + 1
+            currentBadStreak = currentBadStreak + 1
+            if currentBadStreak > maxBadStreak then
+                maxBadStreak = currentBadStreak
+            end
+        else
+            currentBadStreak = 0
+        end
+    end
+
+    local average = sumOfAll / totalRolls
+    local percentBad = (totalBadRolls / totalRolls) * 100
+
+    local msg = string.format(
+        "Dice Stats:\n" ..
+        "- Total rolled: %d\n" ..
+        "- Average roll: %.2f\n" ..
+        "- Bad rolls (3 or lower): %d (%.1f%%)\n" ..
+        "- Longest consecutive bad-roll streak: %d",
+        totalRolls, average, totalBadRolls, percentBad, maxBadStreak
+    )
+    printToAll(msg, "White")
+end
+
+function printChances()
+    local i=0
+    for k,v in ipairs(resultsTotal) do
+        i = i + resultsTotal[k]
+    end
+    if i==0 then
+        printToAll("NO LAST ROLLS", "Yellow")
+    else
+        printToAll("CHANCES: "..i)
+        for k,v in ipairs(resultsTotal) do
+            if(resultsTotal[k]>0) then
+                printToAll(k..": "..tonumber(string.format("%.1f", (100*resultsTotal[k]/i))).."% - "..resultsTotal[k])
+            end
+        end
+    end
+end
 
 function printLast()
 	printResults(1)
@@ -42,6 +118,7 @@ customFace = {4, 6, 8, 10, 12, 20}
 diceGuidFaces = {}
 sortedKeys = {}
 resultsTable = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+resultsTotal = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 seedCounter = 0
 
 thisBoxIsBlue = (self.guid == Global.getVar("blueCustomDiceRoller_GUID")) and true or false
@@ -57,57 +134,48 @@ if objectToPlaceDiceOn == nil then
     objectToPlaceDiceOn = self
 end
 
--- used to nil out a passed parameter
---   remember, this will leave the parameter itself nil
--- LUA will not clear out globally scoped variables automatically
--- setting each element to nil will allow the gc to clear it out
 function clearDataForGC(data)
-  if data == nil then
-    -- nothing needs to be done, return
-    return
-  end
-  for n, element in ipairs(data) do
-    element = nil
-  end
+    if data == nil then
+        return
+    end
+    for n, element in ipairs(data) do
+        element = nil
+    end
 end
 
---Determine the person who put the dice in the box.
 function onObjectPickedUp(playerColor, obj)
 	lastHolder[obj] = playerColor
 end
 
---Reset the person holding the dice when no dice are held.
 function onObjectDestroyed(obj)
 	lastHolder[obj] = nil
 end
 
---Reset description on load if empty.
 function onLoad(save_state)
-	if self.getDescription() == '' then
+    if self.getDescription() == '' then
 		setDefaultState()
 	end
 	self.createButton(printLastBtn)
 	self.createButton(printLast5Btn)
+    self.createButton(printDiceChancesBtn)
+    -- NEW CODE: Add the Show Stats button to the object
+    self.createButton(showStatsBtn)
 end
 
---Returns description on game save.
 function onSave()
 	return self.getDescription()
 end
 
---Reset description on drop if empty.
 function onDropped(player_color)
 	if self.getDescription() == '' then
 		setDefaultState()
 	end
 end
 
---Sets default description.
 function setDefaultState()
 	self.setDescription(JSON.encode_pretty({Results = 'no', SmoothDice = 'no', RotateDice = 'no', Rows = 'yes', SortNoRows = 'asc', Step = 1.05, Version = ver}))
 end
 
---Creates a table and sorts the dice guids by value.
 function sortByVal(t, type)
 	local keys = {}
 	for key in pairs(t) do
@@ -121,24 +189,19 @@ function sortByVal(t, type)
 	return keys
 end
 
---Checks the item dropped in the bag has a guid.
 function hasGuid(t, g)
 	for k, v in ipairs(t) do
 		if v.guid == g then return true end
 	end
-
 	return false
 end
 
---Runs when non-dice is put into bag
 function onObjectEnterContainer(container, obj)
     if container == self then
         if obj.tag == "Dice" then
             collision_info = {collision_object = obj}
             onCollisionEnter(collision_info)
-
-            --Creates a timer to take the dice out and position them.
-        	Wait.time(|| takeDiceOut(), 0.1)
+            Wait.time(|| takeDiceOut(), 0.1)
         else
             local pos = self.getPosition()
             local f = self.getTransformRight()
@@ -150,7 +213,6 @@ function onObjectEnterContainer(container, obj)
     end
 end
 
---Runs when an object is dropped in bag.
 function onCollisionEnter(collision_info)
 	playerColor = lastHolder[collision_info.collision_object]
 	if collision_info.collision_object.getGUID() == nil then return end
@@ -159,7 +221,6 @@ function onCollisionEnter(collision_info)
 	diceGuidFaces = {}
 	sortedKeys = {}
 
-    -- Save number of faces on dice
 	for k, v in ipairs(getAllObjects()) do
 		if v.tag == 'Dice' then
 			objType = tostring(v)
@@ -171,16 +232,8 @@ function onCollisionEnter(collision_info)
             table.insert(sortedKeys, v.getGUID())
 		end
 	end
-
---[[Benchmarking code
-if resetclock ~= 1 then
-clockstart = os.clock()
-resetclock = 1
-end--]]
-
 end
 
---Function to take the dice out of the bag and position them.
 function takeDiceOut(tab)
 	local data = JSON.decode(self.getDescription())
 	if data == nil then
@@ -227,6 +280,7 @@ function takeDiceOut(tab)
 	for _, key in pairs(sortedKeys) do
 		if diceGuids[key] == math.floor(diceGuids[key]) then
 			resultsTable[diceGuids[key]] = resultsTable[diceGuids[key]] + 1
+            resultsTotal[diceGuids[key]] = resultsTotal[diceGuids[key]] + 1
 		end
 
     	if hasGuid(objs, key) then
@@ -244,15 +298,12 @@ function takeDiceOut(tab)
             local newXPos
             local newZPos
             if displayInRows then
-				-- Dice should be displayed next to the 1-6 buttons according to their values.
 				newXPos = 0 - d12Xoffset - 20.4 + (Rows[diceGuids[key]]* data.Step)
 				newZPos = -3.17 + ((((diceGuids[key] - 1) % 6) + 1) * data.Step)
             else
-				-- Dice should simply be in one big group.
 				local pos = n - 1
 				local limit = 25
 				if groupSize > 1 then
-					-- We want subgroups of size _step_, with a gap between each subgroup.
 					pos = pos + math.floor(pos / groupSize)
 					local step = groupSize + 1
 					local maxGroups = math.floor(limit / step)
@@ -265,12 +316,12 @@ function takeDiceOut(tab)
 				newZPos = -3.17 + (row * data.Step)
             end
 
-			-- Having calculated X and Z relative to the default rotation of the dice mat,
-			-- now recalculate them according to the actual rotation.
 			params.position = {
-				position.x + (newXPos * math.cos((180 + rotation.y) * 0.0174532)) - (newZPos * math.sin((180 + rotation.y) * 0.0174532)),
+				position.x + (newXPos * math.cos((180 + rotation.y) * 0.0174532))
+                                   - (newZPos * math.sin((180 + rotation.y) * 0.0174532)),
 				position.y + 2,
-				position.z + (newXPos * math.sin((rotation.y) * 0.0174532)) + (newZPos* math.cos((0 + rotation.y) * 0.0174532))
+				position.z + (newXPos * math.sin((rotation.y) * 0.0174532))
+                                   + (newZPos* math.cos((0 + rotation.y) * 0.0174532))
 			}
             params.rotation = rotation
     		params.callback = 'setValueCallback'
@@ -284,19 +335,13 @@ function takeDiceOut(tab)
     end
 
 	printresultsTable()
---[[Benchmarking code
-	clockend = os.clock()
-	resetclock=0
-	print('Runtime: ' .. clockend-clockstart .. ' seconds.')--]]
 end
 
---Function to count resultsTable for printing.
 function sum(t)
 	local sum = 0
 	for k, v in pairs(t) do
 		sum = sum + v
 	end
-
 	return sum
 end
 
@@ -308,44 +353,84 @@ function setLastHolder(params)
     lastHolder[params.obj] = params.color
 end
 
---Prints resultsTable.
 function printresultsTable()
-	local data = JSON.decode(self.getDescription())
-	local description = {'Ones.', 'Twos.', 'Threes.', 'Fours.', 'Fives.', 'Sixes.', 'Sevens.', 'Eights.', 'Nines.', 'Tens.', 'Elevens.', 'Twelves.', 'Thirteens.', 'Fourteens.', 'Fifteens.', 'Sixteens.', 'Seventeens', 'Eighteens.', 'Nineteens.', 'Twenties.'}
-	local msg = ''
-	local color={1,1,1}
-	for dieFace, numRolled in ipairs(resultsTable) do
-		if numRolled > 0 then
-			msg = msg .. numRolled .. ' ' .. description[dieFace] .. ' '
-		end
-	end
+    local data = JSON.decode(self.getDescription())
+    local description = {
+        'Ones.', 'Twos.', 'Threes.', 'Fours.', 'Fives.', 'Sixes.',
+        'Sevens.', 'Eights.', 'Nines.', 'Tens.', 'Elevens.', 'Twelves.',
+        'Thirteens.', 'Fourteens.', 'Fifteens.', 'Sixteens.', 'Seventeens.',
+        'Eighteens.', 'Nineteens.', 'Twenties.'
+    }
 
-	local time = '[' .. os.date("%H") .. ':' .. os.date("%M") .. ':' .. os.date("%S") .. ' UTC] '
-	if playerColor == nil then
-		msg=time .. '~UNKNOWN PLAYER~ rolls:\n' .. msg .. '*******************************************************'
-	else
-		msg=time .. Player[playerColor].steam_name .. ' rolls:\n' .. msg .. '*******************************************************'
-		color=stringColorToRGB(playerColor)
-	end
-	local rolltorecord={msg=msg, color=color}
-	if sum(resultsTable) > 0 then
-		if #lastRolls >= 5 then
-			table.remove(lastRolls, 1)
-		end
-		table.insert(lastRolls, #lastRolls+1, rolltorecord)
-	end
+    local msg = ''
+    local color = {1,1,1}
 
-	if sum(resultsTable) > 0 and data.Results == 'yes' then
-		printToAll(msg, color)
-	end
-
-	for k,v in ipairs(resultsTable) do
-		resultsTable[k] = 0
-	end
+    -- Build a chat message about the results
+for dieFace, numRolled in ipairs(resultsTable) do
+    if numRolled > 0 then
+        msg = msg .. numRolled .. ' ' .. description[dieFace] .. ' '
+    end
 end
 
---Sets the value of the physical dice object and reorients them if needed.
+-- NEW / ADDED logic to populate rolledFaces
+for dieFace, numRolled in ipairs(resultsTable) do
+    for i=1, numRolled do
+        table.insert(rolledFaces, dieFace)
+    end
+end
+
+    local time = '[' .. os.date("%H") .. ':' .. os.date("%M") .. ':' .. os.date("%S") .. ' UTC] '
+    if playerColor == nil then
+        msg = time .. '~UNKNOWN PLAYER~ rolls:\n' .. msg .. '*******************************************************'
+    else
+        msg = time .. Player[playerColor].steam_name .. ' rolls:\n' .. msg .. '*******************************************************'
+        color = stringColorToRGB(playerColor)
+    end
+
+    local rolltorecord = {msg = msg, color = color}
+    if sum(resultsTable) > 0 then
+        if #lastRolls >= 5 then
+            table.remove(lastRolls, 1)
+        end
+        table.insert(lastRolls, #lastRolls + 1, rolltorecord)
+    end
+
+    if sum(resultsTable) > 0 and data.Results == 'yes' then
+        printToAll(msg, color)
+        broadcastToAll(msg, color)
+    end
+
+    -- Reset our per-roll resultsTable for the next batch
+    for k,v in ipairs(resultsTable) do
+        resultsTable[k] = 0
+    end
+end
+
+
 function setValueCallback(obj, tab)
-    local rotValues = obj.getRotationValues()
-	obj.setRotation(rotValues[tab[1]].rotation + Vector(0, 180.0 + objectToPlaceDiceOn.getRotation()[2], 0))
+    function insidef()
+        local data = JSON.decode(self.getDescription())
+
+        obj.setValue(tab[1])
+        if obj.tag == 'Dice' then
+            objType = tostring(obj)
+            callFaces = tonumber(string.match(objType, 'Die_(%d+).*'))
+            if callFaces == nil then callFaces = tonumber(customFace[obj.getCustomObject().type + 1]) end
+            diceGuidFaces[obj.getGUID()] = callFaces
+        end
+
+        local rotValues = obj.getRotationValues()
+	    obj.setRotation(rotValues[tab[1]].rotation + Vector(0, 180.0 + objectToPlaceDiceOn.getRotation()[2], 0))
+
+        return 1
+    end
+
+    startLuaCoroutine(self, 'insidef')
+end
+
+function waitFrames(frames)
+	while frames > 0 do
+		coroutine.yield(0)
+		frames = frames - 1
+	end
 end

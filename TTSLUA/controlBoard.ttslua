@@ -3,12 +3,14 @@ local RedControlBoard = {
     VortexGUID = "be2cdb",
     CustomDiceMat_GUID = "acae21",
     DiceMat_GUID = "c57d70",
+    StatHelper_GUID = "863da2",
     SelectionHighlighterGUID = "27de4f",
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
     options = {
         {name = "Custom Dice Roller", state = true},
-        {name = "Selection Highlight", state = true},
+        {name = "Selection Highlight\n(Broken)", state = true, title = "Only works before a map has been drawn"},
+        {name = "Stat Helper", state = true},
         {name = "Vortex", state = true},
         {name = "Reserves Board", state = true},
     }
@@ -18,12 +20,14 @@ local BlueControlBoard = {
     VortexGUID = "4b1a7b",
     CustomDiceMat_GUID = "839fcc",
     DiceMat_GUID = "a84ed2",
+    StatHelper_GUID = "863da8",
     SelectionHighlighterGUID = "84c3a4",
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
     options = {
         {name = "Custom Dice Roller", state = true},
-        {name = "Selection Highlight", state = true},
+        {name = "Selection Highlight\n(Broken)", state = true, title = "Only works before a map has been drawn"},
+        {name = "Stat Helper", state = true},
         {name = "Vortex", state = true},
         {name = "Reserves Board", state = true},
     }
@@ -103,34 +107,43 @@ function buildControlPanel(color)
         },
     }
 
-    for i, option in ipairs(board.options) do
-        table.insert(panel.children[2].children, {
-            tag = "HorizontalLayout",
-            children = {
-                {
-                    tag = "Button",
-                    attributes = {
-                        text = option.name,
-                        onClick = "toggleOption(" .. i .. ", '" .. color .. "')",
-                        fontSize = "18",
-                        width = "200",
-                        height = "40",
-                    },
-                },
-                {
-                    tag = "Text",
-                    attributes = {
-                        id = color .. "_status_" .. i,
-                        text = option.state and "ON" or "OFF",
-                        fontSize = "18",
-                        width = "60",
-                        height = "40",
-                        color = option.state and "Green" or "Red",
-                    },
+for i, option in ipairs(board.options) do
+    table.insert(panel.children[2].children, {
+        tag = "HorizontalLayout",
+        children = {
+            {
+                tag = "Button",
+                attributes = {
+                    text     = option.name,
+                    toolTip  = option.title,
+                    onClick  = "toggleOption(" .. i .. ", '" .. color .. "')",
+                    fontSize = "18",
+                    width    = "200",
+                    height   = "40",
                 },
             },
-        })
-    end
+            {
+                -- Presentational "button" (no click)
+                tag = "Button",
+                attributes = {
+                    id           = color .. "_status_" .. i,
+                    text         = option.state and "ON" or "OFF",
+                    fontSize     = "18",
+                    width        = "60",
+                    height       = "40",
+                    -- Using hex colors for normal, hover, and active states (all the same).
+                    colors       = option.state
+                                   and "#3CB371|#3CB371|#3CB371"  -- pasal green if ON
+                                   or  "#FF0000|#FF0000|#FF0000", -- red if OFF
+                    -- Make sure it can't be clicked:
+                    interactable = "false",
+                },
+            },
+        },
+    })
+end
+
+
 
     local boardObjectGUID = (color == "Red") and "32ed4c" or "83ab2a"
     local boardObject = getObjectFromGUID(boardObjectGUID)
@@ -216,6 +229,8 @@ function toggleOption(player, index)
         end
     elseif option.name == "Selection Highlight" then
         toggleObjectState(board.SelectionHighlighterGUID, option.state)
+    elseif option.name == "Stat Helper" then
+        toggleObjectState(board.StatHelper_GUID, option.state)
     elseif option.name == "Dice Roller" then
         toggleObjectState(board.DiceMat_GUID, option.state)
     elseif option.name == "Vortex" then
