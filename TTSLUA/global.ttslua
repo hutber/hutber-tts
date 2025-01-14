@@ -246,6 +246,8 @@ allowMenu = true
 allowAutoSeat = true
 redPlayerID = ""
 bluePlayerID = ""
+redDiceSpawnTime = "slow"
+blueDiceSpawnTime = "slow"
 
 function onSave()
     blueSecondaryDeckGUID = nil
@@ -253,11 +255,11 @@ function onSave()
         blueSecondaryDeckGUID = missionPackData[packSelected].blueSecondaryDeck_GUID
     end
     saved_data = JSON.encode({
-                                svredPlayerID = redPlayerID,
-                                svbluePlayerID = bluePlayerID,
-                                svPackSelected = packSelected,
-                                svBlueSecondaryDeckGUID = blueSecondaryDeckGUID
-                            })
+        svredPlayerID = redPlayerID,
+        svbluePlayerID = bluePlayerID,
+        svPackSelected = packSelected,
+        svBlueSecondaryDeckGUID = blueSecondaryDeckGUID
+    })
     --saved_data = ""
     return saved_data
 end

@@ -10,9 +10,10 @@ local RedControlBoard = {
     options = {
         {name = "Custom Dice Roller", state = true},
         {name = "Selection Highlight\n(Broken)", state = true, title = "Only works before a map has been drawn"},
-        {name = "Stat Helper", state = true},
-        {name = "Vortex", state = true},
+        {name = "Stat Helper", state = true, customHiddenPosition = 0.5},
+        {name = "Vortex", state = true, customHiddenPosition = 0.6},
         {name = "Reserves Board", state = true},
+        {name = "Fast Rolling", state = false},
     }
 }
 
@@ -27,9 +28,10 @@ local BlueControlBoard = {
     options = {
         {name = "Custom Dice Roller", state = true},
         {name = "Selection Highlight\n(Broken)", state = true, title = "Only works before a map has been drawn"},
-        {name = "Stat Helper", state = true},
-        {name = "Vortex", state = true},
+        {name = "Stat Helper", state = true, customHiddenPosition = 0.5},
+        {name = "Vortex", state = true, customHiddenPosition = 0.6},
         {name = "Reserves Board", state = true},
+        {name = "Fast Rolling", state = false},
     }
 }
 
@@ -154,7 +156,7 @@ end
     end
 end
 
-function toggleObjectState(objectGUID, state)
+function toggleObjectState(objectGUID, state, customHiddenPosition)
     local obj = getObjectFromGUID(objectGUID)
     if obj then
         if not originalPositions[objectGUID] then
@@ -164,7 +166,7 @@ function toggleObjectState(objectGUID, state)
         if state then
             local originalPosition = {
                 originalPositions[objectGUID][1],
-                0.87,
+                (customHiddenPosition or 0.87),
                 originalPositions[objectGUID][3]
             }
             obj.setPosition(originalPosition)
@@ -185,6 +187,10 @@ function toggleObjectState(objectGUID, state)
     end
 end
 
+function changeDiceSpawnTime(color, state)
+    Global.setVar(color == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime", state and "fast" or "slow")
+end
+
 function toggleOption(player, index)
     local playerColor = player.color
     local expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
@@ -203,7 +209,6 @@ function toggleOption(player, index)
     local newColor = option.state and "Green" or "Red"
     self.UI.setAttributes(statusId, { text = newText, color = newColor })
 
-
     if option.name == "Selection Highlight" then
         local highlighterGUID = board.SelectionHighlighterGUID
         local highlighter = getObjectFromGUID(highlighterGUID)
@@ -219,24 +224,24 @@ function toggleOption(player, index)
         end
     elseif option.name == "Custom Dice Roller" then
         if option.state then
-            -- Enable custom keyboard, hide original keyboard
             toggleObjectState(board.CustomDiceMat_GUID, true)
             toggleObjectState(board.DiceMat_GUID, false)
         else
-            -- Enable original keyboard, hide custom keyboard
             toggleObjectState(board.CustomDiceMat_GUID, false)
             toggleObjectState(board.DiceMat_GUID, true)
         end
     elseif option.name == "Selection Highlight" then
         toggleObjectState(board.SelectionHighlighterGUID, option.state)
     elseif option.name == "Stat Helper" then
-        toggleObjectState(board.StatHelper_GUID, option.state)
+        toggleObjectState(board.StatHelper_GUID, option.state, option.customHiddenPosition)
     elseif option.name == "Dice Roller" then
         toggleObjectState(board.DiceMat_GUID, option.state)
     elseif option.name == "Vortex" then
-        toggleObjectState(board.VortexGUID, option.state)
+        toggleObjectState(board.VortexGUID, option.state, option.customHiddenPosition)
     elseif option.name == "Reserves Board" then
         toggleObjectState(board.ReservesBoardGUID, option.state)
         toggleObjectState(board.ReservesOldBoardGUID, not option.state)
+    elseif option.name == "Fast Rolling" then
+        Global.setVar(expectedColor == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime", option.state and "fast" or "slow")
     end
 end
