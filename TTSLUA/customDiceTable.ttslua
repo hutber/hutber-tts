@@ -186,6 +186,12 @@ sustainedLethalHitsBtn = {
     position={-2.6, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
+copyOthersDiceBtn = {
+    label="Grab Oppos Dice", tooltip="Click here to copy all the dice from the oppos dice mat",
+    click_function="importOpposDice", function_owner=self,
+    position={-6.45, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3850, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
 
 lethalHitsThreshold = 6
 sustainedHitsThreshold = 6
@@ -200,6 +206,80 @@ if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
     rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
 end
 roller = getObjectFromGUID(rollerGUID)
+function importOpposDice(obj, player, alt)
+    -- Clear the current player's dice mat first.
+    local currentDice = getDice()
+    for _, die in ipairs(currentDice) do
+        die.destroy()
+    end
+
+    -- Determine the GUID of the opposite dice mat.
+    local oppositeMatGUID = nil
+    if currentMat == "Red" then
+        oppositeMatGUID = Global.getVar("blueCustomDiceMat_GUID")
+    else
+        oppositeMatGUID = Global.getVar("redCustomDiceMat_GUID")
+    end
+
+    local oppositeMat = getObjectFromGUID(oppositeMatGUID)
+    if not oppositeMat then
+        printToColor("Opposite dice mat not found.", player, "Orange")
+        return
+    end
+
+    -- Get the bounds of the opposite dice mat.
+    local bounds = oppositeMat.getBounds()
+    local leftBound  = bounds.center.x - bounds.size.x / 2
+    local rightBound = bounds.center.x + bounds.size.x / 2
+    local lowerBound = bounds.center.z - bounds.size.z / 2
+    local upperBound = bounds.center.z + bounds.size.z / 2
+    local ylowerBound = bounds.center.y - bounds.size.y / 2
+    local yupperBound = bounds.center.y + bounds.size.y / 2 + 3  -- using a similar offset as in getDice()
+
+    -- Find all dice in the opposite dice mat zone.
+    local diceToImport = {}
+    for _, obj in ipairs(getAllObjects()) do
+        if obj.tag == "Dice" and obj.resting then
+            local pos = obj.getPosition()
+            if pos.x > leftBound and pos.x < rightBound and
+               pos.z > lowerBound and pos.z < upperBound and
+               pos.y > ylowerBound and pos.y < yupperBound then
+                table.insert(diceToImport, obj)
+            end
+        end
+    end
+
+    if #diceToImport == 0 then
+        printToColor("No dice found on the opposite mat.", player, "Yellow")
+        return
+    end
+
+    -- Get our dice mat's position as a reference.
+    local myPos = self.getPosition()
+    local importedCount = 0
+
+    for _, die in ipairs(diceToImport) do
+        local diePos = die.getPosition()
+        -- Compute the relative position with respect to the opposite mat's center.
+        -- Flip both the x and z axes to mirror horizontally and vertically.
+        local relPos = {
+            x = -(diePos.x - bounds.center.x),
+            y = diePos.y - bounds.center.y,
+            z = -(diePos.z - bounds.center.z)
+        }
+        -- Place the cloned die with the same flipped relative offset on our mat.
+        local newPos = {
+            x = myPos.x + relPos.x,
+            y = myPos.y + relPos.y,
+            z = myPos.z + relPos.z
+        }
+        -- Clone the die.
+        die.clone({position = newPos, snap_to_grid = false})
+        importedCount = importedCount + 1
+    end
+
+    printToAll("Imported " .. importedCount .. " dice from the opposite dice mat.", {1,1,1})
+end
 
 function getDice()
     local dice={}
@@ -451,8 +531,10 @@ function spawnDice25(obj, player, alt)
 end
 
 function spawnDice(n,player)
+    local playerDiceSpeed = player == "Red" and Global.getVar("redDiceSpawnTime") or Global.getVar("blueDiceSpawnTime")
+    print(playerDiceSpeed)
     local currentTime = os.time()
-    local disableTime=0.2
+    local disableTime = (playerDiceSpeed == "slow") and 0.6 or 0.2
     if currentTime-lastClick<disableTime then
         printToColor("Wait a bit!", player, "Yellow")
         return
@@ -663,6 +745,7 @@ function onload()
     self.createButton(lethalHitsBtn)
     self.createButton(sustainedHitsBtn)
     self.createButton(sustainedLethalHitsBtn)
+    self.createButton(copyOthersDiceBtn)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
 end
@@ -746,6 +829,11 @@ local textDisplays = {
     Blue = nil
 }
 
+local nbTextDisplays = {
+    Red = nil,
+    Blue = nil
+}
+
 function initializeLethalHits()
     ensureLethalHitsObjects()
 
@@ -797,10 +885,36 @@ end
 
 function cleanupLethalHits()
     originalPositions = {}
+
     for zone, textDisplay in pairs(textDisplays) do
         if textDisplay then
             textDisplay.destruct()
             textDisplays[zone] = nil
+        end
+    end
+
+    for zone, nbTextDisplay in pairs(nbTextDisplays or {}) do
+        if nbTextDisplay then
+            nbTextDisplay.destruct()
+            nbTextDisplays[zone] = nil
+        end
+    end
+
+    for zone, lethalHitsObject in pairs(lethalHitsObjects or {}) do
+        if lethalHitsObject then
+            local bounds = lethalHitsObject.getBounds()
+
+            for _, obj in ipairs(getAllObjects()) do
+                if obj.tag == "Dice" and obj.resting then
+                    local objPos = obj.getPosition()
+                    if objPos.x > bounds.center.x - (bounds.size.x / 2) and
+                       objPos.x < bounds.center.x + (bounds.size.x / 2) and
+                       objPos.z > bounds.center.z - (bounds.size.z / 2) and
+                       objPos.z < bounds.center.z + (bounds.size.z / 2) then
+                        obj.destroy()
+                    end
+                end
+            end
         end
     end
 end
@@ -808,12 +922,15 @@ end
 function setupLethalHitsDisplay(zone, lethalHitsObject)
     local position = {}
     local rotation = {90, 180, 0}
+    local nbTextPosition = {}
 
     if zone == "Red" then
-        position = {18, 0.97, 22.1}
+        position = {18, 0.97, 22}
+        nbTextPosition = {15, 0.97, 34}
     elseif zone == "Blue" then
         rotation = {90, 0, 0}
-        position = {-18, 0.97, -22.}
+        position = {-18, 0.97, -22}
+        nbTextPosition = {-15, 0.97, -34}
     else
         print("Invalid player. Use 'Red' or 'Blue'.")
         return
@@ -832,22 +949,25 @@ function setupLethalHitsDisplay(zone, lethalHitsObject)
     textDisplay.TextTool.setFontColor({1, 1, 1})
 
     textDisplays[zone] = textDisplay
+
+    local nbTextDisplay = spawnObject({
+        type = "3DText",
+        position = nbTextPosition,
+        rotation = rotation,
+        scale = {1, 1, 1},
+        nickname = "N.B Lethal Hits"
+    })
+
+    nbTextDisplay.TextTool.setValue("*Clear Mat when finished with lethal/sus hits")
+    nbTextDisplay.TextTool.setFontSize(25)
+    nbTextDisplay.TextTool.setFontColor({1, 1, 1})
+
+    nbTextDisplays[zone] = nbTextDisplay
 end
 
+
+
 function createLethalText(remove)
-    local position = {}
-    local rotation = {90, 180, 0}
-
-    if currentMat == "Red" then
-        position = {18, 0.97, 22.5531769}
-    elseif currentMat == "Blue" then
-        rotation = {90, 0, 0}
-        position = {-18, 0.97, -22.5531769}
-    else
-        print("Invalid player. Use 'Red' or 'Blue'.")
-        return
-    end
-
     if remove then
         if spawnedObjects[currentMat].text then
             spawnedObjects[currentMat].text.destroy()
@@ -857,8 +977,6 @@ function createLethalText(remove)
         if spawnedObjects[currentMat].lethalHits then
             spawnedObjects[currentMat].lethalHits.destroy()
             spawnedObjects[currentMat].lethalHits = nil
-        else
-            print("No lethal hits object found for " .. currentMat)
         end
         return
     end
@@ -936,7 +1054,7 @@ function moveLethalHits(isSustainedAndLethal)
     end
     lethalHitAreaBounds = initialLethalHitBounds
     local directionMultiplier = (currentMat == "Blue") and 1 or -1
-    local rowLimit = 18
+    local rowLimit = 25
     local spacing = config.spacing
     local startX = lethalHitAreaBounds.center.x + (lethalHitAreaBounds.size.x / 2) - 0.5 + (directionMultiplier * config.shiftX)
     if currentMat == "Blue" then

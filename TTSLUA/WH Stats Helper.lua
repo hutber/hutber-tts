@@ -1,5 +1,4 @@
 -- FTC-GUID: 863da2, 863da8
-
 currentSelection = {}
 weaponColors = {}
 spawnedDiceCount = 0
@@ -169,7 +168,7 @@ function createWeaponRowUI(weaponData)
       createTextCell(weaponData.data.name),
       createTextCell(weaponData.data.stats),
       createTextCell(weaponData.count),
-      createButtonCell(getAttackInfo(weaponData), "attackButton_"..weaponData.data.name, "onAttackClicked"),
+      createButtonCell(weaponData.attack, "attackButton_"..weaponData.data.name, "onAttackClicked"),
       createButtonCell(getRangeText(weaponData.data.range), "rangeButton_"..weaponData.data.name, "onRangeClicked"),
     }
   }
@@ -245,16 +244,31 @@ function spawnDicesForWeaponByFigures(name, figures)
 end
 
 function spawnDicesForWeapon(weaponMapData)
-  local attacks = getWeaponMapAttacks(weaponMapData)
-  spawnDices(attacks, getWeaponColor(weaponMapData.data.name), getWeaponDescription(weaponMapData.data), spawnedDiceCount)
-  spawnedDiceCount = spawnedDiceCount + attacks
+  local numAttacks = getWeaponMapNumAttacks(weaponMapData)
+  spawnDices(numAttacks, getWeaponColor(weaponMapData.data.name), getWeaponDescription(weaponMapData.data), spawnedDiceCount)
+  spawnedDiceCount = spawnedDiceCount + numAttacks
 end
 
-function getWeaponMapAttacks(weaponMapData)
-  if weaponMapData.data.bonusAttack then
-    return getBonusAttackValueForCount(weaponMapData.data.bonusAttack, weaponMapData.count)
+function getWeaponMapNumAttacks(weaponMapData)
+  local attack = DecomposeAttackStr(weaponMapData.attack)
+  local numAttacks = attack.rawNum
+  if attack.numD6 > 0 then
+    local randResult = 0
+    for i = 1, attack.numD6 do
+      randResult = randResult + math.random(6)
+    end
+    printMessage("Rolling " .. attack.numD6 .. "D6; the value is: " .. randResult)
+    numAttacks = numAttacks + randResult
   end
-  return weaponMapData.attack
+  if attack.numD3 > 0 then
+    local randResult = 0
+    for i = 1, attack.numD3 do
+      randResult = randResult + math.random(3)
+    end
+    printMessage("Rolling " .. attack.numD3 .. "D3; the value is: " .. randResult)
+    numAttacks = numAttacks + randResult
+  end
+  return numAttacks
 end
 
 function getBonusAttackValueForCount(bonusAttack, count)
@@ -294,7 +308,7 @@ function getBonusAttackAppendum(appendum)
 end
 
 function getWeaponDescription(weaponData)
-  return "[c6c930]"..weaponData.name.." [-]"
+  return weaponData.name.."[-][sup]\n"..weaponData.stats
 end
 
 function getWeaponColor(name)
@@ -318,7 +332,7 @@ function drawRangeForWeapon(name, figures)
   local figuresData = createFiguresData(figures)
   for i,v in ipairs(figuresData) do
     local weapon = getFigureWeaponByName(v, name)
-    if weapon != nil then
+    if weapon ~= nil then
       drawFigureRange(weapon.range, figures[i])
     end
   end
@@ -357,10 +371,10 @@ function getCircleVectorPoints(radius, steps, y, thickness)
 end
 
 function getRangeText(range)
-  if range == nil then
-    return "-"
+  if range then
+    return tostring(range) .. "″"
   end
-  return "″"..tostring(range)
+  return "-"
 end
 
 function createButtonCell(text, id, click)
@@ -417,12 +431,12 @@ function convertWeaponDataToMap(weaponsData, resultData)
     if resultData[v.name] == nil then
       resultData[v.name] = {
         count = 0,
-        attack = 0,
+        attack = "0",
         data = v
       }
     end
     resultData[v.name].count = resultData[v.name].count + 1
-    resultData[v.name].attack = resultData[v.name].attack + v.attack
+    resultData[v.name].attack = CombineAttack(resultData[v.name].attack, v.attack)
   end
 end
 
@@ -433,7 +447,7 @@ function parseFigureData(figure)
     melee = {}
   }
   for i,v in ipairs(arr) do
-    if (getBlockName(v) != nil) and (getBlockName(v) != "abilities") then
+    if (getBlockName(v) ~= nil) and (getBlockName(v) ~= "abilities") then
       result[getBlockName(v)] = parseWeaponBlock(arr, i)
     end
   end
@@ -449,33 +463,46 @@ function parseWeaponBlock(arr, fromIndex)
   local result = {}
   local i = fromIndex
   while i < #arr do
-    table.insert(result, {
-      name = parseWeaponName(arr[i + 1]),
-      stats = removeColorTags(arr[i + 2]),
-      range = parseRange(arr[i + 2]),
-      attack = parseWeaponAttack(arr[i + 2]),
-      bonusAttack = parseWeaponBonusAttack(arr[i + 2]),
-      accuracy = parseWeaponAccuracy(arr[i + 2]),
-      strength = getWeaponStatValue(arr[i + 2], "S"),
-      ap = getWeaponStatValue(arr[i + 2], "AP"),
-      damage = getWeaponStatValue(arr[i + 2], "D")
-    })
-    if getBlockName(arr[i + 3]) != nil then
+    if TrimString(arr[i + 1]) == "" or getBlockName(arr[i + 1]) ~= nil then
       return result
     end
+    local name = parseWeaponName(arr[i + 1])
+    local thirdLine = arr[i + 3] and (string.find(arr[i + 3], "%[/sup%]") or string.find(removeColorTags(arr[i + 3]), "%[.*%]"))
+    local stats = TrimString(removeColorTags(arr[i + 2]))
+    if thirdLine then
+      stats = stats .. "\n" .. TrimString(removeColorTags(arr[i + 3]))
+    end
+    table.insert(result, {
+      name = name,
+      stats = stats,
+      range = parseRange(stats),
+      attack = parseWeaponAttack(stats),
+      accuracy = parseWeaponAccuracy(stats),
+      strength = getWeaponStatValue(stats, "S"),
+      ap = getWeaponStatValue(stats, "AP"),
+      damage = getWeaponStatValue(stats, "D")
+    })
     i = i + 2
+    if thirdLine then
+      i = i + 1
+    end
   end
   return result
 end
 
 function removeColorTags(str)
-  str = string.gsub(str, "%[7bc596%]", "")
+  if not str then
+    return ""
+  end
+  str = string.gsub(str, "%[[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]%]", "")
   str = string.gsub(str, "%[%-%]", "")
+  str = string.gsub(str, "%[sup%]", "")
+  str = string.gsub(str, "%[/sup%]", "")
   return str
 end
 
 function parseWeaponName(data)
-  return string.sub(data, 9, -4)
+  return TrimString(removeColorTags(data))
 end
 
 function parseWeaponAccuracy(stats)
@@ -483,16 +510,7 @@ function parseWeaponAccuracy(stats)
 end
 
 function parseWeaponAttack(stats)
-  local stat = getWeaponStatValue(stats, "A")
-  return tonumber(stat) or 0
-end
-
-function parseWeaponBonusAttack(stats)
-  local stat = getWeaponStatValue(stats, "A")
-  if tonumber(stat) == nil then
-    return stat
-  end
-  return nil
+  return getWeaponStatValue(stats, "A") or "0"
 end
 
 function getWeaponStatValue(stats, statName)
@@ -507,7 +525,7 @@ end
 
 function parseRange(stats)
   local inches = string.find(stats, "″") or string.find(stats, '"')
-  if inches != nil then
+  if inches ~= nil then
     return tonumber(string.sub(stats, 1, inches - 1))
   end
 end
@@ -516,13 +534,14 @@ function getBlockName(str)
   if str == nil then
     return
   end
-  if (string.find(str, "Ranged weapons") != nil) then
+  if string.find(str, "[rR]anged [wW]eapons") then
+    return "ranged"
+  elseif string.find(str, "[mM]elee [wW]eapons") then
+    return "melee"
+  elseif string.find(str, "%][wW]eapons%[%-%]") then
     return "ranged"
   end
-  if (string.find(str, "Melee weapons") != nil) then
-    return "melee"
-  end
-  if (string.find(str, "Abilities") != nil) then
+  if string.find(str, "[aA]bilities") then
     return "abilities"
   end
 end
@@ -541,4 +560,63 @@ end
 function printMessage(text, color)
   color = color or {1, 0.5, 0}
   broadcastToAll(text, color)
+end
+
+function TrimString(s)
+  local a = s:match('^%s*()')
+  local b = s:match('()%s*$', a)
+  return s:sub(a, b - 1)
+end
+
+function DecomposeAttackStr(attack)
+  local numD6 = 0
+  local numD3 = 0
+  local rawNum = 0
+  for i, v in ipairs(splitStr(attack, "+")) do
+    v = TrimString(v)
+    local nd6 = v:match("^([0-9]*)[dD]6$")
+    if nd6 == "" then nd6 = 1 end
+    if nd6 then
+      numD6 = numD6 + nd6
+    end
+    local nd3 = v:match("^([0-9]*)[dD]3$")
+    if nd3 == "" then nd3 = 1 end
+    if nd3 then
+      numD3 = numD3 + nd3
+    end
+    if v:match("^[0-9]+$") then
+      rawNum = rawNum + v
+    end
+  end
+  return {
+    numD6 = numD6,
+    numD3 = numD3,
+    rawNum = rawNum
+  }
+end
+
+function ComposeAttack(decomposedAttack)
+  local accum = {}
+  if decomposedAttack.numD6 == 1 then
+    table.insert(accum, "D6")
+  elseif decomposedAttack.numD6 > 1 then
+    table.insert(accum, tostring(decomposedAttack.numD6) .. "D6")
+  end
+  if decomposedAttack.numD3 == 1 then
+    table.insert(accum, "D3")
+  elseif decomposedAttack.numD3 > 1 then
+    table.insert(accum, tostring(decomposedAttack.numD3) .. "D3")
+  end
+  if decomposedAttack.rawNum > 0 then
+    table.insert(accum, tostring(decomposedAttack.rawNum))
+  end
+  local s = table.concat(accum, "+")
+  if s == "" then
+    s = "0"
+  end
+  return s
+end
+
+function CombineAttack(a1, a2)
+  return ComposeAttack(DecomposeAttackStr(a1 .. "+" .. a2))
 end
