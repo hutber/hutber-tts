@@ -429,6 +429,10 @@ function buttonClick_place()
             end
         end
     end
+    local obj = getObjectFromGUID("7abc5a")
+    if(obj) then
+        destroyObject(obj)
+    end
     broadcastToAll("Objects Placed", {1,1,1})
 end
 
