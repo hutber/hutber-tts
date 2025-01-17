@@ -1,4 +1,4 @@
--- FTC-GUID: a48c6f
+-- FTC-GUID: a48c6f,a48a6c
 
     function onLoad()
         self.createButton({
@@ -16712,8 +16712,9 @@ objectJSONs = {
         }
       ]
     }]],
+
     [[{
-      "GUID": "5a1685",
+      "GUID": "49e7a8",
       "Name": "Custom_Model",
       "Transform": {
         "posX": 0.0,
@@ -16735,9 +16736,9 @@ objectJSONs = {
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -16755,7 +16756,7 @@ objectJSONs = {
       "Hands": false,
       "CustomMesh": {
         "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1043093746445937329/E9344C86DC220064302E370F9A7DBFCB2AB39E06/",
+        "DiffuseURL": "https://i.gyazo.com/6e0c08e4103383c6842c607fa2e957b7.png",
         "NormalURL": "",
         "ColliderURL": "",
         "Convex": true,
@@ -16766,7 +16767,7 @@ objectJSONs = {
       "LuaScript": "\nBCBtype = \"terrain\"\n",
       "LuaScriptState": "",
       "XmlUI": ""
-    }]],
+      }]],
   [[{
   "GUID": "7f414f",
   "Name": "Custom_Model",
@@ -16809,8 +16810,8 @@ objectJSONs = {
   "HideWhenFaceDown": false,
   "Hands": false,
   "CustomMesh": {
-    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
-    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/789758618465975570/025A6B3CEF1692272FAE550919E00507B40F207D/",
+  "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
+  "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1043093746445935246/14E522400874F5749E765D7CC148F6DD5D2769F1/",
     "NormalURL": "",
     "ColliderURL": "",
     "Convex": true,
