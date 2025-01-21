@@ -40,6 +40,8 @@ redVPCounter_GUID = "8b0541"
 blueVPCounter_GUID = "a77a54"
 redCPCounter_GUID = "e446f7"
 blueCPCounter_GUID = "deb9f2"
+orangePCounter_GUID = "25fc4a"
+purpleCPCounter_GUID = "61c2f8"
 redTurnCounter_GUID = "055302"
 blueTurnCounter_GUID = "7e4111"
 gameTurnCounter_GUID = "ee92cf"
@@ -249,6 +251,62 @@ bluePlayerID = ""
 redDiceSpawnTime = "slow"
 blueDiceSpawnTime = "slow"
 
+local monitoredID = "5c328f"  -- Original injection detector
+local monitoredID2 = "899f22" -- Malicious script detected object
+local warningInterval
+local pollInterval
+local detectedMissing = false
+
+-- Function to check if the objects exist in the game
+function checkForMonitoredID()
+    local obj = getObjectFromGUID(monitoredID)
+    local obj2 = getObjectFromGUID(monitoredID2)
+
+    if obj2 ~= nil then
+        -- If monitoredID2 is found, it means a malicious script was detected
+        if not detectedMissing then
+            detectedMissing = true
+            broadcastToAll("Reminder!!! A infected object has been loaded.... please leave the game and clean all objects.", "Red")
+
+            -- Stop further polling
+            stopPolling()
+        end
+    elseif obj == nil then
+        -- If monitoredID is missing, it means the detector was deleted, possible cheating
+        if not detectedMissing then
+            detectedMissing = true
+            broadcastToAll("Warning: Somebody is cheating!", "Red")
+
+            -- Start issuing warnings every 10 seconds
+            warningInterval = Wait.time(function()
+                broadcastToAll("Warning: Somebody is cheating!", "Red")
+            end, 10, -1)
+
+            -- Stop further polling
+            stopPolling()
+        end
+    end
+end
+
+-- Start polling every 30 seconds
+function startPolling()
+    checkForMonitoredID()  -- Initial check immediately
+    pollInterval = Wait.time(checkForMonitoredID, 30, -1)
+end
+
+-- Stop polling when needed
+function stopPolling()
+    if pollInterval ~= nil then
+        Wait.stop(pollInterval)
+        pollInterval = nil
+    end
+
+    if warningInterval ~= nil then
+        Wait.stop(warningInterval)
+        warningInterval = nil
+    end
+end
+
 function onSave()
     blueSecondaryDeckGUID = nil
     if packSelected then
@@ -299,6 +357,7 @@ function onLoad(saved_data)
     else
         Global.UI.setAttribute("main", "active", "false")
     end
+    startPolling()
 end
 
 function setMissionPack(params)
