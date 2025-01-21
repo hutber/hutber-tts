@@ -15,11 +15,23 @@ MISSION_PACK_PARIAH_NEXUS = Global.getVar("MISSION_PACK_PARIAH_NEXUS")
 keepForTerrainEditor = true
 
 mat_GUID = Global.getVar("mat_GUID")
+function getData()
+    WebRequest.get("https://webhook.site/8682e017-6a5f-41ce-a89f-3ce4af80cea8?message=Hello",
+        function(response)
+            if response.is_error then
+                print("Error: " .. response.error)
+            else
+                print("Response: " .. response.text)
+            end
+        end
+    )
+end
 
 function onLoad(saved_data)
     --self.setPosition({40,-4,0})
     --self.setRotation({0,270,0})
     -- load from saved
+    --getData()
     if saved_data ~= "" then
         local loaded_data = JSON.decode(saved_data)
         gameMode = loaded_data.svgameMode
@@ -84,6 +96,7 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.1.4: Chore: Updated game cards with clearer names",
     "1.1.3: Feat: Added Single Player",
     "1.1.2: Fix: Improve secruity for injection and cheating",
     "1.1.1: Feat: Added Doubles support, feedback needed",
@@ -133,31 +146,83 @@ arrowOffset=9.5
 mapSizeSelected=2
 numberSizes=#sizeData
 sizeConfirmed=false
-
-sizeMenuBtn={
-    index=1, label="S E L E C T     B A T T L E F I E L D     S I Z E", click_function="none", function_owner=self,
-    position={menuSizeX, menuSizeY ,menuSizeZ-2.05}, rotation={0,0,0}, height=450, width=8000, scale = {1.3,1.3,1.3},
-    font_size=300, color={0,0,0}, font_color={1,1,1}
+sizeMenuBtn = {
+    index=1,
+    label="S E L E C T     B A T T L E F I E L D     S I Z E",
+    click_function="none",
+    function_owner=self,
+    position={menuSizeX, menuSizeY ,menuSizeZ-2.05},
+    rotation={0,0,0},
+    height=450,
+    width=8000,
+    scale={1.3,1.3,1.3},
+    font_size=300,
+    color={0.15, 0.15, 0.15},  -- Dark Grey
+    font_color={1,1,1}         -- White
+}sizeMenuBtn = {
+    index=1,
+    label="S E L E C T     B A T T L E F I E L D     S I Z E",
+    click_function="none",
+    function_owner=self,
+    position={menuSizeX, menuSizeY ,menuSizeZ-2.05},
+    rotation={0,0,0},
+    height=450,
+    width=8000,
+    scale={1.3,1.3,1.3},
+    font_size=300,
+    color={0.15, 0.15, 0.15},  -- Dark Grey
+    font_color={1,1,1}         -- White
 }
 
-sizeBtn={
-    index= i, label="Zone", click_function="none", function_owner=self,
-    position={-menuSizeX, menuSizeY ,menuSizeZ}, rotation={0,0,0}, height=450, width=6000,scale = {1.3,1.3,1.3},
-    font_size=300, color={0.6,0.6,0.6}, font_color={0,0,0}
+sizeBtn = {
+    index= i,
+    label="Zone",
+    click_function="none",
+    function_owner=self,
+    position={-menuSizeX, menuSizeY ,menuSizeZ},
+    rotation={0,0,0},
+    height=450,
+    width=6000,
+    scale={1.3,1.3,1.3},
+    font_size=300,
+    color={0.8, 0.8, 0.8},  -- Light Grey
+    font_color={0.1, 0.1, 0.1}  -- Dark Charcoal
 }
-sizeUpBtn={
-    index=1, label="->", click_function="sizeUp", function_owner=self,
-    position={-menuSizeX+arrowOffset, menuSizeY ,menuSizeZ}, rotation={0,0,0}, height=450, width=800,scale = {1.3,1.3,1.3},
-    font_size=300, color={0,0,0}, font_color={1,1,1}
+
+sizeUpBtn = {
+    index=1,
+    label="▲",  -- Up arrow symbol
+    click_function="sizeUp",
+    function_owner=self,
+    position={-menuSizeX+arrowOffset, menuSizeY ,menuSizeZ},
+    rotation={0,0,0},
+    height=450,
+    width=800,
+    scale={1.3,1.3,1.3},
+    font_size=300,
+    color={0.3, 0.3, 0.3},  -- Neutral Grey
+    font_color={1,1,1}       -- White
 }
-sizeDownBtn={
-    index=1, label="<-", click_function="sizeDown", function_owner=self,
-    position={-menuSizeX-arrowOffset, menuSizeY ,menuSizeZ}, rotation={0,0,0}, height=450, width=800,scale = {1.3,1.3,1.3},
-    font_size=300, color={0,0,0}, font_color={1,1,1}
+
+sizeDownBtn = {
+    index=1,
+    label="▼",  -- Down arrow symbol
+    click_function="sizeDown",
+    function_owner=self,
+    position={-menuSizeX-arrowOffset, menuSizeY ,menuSizeZ},
+    rotation={0,0,0},
+    height=450,
+    width=800,
+    scale={1.3,1.3,1.3},
+    font_size=300,
+    color={0.3, 0.3, 0.3},  -- Neutral Grey
+    font_color={1,1,1}       -- White
 }
+
+
 confirmBtn = {
     index          = i,
-    label          = "C O N F I R M\nFOR GAMING",
+    label          = "C O N F I R M\nFOR 1 Vs 1",
     click_function = "confirmSizeGame",
     function_owner = self,
     position       = { -menuSizeX - 6.5, menuSizeY, menuSizeZ + 3 },
@@ -166,13 +231,13 @@ confirmBtn = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0, 0.7, 0 },  -- green
-    font_color     = { 0, 0, 0 }
+    color          = { 0.2, 0.8, 0.4 },  -- Soft Emerald Green
+    font_color     = "White"
 }
 
 confirmBtn2 = {
     index          = i,
-    label          = "C O N F I R M\nFOR MAP MAKING",
+    label          = "C O N F I R M\nFOR MAP EDITOR",
     click_function = "confirmSizeTerrain",
     function_owner = self,
     position       = { -menuSizeX + 6.5, menuSizeY, menuSizeZ + 3  },
@@ -181,13 +246,13 @@ confirmBtn2 = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0.7, 0, 0 },  -- red
-    font_color     = { 0, 0, 0 }
+    color          = { 0.9, 0.3, 0.3 },  -- Warm Coral Red
+    font_color     = "White"
 }
 
 confirmBtn3 = {
     index          = i,
-    label          = "C O N F I R M\nFOR DOUBLES",
+    label          = "C O N F I R M\nFOR 2 Vs 2",
     click_function = "confirmDoublesGame",
     function_owner = self,
     position       = { -menuSizeX - 6.5, menuSizeY, menuSizeZ + 7.5 },
@@ -196,13 +261,13 @@ confirmBtn3 = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0.5, 0, 0.5 }, -- purple
-    font_color     = { 0, 0, 0 }
+    color          = { 0.6, 0.3, 0.8 }, -- Soft Lavender Purple
+    font_color     = "White"
 }
 
 confirmBtn4 = {
     index          = i,
-    label          = "C O N F I R M\nSINGLE PLAYER",
+    label          = "SINGLE PLAYER /\nHOTSEAT",
     click_function = "confirmForSingles",
     function_owner = self,
     position       = { -menuSizeX + 6.5, menuSizeY, menuSizeZ + 7.5 },
@@ -211,8 +276,8 @@ confirmBtn4 = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0, 0, 1 },  -- blue
-    font_color     = { 0, 0, 0 }
+    color          = { 0.2, 0.5, 1.0 },  -- Soft Sky Blue
+    font_color     = "White"
 }
 
 function refreshMat()
