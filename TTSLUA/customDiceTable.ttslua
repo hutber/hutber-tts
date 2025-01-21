@@ -193,6 +193,20 @@ copyOthersDiceBtn = {
     font_size=500, color="White", font_color={0,0,0}
 }
 
+auto1D6 = {
+    label="1D6", tooltip="Auto roll 1D6",
+    click_function="autoRoll1D6", function_owner=self,
+    position={-6.45, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1850, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+auto2D6 = {
+    label = "2D6", tooltip = "Auto roll 2D6",
+    click_function = "autoRoll2D6", function_owner = self,
+    position = {-6, Yoffset, -1.1}, rotation = {0, 0, 0},
+    height = 1000, width = 1850, scale = {0.1, 0.1, 0.1},
+    font_size = 500, color = "White", font_color = {0, 0, 0}
+}
+
 lethalHitsThreshold = 6
 sustainedHitsThreshold = 6
 sustainedLethalHitsThreshold = 6
@@ -280,6 +294,88 @@ function importOpposDice(obj, player, alt)
 
     printToAll("Imported " .. importedCount .. " dice from the opposite dice mat.", {1,1,1})
 end
+
+local lastSpawnPosition = nil -- Keep track of the last spawned dice position
+local diceCount = 0 -- Track the number of dice spawned in the current sequence
+
+function autoRoll(obj, player, alt, numDice)
+    numDice = numDice or 1 -- Default to 1 die if numDice is not provided
+    local total = 0
+
+    -- Determine direction based on currentMat
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+
+    -- Start position
+    local startX = self.getPosition().x + 16
+    local startY = self.getPosition().y + 1
+    local startZ = self.getPosition().z
+
+    -- If lastSpawnPosition exists, start from there
+    if lastSpawnPosition then
+        startX = lastSpawnPosition.x
+        startY = lastSpawnPosition.y
+        startZ = lastSpawnPosition.z
+    end
+
+    for i = 1, numDice do
+        local result = math.random(6) -- Roll a single D6
+        total = total + result
+        printToAll(player .. " rolled a D6: " .. result, {1, 1, 1}) -- Display individual result
+
+        -- Calculate the position for the dice
+        local position = {
+            x = startX + directionMultiplier * (i - 1) * 1.5, -- Adjust x position based on direction
+            y = startY,
+            z = startZ
+        }
+
+        -- Spawn the dice object
+        local die = spawnObject({
+            type = "Die_6_Rounded",
+            position = position,
+            rotation = {0, 180, 0}
+        })
+
+        if die then
+            die.setValue(result) -- Set the dice value to the rolled result
+            die.setColorTint({1, 0.5, 0}) -- Change dice color to orange (RGB: 1, 0.5, 0)
+            diceCount = diceCount + 1 -- Increment the dice count
+
+            -- Update last spawn position
+            lastSpawnPosition = {
+                x = position.x + directionMultiplier * 1.5, -- Move 1.5 units in the correct direction
+                y = position.y,
+                z = position.z
+            }
+
+            -- Reset position after 5 dice rolls
+            if diceCount >= 5 then
+                lastSpawnPosition = nil -- Reset back to the original starting position
+                diceCount = 0 -- Reset dice count
+            end
+        else
+            printToColor("Failed to spawn a die for roll " .. i, player, "Red")
+        end
+    end
+
+    printToAll(player .. " rolled a total of " .. total .. " (" .. numDice .. "D6)", {0, 1, 0}) -- Display total
+end
+
+
+-- Reset the last spawn position and dice count when the dice area is cleared
+function resetSpawnPosition()
+    lastSpawnPosition = nil
+    diceCount = 0
+end
+
+function autoRoll1D6(obj, player, alt)
+    autoRoll(obj, player, alt, 1)
+end
+
+function autoRoll2D6(obj, player, alt)
+    autoRoll(obj, player, alt, 2)
+end
+
 
 function getDice()
     local dice={}
@@ -746,6 +842,8 @@ function onload()
     self.createButton(sustainedHitsBtn)
     self.createButton(sustainedLethalHitsBtn)
     self.createButton(copyOthersDiceBtn)
+    self.createButton(auto1D6)
+    self.createButton(auto2D6)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
 end

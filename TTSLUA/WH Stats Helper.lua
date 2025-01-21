@@ -1,19 +1,84 @@
 -- FTC-GUID: 863da2,863da8
+version = "2.13"
 currentSelection = {}
 weaponColors = {}
 spawnedDiceCount = 0
 savedPositions = {}
+spawnPosition = nil
 customDieData = nil
 
 function onSave()
-  return JSON.encode(uiData)
+  return JSON.encode({
+    spawnPosition = spawnPosition,
+    customDieData = customDieData
+  })
 end
 
-function onLoad()
-  addHotkey("Save position", savePositionClicked)
-  addHotkey("Restore position", restorePositionClicked)
+function onLoad(data)
+  addHotkey('Save position', savePositionClicked)
+  addHotkey('Restore position', restorePositionClicked)
   self.addContextMenuItem("Set Custom Dice", onSetCustomDiceClicked)
   self.addContextMenuItem("Reset Custom Dice", onResetCustomDiceClicked)
+  self.addContextMenuItem("Set Spawn Position", onSetSpawnPositionClicked)
+  self.addContextMenuItem("Reset Spawn Position", onResetSpawnPositionClicked)
+  self.addContextMenuItem("Version", onVersionClicked)
+  restoreSavedData(data)
+end
+
+function restoreSavedData(data)
+  if data == nil then
+    return
+  end
+
+  local parsedData = JSON.decode(data)
+  spawnPosition = parsedData.spawnPosition
+  customDieData = parsedData.customDieData
+end
+
+function onResetSpawnPositionClicked()
+  spawnPosition = nil
+  printMessage("Spawn position reset complete!")
+end
+
+function onSetSpawnPositionClicked()
+  local marker = findSpawnPositionMarker()
+  if marker == nil then
+    createSpawnPositionMarker()
+    printMessage("Place the marker on the desired position and click 'Set Spawn Position' again")
+  else
+    saveSpawnPosition(marker)
+    printMessage("Spawn position successfully configured!")
+  end
+end
+
+function saveSpawnPosition(marker)
+  spawnPosition = {marker.getPosition()[1] - 1, marker.getPosition()[2], marker.getPosition()[3] - 1}
+  marker.destruct()
+end
+
+function createSpawnPositionMarker()
+  spawnObject({
+    type = "go_game_piece_white",
+    position = getPositionAboveMe(),
+    callback_function = function(obj)
+      obj.setName("Place me on the spawn position and click 'Set Spawn' again")
+      obj.addTag('SpawnMarker')
+    end
+  })
+end
+
+function findSpawnPositionMarker()
+  local objs = getAllObjects()
+
+  for i,v in ipairs(objs) do
+    if v.hasTag("SpawnMarker") then
+      return v
+    end
+  end
+end
+
+function onVersionClicked()
+  print(version)
 end
 
 function onResetCustomDiceClicked()
@@ -32,14 +97,19 @@ function onSetCustomDiceClicked()
   end
 end
 
+function getPositionAboveMe()
+  return self.positionToWorld({0, 3, 8})
+end
+
 function findCustomDie()
   local cast = Physics.cast({
     debug = true,
     direction = {0, -1, 0},
-    origin = self.positionToWorld({0, 3, 8}),
+    origin = getPositionAboveMe(),
     type = 3,
     size = {4, 1, 4}
   })
+
   for i,v in ipairs(cast) do
     if v.hit_object.tag == "Dice" then
       return v.hit_object
@@ -56,11 +126,12 @@ end
 function savePositionClicked(playerColor, hoveredObject)
   savedPositions = {}
   local objects = getObjectsPositionToSave(Player[playerColor], hoveredObject)
+
   if objects != nil then
     for i,v in ipairs(objects) do
       savePosition(v)
     end
-    printToColor(#objects.." objects positions saved!", playerColor)
+    printToColor(#objects..' objects positions saved!', playerColor)
   end
 end
 
@@ -166,34 +237,55 @@ function createWeaponRowUI(weaponData)
       createTextCell(weaponData.data.name),
       createTextCell(weaponData.data.stats),
       createTextCell(weaponData.count),
-      createButtonCell(weaponData.attack, "attackButton_"..weaponData.data.name, "onAttackClicked"),
-      createButtonCell(getRangeText(weaponData.data.range), "rangeButton_"..weaponData.data.name, "onRangeClicked")
+      createButtonCell(getAttackInfo(weaponData), getAttackButtonId(weaponData), "onAttackClicked"),
+      createButtonCell(getRangeText(weaponData.data.range), "rangeButton_"..weaponData.data.name, "onRangeClicked"),
     }
   }
 end
 
+function getAttackButtonId(weaponData)
+  local acc = weaponData.data.accuracy
+  local str = weaponData.data.strength
+  local ap = weaponData.data.ap
+  local d = weaponData.data.damage
+  return "attackButton__"..weaponData.data.name.."__"..acc.."__"..str.."__"..ap.."__"..d
+end
+
+function getWeaponDataFromAttackButtonId(id)
+  local arr = splitStr(id, "__")
+  return {
+    name = arr[2],
+    accuracy = arr[3],
+    strength = arr[4],
+    ap = arr[5],
+    damage = arr[6]
+  }
+end
+
 function getAttackInfo(weaponData)
-  local result = ""
+  local result = "";
   if weaponData.attack != 0 then
     result = result..tostring(weaponData.attack)
   end
   if weaponData.data.bonusAttack then
-    local pref = weaponData.count > 1 and weaponData.count.."*" or ""
+    local pref = weaponData.count > 1 and weaponData.count..'*' or ''
     return pref..weaponData.data.bonusAttack
   end
   return result
 end
 
 function spawnDices(count, color, weaponName, offset, ap, strength, dmg, melta, devastating)
-    local ratioX = math.cos(math.rad(self.getRotation()[2]))
-    local ratioY = math.sin(math.rad(self.getRotation()[2]))
-    local rowSize = 20
+  local ratioX = math.cos(math.rad(self.getRotation()[2]))
+  local ratioY = math.sin(math.rad(self.getRotation()[2]))
+  local rowSize = 20
+  for i = 1, count do
+    local column = (i + offset - 1) % rowSize + 1
+    local row = math.ceil((i + offset) / rowSize)
+    local startingPosition = spawnPosition or self.getPosition()
+    local rowShift = spawnPosition == nil and 3 or 0
 
-    for i = 1, count do
-      local column = (i + offset - 1) % rowSize + 1
-      local row    = math.ceil((i + offset) / rowSize)
-      local x      = self.getPosition()[1] + column * ratioX + ratioY * (3 + row)
-      local z      = self.getPosition()[3] + (3 + row) * ratioX - column * ratioY
+    local x = startingPosition[1] + column * ratioX + ratioY * (rowShift + row)
+    local z = startingPosition[3] + (rowShift + row) * ratioX - column * ratioY
 
       local apStr       = tostring(ap or "0")
       local strengthStr = tostring(strength or "?")
@@ -209,18 +301,17 @@ function spawnDices(count, color, weaponName, offset, ap, strength, dmg, melta, 
         -- "[ffff00]|[-]  AP: "..apStr.."   S: "..strengthStr.."   D: "..dmgStr.."  [ffff00]|[-]\n"..
         -- "[ffff00]--------------------------------[-]"
 
-      local die = spawnObject({
-        type = getDiceType(),
-        position = {x, self.getPosition()[2] + 1, z},
-        callback_function = function(dice)
-          setDieTint(dice, color)
-          dice.setName(tooltip)
-        end
-      })
-
-      setDieCustomObject(die)
-    end
+    local die = spawnObject({
+      type = getDiceType(),
+      position = {x, self.getPosition()[2] + 1, z},
+      callback_function = function(dice)
+        setDieTint(dice, color)
+        dice.setName(tooltip)
+      end
+    })
+    setDieCustomObject(die)
   end
+end
 
 function setDieCustomObject(die)
   if customDieData and customDieData.image then
@@ -240,6 +331,7 @@ function getDiceType()
   if customDieData and customDieData.image then
     return "Custom_Dice"
   end
+
   return "Die_6"
 end
 
@@ -247,13 +339,14 @@ function onAttackClicked(player, _, id)
   if (#currentSelection == 0) then
     return
   end
-  spawnDicesForWeaponByFigures((splitStr(id, "_")[2]), currentSelection)
+  spawnDicesForWeaponByFigures(getWeaponDataFromAttackButtonId(id), currentSelection)
 end
 
-function spawnDicesForWeaponByFigures(name, figures)
+function spawnDicesForWeaponByFigures(weaponStats, figures)
   local weaponMap = createWeaponsMap(createFiguresData(figures))
-  if weaponMap[name] != nil then
-    spawnDicesForWeapon(weaponMap[name])
+  local weaponData = findWeaponByStats(weaponMap, weaponStats)
+  if weaponData != nil then
+    spawnDicesForWeapon(weaponData)
   end
 end
 
@@ -319,28 +412,29 @@ function parseWeaponBlock(arr, fromIndex)
   return result
 end
 
+function findWeaponByStats(weaponMap, stats)
+  local key = getWeaponKey(stats)
+  for i,v in pairs(weaponMap) do
+    if i == key then
+      return v
+    end
+  end
+end
+
 function spawnDicesForWeapon(weaponMapData)
-  local numAttacks = getWeaponMapNumAttacks(weaponMapData)
-  local color      = getWeaponColor(weaponMapData.data.name)
-  local name       = getWeaponDescription(weaponMapData.data)
   local ap         = weaponMapData.data.ap or "0"
   local strength   = weaponMapData.data.strength or "?"
   local dmg        = weaponMapData.data.damage or "?"
   local melta      = weaponMapData.data.melta or ""
   local devastating = weaponMapData.data.devastating or false
 
-  spawnDices(
-    numAttacks,
-    color,
-    name,
-    spawnedDiceCount,
-    ap,
-    strength,
-    dmg,
-    melta,
-    devastating
-  )
-  spawnedDiceCount = spawnedDiceCount + numAttacks
+  local attacks = getWeaponMapAttacks(weaponMapData)
+  spawnDices(attacks, getWeaponColor(getWeaponKey(weaponMapData.data)), getWeaponDescription(weaponMapData.data), spawnedDiceCount,
+                                                                                                                                     ap,
+                                                                                                                                      strength,dmg,
+                                                                                                                                      melta,
+                                                                                                                                      devastating)
+  spawnedDiceCount = spawnedDiceCount + attacks
 end
 
 
@@ -371,6 +465,13 @@ function getWeaponMapNumAttacks(weaponMapData)
   end
 
   return numAttacks
+end
+
+function getWeaponMapAttacks(weaponMapData)
+  if weaponMapData.data.bonusAttack then
+    return getBonusAttackValueForCount(weaponMapData.data.bonusAttack, weaponMapData.count)
+  end
+  return weaponMapData.attack
 end
 
 function getBonusAttackAppendum(appendum)
@@ -434,7 +535,7 @@ function getBonusAttackAppendum(appendum)
 end
 
 function getWeaponDescription(weaponData)
-  return weaponData.name.."[-][sup]"
+  return "[c6c930]"..weaponData.name.." [-]"
 end
 
 function getWeaponColor(name)
@@ -442,21 +543,18 @@ function getWeaponColor(name)
     local color = {math.random(), math.random(), math.random()}
     weaponColors[name] = color
   end
+
   return weaponColors[name]
 end
 
 function onRangeClicked(player, _, id)
-  if (#currentSelection == 0) then
-    return
-  end
-  drawRangeForWeapon(splitStr(id, "_")[2], currentSelection)
 end
 
 function drawRangeForWeapon(name, figures)
   local figuresData = createFiguresData(figures)
   for i,v in ipairs(figuresData) do
     local weapon = getFigureWeaponByName(v, name)
-    if weapon ~= nil then
+    if weapon != nil then
       drawFigureRange(weapon.range, figures[i])
     end
   end
@@ -477,26 +575,28 @@ function drawFigureRange(range, figure)
 end
 
 function getCircleVectorPoints(radius, steps, y, thickness)
-  local points = {}
-  local angle = 360 / steps
-  for i = 0,steps do
-    table.insert(points, {
-      math.cos(math.rad(angle * i)) * radius,
-      y,
-      math.sin(math.rad(angle * i)) * radius
-    })
-  end
-  return {
-    points = points,
-    thickness = thickness
-  }
+    local points = {}
+    local angle = 360 / steps
+
+    for i = 0,steps do
+        table.insert(points, {
+            math.cos(math.rad(angle * i)) * radius,
+            y,
+            math.sin(math.rad(angle * i)) * radius
+        })
+    end
+
+    return {
+      points = points,
+      thickness = thickness
+    }
 end
 
 function getRangeText(range)
-  if range then
-    return tostring(range).."″"
+  if range == nil then
+    return "-"
   end
-  return "-"
+  return "″"..tostring(range)
 end
 
 function createButtonCell(text, id, click)
@@ -550,16 +650,25 @@ end
 
 function convertWeaponDataToMap(weaponsData, resultData)
   for i,v in ipairs(weaponsData) do
-    if resultData[v.name] == nil then
-      resultData[v.name] = {
+    local key = getWeaponKey(v)
+    if resultData[key] == nil then
+      resultData[key] = {
         count = 0,
-        attack = "0",
+        attack = 0,
         data = v
       }
     end
-    resultData[v.name].count = resultData[v.name].count + 1
-    resultData[v.name].attack = CombineAttack(resultData[v.name].attack, v.attack)
+    resultData[key].count = resultData[key].count + 1
+    resultData[key].attack = resultData[key].attack + v.attack
   end
+end
+
+function getWeaponKey(weaponData)
+  local acc = weaponData.accuracy
+  local str = weaponData.strength
+  local ap = weaponData.ap
+  local d = weaponData.damage
+  return weaponData.name..acc..str..ap..d
 end
 
 function parseFigureData(figure)
@@ -569,7 +678,7 @@ function parseFigureData(figure)
     melee = {}
   }
   for i,v in ipairs(arr) do
-    if (getBlockName(v) ~= nil) and (getBlockName(v) ~= "abilities") then
+    if (getBlockName(v) != nil) and (getBlockName(v) != "abilities") then
       result[getBlockName(v)] = parseWeaponBlock(arr, i)
     end
   end
@@ -581,33 +690,60 @@ function parseFigureData(figure)
   return result
 end
 
-function removeColorTags(str)
-  if not str then
-    return ""
+function parseWeaponBlock(arr, fromIndex)
+  local result = {}
+  local i = fromIndex
+  while i < #arr do
+    table.insert(result, {
+      name = parseWeaponName(arr[i + 1]),
+      stats = removeColorTags(arr[i + 2]),
+      range = parseRange(arr[i + 2]),
+      attack = parseWeaponAttack(arr[i + 2]),
+      bonusAttack = parseWeaponBonusAttack(arr[i + 2]),
+      accuracy = parseWeaponAccuracy(arr[i + 2]) or "",
+      strength = getWeaponStatValue(arr[i + 2], "S") or "",
+      ap = getWeaponStatValue(arr[i + 2], "AP") or "",
+      damage = getWeaponStatValue(arr[i + 2], "D") or ""
+    })
+    if getBlockName(arr[i + 3]) != nil then
+      return result
+    end
+    i = i + 2
   end
-  str = string.gsub(str, "%[[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]%]", "")
+  return result
+end
+
+function removeColorTags(str)
+  str = string.gsub(str, "%[7bc596%]", "")
   str = string.gsub(str, "%[%-%]", "")
-  str = string.gsub(str, "%[sup%]", "")
-  str = string.gsub(str, "%[/sup%]", "")
   return str
 end
 
 function parseWeaponName(data)
-  return TrimString(removeColorTags(data))
+  return string.sub(data, 9, -4)
 end
 
 function parseWeaponAccuracy(stats)
-  return getWeaponStatValue(stats, "BS") or getWeaponStatValue(stats, "WS")
+  return  getWeaponStatValue(stats, "BS") or getWeaponStatValue(stats, "WS")
 end
 
 function parseWeaponAttack(stats)
-  return getWeaponStatValue(stats, "A") or "0"
+  local stat = getWeaponStatValue(stats, "A")
+  return tonumber(stat) or 0
+end
+
+function parseWeaponBonusAttack(stats)
+  local stat = getWeaponStatValue(stats, "A")
+  if tonumber(stat) == nil then
+    return stat
+  end
+  return nil
 end
 
 function getWeaponStatValue(stats, statName)
   local statPairs = splitStr(stats, " ")
   for i,v in ipairs(statPairs) do
-    local stat = splitStr(v, ":")
+    local stat = splitStr(v, ':')
     if stat[1] == statName then
       return stat[2]
     end
@@ -615,8 +751,8 @@ function getWeaponStatValue(stats, statName)
 end
 
 function parseRange(stats)
-  local inches = string.find(stats, "″") or string.find(stats, "\"")
-  if inches ~= nil then
+  local inches = string.find(stats, "″") or string.find(stats, '"')
+  if inches != nil then
     return tonumber(string.sub(stats, 1, inches - 1))
   end
 end
@@ -625,14 +761,13 @@ function getBlockName(str)
   if str == nil then
     return
   end
-  if string.find(str, "[rR]anged [wW]eapons") then
-    return "ranged"
-  elseif string.find(str, "[mM]elee [wW]eapons") then
-    return "melee"
-  elseif string.find(str, "%][wW]eapons%[%-%]") then
+  if (string.find(str, "[rR]anged [wW]eapons") != nil) then
     return "ranged"
   end
-  if string.find(str, "[aA]bilities") then
+  if (string.find(str, "[mM]elee [wW]eapons") != nil) then
+    return "melee"
+  end
+  if (string.find(str, "[aA]bilities") != nil) then
     return "abilities"
   end
 end
@@ -649,9 +784,9 @@ function splitStr(inputstr, sep)
 end
 
 function printMessage(text, color)
-    color = color or {1, 0.5, 0}
-    broadcastToAll(text, color)
-  end
+  color = color or {1, 0.5, 0}
+  broadcastToAll(text, color)
+end
 
   function TrimString(s)
     local a = s:match("^%s*()")

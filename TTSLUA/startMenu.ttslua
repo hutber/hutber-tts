@@ -23,6 +23,7 @@ function onLoad(saved_data)
     if saved_data ~= "" then
         local loaded_data = JSON.decode(saved_data)
         gameMode = loaded_data.svgameMode
+        singlesMode = loaded_data.svsSinglesMode
         inGame = loaded_data.svinGame
         currentTurn = loaded_data.svcurrentTurn
         currentPhase = loaded_data.svcurrentPhase
@@ -69,6 +70,7 @@ function onSave()
     saved_data = JSON.encode({
         svinGame = inGame,
         svgameMode = gameMode,
+        svsSinglesMode = singlesMode,
         svcurrentTurn = currentTurn,
         svcurrentPhase = currentPhase,
         svmapSizeSelected = mapSizeSelected,
@@ -82,9 +84,13 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.02: Fix: corrected GW maps search and destory added missing map 3 and removed incorrect map 8",
-    "1.01: Feat: Add dmg, ap and Str to dice",
-    "1.00: Feat: Updated WTC maps to latest",
+    "1.1.3: Feat: Added Single Player",
+    "1.1.2: Fix: Improve secruity for injection and cheating",
+    "1.1.1: Feat: Added Doubles support, feedback needed",
+    "1.0.3: Fix: Updated Pariah Nexus Tournament Companion from 1.2 to 1.4",
+    "1.0.2: Fix: corrected GW maps search and destory added missing map 3 and removed incorrect map 8",
+    "1.0.1: Feat: Add dmg, ap and Str to dice",
+    "1.0.0: Feat: Updated WTC maps to latest",
     --"0.17: Feat: Remove clear map selection button added for casual play",
     --"0.16: Feat: 'Import Dice' button added which will take all dice from your opponents board\n                                  Fix: Default slow role added and toggle to enable fast rolling\n                                  Fix: small bug that heights of vortex and stats helper were not being set correctly when toggled.",
     --"0.15: Feat: Dice tracking added with Stats & Chances Buttons\n                                  Fix: corrected GW map 6, moved vortex into table.\n                                  Feat: Added in stats checker with toggle.",
@@ -121,7 +127,7 @@ sizeData={
 
 menuSizeX = 0
 menuSizeY = 5
-menuSizeZ = 25
+menuSizeZ = 21
 arrowOffset=9.5
 
 mapSizeSelected=2
@@ -149,15 +155,64 @@ sizeDownBtn={
     position={-menuSizeX-arrowOffset, menuSizeY ,menuSizeZ}, rotation={0,0,0}, height=450, width=800,scale = {1.3,1.3,1.3},
     font_size=300, color={0,0,0}, font_color={1,1,1}
 }
-confirmBtn={
-    index= i, label="C O N F I R M\nFOR GAMING", click_function="confirmSizeGame", function_owner=self,
-    position={-menuSizeX, menuSizeY ,menuSizeZ+3.5}, rotation={0,0,0}, height=1400, width=4400, scale = {1.3,1.3,1.3},
-    font_size=500, color={0,0.7,0}, font_color={0,0,0}
+confirmBtn = {
+    index          = i,
+    label          = "C O N F I R M\nFOR GAMING",
+    click_function = "confirmSizeGame",
+    function_owner = self,
+    position       = { -menuSizeX - 6.5, menuSizeY, menuSizeZ + 3 },
+    rotation       = { 0, 0, 0 },
+    height         = 1400,
+    width          = 4400,
+    scale          = { 1.3, 1.3, 1.3 },
+    font_size      = 500,
+    color          = { 0, 0.7, 0 },  -- green
+    font_color     = { 0, 0, 0 }
 }
-confirmBtn2={
-    index= i, label="C O N F I R M\nFOR MAP MAKING", click_function="confirmSizeTerrain", function_owner=self,
-    position={-menuSizeX, menuSizeY ,menuSizeZ+7.5}, rotation={0,0,0}, height=1400, width=4400, scale = {1.3,1.3,1.3},
-    font_size=500, color={0.7,0,0}, font_color={0,0,0}
+
+confirmBtn2 = {
+    index          = i,
+    label          = "C O N F I R M\nFOR MAP MAKING",
+    click_function = "confirmSizeTerrain",
+    function_owner = self,
+    position       = { -menuSizeX + 6.5, menuSizeY, menuSizeZ + 3  },
+    rotation       = { 0, 0, 0 },
+    height         = 1400,
+    width          = 4400,
+    scale          = { 1.3, 1.3, 1.3 },
+    font_size      = 500,
+    color          = { 0.7, 0, 0 },  -- red
+    font_color     = { 0, 0, 0 }
+}
+
+confirmBtn3 = {
+    index          = i,
+    label          = "C O N F I R M\nFOR DOUBLES",
+    click_function = "confirmDoublesGame",
+    function_owner = self,
+    position       = { -menuSizeX - 6.5, menuSizeY, menuSizeZ + 7.5 },
+    rotation       = { 0, 0, 0 },
+    height         = 1400,
+    width          = 4400,
+    scale          = { 1.3, 1.3, 1.3 },
+    font_size      = 500,
+    color          = { 0.5, 0, 0.5 }, -- purple
+    font_color     = { 0, 0, 0 }
+}
+
+confirmBtn4 = {
+    index          = i,
+    label          = "C O N F I R M\nSINGLE PLAYER",
+    click_function = "confirmForSingles",
+    function_owner = self,
+    position       = { -menuSizeX + 6.5, menuSizeY, menuSizeZ + 7.5 },
+    rotation       = { 0, 0, 0 },
+    height         = 1400,
+    width          = 4400,
+    scale          = { 1.3, 1.3, 1.3 },
+    font_size      = 500,
+    color          = { 0, 0, 1 },  -- blue
+    font_color     = { 0, 0, 0 }
 }
 
 function refreshMat()
@@ -177,6 +232,8 @@ function writeSizeMenu()
     self.createButton(confirmBtn)
     self.createButton(confirmBtn2)
     self.createButton(removeMapsBtn)
+    self.createButton(confirmBtn3)
+    self.createButton(confirmBtn4)
     mat.setScale(sizeData[mapSizeSelected].scale)
     mat.setPosition(positionValue)
 end
@@ -186,23 +243,22 @@ local spawnedObjectRef = nil -- Store a reference to the spawned object
 
 -- Function called when the button is clicked
 function onObjectClick(player_color, object_clicked)
-    showMapsToggle=true
+    showMapsToggle = true
     local guidPositions = {
         ["03286d"] = -4.776464939,
         ["cd649d"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
         ["8395b2"] = -6.19999981,
-        ["4bb528"] = -6.19999981
+        ["4bb528"] = -6.19999981,
+        ["7abc5a"] = -6.19999981
     }
 
-    -- Iterate over each GUID and set the new height
-    for guid, newPosY in pairs(guidPositions) do
+    -- Iterate over each GUID and destroy the object if found
+    for guid, _ in pairs(guidPositions) do
         local obj = getObjectFromGUID(guid)
         if obj then
-            local position = obj.getPosition()
-            position.y = newPosY
-            obj.setPosition(position)
+            destroyObject(obj) -- Destroy the object
         else
             print("Object with GUID " .. guid .. " not found.")
         end
@@ -214,6 +270,7 @@ function onObjectClick(player_color, object_clicked)
         spawnedObjectRef = nil -- Clear the reference after destruction
     end
 end
+
 -- Function to set up click events for a spawned object
 function setupClickEvents(spawnedObject)
     spawnedObject.setLock(true)
@@ -273,6 +330,194 @@ function sizeUpDown(increment)
     writeMenus()
 end
 
+function removeObjectFromBagAndPlace()
+    local bag = getObjectFromGUID("f8ddf5")
+    local objectToPlaceGUID = "cb19c0"
+    local centerPosition = {40, 0.9499984, 29}
+
+    if bag and bag.type == "Bag" then
+        local objectsInBag = bag.getObjects()
+        for _, obj in ipairs(objectsInBag) do
+            if obj.guid == objectToPlaceGUID then
+                bag.takeObject({
+                    guid = objectToPlaceGUID,
+                    position = centerPosition,
+                    rotation = {0, -90, 0},
+                    smooth = false
+                })
+                return
+            end
+        end
+        broadcastToAll("Object not found in the bag.", {1, 0, 0})
+    else
+        broadcastToAll("Bag with the specified GUID not found.", {1, 0, 0})
+    end
+end
+
+function enableObjects()
+    local orangePCounter_GUID = Global.getVar("orangePCounter_GUID")
+    local purplePCounter_GUID = Global.getVar("purpleCPCounter_GUID")
+
+    local orangePCounter = getObjectFromGUID(orangePCounter_GUID)
+    local purplePCounter = getObjectFromGUID(purplePCounter_GUID)
+    local orangePCounterText = getObjectFromGUID("7ab8ca")
+
+    local purplePCounterText = getObjectFromGUID("028baa")
+    local AddNewPlayerBCounterText = getObjectFromGUID("838abc")
+    local RemoveOldPlayerBCounterText = getObjectFromGUID("9a85e3")
+
+    if orangePCounter then
+        orangePCounter.setPosition({51.3211021, -1.33, 37.5})
+        orangePCounterText.setPosition({54.35, 1.23999178, 37.5})
+        orangePCounter.interactable = true
+    else
+        print("Orange CP Counter not found!")
+    end
+
+    if purplePCounter then
+        RemoveOldPlayerBCounterText.setPosition({62.50006, -3.23998809, -37.49884})
+
+        -- setup new counter
+        purplePCounter.setPosition({59.5018, -1.33, -55})
+        purplePCounterText.setPosition({62.50006, 1.23998809, -55.019884})
+
+        AddNewPlayerBCounterText.setPosition({62.50006, 1.23998809, -37.49884})
+        purplePCounter.interactable = true
+    else
+        print("Purple CP Counter not found!")
+    end
+end
+
+
+function confirmDoublesGame()
+    -- inGame = true
+    mapSizeSelected=3
+    selectPariahNexus()
+    -- Auto-assign teams
+    -- autoAssignTeams()
+    removeObjectFromBagAndPlace()
+    enableObjects()
+
+    -- Place tokens, shuffle team cards, or any other setup
+    placeGameTokens()
+
+    broadcastToAll("2v2 Doubles Game Mode Initialized!", {0.5, 0, 0.5})
+    confirmSizeMat("game")
+    --deleting the Combat Patrol Mission book unless on the appropriate map size
+    if sizeData[mapSizeSelected].id ~= 1 then
+        cpbook = getObjectFromGUID(Global.getVar("CPMissionBook_GUID"))
+        destroyObject(cpbook)
+    end
+    -- Change color of object with GUID "deb9f2" to blue
+    local blueObject = getObjectFromGUID("deb9f2")
+    if blueObject then
+        blueObject.setColorTint({r = 0, g = 0, b = 1})
+    end
+
+    -- Change color of object with GUID "e446f7" to orange
+    local orangeObject = getObjectFromGUID("e446f7")
+    if orangeObject then
+        orangeObject.setColorTint({r = 1, g = 0.5, b = 0})
+    end
+
+    local guidPositions = {
+        ["03286d"] = -4.776464939,
+        ["cd649d"] = -4.776464939,
+        ["9a7c3c"] = -4.776464939,
+        ["3c8a1b"] = -6.19999981,
+        ["8395b2"] = -6.19999981,
+        ["4bb528"] = -6.19999981,
+        ["7abc5a"] = -6.19999981
+    }
+
+    -- Iterate over each GUID and destroy the object if found
+    for guid, _ in pairs(guidPositions) do
+        local obj = getObjectFromGUID(guid)
+        if obj then
+            destroyObject(obj) -- Destroy the object
+        else
+            print("Object with GUID " .. guid .. " not found.")
+        end
+    end
+    writeMenus()
+end
+
+function createCounter(position, label)
+    local counter = spawnObject({
+        type = "Counter",
+        position = position,
+        scale = {1, 1, 1},
+    })
+    counter.setName(label)
+    counter.setValue(0)
+    return counter
+end
+
+function shuffleAndDealTeamCards()
+    local teamDeck = getObjectFromGUID(Global.getVar("teamDeck_GUID"))
+    teamDeck.shuffle()
+    local players = Player.getPlayers()
+    for i, player in ipairs(players) do
+        teamDeck.deal(1, player.color)
+    end
+    broadcastToAll("Teams have been randomized and dealt!", {0, 1, 0})
+end
+
+
+function placeGameTokens()
+    -- Check if the bag exists
+    local markedForDeathToken = getObjectFromGUID("cda0b3")
+    markedForDeathToken.setPosition({37.34079, 0.9, 29})
+
+    local cardsTeams = getObjectFromGUID("c59f7a")
+    cardsTeams.shuffle()
+    broadcastToAll("Team cards have been shuffled! Safe to Draw.", {0, 1, 0})
+    if cardsTeams then
+        cardsTeams.setPosition({42, 0.9, 37})
+        print("cardsTeams new position:", cardsTeams.getPosition())
+    else
+        print("cardsTeams not found!")
+    end
+
+    local tokenBag = getObjectFromGUID("f8ddf5")
+    if not tokenBag then
+        broadcastToAll("Error: Token bag not found (GUID: f8ddf5).", {1, 0, 0})
+        return
+    end
+
+    -- Extract the token object from the bag
+    local tokenTemplate = tokenBag.takeObject({guid = "7a8aba"})
+    if not tokenTemplate then
+        broadcastToAll("Error: Token template (GUID: 7a8aba) not found in bag.", {1, 0, 0})
+        return
+    end
+
+    -- Clean up the extracted template
+    tokenTemplate.destruct()
+end
+
+
+
+function spawnToken(position, label)
+    local token = spawnObject({
+        type = "BlockSquare",
+        position = position,
+        scale = {0.5, 0.5, 0.5},
+    })
+    token.setName(label)
+    return token
+end
+
+function setupExtraDeepStrikeMaps()
+    -- Logic to spawn and manage extra deep strike/transport maps if required
+    broadcastToAll("Extra Deep Strike Maps Enabled!", {0, 0.5, 1})
+end
+
+function confirmForSingles()
+    singlesMode = "singles"
+    confirmSizeGame()
+end
+
 function confirmSizeGame()
     spawnInteractiveObject()
     confirmSizeMat("game")
@@ -306,9 +551,17 @@ function confirmSizeGame()
             print("Object with GUID " .. guid .. " not found.")
         end
     end
+    local cardsTeams = getObjectFromGUID("c59f7a")
+    destroyObject(cardsTeams)
+    local mfdToken = getObjectFromGUID("cda0b3")
+    destroyObject(mfdToken)
 end
 
 function confirmSizeTerrain()
+    local cardsTeams = getObjectFromGUID("c59f7a")
+    destroyObject(cardsTeams)
+    local mfdToken = getObjectFromGUID("cda0b3")
+    destroyObject(mfdToken)
     confirmSizeMat("terrain")
 end
 
@@ -1865,12 +2118,15 @@ function startGame(obj, player, alt)
         numberOfPlayers = numberOfPlayers + 1
     end
 
-    if Player["Red"].seated == false or Player["Blue"].seated == false then
-        broadcastToAll("Must have both players seated", {1, 0, 0})
-        if simulation == false then
-            return
+    if(singlesMode != "singles") then
+        if Player["Red"].seated == false or Player["Blue"].seated == false then
+            broadcastToAll("Must have both players seated", {1, 0, 0})
+            if simulation == false then
+                return
+            end
         end
     end
+
     Global.call("recordPlayers")
     inGame = true
 
@@ -1937,48 +2193,58 @@ function nextPhase(obj, player_color_click, alt_click)
 end
 
 function passTurn(obj, player_color_click, alt_click)
-    if player_color_click ~= currentTurn then
-
-        if simulation then
-            broadcastToAll("INTRUDER", "Pink")
-        else
-            return
+    if(singlesMode != "singles") then
+        if player_color_click ~= currentTurn then
+            if simulation then
+                broadcastToAll("INTRUDER", "Pink")
+            else
+                return
+            end
         end
-
     end
+
     currentPhase = 1
+    local orangePCounter = getObjectFromGUID(Global.getVar("orangePCounter_GUID"))
+    local purplePCounter = getObjectFromGUID(Global.getVar("purpleCPCounter_GUID"))
+
     if currentTurn == "Red" then
-        currentTurn = "Blue" -- it has to be the opposite
+        currentTurn = "Blue"
         blueTurnCounter.call("increaseSelf")
         blueCpCounter.Counter.increment()
+        orangePCounter.Counter.increment() -- Increment Orange CP
         if cpEveryTurn then
-          redCpCounter.Counter.increment()
-          Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
+            redCpCounter.Counter.increment()
+            purplePCounter.Counter.increment() -- Increment Purple CP
+            Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
         else
-          Wait.time(function() broadcastToAll("Blue CPs incremented!", "Blue") end, 0.3)
+            Wait.time(function() broadcastToAll("Blue CPs incremented!", "Blue") end, 0.3)
         end
     else
         currentTurn = "Red"
         redTurnCounter.call("increaseSelf")
         redCpCounter.Counter.increment()
+        purplePCounter.Counter.increment() -- Increment Purple CP
         if cpEveryTurn then
-          blueCpCounter.Counter.increment()
-          Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
+            blueCpCounter.Counter.increment()
+            orangePCounter.Counter.increment() -- Increment Orange CP
+            Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
         else
-          Wait.time(function() broadcastToAll("Red CPs incremented!", "Red") end, 0.3)
+            Wait.time(function() broadcastToAll("Red CPs incremented!", "Red") end, 0.3)
         end
     end
+
     if simulation then
-        broadcastToAll("It's "..currentTurn.." turn", currentTurn)
+        broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
     else
         if Player[currentTurn].steam_name then
-            broadcastToAll("It's "..Player[currentTurn].steam_name.." turn", currentTurn)
+            broadcastToAll("It's " .. Player[currentTurn].steam_name .. " turn", currentTurn)
         else
-            broadcastToAll("It's "..currentTurn.." turn", currentTurn)
+            broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
         end
     end
     writeMenus()
 end
+
 
 function startCustomTurns()
     if first == "Red" then

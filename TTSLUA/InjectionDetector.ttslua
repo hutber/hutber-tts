@@ -25,6 +25,7 @@ end
 
 function objectCheck()
     script_to_compare = self.getLuaScript()
+    self.interactable = false
     new_length = string.len(script_to_compare)
 
     -- If the code was changed and we haven't flagged it already, do so
