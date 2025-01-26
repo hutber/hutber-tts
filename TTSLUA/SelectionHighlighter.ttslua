@@ -5,16 +5,16 @@ local selectedObjects = {}
 local checkInterval = 0.1
 
 function onLoad()
-    -- Just destroy it (if it exists). If it doesn't exist, TTS won't error out.
+--    ---- Just destroy it (if it exists). If it doesn't exist, TTS won't error out.
     Timer.destroy("checkSelections")
-
-    -- Wait 30 frames, then move ourselves below the table
+--    --
+--    ---- Wait 30 frames, then move ourselves below the table
     Wait.frames(function()
-        self.setPosition({-5, -5, -5})
-        self.setLock(true)
+--    --    self.setPosition({-5, -5, -5})
+    --    self.setLock(true)
         self.interactable = false
     end, 30)
-
+--
     -- Create the timer
     Timer.create({
         identifier    = "checkSelections",
