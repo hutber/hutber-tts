@@ -96,7 +96,11 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.1.4: Chore: Updated game cards with clearer names",
+    "1.1.8: Feat: Finally fixed Selection Tool. Fix: sometimes you could interact with old dice mat would ",
+    "1.1.7: Feat: Added revert dice that will put dice back to their previously rolled state",
+    "1.1.6: Style: Reverted some of the colours back, they were far too wet looking",
+    "1.1.5: Style: Updated intro screen and updated buttons with cleaner names",
+    "1.1.4: Style: Updated game cards with clearer names",
     "1.1.3: Feat: Added Single Player",
     "1.1.2: Fix: Improve secruity for injection and cheating",
     "1.1.1: Feat: Added Doubles support, feedback needed",
@@ -222,7 +226,7 @@ sizeDownBtn = {
 
 confirmBtn = {
     index          = i,
-    label          = "C O N F I R M\nFOR 1 Vs 1",
+    label          = "1 Vs 1",
     click_function = "confirmSizeGame",
     function_owner = self,
     position       = { -menuSizeX - 6.5, menuSizeY, menuSizeZ + 3 },
@@ -231,13 +235,16 @@ confirmBtn = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0.2, 0.8, 0.4 },  -- Soft Emerald Green
-    font_color     = "White"
+    color          = {
+         0.191999942,
+        0.701,
+        0.167999923},  -- Rich Forest Green
+    font_color     = { 1.0, 1.0, 1.0 }  -- Pure White
 }
 
 confirmBtn2 = {
     index          = i,
-    label          = "C O N F I R M\nFOR MAP EDITOR",
+    label          = "MAP EDITOR",
     click_function = "confirmSizeTerrain",
     function_owner = self,
     position       = { -menuSizeX + 6.5, menuSizeY, menuSizeZ + 3  },
@@ -246,13 +253,16 @@ confirmBtn2 = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0.9, 0.3, 0.3 },  -- Warm Coral Red
-    font_color     = "White"
+    color          = {
+        0.856,
+        0.09999994,
+        0.09399993},  -- Deep Crimson Red
+    font_color     = { 1.0, 1.0, 1.0 }  -- Pure White
 }
 
 confirmBtn3 = {
     index          = i,
-    label          = "C O N F I R M\nFOR 2 Vs 2",
+    label          = "2 Vs 2",
     click_function = "confirmDoublesGame",
     function_owner = self,
     position       = { -menuSizeX - 6.5, menuSizeY, menuSizeZ + 7.5 },
@@ -261,8 +271,10 @@ confirmBtn3 = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0.6, 0.3, 0.8 }, -- Soft Lavender Purple
-    font_color     = "White"
+    color          = {
+        0.627,
+        0.124999948,0.941 }, -- Royal Purple
+    font_color     = { 1.0, 1.0, 1.0 }  -- Pure White
 }
 
 confirmBtn4 = {
@@ -276,8 +288,11 @@ confirmBtn4 = {
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
     font_size      = 500,
-    color          = { 0.2, 0.5, 1.0 },  -- Soft Sky Blue
-    font_color     = "White"
+    color          = {
+        0.117999949,
+        0.53,
+         1},  -- Vibrant Royal Blue
+    font_color     = { 1.0, 1.0, 1.0 }  -- Pure White
 }
 
 function refreshMat()

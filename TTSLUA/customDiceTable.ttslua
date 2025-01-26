@@ -194,17 +194,31 @@ copyOthersDiceBtn = {
 }
 
 auto1D6 = {
-    label="1D6", tooltip="Auto roll 1D6",
+    label="1D6 Advance", tooltip="Auto roll 1D6",
     click_function="autoRoll1D6", function_owner=self,
-    position={-6.45, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1850, scale={0.1,0.1,0.1},
+    position={-6.52, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=3050, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 auto2D6 = {
-    label = "2D6", tooltip = "Auto roll 2D6",
+    label = "2D6 Charge", tooltip = "Auto roll 2D6",
     click_function = "autoRoll2D6", function_owner = self,
-    position = {-6, Yoffset, -1.1}, rotation = {0, 0, 0},
-    height = 1000, width = 1850, scale = {0.1, 0.1, 0.1},
+    position = {-5.8, Yoffset, -1.1}, rotation = {0, 0, 0},
+    height = 1000, width = 3050, scale = {0.1, 0.1, 0.1},
     font_size = 500, color = "White", font_color = {0, 0, 0}
+}
+local revertRollBtn = {
+    label          = "Revert Roll",
+    tooltip="It takes 1 second after rolling to 'lock in'",
+    click_function = "revertRoll",
+    function_owner = self,
+    position       = { -2.5, 0.1, 1.5 },
+    rotation       = { 0, 0, 0 },
+    height         = 50,
+    width          = 400,
+    font_size      = 60,
+    color          = {0, 0, 0},
+    font_color     = {1, 1, 1},
+    scale          = { 1,1,1 }
 }
 
 lethalHitsThreshold = 6
@@ -215,6 +229,8 @@ rollMode = true
 selectedColor = "White"
 diceType = "Die_6_Rounded"
 customDiceImage = nil
+scaleBtn = 0.1
+previousRollData = {}
 rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
 if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
     rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
@@ -297,6 +313,63 @@ end
 
 local lastSpawnPosition = nil -- Keep track of the last spawned dice position
 local diceCount = 0 -- Track the number of dice spawned in the current sequence
+function storeCurrentDiceAsPreviousRoll()
+    previousRollData = {}
+    for _, die in ipairs(getDice()) do
+        local c = die.getCustomObject()
+        local d = {
+            pos  = die.getPosition(),
+            rot  = die.getRotation(),
+            val  = die.getValue(),
+            tint = die.getColorTint(),
+            customImage = nil
+        }
+        if c then
+            d.customImage = c.image
+        end
+        table.insert(previousRollData, d)
+    end
+end
+
+function revertRoll(obj, player, alt)
+    for _, die in ipairs(getDice()) do
+        die.destroy()
+    end
+    if not previousRollData or #previousRollData == 0 then
+        printToColor("No previous roll found.", player, "Red")
+        return
+    end
+    for _, data in ipairs(previousRollData) do
+        local diceTypeToSpawn = "Die_6_Rounded"
+        if data.customImage then
+            diceTypeToSpawn = "Custom_Dice"
+        elseif pipColorBtn.color == "Black" then
+            diceTypeToSpawn = "Die_6"
+        end
+
+        local spawned = spawnObject({
+            type     = diceTypeToSpawn,
+            position = data.pos,
+            rotation = data.rot
+        })
+        if data.customImage then
+            spawned.setCustomObject({ image = data.customImage, type = 1 })
+        end
+        spawned.setColorTint(data.tint)
+        spawned.setValue(data.val)
+    end
+    printToColor("Reverted roll!", player, "Green")
+end
+function moveDiceToRoller(color, dice)
+    roller.call("setPlayerColor", { color = color })
+    for _, die in ipairs(dice) do
+        roller.call("setLastHolder", { obj = die, color = color })
+        roller.putObject(die)
+    end
+
+    -- Add this line at the end:
+    storeCurrentDiceAsPreviousRoll()
+end
 
 function autoRoll(obj, player, alt, numDice)
     numDice = numDice or 1 -- Default to 1 die if numDice is not provided
@@ -844,6 +917,7 @@ function onload()
     self.createButton(copyOthersDiceBtn)
     self.createButton(auto1D6)
     self.createButton(auto2D6)
+    self.createButton(revertRollBtn)  -- Add this near the end of the button creations
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
 end

@@ -7,9 +7,23 @@ local RedControlBoard = {
     SelectionHighlighterGUID = "27de4f",
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
+    bagIds = {
+        d12  ="b9c441",
+        greyD12 = "fbf744",
+        blueD12 = "420627",
+        black = "771c41",
+        blue = "048595",
+        purple = "a8cbbb",
+        grey = "4433bb",
+        green = "21569d",
+        red = "14d612",
+        lightGrey = "791e47",
+        yellow = "34366b",
+        orange = "2ff2db",
+    },
     options = {
         {name = "Custom Dice Roller", state = true},
-        {name = "Selection Highlight\n(Broken)", state = true, title = "Only works before a map has been drawn"},
+        {name = "Selection Highlight", state = true, title = "Only works before a map has been drawn"},
         {name = "Stat Helper", state = true, customHiddenPosition = 0.5},
         {name = "Vortex", state = true, customHiddenPosition = 0.6},
         {name = "Reserves Board", state = true},
@@ -25,9 +39,23 @@ local BlueControlBoard = {
     SelectionHighlighterGUID = "84c3a4",
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
+    bagIds = {
+        d12  ="ab15ef",
+        greyD12 = "c3c404",
+        blueD12 = "1911c6",
+        black = "0ddfb6",
+        blue = "8ad6b4",
+        purple = "fc7feb",
+        grey = "0e6250",
+        green = "99582c",
+        red = "31b11f",
+        lightGrey = "176bc4",
+        yellow = "7a3612",
+        orange = "a65625",
+    },
     options = {
         {name = "Custom Dice Roller", state = true},
-        {name = "Selection Highlight\n(Broken)", state = true, title = "Only works before a map has been drawn"},
+        {name = "Selection Highlight", state = true, title = "Only works before a map has been drawn"},
         {name = "Stat Helper", state = true, customHiddenPosition = 0.5},
         {name = "Vortex", state = true, customHiddenPosition = 0.6},
         {name = "Reserves Board", state = true},
@@ -191,6 +219,20 @@ function changeDiceSpawnTime(color, state)
     Global.setVar(color == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime", state and "fast" or "slow")
 end
 
+local function swapDiceMats(board)
+    local customDiceMat = getObjectFromGUID(board.CustomDiceMat_GUID)
+    local diceMat = getObjectFromGUID(board.DiceMat_GUID)
+
+    if customDiceMat and diceMat then
+        local customPosition = customDiceMat.getPosition()
+        local dicePosition = diceMat.getPosition()
+
+        customDiceMat.setPosition(dicePosition)
+        diceMat.setPosition(customPosition)
+    else
+        print("Error: One or both dice mats not found for swapping.")
+    end
+end
 function toggleOption(player, index)
     local playerColor = player.color
     local expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
@@ -209,29 +251,19 @@ function toggleOption(player, index)
     local newColor = option.state and "Green" or "Red"
     self.UI.setAttributes(statusId, { text = newText, color = newColor })
 
-    if option.name == "Selection Highlight" then
-        local highlighterGUID = board.SelectionHighlighterGUID
-        local highlighter = getObjectFromGUID(highlighterGUID)
-
+    if option.name == "Custom Dice Roller" then
+        swapDiceMats(board)
+    elseif option.name == "Selection Highlight" then
+        local highlighter = getObjectFromGUID(board.SelectionHighlighterGUID)
         if highlighter then
             if option.state then
-                highlighter.call("onLoad") -- Restart the highlighter script
+                highlighter.call("onLoad")  -- Restart the highlighter script
             else
-                highlighter.call("onDestroy") -- Stop the highlighter script
+                highlighter.call("onDestroy")  -- Stop the highlighter script and clear highlights
             end
         else
-            print("Highlighter object not found for " .. expectedColor)
+            print("Selection highlighter object not found for " .. expectedColor)
         end
-    elseif option.name == "Custom Dice Roller" then
-        if option.state then
-            toggleObjectState(board.CustomDiceMat_GUID, true)
-            toggleObjectState(board.DiceMat_GUID, false)
-        else
-            toggleObjectState(board.CustomDiceMat_GUID, false)
-            toggleObjectState(board.DiceMat_GUID, true)
-        end
-    elseif option.name == "Selection Highlight" then
-        toggleObjectState(board.SelectionHighlighterGUID, option.state)
     elseif option.name == "Stat Helper" then
         toggleObjectState(board.StatHelper_GUID, option.state, option.customHiddenPosition)
     elseif option.name == "Dice Roller" then

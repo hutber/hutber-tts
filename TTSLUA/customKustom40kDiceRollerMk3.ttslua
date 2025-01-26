@@ -99,16 +99,81 @@ function printLast5()
 end
 
 function printResults(n)
-	if #lastRolls==0 then
-		printToAll("NO LAST ROLLS\n", "Yellow")
-	else
-		printToAll("LAST ROLLS\n")
-	end
-	for i, result in ipairs(lastRolls) do
-		if i<= n then
-			printToAll("-- " .. i .. " --\n" .. result.msg, result.color)
-		end
-	end
+    if #lastRolls == 0 then
+        printToAll("NO LAST ROLLS\n", "Yellow")
+        return
+    end
+
+    printToAll("LAST 5 ROLLS SUMMARY\n", "White")
+
+    function supportsUnicode()
+        local testString = "⚀"
+        return testString ~= ""
+    end
+
+    local diceFaces = supportsUnicode() and {
+        [1] = "⚀",
+        [2] = "⚁",
+        [3] = "⚂",
+        [4] = "⚃",
+        [5] = "⚄",
+        [6] = "⚅"
+    } or {
+        [1] = " 1",
+        [2] = " 2",
+        [3] = " 3",
+        [4] = " 4",
+        [5] = " 5",
+        [6] = " 6"
+    }
+
+    -- Determine if the dice roller is red or blue based on GUID
+    local redDiceRollerGUID = "17ca2b"
+    local blueDiceRollerGUID = "927ca1"
+    local diceColor = {1, 1, 1}  -- Default to white
+
+    if self.getGUID() == redDiceRollerGUID then
+        diceColor = {0.91, 0.29, 0.23} -- Red color for red dice roller
+    elseif self.getGUID() == blueDiceRollerGUID then
+        diceColor = {0.2, 0.62, 0.91}   -- Blue color for blue dice roller
+    end
+
+    for i = 1, n do
+        if lastRolls[i] then
+            local roll = lastRolls[i]
+            local countTable = {0, 0, 0, 0, 0, 0}  -- Initialize all dice counts to 0
+
+            -- Extract dice counts accurately
+            for dice, count in roll.msg:gmatch("(%d+) (%a+)") do
+                local diceMap = {
+                    ["Ones"] = 1, ["Twos"] = 2, ["Threes"] = 3,
+                    ["Fours"] = 4, ["Fives"] = 5, ["Sixes"] = 6
+                }
+                local diceIndex = diceMap[count]
+                if diceIndex then
+                    countTable[diceIndex] = countTable[diceIndex] + tonumber(dice)
+                end
+            end
+
+            -- Construct the dice row visually
+            local diceRow = ""
+            local countRow = ""
+
+            for face = 1, 6 do
+                diceRow = diceRow .. " " .. diceFaces[face] .. " "
+                countRow = countRow .. string.format(" %2d ", countTable[face])
+            end
+
+            -- Label rolls correctly
+            local rollLabel = (i == 1) and "Oldest Roll" or (i == n and "Most Recent Roll") or ("Roll " .. (n - i + 1))
+
+            -- Print roll summary with colors
+            printToAll(rollLabel .. ":", {1, 1, 1})  -- White color for label
+            printToAll(diceRow, diceColor)            -- Conditional color for dice symbols
+            printToAll(countRow, {1, 1, 1})            -- White color for counts
+            printToAll("-------------------------------------------------", {1, 1, 1})
+        end
+    end
 end
 
 --Initialize Global Variables and pRNG Seed
@@ -335,6 +400,10 @@ function takeDiceOut(tab)
     end
 
 	printresultsTable()
+    Wait.time(function()
+        -- "objectToPlaceDiceOn" is your dice-mat object
+        objectToPlaceDiceOn.call("storeCurrentDiceAsPreviousRoll")
+    end, 1)
 end
 
 function sum(t)
