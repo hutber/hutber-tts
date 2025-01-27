@@ -28,6 +28,7 @@ local RedControlBoard = {
         {name = "Vortex", state = true, customHiddenPosition = 0.6},
         {name = "Reserves Board", state = true},
         {name = "Fast Rolling", state = false},
+        {name = "Show Dice Bags", state = false},
     }
 }
 
@@ -60,6 +61,7 @@ local BlueControlBoard = {
         {name = "Vortex", state = true, customHiddenPosition = 0.6},
         {name = "Reserves Board", state = true},
         {name = "Fast Rolling", state = false},
+        {name = "Show Dice Bags", state = false},
     }
 }
 
@@ -92,8 +94,30 @@ function onLoad()
         else
             print(color .. " DiceRoller object not found during onLoad")
         end
+
+        -- Hide dice bags on load
+        for _, guid in pairs(board.bagIds) do
+            local obj = getObjectFromGUID(guid)
+            if obj then
+                if not originalPositions[guid] then
+                    originalPositions[guid] = obj.getPosition()
+                end
+                local hiddenPosition = {
+                    originalPositions[guid][1],
+                    originalPositions[guid][2] - 3,  -- Move it below the table
+                    originalPositions[guid][3]
+                }
+                obj.setPosition(hiddenPosition)
+                obj.setLock(true)
+                obj.interactable = false
+            else
+                print(color .. " Dice bag object not found during onLoad: " .. guid)
+            end
+        end
     end
 end
+
+
 function buildControlPanel(color)
     local board = boards[color]
     if not board then
@@ -233,6 +257,7 @@ local function swapDiceMats(board)
         print("Error: One or both dice mats not found for swapping.")
     end
 end
+
 function toggleOption(player, index)
     local playerColor = player.color
     local expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
@@ -251,7 +276,9 @@ function toggleOption(player, index)
     local newColor = option.state and "Green" or "Red"
     self.UI.setAttributes(statusId, { text = newText, color = newColor })
 
-    if option.name == "Custom Dice Roller" then
+    if option.name == "Show Dice Bags" then
+        toggleDiceBags(board, option.state)
+    elseif option.name == "Custom Dice Roller" then
         swapDiceMats(board)
     elseif option.name == "Selection Highlight" then
         local highlighter = getObjectFromGUID(board.SelectionHighlighterGUID)
@@ -275,5 +302,37 @@ function toggleOption(player, index)
         toggleObjectState(board.ReservesOldBoardGUID, not option.state)
     elseif option.name == "Fast Rolling" then
         Global.setVar(expectedColor == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime", option.state and "fast" or "slow")
+    end
+end
+
+function toggleDiceBags(board, state)
+    for _, guid in pairs(board.bagIds) do
+        local obj = getObjectFromGUID(guid)
+        if obj then
+            if not originalPositions[guid] then
+                originalPositions[guid] = obj.getPosition()
+            end
+
+            if state then
+                obj.setPosition({
+                    originalPositions[guid][1],
+                    1,  -- Set Y position to always be 1 when turning on
+                    originalPositions[guid][3]
+                })
+                obj.setLock(false)
+                obj.interactable = true
+            else
+                local hiddenPosition = {
+                    originalPositions[guid][1],
+                    originalPositions[guid][2] - 3,  -- Move it below the table
+                    originalPositions[guid][3]
+                }
+                obj.setPosition(hiddenPosition)
+                obj.setLock(true)
+                obj.interactable = false
+            end
+        else
+            print("Dice bag object not found: " .. guid)
+        end
     end
 end
