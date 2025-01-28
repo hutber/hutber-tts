@@ -211,15 +211,46 @@ local revertRollBtn = {
     tooltip="It takes 1 second after rolling to 'lock in'",
     click_function = "revertRoll",
     function_owner = self,
-    position       = { -2.5, 0.1, 1.5 },
+    position       = {-7.5, Yoffset, 0.86},
     rotation       = { 0, 0, 0 },
-    height         = 50,
-    width          = 400,
-    font_size      = 60,
-    color          = {0, 0, 0},
-    font_color     = {1, 1, 1},
-    scale          = { 1,1,1 }
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
 }
+
+-- Background Box (Soft Off-White for a Professional Look)
+local customDiceInputBG = {
+    label = "", click_function = "none", function_owner = self,
+    position = {-7.5, Yoffset, -0.5}, rotation = {0, 0, 0},
+    width = 1300, height = 375, font_size = 100,
+    color = {0.95, 0.95, 0.95, 1}, -- Soft off-white
+    scale = {0.5, 0.5, 0.5}
+}
+
+-- Input Field (Bright White)
+local customDiceInput = {
+    label = "Enter Dice #", input_function = "setCustomDiceCount", function_owner = self,
+    position = {-7.5, Yoffset, -0.48}, rotation = {0, 0, 0},
+    width = 1100, height = 225, font_size = 180, alignment = 2, scale = {0.5, 0.5, 0.5},
+    color = {1, 1, 1, 1}, -- Pure white
+    font_color = {0.2, 0.2, 0.2} -- Dark gray text
+}
+
+-- Modern Black "Spawn Dice" Button
+local customDiceSpawnButton = {
+    label = "Spawn Dice", click_function = "spawnCustomDice", function_owner = self,
+    position = {-7.5, Yoffset, -0.2}, rotation = {0, 0, 0},
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+local customDiceCount = 1 -- Default number of dice
 
 lethalHitsThreshold = 6
 sustainedHitsThreshold = 6
@@ -370,7 +401,24 @@ function moveDiceToRoller(color, dice)
     -- Add this line at the end:
     storeCurrentDiceAsPreviousRoll()
 end
+function setCustomDiceCount(_, player, value, _)
+    local num = tonumber(value)
+    if num and num > 0 and num <= 128 then -- Validate input
+        customDiceCount = math.floor(num)
+        printToColor("Custom Dice Count Set to: " .. customDiceCount, player, "Green")
+    else
+        printToColor("Invalid Number! Enter a number between 1 and 128.", player, "Red")
+    end
+end
 
+function spawnCustomDice(_, player, _)
+    if customDiceCount > 0 then
+        spawnDice(customDiceCount, player)
+        printToAll(player .. " spawned " .. customDiceCount .. " dice!", {0, 1, 0})
+    else
+        printToColor("No valid custom dice count set.", player, "Red")
+    end
+end
 function autoRoll(obj, player, alt, numDice)
     numDice = numDice or 1 -- Default to 1 die if numDice is not provided
     local total = 0
@@ -379,7 +427,7 @@ function autoRoll(obj, player, alt, numDice)
     local directionMultiplier = (currentMat == "Blue") and 1 or -1
 
     -- Start position
-    local startX = self.getPosition().x + 16
+    local startX = self.getPosition().x + (currentMat == "Blue" and -16 or 16)
     local startY = self.getPosition().y + 1
     local startZ = self.getPosition().z
 
@@ -411,7 +459,13 @@ function autoRoll(obj, player, alt, numDice)
 
         if die then
             die.setValue(result) -- Set the dice value to the rolled result
-            die.setColorTint({1, 0.5, 0}) -- Change dice color to orange (RGB: 1, 0.5, 0)
+            die.setColorTint({0, 1.5, 0.2}) -- Change dice color to orange (RGB: 1, 0.5, 0)
+            die.setCustomObject({
+                type = 1,
+                image = customDiceImage,
+                face = 1,
+                font_color = {0, 0, 0} -- Set dice dot numbers to black
+            })
             diceCount = diceCount + 1 -- Increment the dice count
 
             -- Update last spawn position
@@ -449,31 +503,38 @@ function autoRoll2D6(obj, player, alt)
     autoRoll(obj, player, alt, 2)
 end
 
-
 function getDice()
-    local dice={}
+    local dice = {}
     local ownPos = self.getPosition()
     local ownRotation = self.getRotation()['x']
-    local ownScale = self.getScale()['x']
     local BoundsNormalized = self.getBounds()
-    local Rotation = self.getRotation()
-    local leftBound = BoundsNormalized.center.x-(BoundsNormalized.size.x/2)
-    local rightBound = BoundsNormalized.center.x+(BoundsNormalized.size.x/2)
-    local upperBound = BoundsNormalized.center.z+(BoundsNormalized.size.z/2)
-    local lowerBound = BoundsNormalized.center.z-(BoundsNormalized.size.z/2)
-    local yupperBound = BoundsNormalized.center.y+(BoundsNormalized.size.y/2)+3
-    local ylowerBound =  BoundsNormalized.center.y-(BoundsNormalized.size.y/2)
+
+    -- How much smaller you want the detection box to be
+    local MARGIN = 0.4
+
+    local leftBound  = BoundsNormalized.center.x - (BoundsNormalized.size.x / 2) + MARGIN
+    local rightBound = BoundsNormalized.center.x + (BoundsNormalized.size.x / 2) - MARGIN
+    local upperBound = BoundsNormalized.center.z + (BoundsNormalized.size.z / 2) - MARGIN
+    local lowerBound = BoundsNormalized.center.z - (BoundsNormalized.size.z / 2) + MARGIN
+
+    -- Notice we keep the existing +3 on yupperBound, just subtract MARGIN
+    local yupperBound = BoundsNormalized.center.y + (BoundsNormalized.size.y / 2) + 3 - MARGIN
+    local ylowerBound = BoundsNormalized.center.y - (BoundsNormalized.size.y / 2) + MARGIN
 
     for _, obj in pairs(getAllObjects()) do
-        if obj != nil and obj.tag == 'Dice' and obj.resting then
+        if obj ~= nil and obj.tag == "Dice" and obj.resting then
             local objPos = obj.getPosition()
-            if objPos['x'] > leftBound and objPos['x'] < rightBound and objPos['z'] > lowerBound and objPos['z'] < upperBound and objPos['y'] < yupperBound and objPos['y'] > ylowerBound then
+            if objPos.x > leftBound and objPos.x < rightBound
+               and objPos.z > lowerBound and objPos.z < upperBound
+               and objPos.y < yupperBound and objPos.y > ylowerBound then
                 table.insert(dice, #dice+1, obj)
             end
         end
     end
+
     return dice
 end
+
 
 function customDice(obj, player, alt)
     found = false
@@ -918,6 +979,9 @@ function onload()
     self.createButton(auto1D6)
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
+    self.createInput(customDiceInput)
+    self.createButton(customDiceSpawnButton)
+    self.createButton(customDiceInputBG)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
 end
