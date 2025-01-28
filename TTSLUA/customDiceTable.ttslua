@@ -211,7 +211,7 @@ local revertRollBtn = {
     tooltip="It takes 1 second after rolling to 'lock in'",
     click_function = "revertRoll",
     function_owner = self,
-    position       = {-7.5, Yoffset, 0.86},
+    position       = {-7.5, Yoffset, 0.36},
     rotation       = { 0, 0, 0 },
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
@@ -224,7 +224,7 @@ local revertRollBtn = {
 -- Background Box (Soft Off-White for a Professional Look)
 local customDiceInputBG = {
     label = "", click_function = "none", function_owner = self,
-    position = {-7.5, Yoffset, -0.5}, rotation = {0, 0, 0},
+    position = {-7.5, Yoffset, -0.3}, rotation = {0, 0, 0},
     width = 1300, height = 375, font_size = 100,
     color = {0.95, 0.95, 0.95, 1}, -- Soft off-white
     scale = {0.5, 0.5, 0.5}
@@ -233,7 +233,7 @@ local customDiceInputBG = {
 -- Input Field (Bright White)
 local customDiceInput = {
     label = "Enter Dice #", input_function = "setCustomDiceCount", function_owner = self,
-    position = {-7.5, Yoffset, -0.48}, rotation = {0, 0, 0},
+    position = {-7.5, Yoffset, -0.28}, rotation = {0, 0, 0},
     width = 1100, height = 225, font_size = 180, alignment = 2, scale = {0.5, 0.5, 0.5},
     color = {1, 1, 1, 1}, -- Pure white
     font_color = {0.2, 0.2, 0.2} -- Dark gray text
@@ -242,7 +242,7 @@ local customDiceInput = {
 -- Modern Black "Spawn Dice" Button
 local customDiceSpawnButton = {
     label = "Spawn Dice", click_function = "spawnCustomDice", function_owner = self,
-    position = {-7.5, Yoffset, -0.2}, rotation = {0, 0, 0},
+    position = {-7.5, Yoffset, 0}, rotation = {0, 0, 0},
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -401,24 +401,27 @@ function moveDiceToRoller(color, dice)
     -- Add this line at the end:
     storeCurrentDiceAsPreviousRoll()
 end
+
 function setCustomDiceCount(_, player, value, _)
     local num = tonumber(value)
     if num and num > 0 and num <= 128 then -- Validate input
         customDiceCount = math.floor(num)
-        printToColor("Custom Dice Count Set to: " .. customDiceCount, player, "Green")
     else
         printToColor("Invalid Number! Enter a number between 1 and 128.", player, "Red")
     end
 end
 
 function spawnCustomDice(_, player, _)
-    if customDiceCount > 0 then
+    if customDiceCount and customDiceCount > 0 then
         spawnDice(customDiceCount, player)
-        printToAll(player .. " spawned " .. customDiceCount .. " dice!", {0, 1, 0})
+        customDiceCount = nil -- Reset custom dice count
+        self.editInput({index = 0, value = ""}) -- Clear the input field (replace index if needed)
+        printToColor("Custom Dice Count reset after spawning.", player, "Yellow")
     else
         printToColor("No valid custom dice count set.", player, "Red")
     end
 end
+
 function autoRoll(obj, player, alt, numDice)
     numDice = numDice or 1 -- Default to 1 die if numDice is not provided
     local total = 0
@@ -459,7 +462,7 @@ function autoRoll(obj, player, alt, numDice)
 
         if die then
             die.setValue(result) -- Set the dice value to the rolled result
-            die.setColorTint({0, 1.5, 0.2}) -- Change dice color to orange (RGB: 1, 0.5, 0)
+            die.setColorTint({0.627, 0.124999948, 0.941}) -- Set to the requested purple color
             die.setCustomObject({
                 type = 1,
                 image = customDiceImage,
