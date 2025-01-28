@@ -267,6 +267,7 @@ if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
     rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
 end
 roller = getObjectFromGUID(rollerGUID)
+
 function importOpposDice(obj, player, alt)
     -- Clear the current player's dice mat first.
     local currentDice = getDice()
@@ -274,14 +275,26 @@ function importOpposDice(obj, player, alt)
         die.destroy()
     end
 
-    -- Determine the GUID of the opposite dice mat.
-    local oppositeMatGUID = nil
-    if currentMat == "Red" then
-        oppositeMatGUID = Global.getVar("blueCustomDiceMat_GUID")
-    else
-        oppositeMatGUID = Global.getVar("redCustomDiceMat_GUID")
+    -- Clear the lethal hit area for the current mat.
+    local currentLethalHitsGUID = (currentMat == "Red") and Global.getVar("redLethalHits_GUID") or Global.getVar("blueLethalHits_GUID")
+    local currentLethalHitsObj = getObjectFromGUID(currentLethalHitsGUID)
+    if currentLethalHitsObj then
+        local lethalBounds = currentLethalHitsObj.getBounds()
+        for _, obj in ipairs(getAllObjects()) do
+            if obj.tag == "Dice" and obj.resting then
+                local pos = obj.getPosition()
+                if pos.x > lethalBounds.center.x - lethalBounds.size.x / 2 and
+                   pos.x < lethalBounds.center.x + lethalBounds.size.x / 2 and
+                   pos.z > lethalBounds.center.z - lethalBounds.size.z / 2 and
+                   pos.z < lethalBounds.center.z + lethalBounds.size.z / 2 then
+                    obj.destroy()
+                end
+            end
+        end
     end
 
+    -- Determine the GUID of the opposite dice mat.
+    local oppositeMatGUID = (currentMat == "Red") and Global.getVar("blueCustomDiceMat_GUID") or Global.getVar("redCustomDiceMat_GUID")
     local oppositeMat = getObjectFromGUID(oppositeMatGUID)
     if not oppositeMat then
         printToColor("Opposite dice mat not found.", player, "Orange")
@@ -295,9 +308,9 @@ function importOpposDice(obj, player, alt)
     local lowerBound = bounds.center.z - bounds.size.z / 2
     local upperBound = bounds.center.z + bounds.size.z / 2
     local ylowerBound = bounds.center.y - bounds.size.y / 2
-    local yupperBound = bounds.center.y + bounds.size.y / 2 + 3  -- using a similar offset as in getDice()
+    local yupperBound = bounds.center.y + bounds.size.y / 2 + 3
 
-    -- Find all dice in the opposite dice mat zone.
+    -- Find dice in the opposite mat zone
     local diceToImport = {}
     for _, obj in ipairs(getAllObjects()) do
         if obj.tag == "Dice" and obj.resting then
@@ -310,37 +323,58 @@ function importOpposDice(obj, player, alt)
         end
     end
 
+    -- Also find dice in the lethal hits area of the opposite mat
+    local lethalHitsGUID = (currentMat == "Red") and Global.getVar("blueLethalHits_GUID") or Global.getVar("redLethalHits_GUID")
+    local lethalHitsObj = getObjectFromGUID(lethalHitsGUID)
+    if lethalHitsObj then
+        local lethalBounds = lethalHitsObj.getBounds()
+        for _, obj in ipairs(getAllObjects()) do
+            if obj.tag == "Dice" and obj.resting then
+                local pos = obj.getPosition()
+                if pos.x > lethalBounds.center.x - lethalBounds.size.x / 2 and
+                   pos.x < lethalBounds.center.x + lethalBounds.size.x / 2 and
+                   pos.z > lethalBounds.center.z - lethalBounds.size.z / 2 and
+                   pos.z < lethalBounds.center.z + lethalBounds.size.z / 2 then
+                    table.insert(diceToImport, obj)
+                end
+            end
+        end
+    else
+        printToColor("Opposite lethal hits area not found.", player, "Yellow")
+    end
+
     if #diceToImport == 0 then
         printToColor("No dice found on the opposite mat.", player, "Yellow")
         return
     end
 
-    -- Get our dice mat's position as a reference.
+    -- Get our dice mat's position as a reference
     local myPos = self.getPosition()
     local importedCount = 0
 
     for _, die in ipairs(diceToImport) do
         local diePos = die.getPosition()
-        -- Compute the relative position with respect to the opposite mat's center.
-        -- Flip both the x and z axes to mirror horizontally and vertically.
+        -- Compute the relative position with respect to the opposite mat's center
+        -- Flip both the x and z axes to mirror horizontally and vertically
         local relPos = {
             x = -(diePos.x - bounds.center.x),
             y = diePos.y - bounds.center.y,
             z = -(diePos.z - bounds.center.z)
         }
-        -- Place the cloned die with the same flipped relative offset on our mat.
+        -- Place the cloned die with the same flipped relative offset on our mat
         local newPos = {
             x = myPos.x + relPos.x,
             y = myPos.y + relPos.y,
             z = myPos.z + relPos.z
         }
-        -- Clone the die.
+        -- Clone the die
         die.clone({position = newPos, snap_to_grid = false})
         importedCount = importedCount + 1
     end
 
-    printToAll("Imported " .. importedCount .. " dice from the opposite dice mat.", {1,1,1})
+    printToAll("Imported " .. importedCount .. " dice from the opposite dice mat, including lethal hits.", {1,1,1})
 end
+
 
 local lastSpawnPosition = nil -- Keep track of the last spawned dice position
 local diceCount = 0 -- Track the number of dice spawned in the current sequence
