@@ -15,8 +15,8 @@ function onSave()
 end
 
 function onLoad(data)
-  addHotkey('Save position', savePositionClicked)
-  addHotkey('Restore position', restorePositionClicked)
+  addHotkey("Save position", savePositionClicked)
+  addHotkey("Restore position", restorePositionClicked)
   self.addContextMenuItem("Set Custom Dice", onSetCustomDiceClicked)
   self.addContextMenuItem("Reset Custom Dice", onResetCustomDiceClicked)
   self.addContextMenuItem("Set Spawn Position", onSetSpawnPositionClicked)
@@ -26,14 +26,17 @@ function onLoad(data)
 end
 
 function restoreSavedData(data)
-  if data == nil then
-    return
-  end
+    if data == nil or data == "" then
+        return
+    end
 
-  local parsedData = JSON.decode(data)
-  spawnPosition = parsedData.spawnPosition
-  customDieData = parsedData.customDieData
+    local parsedData = JSON.decode(data)
+    if parsedData then
+        spawnPosition = parsedData.spawnPosition or nil
+        customDieData = parsedData.customDieData or nil
+    end
 end
+
 
 function onResetSpawnPositionClicked()
   spawnPosition = nil
@@ -41,14 +44,14 @@ function onResetSpawnPositionClicked()
 end
 
 function onSetSpawnPositionClicked()
-  local marker = findSpawnPositionMarker()
-  if marker == nil then
-    createSpawnPositionMarker()
-    printMessage("Place the marker on the desired position and click 'Set Spawn Position' again")
-  else
-    saveSpawnPosition(marker)
-    printMessage("Spawn position successfully configured!")
-  end
+    local marker = findSpawnPositionMarker()
+    if marker == nil then
+        createSpawnPositionMarker()
+        printMessage("Place the marker on the desired position and click \"Set Spawn Position\" again")
+    else
+        saveSpawnPosition(marker)
+        printMessage("Spawn position successfully configured!")
+    end
 end
 
 function saveSpawnPosition(marker)
@@ -61,8 +64,8 @@ function createSpawnPositionMarker()
     type = "go_game_piece_white",
     position = getPositionAboveMe(),
     callback_function = function(obj)
-      obj.setName("Place me on the spawn position and click 'Set Spawn' again")
-      obj.addTag('SpawnMarker')
+      obj.setName("Place me on the spawn position and click \"Set Spawn\" again")
+      obj.addTag("SpawnMarker")
     end
   })
 end
@@ -131,18 +134,18 @@ function savePositionClicked(playerColor, hoveredObject)
     for i,v in ipairs(objects) do
       savePosition(v)
     end
-    printToColor(#objects..' objects positions saved!', playerColor)
+    printToColor(#objects.." objects positions saved!", playerColor)
   end
 end
 
 function restorePositionClicked(playerColor)
-  for i,v in ipairs(savedPositions) do
-    local obj = getObjectFromGUID(v.guid)
-    if obj != nil then
-      obj.setRotation(v.rotation)
-      obj.setPositionSmooth(v.position, false, true)
+    for i, v in ipairs(savedPositions) do
+        local obj = getObjectFromGUID(v.guid)
+        if obj then  -- Ensure obj is not nil
+            obj.setRotation(v.rotation)
+            obj.setPositionSmooth(v.position, false, true)
+        end
     end
-  end
 end
 
 function getObjectsPositionToSave(player, hoveredObject)
@@ -268,7 +271,7 @@ function getAttackInfo(weaponData)
     result = result..tostring(weaponData.attack)
   end
   if weaponData.data.bonusAttack then
-    local pref = weaponData.count > 1 and weaponData.count..'*' or ''
+    local pref = weaponData.count > 1 and weaponData.count.."*" or ""
     return pref..weaponData.data.bonusAttack
   end
   return result
@@ -743,7 +746,7 @@ end
 function getWeaponStatValue(stats, statName)
   local statPairs = splitStr(stats, " ")
   for i,v in ipairs(statPairs) do
-    local stat = splitStr(v, ':')
+    local stat = splitStr(v, ":")
     if stat[1] == statName then
       return stat[2]
     end
@@ -751,8 +754,8 @@ function getWeaponStatValue(stats, statName)
 end
 
 function parseRange(stats)
-  local inches = string.find(stats, "″") or string.find(stats, '"')
-  if inches != nil then
+  local inches = string.find(stats, "″") or string.find(stats, [["]])
+  if inches ~= nil then
     return tonumber(string.sub(stats, 1, inches - 1))
   end
 end
