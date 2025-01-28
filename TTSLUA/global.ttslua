@@ -32,6 +32,9 @@ blueCustomDiceMat_GUID = "839fcc" -- diceTable
 redCustomDiceRoller_GUID = "17ca2b" -- kustom40kDiceRoller
 blueCustomDiceRoller_GUID = "927ca1" -- kustom40kDiceRoller
 
+redLethalHits_GUID = "7ac8ba"
+blueLethalHits_GUID = "71ab21"
+
 RedVortexGUID = "be2cdb"
 BlueVortexGUID = "4b1a7b"
 

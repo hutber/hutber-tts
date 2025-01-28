@@ -96,7 +96,8 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.1.9: Feat: New dice spawner. Fix: stat helper updated.",
+    "1.2.0: Feat: New dice spawner. Fix: stat helper updated.",
+    "1.1.9: Fix: Grab oppos dice now import lethal hits for you.",
     "1.1.8: Feat: Finally fixed Selection Tool. Fix: sometimes you could interact with old dice mat would ",
     "1.1.7: Feat: Added revert dice that will put dice back to their previously rolled state",
     "1.1.6: Style: Reverted some of the colours back, they were far too wet looking",
