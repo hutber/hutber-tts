@@ -434,6 +434,8 @@ function moveDiceToRoller(color, dice)
 
     -- Add this line at the end:
     storeCurrentDiceAsPreviousRoll()
+    -- Infer roll phase and calculate stats
+    inferRollPhase(dice)
 end
 
 function setCustomDiceCount(_, player, value, _)
@@ -799,7 +801,6 @@ end
 
 function spawnDice(n,player)
     local playerDiceSpeed = player == "Red" and Global.getVar("redDiceSpawnTime") or Global.getVar("blueDiceSpawnTime")
-    print(playerDiceSpeed)
     local currentTime = os.time()
     local disableTime = (playerDiceSpeed == "slow") and 0.6 or 0.2
     if currentTime-lastClick<disableTime then
@@ -1023,7 +1024,7 @@ function onload()
 
 end
 
-local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/34438955573517849/113D79186FC9E0B9769DB8D5D480D0B0842974DF"
+local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/34438955573517849/113D79186FC9E0B9769DB8D5D480D0B0842974DF/"
 
 local spawnedObjects = {
     Red = {

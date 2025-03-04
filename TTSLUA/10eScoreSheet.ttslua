@@ -9,6 +9,20 @@ secondary11ZoneObj = getObjectFromGUID(Global.getVar("secondary11CardZone_GUID")
 secondary12ZoneObj = getObjectFromGUID(Global.getVar("secondary12CardZone_GUID"))
 secondary21ZoneObj = getObjectFromGUID(Global.getVar("secondary21CardZone_GUID"))
 secondary22ZoneObj = getObjectFromGUID(Global.getVar("secondary22CardZone_GUID"))
+
+-- Fixed transform definitions
+fixedCard1Pos = {26.9489384, 0.913603365, 25.2107239}
+fixedCard1Rot = {0.00000162272181, 359.99173, -5.558658e-7}
+fixedCard1Scale = {1, 1, 1}
+
+fixedCard2Pos = {28.9215851, 0.913603365, 25.2053833}
+fixedCard2Rot = {0.00000165932113, 0.009773632, -5.64291838e-7}
+fixedCard2Scale = {1, 1, 1}
+
+-- Global variables to store the fixed copies
+fixedSecondaryCard1 = nil
+fixedSecondaryCard2 = nil
+
 redDiscardPosition = { x = 79.25, y = 1.5, z = 8.05 }
 blueDiscardPosition = { x = 79.25, y = 1.5, z = -8.05 }
 redUsingFixed = false
@@ -244,6 +258,37 @@ function enableSheet()
 	onload(self.script_state)
 end
 
+function copySecondaryCardToFixedPositions(drawnCard)
+    if drawnCard == nil then
+        print("copySecondaryCardToFixedPositions: drawnCard is nil")
+        return
+    end
+    -- Destroy any previous fixed copies
+    if fixedSecondaryCard1 then
+        fixedSecondaryCard1.destroy()
+        fixedSecondaryCard1 = nil
+    end
+    if fixedSecondaryCard2 then
+        fixedSecondaryCard2.destroy()
+        fixedSecondaryCard2 = nil
+    end
+
+    -- Clone the drawn card twice
+    fixedSecondaryCard1 = drawnCard.clone()
+    fixedSecondaryCard2 = drawnCard.clone()
+
+    -- Set transform for fixed card 1
+    fixedSecondaryCard1.setPositionSmooth(fixedCard1Pos)
+    fixedSecondaryCard1.setRotationSmooth(fixedCard1Rot)
+    fixedSecondaryCard1.setScale(fixedCard1Scale)
+
+    -- Set transform for fixed card 2
+    fixedSecondaryCard2.setPositionSmooth(fixedCard2Pos)
+    fixedSecondaryCard2.setRotationSmooth(fixedCard2Rot)
+    fixedSecondaryCard2.setScale(fixedCard2Scale)
+
+    print("Copied drawn card to fixed secondary positions.")
+end
 function onload(save_data)
 	if save_data ~= "" then
 		local data = JSON.decode(save_data)
@@ -577,22 +622,61 @@ end
 
 -- TODO: lock and unlock secondary cards
 
+-- Modified drawSecondary1 function (for Red)
 function drawSecondary1()
-	if #secondary11ZoneObj.getObjects() < 1 then
-		Global.call("moveOneFromDeckToZone", {deck = "redSecondary", zone = "secondary11"})
-	elseif #secondary12ZoneObj.getObjects() < 1 then
-		Global.call("moveOneFromDeckToZone", {deck = "redSecondary", zone = "secondary12"})
-	end
+    local zoneObjects = secondary11ZoneObj.getObjects()
+	print(zoneObjects)
+    if #zoneObjects < 1 then
+        Global.call("moveOneFromDeckToZone", {deck = "redSecondary", zone = "secondary11"})
+        Wait.frames(function()
+            local objs = secondary11ZoneObj.getObjects()
+            if #objs > 0 then
+                copySecondaryCardToFixedPositions(objs[1])
+            else
+                print("drawSecondary1: No card found in zone after drawing.")
+            end
+        end, 1)
+    elseif #secondary12ZoneObj.getObjects() < 1 then
+        Global.call("moveOneFromDeckToZone", {deck = "redSecondary", zone = "secondary12"})
+        Wait.frames(function()
+            local objs = secondary12ZoneObj.getObjects()
+            if #objs > 0 then
+                copySecondaryCardToFixedPositions(objs[1])
+            else
+                print("drawSecondary1: No card found in secondary12 zone after drawing.")
+            end
+        end, 1)
+    else
+        print("Red secondary zones already have cards.")
+    end
 end
 
 function drawSecondary2()
-	if #secondary21ZoneObj.getObjects() < 1 then
-		Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary21"})
-	elseif #secondary22ZoneObj.getObjects() < 1 then
-		Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary22"})
-	end
+    local zoneObjects = secondary21ZoneObj.getObjects()
+    if #zoneObjects < 1 then
+        Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary21"})
+        Wait.frames(function()
+            local objs = secondary21ZoneObj.getObjects()
+            if #objs > 0 then
+                copySecondaryCardToFixedPositions(objs[1])
+            else
+                print("drawSecondary2: No card found in secondary21 zone after drawing.")
+            end
+        end, 1)
+    elseif #secondary22ZoneObj.getObjects() < 1 then
+        Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary22"})
+        Wait.frames(function()
+            local objs = secondary22ZoneObj.getObjects()
+            if #objs > 0 then
+                copySecondaryCardToFixedPositions(objs[1])
+            else
+                print("drawSecondary2: No card found in secondary22 zone after drawing.")
+            end
+        end, 1)
+    else
+        print("Blue secondary zones already have cards.")
+    end
 end
-
 function recycleSecondary11()
 	Global.call("moveAllFromZoneToDeck", {zone = "secondary11", deck = "redSecondary"})
 	Global.call("moveOneFromDeckToZone", {deck = "redSecondary", zone = "secondary11"})

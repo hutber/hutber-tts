@@ -4,6 +4,16 @@
 lastRolls={}
 scaleBtn=3
 rolledFaces = {}
+-- Globals to track rolls and phases
+currentPhase = "none" -- Tracks the current phase: "none", "hit", "wound", "special"
+previousRoll = {}      -- Stores dice rolled in the last phase
+currentRoll = {}       -- Stores dice rolled in the current phase
+specialRollDice = {}   -- Tracks dice moved for special rolls (e.g., Lethal/Sustained Hits)
+
+-- Track stats
+totalHits = 0          -- Total successful hits
+missedHits = 0         -- Total missed hits
+totalWounds = 0        -- Total successful wounds
 
 printLastBtn={
     label="Last roll", click_function="printLast", function_owner=self,
@@ -11,7 +21,7 @@ printLastBtn={
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
 printLast5Btn={
-    label="Last 5 rolls", click_function="printLast5", function_owner=self,
+    label="Last 5 rolls", click_function="printLast5Innovative", function_owner=self,
     position={2.5,0.1,-0.57}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
@@ -28,6 +38,64 @@ showStatsBtn={
     position={-2.5,0.1,0.5}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
+function trackRoll(dice)
+    currentRoll = {}
+    for _, die in ipairs(dice) do
+        table.insert(currentRoll, die.getValue())
+    end
+end
+
+function inferRollPhase(dice)
+    if #previousRoll == 0 then
+        -- If no previous roll, assume this is the Hit Roll
+        currentPhase = "hit"
+        trackRoll(dice)
+        calculateHits(dice)
+    elseif currentPhase == "hit" then
+        -- If we were in the Hit Roll phase, the next roll is likely Wound Rolls
+        currentPhase = "wound"
+        calculateWounds(dice)
+    elseif currentPhase == "special" then
+        -- Handle special rolls like lethal or sustained hits
+        calculateSpecialRoll(dice)
+    end
+
+    -- Save the current roll as the previous for the next phase
+    previousRoll = currentRoll
+end
+
+function calculateHits(dice)
+    totalHits = 0
+    missedHits = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() >= 4 then -- Assume 4+ is a hit
+            totalHits = totalHits + 1
+        else
+            missedHits = missedHits + 1
+        end
+    end
+    printToAll("Hit Roll: " .. totalHits .. " hits, " .. missedHits .. " misses.", "Green")
+end
+
+function calculateWounds(dice)
+    totalWounds = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() >= 3 then -- Assume 3+ is a wound
+            totalWounds = totalWounds + 1
+        end
+    end
+    printToAll("Wound Roll: " .. totalWounds .. " wounds.", "Red")
+end
+
+function calculateSpecialRoll(dice)
+    local lethalHits = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() == 6 then
+            lethalHits = lethalHits + 1
+        end
+    end
+    printToAll("Special Roll: " .. lethalHits .. " lethal hits.", "Blue")
+end
 
 -- (2) Implement showStats() function to calculate min, max, average, etc.
 -- Replace your existing showStats() with this:
@@ -97,6 +165,56 @@ end
 function printLast5()
 	printResults(5)
 end
+
+-- Example: Detailed breakdown for each roll.
+-- You can insert this into your script, replacing or supplementing printLast5Innovative.
+function printLast5Innovative(pointless, player_color)
+    if #lastRolls == 0 then
+        printToAll("NO LAST ROLLS", {1,1,0})
+        return
+    end
+
+    -- Roman numerals for faces
+    local roman = {"One", "Two", "Three", "Four", "Five", "Six"}
+    local faceIndex = {Ones=1, Twos=2, Threes=3, Fours=4, Fives=5, Sixes=6}
+
+    printToAll("RECENT DICE ROLLS (CONCISE):", {1,1,1})
+
+    -- Iterate from last to first so latest roll is on top
+    for i = #lastRolls, 1, -1 do
+        local rollData = lastRolls[i]
+        local rollColor = rollData.color or {1,1,1}
+
+        -- Tally each face
+        local tally = {0,0,0,0,0,0}
+        for numStr, faceStr in rollData.msg:gmatch("(%d+) (%a+)") do
+            local idx = faceIndex[faceStr]
+            if idx then
+                tally[idx] = tally[idx] + tonumber(numStr)
+            end
+        end
+
+        -- Sum up total dice
+        local totalDice = 0
+        for face = 1, 6 do
+            totalDice = totalDice + tally[face]
+        end
+
+        -- Build a single-line string:
+        -- e.g. Roll #5 => (I:0) (II:0) (III:2) (IV:0) (V:4) (VI:0) [Total:6]
+        local rollLine = string.format("Roll #%d => ", i)
+        for face = 1, 6 do
+            rollLine = rollLine .. string.format("(%s:%d) ", roman[face], tally[face])
+        end
+        rollLine = rollLine .. string.format("[Total:%d]", totalDice)
+
+        printToAll(rollLine, rollColor)
+    end
+
+    printToAll("–––––––––––––––––––––––––––––––––––––––––", {1,1,1})
+end
+
+
 
 function printResults(n)
     if #lastRolls == 0 then
