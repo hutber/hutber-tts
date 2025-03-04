@@ -96,14 +96,25 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.2.0: Feat: New dice spawner. Fix: stat helper updated.",
-    "1.1.9: Fix: Grab oppos dice now import lethal hits for you.",
-    "1.1.8: Feat: Finally fixed Selection Tool. Fix: sometimes you could interact with old dice mat would ",
-    "1.1.7: Feat: Added revert dice that will put dice back to their previously rolled state",
-    "1.1.6: Style: Reverted some of the colours back, they were far too wet looking",
-    "1.1.5: Style: Updated intro screen and updated buttons with cleaner names",
-    "1.1.4: Style: Updated game cards with clearer names",
-    "1.1.3: Feat: Added Single Player",
+    "1.3.2: Feat: Cannot start game without secondaries locked in (expect for single player mode)",
+    "1.3.1: Feat: Auto position models 2\" apart",
+    "1.3.0: Feat: Instant 9\"/12\" Bubble for Deep Strike on models",
+    "1.3.0: Fix: Removed button that disabled remove 1s",
+    --"1.2.4.3: Feat: New Control Board Feature Custom Counter for Kabal Tokens, Eldar Agile Maneuvers etc",
+    --"1.2.4.3: Fix: Last 5 rolls not displaying (please comment if not working)",
+    --"1.2.4.2: Fix: Updated Storm Hostile Objective secondary to newest version",
+    --"1.2.4.1: Feat: Added Core Rule Update PDF",
+    --"1.2.3: Fix: Bug that meant old reserves board was under the table",
+    --"1.2.2: Fix: Update Storm Hostile Objective secondary to newest version",
+    --"1.2.1: Style: Small placement updates on various objects. Please feedback if you hate it",
+    --"1.2.0: Feat: New dice spawner. Fix: stat helper updated",
+    --"1.1.9: Fix: Grab oppos dice now import lethal hits for you",
+    --"1.1.8: Feat: Finally fixed Selection Tool. Fix: sometimes you could interact with old dice mat would",
+    --"1.1.7: Feat: Added revert dice that will put dice back to their previously rolled state",
+    --"1.1.6: Style: Reverted some of the colours back, they were far too wet looking",
+    --"1.1.5: Style: Updated intro screen and updated buttons with cleaner names",
+    --"1.1.4: Style: Updated game cards with clearer names",
+    --"1.1.3: Feat: Added Single Player",
     --"1.1.2: Fix: Improve secruity for injection and cheating",
     --"1.1.1: Feat: Added Doubles support, feedback needed",
     --"1.0.3: Fix: Updated Pariah Nexus Tournament Companion from 1.2 to 1.4",
@@ -473,7 +484,7 @@ end
 
 function confirmDoublesGame()
     -- inGame = true
-    mapSizeSelected=3
+    --mapSizeSelected=3
     selectPariahNexus()
     -- Auto-assign teams
     -- autoAssignTeams()
@@ -2190,20 +2201,56 @@ function writeIngameMenu()
     self.createButton(nextPhaseBtn)
 end
 
+function getContainedItems(container)
+    local contained = {}
+    local bounds = container.getBounds()
+    if not bounds then
+        return contained
+    end
+    for _, obj in ipairs(getAllObjects()) do
+        if obj ~= container then
+            local pos = obj.getPosition()
+            if pos.x > (bounds.center.x - bounds.size.x/2) and pos.x < (bounds.center.x + bounds.size.x/2) and
+               pos.z > (bounds.center.z - bounds.size.z/2) and pos.z < (bounds.center.z + bounds.size.z/2) and
+               pos.y > (bounds.center.y - bounds.size.y/2) and pos.y < (bounds.center.y + bounds.size.y/2) then
+                table.insert(contained, obj)
+            end
+        end
+    end
+    return contained
+end
+
 function startGame(obj, player, alt)
     if alt then
         simulation = true
     end
-    local playerList = Player.getPlayers()
-    local numberOfPlayers = 0
-    for i, p in ipairs(playerList) do
-        numberOfPlayers = numberOfPlayers + 1
-    end
+    if singlesMode ~= "singles" then
+        local secHolder = getObjectFromGUID("06d627")
+        if not secHolder then
+            broadcastToAll("Secondary container not found (GUID: 06d627).", {1, 0, 0})
+            return
+        end
 
-    if(singlesMode != "singles") then
-        if Player["Red"].seated == false or Player["Blue"].seated == false then
+        local contained = getContainedItems(secHolder)
+        local count = #contained
+        -- If the count is not 11 AND also not 14, fail
+        if count ~= 11 and count ~= 14 then
+            broadcastToAll("Please Lock in your Secondaries", {1, 0, 0})
+            return
+        end
+
+
+        -- Count the number of players (if needed later)
+        local playerList = Player.getPlayers()
+        local numberOfPlayers = 0
+        for i, p in ipairs(playerList) do
+            numberOfPlayers = numberOfPlayers + 1
+        end
+
+
+        if not Player["Red"].seated or not Player["Blue"].seated then
             broadcastToAll("Must have both players seated", {1, 0, 0})
-            if simulation == false then
+            if not simulation then
                 return
             end
         end
@@ -2225,6 +2272,7 @@ function startGame(obj, player, alt)
     writeMenus()
     simulation = false
 end
+
 
 function resetActivationTokens()
     for i, obj in ipairs(getAllObjects()) do
