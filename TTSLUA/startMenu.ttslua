@@ -96,10 +96,14 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.3.5: Fix: Updated Stats Helper to fix the errors that rarely occured",
+    "1.3.4: Feat: Added Secondary Cards next to dice mat",
+    "1.3.3: Fix: Rewrote the Last 5 Rolls",
+    "1.3.3: Fix: Added colours on mod inital load to the control board",
     "1.3.2: Feat: Cannot start game without secondaries locked in (expect for single player mode)",
     "1.3.1: Feat: Auto position models 2\" apart",
     "1.3.0: Feat: Instant 9\"/12\" Bubble for Deep Strike on models",
-    "1.3.0: Fix: Removed button that disabled remove 1s",
+    --"1.3.0: Fix: Removed button that disabled remove 1s",
     --"1.2.4.3: Feat: New Control Board Feature Custom Counter for Kabal Tokens, Eldar Agile Maneuvers etc",
     --"1.2.4.3: Fix: Last 5 rolls not displaying (please comment if not working)",
     --"1.2.4.2: Fix: Updated Storm Hostile Objective secondary to newest version",
