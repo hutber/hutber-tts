@@ -492,7 +492,6 @@ function confirmDoublesGame()
     selectPariahNexus()
     -- Auto-assign teams
     -- autoAssignTeams()
-    removeObjectFromBagAndPlace()
     enableObjects()
 
     -- Place tokens, shuffle team cards, or any other setup
@@ -668,6 +667,7 @@ function confirmSizeMat(type)
     mat.setScale(sizeData[mapSizeSelected].scale)
     self.setRotation({0,270,0})
     writeMenus()
+    removeObjectFromBagAndPlace()
     if gameMode == "game" then
     end
     if gameMode == "terrain" then
