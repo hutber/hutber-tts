@@ -145,6 +145,7 @@ Tipping Point 77cde6
 
 MISSION_PACK_LEVIATHAN = 1
 MISSION_PACK_PARIAH_NEXUS = 2
+LOCKED_IN_SECONDARIES = 0
 packSelected = nil
 missionPackData = {
     {
