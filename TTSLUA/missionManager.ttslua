@@ -214,8 +214,12 @@ function lockInSecondaries()
     Wait.time(shuffleAndMaybeFlipSecondaries, 0.5)
 end
 
+
 function shuffleAndMaybeFlipSecondaries()
     secondaryDeck.shuffle()
+    local secondariesLockedIn = Global.getVar("LOCKED_IN_SECONDARIES") or 0
+   secondariesLockedIn = secondariesLockedIn + 1
+   Global.setVar("LOCKED_IN_SECONDARIES", secondariesLockedIn)
 
     if #secondary1Zone.getObjects() > 0 and #secondary2Zone.getObjects() > 0 and #otherSecondary1Zone.getObjects() > 0 and #otherSecondary2Zone.getObjects() > 0 then
         flipCardsInZone(secondary1Zone)
@@ -237,6 +241,7 @@ end
 function lockInGambit()
     local cardsInHand = handZone.getObjects()
     local faceDownCards = 0
+
     for _,card in ipairs(cardsInHand) do
         if card.is_face_down then
             faceDownCards = faceDownCards + 1

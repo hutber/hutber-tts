@@ -1,4 +1,44 @@
 -- FTC-GUID: 32ed4c,83ab2a
+
+local measuringCircles = {}
+local isCurrentlyCheckingCoherency = false
+local hasBuiltUI = false
+local previousHighlightColor = nil
+local MM_TO_INCH = 0.0393701
+local MEASURING_RING_Y_OFFSET = 0.17
+local VALID_BASE_SIZES_IN_MM = {
+    {x = 25, z = 25},
+    {x = 28, z = 28},
+    {x = 30, z = 30},
+    {x = 32, z = 32},
+    {x = 40, z = 40},
+    {x = 50, z = 50},
+    {x = 55, z = 55},
+    {x = 60, z = 60},
+    {x = 65, z = 65},
+    {x = 80, z = 80},
+    {x = 90, z = 90},
+    {x = 100, z = 100},
+    {x = 130, z = 130},
+    {x = 160, z = 160},
+    {x = 25, z = 75},
+    {x = 75, z = 25},
+    {x = 35.5, z = 60},
+    {x = 60, z = 35.5},
+    {x = 40, z = 95},
+    {x = 95, z = 40},
+    {x = 52, z = 90},
+    {x = 90, z = 52},
+    {x = 70, z = 105},
+    {x = 105, z = 70},
+    {x = 92, z = 120},
+    {x = 120, z = 92},
+    {x = 95, z = 150},
+    {x = 150, z = 95},
+    {x = 109, z = 170},
+    {x = 170, z = 109}
+}
+
 local RedControlBoard = {
     VortexGUID = "be2cdb",
     CustomDiceMat_GUID = "acae21",
@@ -7,6 +47,7 @@ local RedControlBoard = {
     SelectionHighlighterGUID = "27de4f",
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
+    CustomCounter = "021302",
     bagIds = {
         d12  ="b9c441",
         greyD12 = "fbf744",
@@ -21,13 +62,49 @@ local RedControlBoard = {
         orange = "2ff2db",
     },
     options = {
-        {name = "Custom Dice Roller", state = true},
-        {name = "Selection Highlight", state = true, title = "Only works before a map has been drawn"},
-        {name = "Stat Helper", state = true, customHiddenPosition = 0.5},
-        {name = "Vortex", state = true, customHiddenPosition = 0.6},
-        {name = "Reserves Board", state = true},
-        {name = "Fast Rolling", state = false},
-        {name = "Show Dice Bags", state = false},
+        {
+            name = "Custom Dice Roller",
+            state = true,
+            title = "Swap dice mats to toggle the custom dice roller"
+        },
+        {
+            name = "Selection Highlight",
+            state = true,
+            title = "Highlights selected models with players colour to show users which models they are talking about."
+        },
+        {
+            name = "Stat Helper",
+            state = false,
+            title = "Auto generate dice for selected units",
+            customHiddenPosition = {-3.82076836, 0.5, 34.74994}
+        },
+        {
+            name = "Vortex",
+            state = true,
+            title = "Toggle the Vortex feature",
+            customHiddenPosition = 0.6
+        },
+        {
+            name = "Reserves Board",
+            state = true,
+            title = "Toggle the display of the Reserves Board"
+        },
+        {
+            name = "Fast Rolling",
+            state = false,
+            title = "Enable fast dice spawning for quicker rolls"
+        },
+        {
+            name = "Show Dice Bags",
+            state = false,
+            title = "Toggle visibility of dice bags on the table"
+        },
+        {
+            name = "Custom Counter",
+            state = false,
+            title = "Toggle the display of the custom counter",
+            customHiddenPosition = -1.32
+        },
     }
 }
 
@@ -39,6 +116,7 @@ local BlueControlBoard = {
     SelectionHighlighterGUID = "84c3a4",
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
+    CustomCounter = "7f211",
     bagIds = {
         d12  ="ab15ef",
         greyD12 = "c3c404",
@@ -53,13 +131,49 @@ local BlueControlBoard = {
         orange = "a65625",
     },
     options = {
-        {name = "Custom Dice Roller", state = true},
-        {name = "Selection Highlight", state = true, title = "Only works before a map has been drawn"},
-        {name = "Stat Helper", state = true, customHiddenPosition = 0.5},
-        {name = "Vortex", state = true, customHiddenPosition = 0.6},
-        {name = "Reserves Board", state = true},
-        {name = "Fast Rolling", state = false},
-        {name = "Show Dice Bags", state = false},
+        {
+            name = "Custom Dice Roller",
+            state = true,
+            title = "Swap dice mats to toggle the custom dice roller"
+        },
+        {
+            name = "Selection Highlight",
+            state = true,
+            title = "Highlights selected models with players colour to show users which models they are talking about."
+        },
+        {
+            name = "Stat Helper",
+            state = false,
+            title = "Auto generate dice for selected units",
+            customHiddenPosition = {3.82076836, 0.5, -34.7402}
+        },
+        {
+            name = "Vortex",
+            state = true,
+            title = "Toggle the Vortex feature",
+            customHiddenPosition = 0.6
+        },
+        {
+            name = "Reserves Board",
+            state = true,
+            title = "Toggle the display of the Reserves Board"
+        },
+        {
+            name = "Fast Rolling",
+            state = false,
+            title = "Enable fast dice spawning for quicker rolls"
+        },
+        {
+            name = "Show Dice Bags",
+            state = false,
+            title = "Toggle visibility of dice bags on the table"
+        },
+        {
+            name = "Custom Counter",
+            state = false,
+            title = "Toggle the display of the custom counter",
+            customHiddenPosition =  -1.32
+        },
     }
 }
 
@@ -70,50 +184,205 @@ local boards = {
 
 local originalPositions = {}
 
-function onLoad()
-    buildControlPanel("Red")
-    buildControlPanel("Blue")
+--[[
+  This script ensures each model is within 2" of at least one other model.
+  If you run it and "nothing happens," you can add debug prints to see
+  whether it's being called, how many models are selected, etc.
+  Below is the same script, but with some extra debug messages to
+  help verify what's going on step-by-step.
+--]]
+function arrangeModelsWith2Inch(playerColor, value, id)
+    local playerObj = Player[playerColor]
+    if not playerObj then
+      print("Player object not found for color: " .. playerColor)
+      return
+    end
 
-    -- Hide and disable DiceRollers initially for both colors
-    for color, board in pairs(boards) do
-        local diceRoller = getObjectFromGUID(board.DiceMat_GUID)
-        if diceRoller then
-            if not originalPositions[board.DiceMat_GUID] then
-                originalPositions[board.DiceMat_GUID] = diceRoller.getPosition()
-            end
-            local hiddenPosition = {
-                originalPositions[board.DiceMat_GUID][1],
-                originalPositions[board.DiceMat_GUID][2] - 3,
-                originalPositions[board.DiceMat_GUID][3]
-            }
-            diceRoller.setPosition(hiddenPosition)
-            diceRoller.setLock(true)
-            diceRoller.interactable = false
-        else
-            print(color .. " DiceRoller object not found during onLoad")
-        end
+    local objs = playerObj.getSelectedObjects()
+    if #objs < 2 then
+      print("Less than 2 objects selected; nothing to arrange.")
+      return
+    end
 
-        -- Hide dice bags on load
-        for _, guid in pairs(board.bagIds) do
-            local obj = getObjectFromGUID(guid)
-            if obj then
-                if not originalPositions[guid] then
-                    originalPositions[guid] = obj.getPosition()
+    -- Determine overall orientation in the X-Z plane using the bounding box of the selected objects.
+    local minPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    local maxPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    for i = 2, #objs do
+      local p = objs[i].getPosition()
+      if p.x < minPos.x then minPos.x = p.x end
+      if p.z < minPos.z then minPos.z = p.z end
+      if p.x > maxPos.x then maxPos.x = p.x end
+      if p.z > maxPos.z then maxPos.z = p.z end
+    end
+
+    local dx = maxPos.x - minPos.x
+    local dz = maxPos.z - minPos.z
+    local mag = math.sqrt(dx * dx + dz * dz)
+    local d = {}
+    if mag < 0.0001 then
+      d.x, d.z = 1, 0
+    else
+      d.x, d.z = dx / mag, dz / mag
+    end
+
+    -- Build a list of items with their object, original position, and half-width (using bounds.x as an approximation)
+    local items = {}
+    for _, obj in ipairs(objs) do
+      local pos = obj.getPosition()
+      local half = obj.getBoundsNormalized().size.x / 2
+      -- Compute projection of the object's center along the direction d in the X-Z plane.
+      local proj = pos.x * d.x + pos.z * d.z
+      table.insert(items, { obj = obj, pos = pos, half = half, proj = proj })
+    end
+
+    -- Sort items by their projection value
+    table.sort(items, function(a, b) return a.proj < b.proj end)
+
+    -- Use the first item as the starting point. We'll anchor its new position at its current position.
+    local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
+    local startY = items[1].pos.y
+    local cumulative = items[1].half  -- start with half-width of first model
+
+    -- For each item, compute its new position along the direction d.
+    for i, item in ipairs(items) do
+      if i == 1 then
+        -- First item remains at its anchor position (preserve its original Y)
+        item.newPos = { x = anchorPos.x, y = item.pos.y, z = anchorPos.z }
+      else
+        -- Increase cumulative distance by: previous half + gap (2") + current half
+        local prev = items[i-1]
+        cumulative = cumulative + prev.half + 2 + item.half
+        -- New position is: anchorPos + d * cumulative (in X-Z), but use the model's original Y
+        item.newPos = {
+          x = anchorPos.x + d.x * cumulative,
+          y = item.pos.y,
+          z = anchorPos.z + d.z * cumulative
+        }
+      end
+    end
+
+    -- Apply the new positions to each model
+    for _, item in ipairs(items) do
+      item.obj.setPositionSmooth(item.newPos)
+    end
+
+    print("Arranged " .. #items .. " models with a 2-inch gap along the detected orientation.")
+  end
+
+
+function determineBaseInInches(model)
+    local savedBase = model.getTable("chosenBase")
+
+    if savedBase ~= nil then
+        return savedBase.base
+    else
+        local chosenBase =  VALID_BASE_SIZES_IN_MM[1]
+        local modelSize = model.getBoundsNormalized().size
+        local modelSizeX = modelSize.x
+        local modelSizeZ = modelSize.z
+        local closestSum = 10000000000
+        local chosenBaseIdx = 1
+
+        for k, base in pairs(VALID_BASE_SIZES_IN_MM) do
+            local baseInchX = (MM_TO_INCH - 0.001) * base.x
+            local baseInchZ = (MM_TO_INCH - 0.001) * base.z
+            if modelSizeX > baseInchX and modelSizeZ > baseInchZ then
+                local distSum = (modelSizeX - baseInchX) + (modelSizeZ - baseInchZ)
+                if distSum < closestSum then
+                    closestSum = distSum
+                    chosenBase = base
+                    chosenBaseIdx = k
                 end
-                local hiddenPosition = {
-                    originalPositions[guid][1],
-                    originalPositions[guid][2] - 3,  -- Move it below the table
-                    originalPositions[guid][3]
-                }
-                obj.setPosition(hiddenPosition)
-                obj.setLock(true)
-                obj.interactable = false
-            else
-                print(color .. " Dice bag object not found during onLoad: " .. guid)
             end
         end
+
+        if chosenBase == nil then
+            chosenBase = { x=modelSizeX/2, z=modelSizeZ/2}
+        else
+            chosenBase = {
+                x = (chosenBase.x * MM_TO_INCH)/2,
+                z = (chosenBase.z * MM_TO_INCH)/2
+            }
+        end
+
+        model.setTable("chosenBase", { baseIdx=chosenBaseIdx, base=chosenBase })
+
+        return chosenBase
     end
 end
+
+function getCircleVectorPoints(radius, baseX, baseZ, obj)
+    local result = {}
+    local scaleFactor = 1/obj.getScale().x
+    local rotationDegrees =  obj.getRotation().y
+    local steps = 64
+    local degrees,sin,cos,toRads = 360/steps, math.sin, math.cos, math.rad
+
+    for i = 0,steps do
+        table.insert(result,{
+            x = cos(toRads(degrees*i))*((radius+baseX)*scaleFactor),
+            z = MEASURING_RING_Y_OFFSET,
+            y = sin(toRads(degrees*i))*((radius+baseZ)*scaleFactor)
+        })
+    end
+
+    return result
+end
+
+
+function getRectangleVectorPoints(radius, sizeX, sizeZ, obj)
+    local result = {}
+    local scaleFactor = 1/obj.getScale().x
+
+    sizeX = sizeX*scaleFactor
+    sizeZ = sizeZ*scaleFactor
+    radius = radius*scaleFactor
+
+    local steps = 65
+    local degrees,sin,cos,toRads = 360/(steps-1), math.sin, math.cos, math.rad
+    local xOffset,zOffset = sizeX,sizeZ
+    -- compensate for ignoring vertical line
+    table.insert(result,{
+        x = (cos(toRads(degrees*0))*radius)+sizeX-0.001,
+        y = (sin(toRads(degrees*0))*radius)+sizeZ,
+        z = MEASURING_RING_Y_OFFSET
+    })
+
+    for i = 1,steps-1 do
+        if i == 16 then
+            table.insert(result,{ x= sizeX, y=(radius+sizeZ), z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-sizeX, y=(radius+sizeZ), z=MEASURING_RING_Y_OFFSET })
+            xOffset = -sizeX
+        elseif i == 33 then
+            table.insert(result,{ x=-radius-sizeX,       y= sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-radius-sizeX-0.001, y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-radius-sizeX,       y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            zOffset = -sizeZ
+        elseif i == 49 then
+            table.insert(result,{ x=-sizeX, y=-radius-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x= sizeX, y=-radius-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            xOffset = sizeX
+        elseif i == 65 then
+            table.insert(result,{ x=radius+sizeX,       y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=radius+sizeX-0.001, y= sizeZ, z=MEASURING_RING_Y_OFFSET })
+        else
+            table.insert(result,{
+                x = (cos(toRads(degrees*i))*radius)+xOffset,
+                y = (sin(toRads(degrees*i))*radius)+zOffset,
+                z = MEASURING_RING_Y_OFFSET
+            })
+        end
+    end
+    -- compensate for ignoring vertical line
+    table.insert(result,{
+        x = (cos(toRads(degrees*0))*radius)+sizeX-0.001,
+        y = (sin(toRads(degrees*0))*radius)+sizeZ,
+        z = MEASURING_RING_Y_OFFSET
+    })
+
+    return result
+end
+
 
 
 function buildControlPanel(color)
@@ -122,6 +391,10 @@ function buildControlPanel(color)
         print("Invalid color: " .. tostring(color))
         return
     end
+
+    -- Define pastel colors:
+    local onColor = "#77DD77|#66CC66|#55BB55"    -- Pastel green (normal, hover, pressed)
+    local offColor = "#FFCCCC|#FFB3B3|#FFA6A6"   -- Softer pastel red
 
     local panel = {
         tag = "VerticalLayout",
@@ -159,43 +432,42 @@ function buildControlPanel(color)
         },
     }
 
-for i, option in ipairs(board.options) do
-    table.insert(panel.children[2].children, {
-        tag = "HorizontalLayout",
-        children = {
-            {
-                tag = "Button",
-                attributes = {
-                    text     = option.name,
-                    toolTip  = option.title,
-                    onClick  = "toggleOption(" .. i .. ", '" .. color .. "')",
-                    fontSize = "18",
-                    width    = "200",
-                    height   = "40",
+    for i, option in ipairs(board.options) do
+        local tooltipText = option.title or ("Toggle " .. option.name)
+        local stateText = option.state and "ON" or "OFF"
+        local stateColor = option.state and onColor or offColor
+
+        table.insert(panel.children[2].children, {
+            tag = "HorizontalLayout",
+            children = {
+                {
+                    tag = "Button",
+                    attributes = {
+                        text     = option.name,
+                        toolTip  = tooltipText,
+                        onClick  = "toggleOption(" .. i .. ", '" .. color .. "')",
+                        fontSize = "18",
+                        width    = "200",
+                        height   = "40",
+                    },
+                },
+                {
+                    tag = "Button",
+                    attributes = {
+                        id           = color .. "_status_" .. i,
+                        text         = stateText,
+                        toolTip      = "Current state of " .. option.name,
+                        fontSize     = "18",
+                        width        = "60",
+                        height       = "40",
+                        colors       = stateColor,
+                        interactable = "true",
+                        onClick      = "toggleOption(" .. i .. ", '" .. color .. "')"
+                    },
                 },
             },
-            {
-                -- Presentational "button" (no click)
-                tag = "Button",
-                attributes = {
-                    id           = color .. "_status_" .. i,
-                    text         = option.state and "ON" or "OFF",
-                    fontSize     = "18",
-                    width        = "60",
-                    height       = "40",
-                    -- Using hex colors for normal, hover, and active states (all the same).
-                    colors       = option.state
-                                   and "#3CB371|#3CB371|#3CB371"  -- pasal green if ON
-                                   or  "#FF0000|#FF0000|#FF0000", -- red if OFF
-                    -- Make sure it can't be clicked:
-                    interactable = "false",
-                },
-            },
-        },
-    })
-end
-
-
+        })
+    end
 
     local boardObjectGUID = (color == "Red") and "32ed4c" or "83ab2a"
     local boardObject = getObjectFromGUID(boardObjectGUID)
@@ -206,6 +478,8 @@ end
     end
 end
 
+
+
 function toggleObjectState(objectGUID, state, customHiddenPosition)
     local obj = getObjectFromGUID(objectGUID)
     if obj then
@@ -214,12 +488,26 @@ function toggleObjectState(objectGUID, state, customHiddenPosition)
         end
 
         if state then
-            local originalPosition = {
-                originalPositions[objectGUID][1],
-                (customHiddenPosition or 0.87),
-                originalPositions[objectGUID][3]
-            }
-            obj.setPosition(originalPosition)
+            local newPosition
+            if type(customHiddenPosition) == "table" then
+                newPosition = {
+                    customHiddenPosition[1] or originalPositions[objectGUID][1],
+                    customHiddenPosition[2] or originalPositions[objectGUID][2],
+                    customHiddenPosition[3] or originalPositions[objectGUID][3]
+                }
+            else
+                newPosition = {
+                    originalPositions[objectGUID][1],
+                    (customHiddenPosition or originalPositions[objectGUID][2]),
+                    originalPositions[objectGUID][3]
+                }
+            end
+
+            if objectGUID == boards.Red.ReservesOldBoardGUID or objectGUID == boards.Blue.ReservesOldBoardGUID then
+                newPosition[2] = 1
+            end
+
+            obj.setPosition(newPosition)
             obj.setLock(true)
             obj.interactable = true
         else
@@ -256,10 +544,13 @@ local function swapDiceMats(board)
     end
 end
 
+
+
 function toggleOption(player, index)
     local playerColor = player.color
     local expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
 
+    -- Only the matching color can use this board.
     if playerColor ~= expectedColor then
         print("Access denied: " .. playerColor .. " tried to use the " .. expectedColor .. " control board.")
         return
@@ -267,24 +558,35 @@ function toggleOption(player, index)
 
     local board = boards[expectedColor]
     local option = board.options[tonumber(index)]
+    -- Flip the state (on/off).
     option.state = not option.state
 
     local statusId = expectedColor .. "_status_" .. index
     local newText = option.state and "ON" or "OFF"
-    local newColor = option.state and "Green" or "Red"
-    self.UI.setAttributes(statusId, { text = newText, color = newColor })
 
+    -- Pastel color repeated 4 times: normal|hover|pressed|disabled
+    local onColor  = "#77DD77|#77DD77|#77DD77|#77DD77"
+    local offColor = "#FFCCCC|#FFCCCC|#FFCCCC|#FFCCCC"
+    local newColors = option.state and onColor or offColor
+
+    -- Update the button's text and the multi-state color attribute.
+    self.UI.setAttributes(statusId, {
+        text   = newText,
+        colors = newColors
+    })
+
+    -- Then do your logic for each option name:
     if option.name == "Show Dice Bags" then
         toggleDiceBags(board, option.state)
-    elseif option.name == "Custom Dice Roller" then
+    elseif option.name == "Custom Dice Rollzer" then
         swapDiceMats(board)
     elseif option.name == "Selection Highlight" then
         local highlighter = getObjectFromGUID(board.SelectionHighlighterGUID)
         if highlighter then
             if option.state then
-                highlighter.call("onLoad")  -- Restart the highlighter script
+                highlighter.call("onLoad")
             else
-                highlighter.call("onDestroy")  -- Stop the highlighter script and clear highlights
+                highlighter.call("onDestroy")
             end
         else
             print("Selection highlighter object not found for " .. expectedColor)
@@ -299,7 +601,12 @@ function toggleOption(player, index)
         toggleObjectState(board.ReservesBoardGUID, option.state)
         toggleObjectState(board.ReservesOldBoardGUID, not option.state)
     elseif option.name == "Fast Rolling" then
-        Global.setVar(expectedColor == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime", option.state and "fast" or "slow")
+        Global.setVar(
+            expectedColor == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime",
+            option.state and "fast" or "slow"
+        )
+    elseif option.name == "Custom Counter" then
+        toggleObjectState(board.CustomCounter, option.state, option.customHiddenPosition)
     end
 end
 
@@ -314,7 +621,7 @@ function toggleDiceBags(board, state)
             if state then
                 obj.setPosition({
                     originalPositions[guid][1],
-                    1,  -- Set Y position to always be 1 when turning on
+                    1,
                     originalPositions[guid][3]
                 })
                 obj.setLock(false)
@@ -322,7 +629,7 @@ function toggleDiceBags(board, state)
             else
                 local hiddenPosition = {
                     originalPositions[guid][1],
-                    originalPositions[guid][2] - 3,  -- Move it below the table
+                    originalPositions[guid][2] - 3,
                     originalPositions[guid][3]
                 }
                 obj.setPosition(hiddenPosition)
@@ -331,6 +638,169 @@ function toggleDiceBags(board, state)
             end
         else
             print("Dice bag object not found: " .. guid)
+        end
+    end
+end
+
+function toggleMeasurementCircleForSelection(playerColor)
+    local playerObj = Player[playerColor]
+    if not playerObj then return end
+    local objs = playerObj.getSelectedObjects()
+    for _, obj in ipairs(objs) do
+        changeMeasurementCircle(9, obj)
+    end
+end
+
+function changeMeasurementCircle(newRequestedRadius, target, presetBase)
+    if target == nil then return end
+
+    local measuringRings = target.getTable("ym-measuring-circles")
+    local currentColor = "Teal"
+    local currentColorRadius
+
+    -- Retrieve or create the measurement data
+    if measuringRings == nil then
+        measuringRings = {}
+        currentColorRadius = 0
+    else
+        -- Remove any existing rings for this color
+        for idx = #measuringRings, 1, -1 do
+            if (measuringRings[idx].name == currentColor) or
+               (measuringRings[idx].name == nil and currentColor == nil) then
+                currentColorRadius = measuringRings[idx].radius
+                table.remove(measuringRings, idx)
+            elseif measuringRings[idx].name == "base" then
+                table.remove(measuringRings, idx)
+            end
+        end
+
+        if currentColorRadius == nil then currentColorRadius = 0 end
+    end
+
+    -- Toggle logic:
+    -- If the current radius matches the new requested radius, turn it off (0).
+    -- Otherwise, set it to the new requested radius.
+    local newRadius
+    if currentColorRadius == newRequestedRadius then
+        -- Same radius is already active => toggle off
+        newRadius = 0
+    else
+        -- Different radius => switch to the requested one
+        newRadius = newRequestedRadius
+    end
+
+    if newRadius ~= 0 then
+        local isRectangular = target.hasTag("rectangularMeasuring")
+        local measuring = {
+            name = currentColor,
+            color = Color.fromString(currentColor),
+            radius = newRadius,
+            thickness = 0.5,  -- or your preferred thickness
+            rotation = {270, 0, 0}
+        }
+        local base = {
+            name = "base",
+            color = Color.fromString(currentColor),
+            thickness = 0.2,  -- or your preferred thickness
+            rotation = {270, 0, 0}
+        }
+
+        local measuringPoints, basePoints
+        if isRectangular then
+            local modelBounds = target.getBoundsNormalized()
+            measuringPoints = getRectangleVectorPoints(newRadius, modelBounds.size.x / 2, modelBounds.size.z / 2, target)
+            basePoints = getRectangleVectorPoints(0, modelBounds.size.x / 2, modelBounds.size.z / 2, target)
+        else
+            local baseRadiuses = (presetBase == nil) and determineBaseInInches(target) or presetBase
+            measuringPoints = getCircleVectorPoints(newRadius, baseRadiuses.x, baseRadiuses.z, target)
+            basePoints = getCircleVectorPoints(0, baseRadiuses.x, baseRadiuses.z, target)
+        end
+
+        measuring.points = measuringPoints
+        base.points = basePoints
+
+        table.insert(measuringRings, measuring)
+        table.insert(measuringRings, base)
+    end
+
+    target.setVectorLines(measuringRings)
+    target.setTable("ym-measuring-circles", measuringRings)
+end
+
+
+function onLoad()
+    print("Control Panel script loaded")
+
+    addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
+    addHotkey("Toggle 3 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(3, target)
+    end)
+    addHotkey("Toggle 6 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(6, target)
+    end)
+    addHotkey("Toggle 9 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(9, target)
+    end)
+    addHotkey("Toggle 12 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(12.01, target)
+    end)
+
+    buildControlPanel("Red")
+    buildControlPanel("Blue")
+
+    -- Hide and disable DiceRollers, Dice Bags, and Custom Counter objects for each board.
+    for color, board in pairs(boards) do
+        local diceRoller = getObjectFromGUID(board.DiceMat_GUID)
+        if diceRoller then
+            if not originalPositions[board.DiceMat_GUID] then
+                originalPositions[board.DiceMat_GUID] = diceRoller.getPosition()
+            end
+            local hiddenPosition = {
+                originalPositions[board.DiceMat_GUID][1],
+                originalPositions[board.DiceMat_GUID][2] - 3,
+                originalPositions[board.DiceMat_GUID][3]
+            }
+            diceRoller.setPosition(hiddenPosition)
+            diceRoller.setLock(true)
+            diceRoller.interactable = false
+        else
+            print(color .. " DiceRoller object not found during onLoad")
+        end
+
+        for _, guid in pairs(board.bagIds) do
+            local obj = getObjectFromGUID(guid)
+            if obj then
+                if not originalPositions[guid] then
+                    originalPositions[guid] = obj.getPosition()
+                end
+                local hiddenPosition = {
+                    originalPositions[guid][1],
+                    originalPositions[guid][2] - 3,
+                    originalPositions[guid][3]
+                }
+                obj.setPosition(hiddenPosition)
+                obj.setLock(true)
+                obj.interactable = false
+            else
+                print(color .. " Dice bag object not found during onLoad: " .. guid)
+            end
+        end
+
+        local counter = getObjectFromGUID(board.CustomCounter)
+        if counter then
+            if not originalPositions[board.CustomCounter] then
+                originalPositions[board.CustomCounter] = counter.getPosition()
+            end
+            local hiddenPosition = {
+                originalPositions[board.CustomCounter][1],
+                originalPositions[board.CustomCounter][2] - 3,
+                originalPositions[board.CustomCounter][3]
+            }
+            counter.setPosition(hiddenPosition)
+            counter.setLock(true)
+            counter.interactable = false
+        else
+            print(color .. " CustomCounter object not found during onLoad: " .. board.CustomCounter)
         end
     end
 end

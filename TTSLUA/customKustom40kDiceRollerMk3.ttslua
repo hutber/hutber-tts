@@ -4,6 +4,16 @@
 lastRolls={}
 scaleBtn=3
 rolledFaces = {}
+-- Globals to track rolls and phases
+currentPhase = "none" -- Tracks the current phase: "none", "hit", "wound", "special"
+previousRoll = {}      -- Stores dice rolled in the last phase
+currentRoll = {}       -- Stores dice rolled in the current phase
+specialRollDice = {}   -- Tracks dice moved for special rolls (e.g., Lethal/Sustained Hits)
+
+-- Track stats
+totalHits = 0          -- Total successful hits
+missedHits = 0         -- Total missed hits
+totalWounds = 0        -- Total successful wounds
 
 printLastBtn={
     label="Last roll", click_function="printLast", function_owner=self,
@@ -11,7 +21,7 @@ printLastBtn={
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
 printLast5Btn={
-    label="Last 5 rolls", click_function="printLast5", function_owner=self,
+    label="Last 5 rolls", click_function="printLast5Innovative", function_owner=self,
     position={2.5,0.1,-0.57}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
@@ -28,6 +38,64 @@ showStatsBtn={
     position={-2.5,0.1,0.5}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}, scale={scaleBtn,scaleBtn,scaleBtn}
 }
+function trackRoll(dice)
+    currentRoll = {}
+    for _, die in ipairs(dice) do
+        table.insert(currentRoll, die.getValue())
+    end
+end
+
+function inferRollPhase(dice)
+    if #previousRoll == 0 then
+        -- If no previous roll, assume this is the Hit Roll
+        currentPhase = "hit"
+        trackRoll(dice)
+        calculateHits(dice)
+    elseif currentPhase == "hit" then
+        -- If we were in the Hit Roll phase, the next roll is likely Wound Rolls
+        currentPhase = "wound"
+        calculateWounds(dice)
+    elseif currentPhase == "special" then
+        -- Handle special rolls like lethal or sustained hits
+        calculateSpecialRoll(dice)
+    end
+
+    -- Save the current roll as the previous for the next phase
+    previousRoll = currentRoll
+end
+
+function calculateHits(dice)
+    totalHits = 0
+    missedHits = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() >= 4 then -- Assume 4+ is a hit
+            totalHits = totalHits + 1
+        else
+            missedHits = missedHits + 1
+        end
+    end
+    printToAll("Hit Roll: " .. totalHits .. " hits, " .. missedHits .. " misses.", "Green")
+end
+
+function calculateWounds(dice)
+    totalWounds = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() >= 3 then -- Assume 3+ is a wound
+            totalWounds = totalWounds + 1
+        end
+    end
+    printToAll("Wound Roll: " .. totalWounds .. " wounds.", "Red")
+end
+
+function calculateSpecialRoll(dice)
+    local lethalHits = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() == 6 then
+            lethalHits = lethalHits + 1
+        end
+    end
+    printToAll("Special Roll: " .. lethalHits .. " lethal hits.", "Blue")
+end
 
 -- (2) Implement showStats() function to calculate min, max, average, etc.
 -- Replace your existing showStats() with this:
@@ -97,82 +165,14 @@ end
 function printLast5()
 	printResults(5)
 end
-
-function printResults(n)
-    if #lastRolls == 0 then
-        printToAll("NO LAST ROLLS\n", "Yellow")
-        return
-    end
-
-    printToAll("LAST 5 ROLLS SUMMARY\n", "White")
-
-    function supportsUnicode()
-        local testString = "⚀"
-        return testString ~= ""
-    end
-
-    local diceFaces = supportsUnicode() and {
-        [1] = "⚀",
-        [2] = "⚁",
-        [3] = "⚂",
-        [4] = "⚃",
-        [5] = "⚄",
-        [6] = "⚅"
-    } or {
-        [1] = " 1",
-        [2] = " 2",
-        [3] = " 3",
-        [4] = " 4",
-        [5] = " 5",
-        [6] = " 6"
-    }
-
-    -- Determine if the dice roller is red or blue based on GUID
-    local redDiceRollerGUID = "17ca2b"
-    local blueDiceRollerGUID = "927ca1"
-    local diceColor = {1, 1, 1}  -- Default to white
-
-    if self.getGUID() == redDiceRollerGUID then
-        diceColor = {0.91, 0.29, 0.23} -- Red color for red dice roller
-    elseif self.getGUID() == blueDiceRollerGUID then
-        diceColor = {0.2, 0.62, 0.91}   -- Blue color for blue dice roller
-    end
-
-    for i = 1, n do
-        if lastRolls[i] then
-            local roll = lastRolls[i]
-            local countTable = {0, 0, 0, 0, 0, 0}  -- Initialize all dice counts to 0
-
-            -- Extract dice counts accurately
-            for dice, count in roll.msg:gmatch("(%d+) (%a+)") do
-                local diceMap = {
-                    ["Ones"] = 1, ["Twos"] = 2, ["Threes"] = 3,
-                    ["Fours"] = 4, ["Fives"] = 5, ["Sixes"] = 6
-                }
-                local diceIndex = diceMap[count]
-                if diceIndex then
-                    countTable[diceIndex] = countTable[diceIndex] + tonumber(dice)
-                end
-            end
-
-            -- Construct the dice row visually
-            local diceRow = ""
-            local countRow = ""
-
-            for face = 1, 6 do
-                diceRow = diceRow .. " " .. diceFaces[face] .. " "
-                countRow = countRow .. string.format(" %2d ", countTable[face])
-            end
-
-            -- Label rolls correctly
-            local rollLabel = (i == 1) and "Oldest Roll" or (i == n and "Most Recent Roll") or ("Roll " .. (n - i + 1))
-
-            -- Print roll summary with colors
-            printToAll(rollLabel .. ":", {1, 1, 1})  -- White color for label
-            printToAll(diceRow, diceColor)            -- Conditional color for dice symbols
-            printToAll(countRow, {1, 1, 1})            -- White color for counts
-            printToAll("-------------------------------------------------", {1, 1, 1})
-        end
+-- NEW HELPER: Return pastel color if player is Red or Blue
+function getPastelIfRedOrBlue(pColor)
+    if pColor == "Red" then
+        return {1, 0.6, 0.6}  -- pastel red
+    elseif pColor == "Blue" then
+        return {0.6, 0.7, 1}  -- pastel blue closer to blue
+    else
+        return stringColorToRGB(pColor) or {1,1,1}
     end
 end
 
@@ -422,6 +422,7 @@ function setLastHolder(params)
     lastHolder[params.obj] = params.color
 end
 
+-- In your printresultsTable function, modify how you store the roll record:
 function printresultsTable()
     local data = JSON.decode(self.getDescription())
     local description = {
@@ -434,34 +435,28 @@ function printresultsTable()
     local msg = ''
     local color = {1,1,1}
 
-    -- Build a chat message about the results
-for dieFace, numRolled in ipairs(resultsTable) do
-    if numRolled > 0 then
-        msg = msg .. numRolled .. ' ' .. description[dieFace] .. ' '
-    end
-end
-
--- NEW / ADDED logic to populate rolledFaces
-for dieFace, numRolled in ipairs(resultsTable) do
-    for i=1, numRolled do
-        table.insert(rolledFaces, dieFace)
-    end
-end
-
-    local time = '[' .. os.date("%H") .. ':' .. os.date("%M") .. ':' .. os.date("%S") .. ' UTC] '
     if playerColor == nil then
-        msg = time .. '~UNKNOWN PLAYER~ rolls:\n' .. msg .. '*******************************************************'
+        msg = '[' .. os.date("%H:%M:%S UTC") .. '] ~UNKNOWN PLAYER~ rolls:\n'
     else
-        msg = time .. Player[playerColor].steam_name .. ' rolls:\n' .. msg .. '*******************************************************'
-        color = stringColorToRGB(playerColor)
+        -- Use pastel color if applicable.
+        color = getPastelIfRedOrBlue(playerColor)
+        msg = '[' .. os.date("%H:%M:%S UTC") .. '] ' .. Player[playerColor].steam_name .. ' rolls:\n'
     end
 
-    local rolltorecord = {msg = msg, color = color}
+    for dieFace, numRolled in ipairs(resultsTable) do
+        if numRolled > 0 then
+            msg = msg .. numRolled .. ' ' .. description[dieFace] .. ' '
+        end
+    end
+
+    msg = msg .. '*******************************************************'
+
+    local rolltorecord = { msg = msg, color = color }
     if sum(resultsTable) > 0 then
         if #lastRolls >= 5 then
             table.remove(lastRolls, 1)
         end
-        table.insert(lastRolls, #lastRolls + 1, rolltorecord)
+        table.insert(lastRolls, rolltorecord)
     end
 
     if sum(resultsTable) > 0 and data.Results == 'yes' then
@@ -469,11 +464,59 @@ end
         broadcastToAll(msg, color)
     end
 
-    -- Reset our per-roll resultsTable for the next batch
     for k,v in ipairs(resultsTable) do
         resultsTable[k] = 0
     end
 end
+
+-- Now printLast5Innovative uses the stored color without overriding it.
+function printLast5Innovative(pointless, player_color)
+    if #lastRolls == 0 then
+        printToAll("NO LAST ROLLS", {1,1,0})
+        return
+    end
+
+    local faceNames = {"One", "Two", "Three", "Four", "Five", "Six"}
+    local faceIndex = {Ones=1, Twos=2, Threes=3, Fours=4, Fives=5, Sixes=6}
+
+    printToAll("–––––––––––––––––––––––––––––––––––––––––", {1,1,1})
+
+    for i = #lastRolls, 1, -1 do
+        local rollData = lastRolls[i]
+        local rollColor = rollData.color or {1,1,1}  -- use stored pastel color if present
+
+        local tally = {0,0,0,0,0,0}
+        for numStr, faceStr in rollData.msg:gmatch("(%d+) (%a+)") do
+            local idx = faceIndex[faceStr]
+            if idx then
+                tally[idx] = tally[idx] + tonumber(numStr)
+            end
+        end
+
+        local totalDice = 0
+        for face = 1, 6 do
+            totalDice = totalDice + tally[face]
+        end
+
+        local prefix
+        if i == #lastRolls then
+            prefix = "Latest =>"
+        elseif i == 1 then
+            prefix = "Oldest =>"
+        else
+            prefix = string.format("Roll #%d =>", i)
+        end
+
+        local rollLine = prefix
+        for face = 1, 6 do
+            rollLine = rollLine .. string.format(" %s:%d", faceNames[face], tally[face])
+        end
+        rollLine = rollLine .. string.format(" [Total:%d]", totalDice)
+
+        printToAll(rollLine, rollColor)
+    end
+end
+
 
 
 function setValueCallback(obj, tab)
