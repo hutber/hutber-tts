@@ -1,4 +1,4 @@
--- FTC-GUID: 1ee4a3,293211,ba7e7c,1eb4a3
+-- FTC-GUID: 1ee4a3,293211,ba7e7c
 
     function onLoad()
         self.createButton({
@@ -2469,7 +2469,7 @@ objectJSONs = {
   "Hands": false,
   "CustomMesh": {
     "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
-    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/849339809539332522/5289A4E95F8A2C03C1CD552D9A0A4CC98BEEBE44/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/789758618465975570/025A6B3CEF1692272FAE550919E00507B40F207D/",
     "NormalURL": "",
     "ColliderURL": "",
     "Convex": true,

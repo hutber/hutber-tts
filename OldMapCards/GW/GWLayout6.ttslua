@@ -1,4 +1,4 @@
--- FTC-GUID: 4baba1,6948e5,460b8a
+-- FTC-GUID: 4baba1,6948e5
 
     function onLoad()
         self.createButton({
@@ -94,6 +94,7 @@
     -----------------------------------------------------------------------------------------------------------------
     -- This function runs when the Clear Map button is clicked on the Map Card
     function clearMap(objectClicked, clickerColor, altClickUsed)
+
         local scriptzoneParams = {                  -- Define the parameters for the scripting zone
             position = {x=0, y=26, z=0},
             --scale = {x=30.15, y=73, z=22.03}, --Kill Team Size
@@ -105,7 +106,8 @@
             callback_owner = self,
             }
 
-        spawnObject(scriptzoneParams)
+    spawnObject(scriptzoneParams)
+
     end
 
 

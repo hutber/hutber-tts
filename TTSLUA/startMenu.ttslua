@@ -96,6 +96,8 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.3.8: Feat: Added random WTC mission selector",
+    "1.3.8: Fix: A random situation where the game would not start, added `force start` by clicking start 3 times",
     "1.3.7: Fix: If Mission Select was not used `lock your secondaries` message was displayed",
     "1.3.6: Feat: Hide tokens into a bag and added the most used near the dice mat",
     "1.3.5: Fix: Updated Stats Helper to fix the errors that rarely occured",
@@ -182,7 +184,8 @@ sizeMenuBtn = {
     font_size=300,
     color={0.15, 0.15, 0.15},  -- Dark Grey
     font_color={1,1,1}         -- White
-}sizeMenuBtn = {
+}
+sizeMenuBtn = {
     index=1,
     label="S E L E C T     B A T T L E F I E L D     S I Z E",
     click_function="none",
@@ -1823,10 +1826,10 @@ missionHeaderBtn = {
     label = "M I S S I O N   S E L E C T I O N",
     click_function = "none",
     function_owner = self,
-    position = {9.25, 5, -17.1},
+    position = {9.20, 5, -17.1},
     rotation = {0, 0, 0},
     height = 250,
-    width = 4000,
+    width = 4750,
     font_size = 200,
     color = {1, 1, 1},
     font_color = {0, 0, 0},
@@ -1835,19 +1838,7 @@ randomiseMissionBtn = {
     label = "Fully\nRandom",
     click_function = "randomiseMission",
     function_owner = self,
-    position = {5.85, 5, -16.2},
-    rotation = {0, 0, 0},
-    height = 550,
-    width = 750,
-    font_size = 160,
-    color = {1, 1, 1},
-    font_color = {0, 0, 0}
-}
-randomTournamentMissionBtn = {
-    label = "Random\nGW",
-    click_function = "randomTournamentMission",
-    function_owner = self,
-    position = {12.65, 5, -16.2},
+    position = {5.00, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
@@ -1859,19 +1850,7 @@ missionSelectionDownBtn = {
     label = "<-",
     click_function = "missionSelectionDown",
     function_owner = self,
-    position = {7.55, 5, -16.2},
-    rotation = {0, 0, 0},
-    height = 550,
-    width = 750,
-    font_size = 320,
-    color = {1, 1, 1},
-    font_color = {0, 0, 0}
-}
-missionSelectionUpBtn = {
-    label = "->",
-    click_function = "missionSelectionUp",
-    function_owner = self,
-    position = {10.95, 5, -16.2},
+    position = {6.65, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
@@ -1883,11 +1862,47 @@ missionSelectionDispBtn = {
     label = "?",
     click_function = "none",
     function_owner = self,
-    position = {9.25, 5, -16.2},
+    position = {8.35, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
     font_size = 320,
+    color = {1, 1, 1},
+    font_color = {0, 0, 0}
+}
+missionSelectionUpBtn = {
+    label = "->",
+    click_function = "missionSelectionUp",
+    function_owner = self,
+    position = {10.00, 5, -16.2},
+    rotation = {0, 0, 0},
+    height = 550,
+    width = 750,
+    font_size = 320,
+    color = {1, 1, 1},
+    font_color = {0, 0, 0}
+}
+randomTournamentMissionBtn = {
+    label = "Random\nGW",
+    click_function = "randomTournamentMission",
+    function_owner = self,
+    position = {11.70, 5, -16.2},
+    rotation = {0, 0, 0},
+    height = 550,
+    width = 750,
+    font_size = 160,
+    color = {1, 1, 1},
+    font_color = {0, 0, 0}
+}
+randomWTCMissionBtn = {
+    label = "Random\nWTC",
+    click_function = "randomWTCMission",
+    function_owner = self,
+    position = {13.35, 5, -16.2},
+    rotation = {0, 0, 0},
+    height = 550,
+    width = 750,
+    font_size = 160,
     color = {1, 1, 1},
     font_color = {0, 0, 0}
 }
@@ -1964,6 +1979,27 @@ function randomTournamentMission()
         updateMission()
     end
 end
+
+function randomWTCMission()
+    if canChangeMission then
+        math.randomseed(os.time())
+        local chars = {"B","C","H","J","L","N","P"}
+        local randomChar = chars[math.random(#chars)]
+        local foundIndex
+        for i, mission in ipairs(missionPackData.tournamentMissions) do
+            if mission and mission.name == randomChar then
+                foundIndex = i
+                break
+            end
+        end
+        if foundIndex then
+            selectedMission = foundIndex
+            updateMission()
+        end
+    end
+end
+
+
 
 function updateMission()
     canChangeMission = false
@@ -2147,6 +2183,7 @@ function writeDeployMenu()
             self.createButton(missionHeaderBtn)
             self.createButton(randomiseMissionBtn)
             self.createButton(randomTournamentMissionBtn)
+            self.createButton(randomWTCMissionBtn)
             self.createButton(missionSelectionDownBtn)
             self.createButton(missionSelectionUpBtn)
             self.createButton(missionSelectionDispBtn)
@@ -2208,11 +2245,22 @@ function startGame(obj, player, alt)
     end
     if singlesMode ~= "singles" then
         local count = Global.getVar("LOCKED_IN_SECONDARIES")
-        if count ~= 2 then
-            broadcastToAll("Please Lock in your Secondaries", {1, 0, 0})
-            return
-        end
+        forceStartCounter = forceStartCounter or 0
 
+        if count ~= 2 then
+            if forceStartCounter < 2 then
+            forceStartCounter = forceStartCounter + 1
+            local remaining = 3 - forceStartCounter
+            if remaining > 0 then
+                broadcastToAll("Please Lock in your Secondaries. Click "..remaining.." more times to force start the game", {1,0,0})
+                return
+            else
+                broadcastToAll("Force starting the game!", {1,0,0})
+            end
+            end
+        else
+            forceStartCounter = 0
+        end
 
         -- Count the number of players (if needed later)
         local playerList = Player.getPlayers()

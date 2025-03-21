@@ -2,13 +2,13 @@ param ([Switch]$test)
 
 function WriteLuaScriptToJsonContent([int]$jsonLineNumber, [int]$luaScriptFileIdx)
 {
-	$fileName = ('{0}{1}' -f $pathLua, $luaScriptFiles[$luaScriptFileIdx])
-	$luaContent = Get-Content $fileName | Out-String | ConvertTo-Json
+    $fileName = ('{0}{1}' -f $pathLua, $luaScriptFiles[$luaScriptFileIdx])
+    $luaContent = Get-Content $fileName | Out-String | ConvertTo-Json
 
-	$curJsonContentOnLine = $jsonContent[$jsonLineNumber] -replace ".{3}$"
+    $curJsonContentOnLine = $jsonContent[$jsonLineNumber] -replace ".{3}$"
 
-	Write-Host "Writing to JSON line number $jsonLineNumber. " -NoNewLine
-	$jsonContent[$jsonLineNumber] = $curJsonContentOnLine + $luaContent + ","
+    Write-Host "Writing to JSON line number $jsonLineNumber. " -NoNewLine
+    $jsonContent[$jsonLineNumber] = $curJsonContentOnLine + $luaContent + ","
 }
 
 # Update this if TTS is installed elsewhere.
@@ -17,7 +17,8 @@ $ttsSaves = "/home/hutber/.local/share/Tabletop Simulator/Saves/"
 
 $pathLua = '..\TTSLUA\'
 $luaScriptFiles = @('global.ttslua')
-$luaScriptFiles += Get-ChildItem $pathLua -include *.ttslua -exclude global.ttslua -name
+# Recursively search for all .ttslua files (excluding global.ttslua) in the TSLUA folder and its subdirectories.
+$luaScriptFiles += Get-ChildItem $pathLua -Recurse -Include *.ttslua -Exclude global.ttslua -Name
 
 $pathJson = '..\TTSJSON\'
 $jsonName = 'ftc_base'
@@ -32,25 +33,25 @@ $regexJsonLuaScript = '"LuaScript": '
 $fileName = $pathJson + $jsonName + $jsonExt
 if(!(Test-Path $fileName))
 {
-	Write-Host "$fileName could not be found! Ending compilation..."
+    Write-Host "$fileName could not be found! Ending compilation..."
 }
 
 # ask user to give a version number
 # blank input gives no version
 if ($test -eq $false)
 {
-	$version = Read-Host "Version number"
-	if($version -ne "")
-	{
-		if($version.substring(0,1) -ne "v")
-		{
-			$version = "v" + $version
-		}
-	}
+    $version = Read-Host "Version number"
+    if($version -ne "")
+    {
+        if($version.substring(0,1) -ne "v")
+        {
+            $version = "v" + $version
+        }
+    }
 }
 else
 {
-	$version = "test"
+    $version = "test"
 }
 
 $luaContent = ''
@@ -58,39 +59,37 @@ $luaGUIDs = @()
 # pull each of the GUIDs and store them, ignore the first lua file as it's the global file with no GUID
 for($luaIdx = 1; $luaIdx -lt $luaScriptFiles.Count; $luaIdx++)
 {
-	# test if the lua script file does exists
-	$fileName = ('{0}{1}' -f $pathLua, $luaScriptFiles[$luaIdx])
-	if(!(Test-Path $fileName))
-	{
-		Write-Host "$fileName could not be found! Ending compilation..."
-		Pause
-		exit
-	}
+    # test if the lua script file exists
+    $fileName = ('{0}{1}' -f $pathLua, $luaScriptFiles[$luaIdx])
+    if(!(Test-Path $fileName))
+    {
+        Write-Host "$fileName could not be found! Ending compilation..."
+        Pause
+        exit
+    }
 
-	# grab the contents of the lua script file and capture the GUIDs from the first line
-	Write-Host "Searching for GUIDs in $fileName... " -NoNewLine
-	$luaContent = Get-Content $fileName
-	$results = $luaContent[0] | Select-String -AllMatches -Pattern $regexLuaGUID
+    # grab the contents of the lua script file and capture the GUIDs from the first line
+    Write-Host "Searching for GUIDs in $fileName... " -NoNewLine
+    $luaContent = Get-Content $fileName
+    $results = $luaContent[0] | Select-String -AllMatches -Pattern $regexLuaGUID
 
-	# test to see if we received valid GUIDs
-	if($results.Matches.Length -eq 0)
-	{
-		Write-Host "No GUIDs found! Ending compilation..."
-		Pause
-		exit
-	}
+    # test to see if we received valid GUIDs
+    if($results.Matches.Length -eq 0)
+    {
+        Write-Host "No GUIDs found! Ending compilation..."
+        Pause
+        exit
+    }
 
-	Write-Host "GUIDs " -NoNewLine
-	foreach($match in $results.Matches)
-	{
-		# For each found GUID, store the combo of that GUID and the current file
-		# index. (The comma in the append operation ensures we append an array,
-		# rather than unrolling it and appending the contents.)
-		$guid = $match.Value
-		$luaGUIDs += , @($guid, $luaIdx)
-		Write-Host "$guid " -NoNewLine
-	}
-	Write-Host "found."
+    Write-Host "GUIDs " -NoNewLine
+    foreach($match in $results.Matches)
+    {
+        # For each found GUID, store the combo of that GUID and the current file index.
+        $guid = $match.Value
+        $luaGUIDs += , @($guid, $luaIdx)
+        Write-Host "$guid " -NoNewLine
+    }
+    Write-Host "found."
 }
 
 # grab the contents of the json file
@@ -115,57 +114,56 @@ Write-Host 'Successful update.'
 # iterate through the lua script GUIDs
 foreach($guid in $luaGUIDs)
 {
-	$findGUID = $guid[0]
-	$fileIndex = $guid[1]
-	$fileName = $luaScriptFiles[$fileIndex]
-	Write-Host "Locating GUID $findGUID for $fileName... " -NoNewLine
+    $findGUID = $guid[0]
+    $fileIndex = $guid[1]
+    Write-Host "Locating GUID $findGUID for $($luaScriptFiles[$fileIndex])... " -NoNewLine
 
-	$GUIDfound = $false
-	# check against the list of GUIDs from the json file
-	for($jsonGUIDIdx = 0; $jsonGUIDIdx -lt $jsonGUIDLine.Count; $jsonGUIDIdx++)
-	{
-		$jsonGUID = $jsonGUIDLine.Matches[$jsonGUIDIdx].Groups[1].Value
-		# match the json GUID with the lua script GUID then modify json content
-		if($findGUID -eq $jsonGUID)
-		{
-			$lineNum = $jsonLuaScriptLine[$jsonGUIDIdx + 1].LineNumber - 1
-			Write-Host 'GUID found! ' -NoNewLine
-			WriteLuaScriptToJsonContent $lineNum $fileIndex
-			$GUIDfound = $true
-			Write-Host 'Successful update!'
-			$jsonGUIDIdx = $jsonGUIDLine.Count
-		}
-	}
+    $GUIDfound = $false
+    # check against the list of GUIDs from the json file
+    for($jsonGUIDIdx = 0; $jsonGUIDIdx -lt $jsonGUIDLine.Count; $jsonGUIDIdx++)
+    {
+        $jsonGUID = $jsonGUIDLine.Matches[$jsonGUIDIdx].Groups[1].Value
+        # match the json GUID with the lua script GUID then modify json content
+        if($findGUID -eq $jsonGUID)
+        {
+            $lineNum = $jsonLuaScriptLine[$jsonGUIDIdx + 1].LineNumber - 1
+            Write-Host 'GUID found! ' -NoNewLine
+            WriteLuaScriptToJsonContent $lineNum $fileIndex
+            $GUIDfound = $true
+            Write-Host 'Successful update!'
+            $jsonGUIDIdx = $jsonGUIDLine.Count
+        }
+    }
 
-	# stop if no GUID match was found
-	if(!($GUIDfound))
-	{
-		Write-Host 'GUID not found! Ending compilation...'
-		Pause
-		exit
-	}
+    # stop if no GUID match was found
+    if(!($GUIDfound))
+    {
+        Write-Host 'GUID not found! Ending compilation...'
+        Pause
+        exit
+    }
 }
 
 # write version number
 if($version -ne "")
 {
-	Write-Host "Writing to SaveName... " -NoNewLine
-	$jsonLine = $jsonContent[1] -replace ".{4}$"
-	$jsonContent[1] = $jsonLine + ' - ' + $version + '",'
-	Write-Host "Writing to GameMode... " -NoNewLine
-	$jsonLine = $jsonContent[2] -replace ".{4}$"
-	$jsonContent[2] = $jsonLine + ' - ' + $version + '",'
-	Write-Host "Done."
+    Write-Host "Writing to SaveName... " -NoNewLine
+    $jsonLine = $jsonContent[1] -replace ".{4}$"
+    $jsonContent[1] = $jsonLine + ' - ' + $version + '",'
+    Write-Host "Writing to GameMode... " -NoNewLine
+    $jsonLine = $jsonContent[2] -replace ".{4}$"
+    $jsonContent[2] = $jsonLine + ' - ' + $version + '",'
+    Write-Host "Done."
 }
 
 # write out the content to a new file
 if($version -ne "")
 {
-	$fileName = ".\" + $jsonName + "_" + $version + $jsonCompileUpdate + $jsonExt
+    $fileName = ".\" + $jsonName + "_" + $version + $jsonCompileUpdate + $jsonExt
 }
 else
 {
-	$fileName = ".\" + $jsonName + $jsonCompileUpdate + $jsonExt
+    $fileName = ".\" + $jsonName + $jsonCompileUpdate + $jsonExt
 }
 
 $jsonContent | Set-Content $fileName
@@ -173,6 +171,6 @@ Write-Host "File $fileName complete."
 
 if ($test -ne $null)
 {
-	Copy-Item $fileName -Destination $ttsSaves
-	Write-Host "Copied to $ttsSaves."
+    Copy-Item $fileName -Destination $ttsSaves
+    Write-Host "Copied to $ttsSaves."
 }

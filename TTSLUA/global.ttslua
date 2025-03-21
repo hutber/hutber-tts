@@ -11,6 +11,7 @@
 centerCircle_GUID = "51ee2f"
 quarterCircle_GUID = "51ee3f"
 templateObjective_GUID = "573333"
+templateObjective_Hutber_GUID = "a8aca1"
 startMenu_GUID = "738804"
 redDiceMat_GUID = "c57d70" -- diceTable
 blueDiceMat_GUID = "a84ed2" -- diceTable

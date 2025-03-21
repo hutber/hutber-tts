@@ -630,7 +630,6 @@ end
 function drawSecondary1()
     -- If both fixed clones already exist, nothing to do.
     if fixedSecondaryCard1_Red and fixedSecondaryCard2_Red then
-        print("drawSecondary1: Red fixed secondary cards already exist.")
         return
     end
 
@@ -665,7 +664,6 @@ end
 -- For Blue: use zone "secondary21" for index 1 and "secondary22" for index 2.
 function drawSecondary2()
     if fixedSecondaryCard1_Blue and fixedSecondaryCard2_Blue then
-        print("drawSecondary2: Blue fixed secondary cards already exist.")
         return
     end
 
