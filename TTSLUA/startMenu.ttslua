@@ -96,13 +96,20 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.4.4: Fix: Removed 5 dice because everybody only needs 1!! (For the deployment order)",
+    "1.4.4: Feat: Alpine Cup 2025 Maps Added",
+    "1.4.3: Feat: Added Terraform objective States",
+    "1.4.2: Fix: Updated all objectives primary/red/blue",
+    "1.4.1: Feat: Objectives are now clickable anywhere",
+    "1.4.0: Feat: WTC 2025 Maps Updated",
+    "1.4.0: Feat: Updated Objective Markers to be more visible",
     "1.3.8: Feat: Added random WTC mission selector",
-    "1.3.8: Fix: A random situation where the game would not start, added `force start` by clicking start 3 times",
-    "1.3.7: Fix: If Mission Select was not used `lock your secondaries` message was displayed",
-    "1.3.6: Feat: Hide tokens into a bag and added the most used near the dice mat",
-    "1.3.5: Fix: Updated Stats Helper to fix the errors that rarely occured",
-    "1.3.4: Feat: Added Secondary Cards next to dice mat",
-    "1.3.3: Fix: Rewrote the Last 5 Rolls",
+    --"1.3.8: Fix: A random situation where the game would not start, added `force start` by clicking start 3 times",
+    --"1.3.7: Fix: If Mission Select was not used `lock your secondaries` message was displayed",
+    --"1.3.6: Feat: Hide tokens into a bag and added the most used near the dice mat",
+    --"1.3.5: Fix: Updated Stats Helper to fix the errors that rarely occured",
+    --"1.3.4: Feat: Added Secondary Cards next to dice mat",
+    --"1.3.3: Fix: Rewrote the Last 5 Rolls",
     --"1.3.3: Fix: Added colours on mod inital load to the control board",
     --"1.3.2: Feat: Cannot start game without secondaries locked in (expect for single player mode)",
     --"1.3.1: Feat: Auto position models 2\" apart",
@@ -266,15 +273,15 @@ confirmBtn = {
 
 confirmBtn2 = {
     index          = i,
-    label          = "MAP EDITOR",
-    click_function = "confirmSizeTerrain",
+    label          = "CRUSADE\n(Coming Soon) ((Maybe))",
+    click_function = "comingSoon",
     function_owner = self,
     position       = { -menuSizeX + 6.5, menuSizeY, menuSizeZ + 3  },
     rotation       = { 0, 0, 0 },
     height         = 1400,
     width          = 4400,
     scale          = { 1.3, 1.3, 1.3 },
-    font_size      = 500,
+    font_size      = 300,
     color          = {
         0.856,
         0.09999994,
@@ -348,9 +355,11 @@ function onObjectClick(player_color, object_clicked)
     showMapsToggle = true
     local guidPositions = {
         ["03286d"] = -4.776464939,
+        ["ca7711"] = -4.776464939,
         ["cd649d"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
+        ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
         ["4bb528"] = -6.19999981,
         ["7abc5a"] = -6.19999981
@@ -500,9 +509,11 @@ function confirmDoublesGame()
 
     local guidPositions = {
         ["03286d"] = -4.776464939,
+        ["ca7711"] = -4.776464939,
         ["cd649d"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
+        ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
         ["4bb528"] = -6.19999981,
         ["7abc5a"] = -6.19999981
@@ -518,6 +529,10 @@ function confirmDoublesGame()
         end
     end
     writeMenus()
+end
+
+function comingSoon()
+    broadcastToAll("Not yet! ;) But it is on my list of things to do!")
 end
 
 function createCounter(position, label)
@@ -609,8 +624,10 @@ function confirmSizeGame()
     -- bascially to hide certain objects that are controlled by the control board
     local guidPositions = {
         ["03286d"] = 0.776464939,
+        ["ca7711"] = 0.776464939,
         ["cd649d"] = 0.776464939,
         ["9a7c3c"] = 0.776464939,
+        ["8a7c7a"] = 1.19999981,
         ["3c8a1b"] = 1.19999981,
         ["8395b2"] = 1.19999981,
         ["4bb528"] = 1.19999981

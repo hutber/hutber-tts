@@ -83,6 +83,10 @@ secondary22CardZone_GUID = "88cac4"
 
 CPMissionBook_GUID = "731ec4"
 
+teamModels = { Red = {}, Blue = {} }
+Global.setTable("teamModels", teamModels)
+
+
 --[[
 GUID reference for primary / mission / deployment cards
 Yeah, I could use variables but I didn't, oh well
@@ -327,7 +331,42 @@ function onSave()
     return saved_data
 end
 
+function updateTeamModel(obj, team)
+    local teamModels = Global.getTable("teamModels") or { Red = {}, Blue = {} }
+    -- Remove the object's GUID from any team it might already be in.
+    for _, t in ipairs({"Red", "Blue"}) do
+        for i = #teamModels[t], 1, -1 do
+            if teamModels[t][i] == obj.getGUID() then
+                table.remove(teamModels[t], i)
+            end
+        end
+    end
+    -- Add the object to the proper team.
+    table.insert(teamModels[team], obj.getGUID())
+    Global.setTable("teamModels", teamModels)
+end
+
+function tagSelectedAsRed(playerColor, target)
+    local objs = Player[playerColor].getSelectedObjects()
+    for _, obj in ipairs(objs) do
+      obj.setGMNotes("Red")
+      updateTeamModel(obj, "Red")
+    end
+    printToColor("Tagged selected objects as Red", playerColor, "Red")
+  end
+
+  function tagSelectedAsBlue(playerColor, target)
+    local objs = Player[playerColor].getSelectedObjects()
+    for _, obj in ipairs(objs) do
+      obj.setGMNotes("Blue")
+      updateTeamModel(obj, "Blue")
+    end
+    printToColor("Tagged selected objects as Blue", playerColor, "Blue")
+  end
+
 function onLoad(saved_data)
+    --addHotkey("Tag Selected as Red", tagSelectedAsRed)
+    --addHotkey("Tag Selected as Blue", tagSelectedAsBlue)
     Turns.enable=false
     --- load vars from saved
     if saved_data ~= "" then
@@ -362,7 +401,7 @@ function onLoad(saved_data)
     else
         Global.UI.setAttribute("main", "active", "false")
     end
-    startPolling()
+    --startPolling()
 end
 
 function setMissionPack(params)
