@@ -320,7 +320,7 @@ objectJSONs = {
               "HideWhenFaceDown": false,
               "Hands": false,
               "CustomMesh": {
-                "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                 "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                 "NormalURL": "",
                 "ColliderURL": "",
@@ -375,7 +375,7 @@ objectJSONs = {
                   "HideWhenFaceDown": false,
                   "Hands": false,
                   "CustomMesh": {
-                    "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                     "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                     "NormalURL": "",
                     "ColliderURL": "",
@@ -436,7 +436,7 @@ objectJSONs = {
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomMesh": {
-        "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+        "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
         "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
         "NormalURL": "",
         "ColliderURL": "",
@@ -491,7 +491,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -802,7 +802,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -857,7 +857,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -912,7 +912,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -967,7 +967,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -1399,7 +1399,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -1454,7 +1454,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -1509,7 +1509,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -1564,7 +1564,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -1621,7 +1621,7 @@ objectJSONs = {
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomMesh": {
-        "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+        "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
         "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
         "NormalURL": "",
         "ColliderURL": "",
@@ -1676,7 +1676,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -1939,7 +1939,7 @@ objectJSONs = {
               "HideWhenFaceDown": false,
               "Hands": false,
               "CustomMesh": {
-                "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                 "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                 "NormalURL": "",
                 "ColliderURL": "",
@@ -1994,7 +1994,7 @@ objectJSONs = {
                   "HideWhenFaceDown": false,
                   "Hands": false,
                   "CustomMesh": {
-                    "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                     "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                     "NormalURL": "",
                     "ColliderURL": "",
@@ -2101,7 +2101,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -2156,7 +2156,7 @@ objectJSONs = {
               "HideWhenFaceDown": false,
               "Hands": false,
               "CustomMesh": {
-                "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                 "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                 "NormalURL": "",
                 "ColliderURL": "",
@@ -2211,7 +2211,7 @@ objectJSONs = {
                   "HideWhenFaceDown": false,
                   "Hands": false,
                   "CustomMesh": {
-                    "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                     "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                     "NormalURL": "",
                     "ColliderURL": "",
@@ -2318,7 +2318,7 @@ objectJSONs = {
           "HideWhenFaceDown": false,
           "Hands": false,
           "CustomMesh": {
-            "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
             "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
             "NormalURL": "",
             "ColliderURL": "",
@@ -2373,7 +2373,7 @@ objectJSONs = {
               "HideWhenFaceDown": false,
               "Hands": false,
               "CustomMesh": {
-                "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                 "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                 "NormalURL": "",
                 "ColliderURL": "",
@@ -2428,7 +2428,7 @@ objectJSONs = {
                   "HideWhenFaceDown": false,
                   "Hands": false,
                   "CustomMesh": {
-                    "MeshURL": "http://pastebin.com/raw.php?i=RwY2qFkX",
+                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
                     "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                     "NormalURL": "",
                     "ColliderURL": "",

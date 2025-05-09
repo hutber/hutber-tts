@@ -105,6 +105,11 @@ local RedControlBoard = {
             title = "Toggle the display of the custom counter",
             customHiddenPosition = -1.32
         },
+         {
+             name = "Rotation 5 Degrees",
+             state = false,
+             title = "Toggle between 5 and native degrees for rotation"
+         }
     }
 }
 
@@ -174,6 +179,11 @@ local BlueControlBoard = {
             title = "Toggle the display of the custom counter",
             customHiddenPosition =  -1.32
         },
+        {
+            name = "Rotation 5 Degrees",
+            state = false,
+            title = "Toggle between 5 and native degrees for rotation"
+        }
     }
 }
 
@@ -607,8 +617,56 @@ function toggleOption(player, index)
         )
     elseif option.name == "Custom Counter" then
         toggleObjectState(board.CustomCounter, option.state, option.customHiddenPosition)
+    elseif option.name == "Rotation 5 Degrees" then
+    print(expectedColor)
+        toggleRotationAngle(board.CustomCounter, option.state)
     end
 end
+
+local rotationAngleState = 15  -- default is 15 degrees
+local rotationIncrement = 5    -- Rotation increment when the angle is toggled to "on"
+
+function toggleRotationAngle(color)
+    -- Toggle between 15 and 5 degrees.
+    if rotationAngleState == 15 then
+        rotationAngleState = 5
+    else
+        rotationAngleState = 15
+    end
+
+    -- Update the status button text.
+    local statusId = color .. "_status_rotation"
+    local newText = rotationAngleState .. " Degrees"
+
+    -- Pastel color for status button
+    local onColor  = "#77DD77|#77DD77|#77DD77|#77DD77"
+    local newColors = rotationAngleState == 5 and "#FFCCCC|#FFCCCC|#FFCCCC|#FFCCCC" or onColor
+
+    -- Update the button's text and the multi-state color attribute.
+    self.UI.setAttributes(statusId, {
+        text   = newText,
+        colors = newColors
+    })
+
+    -- Apply the new rotation behavior to all selected objects when the player picks them up
+    local playerObj = Player[color]
+    if not playerObj then
+      print("Player object not found for color: " .. playerColor)
+      return
+    end
+    local objs = playerObj.getSelectedObjects()
+
+    -- For each object, rotate by the specified amount
+    for _, obj in ipairs(objs) do
+        local currentRotation = obj.getRotation()
+        obj.setRotation({
+            currentRotation[1],
+            currentRotation[2] + rotationIncrement,  -- Apply the rotation increment here
+            currentRotation[3]
+        })
+    end
+end
+
 
 function toggleDiceBags(board, state)
     for _, guid in pairs(board.bagIds) do

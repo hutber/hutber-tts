@@ -96,14 +96,15 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.4.5: Fix: pastebin changes their RAW URL, which broke GW Map 1. Updated to new after losing 3-2 at UKTC :D",
     "1.4.4: Fix: Removed 5 dice because everybody only needs 1!! (For the deployment order)",
     "1.4.4: Feat: Alpine Cup 2025 Maps Added",
     "1.4.3: Feat: Added Terraform objective States",
     "1.4.2: Fix: Updated all objectives primary/red/blue",
-    "1.4.1: Feat: Objectives are now clickable anywhere",
-    "1.4.0: Feat: WTC 2025 Maps Updated",
-    "1.4.0: Feat: Updated Objective Markers to be more visible",
-    "1.3.8: Feat: Added random WTC mission selector",
+    -- "1.4.1: Feat: Objectives are now clickable anywhere",
+    -- "1.4.0: Feat: WTC 2025 Maps Updated",
+    -- "1.4.0: Feat: Updated Objective Markers to be more visible",
+    -- "1.3.8: Feat: Added random WTC mission selector",
     --"1.3.8: Fix: A random situation where the game would not start, added `force start` by clicking start 3 times",
     --"1.3.7: Fix: If Mission Select was not used `lock your secondaries` message was displayed",
     --"1.3.6: Feat: Hide tokens into a bag and added the most used near the dice mat",
