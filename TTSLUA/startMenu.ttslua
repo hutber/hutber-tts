@@ -9,7 +9,6 @@
 menuX = 18
 menuZ = 1.05-1.05
 
-MISSION_PACK_LEVIATHAN = Global.getVar("MISSION_PACK_LEVIATHAN")
 MISSION_PACK_PARIAH_NEXUS = Global.getVar("MISSION_PACK_PARIAH_NEXUS")
 
 keepForTerrainEditor = true
@@ -96,6 +95,8 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.4.6: Feat: New discord server started: https://discord.gg/Drpzcwwmm6",
+    "1.4.6: Feat: New Stat Check site v0.01 published https://stats.hutber.com",
     "1.4.5: Fix: pastebin changes their RAW URL, which broke GW Map 1. Updated to new after losing 3-2 at UKTC :D",
     "1.4.4: Fix: Removed 5 dice because everybody only needs 1!! (For the deployment order)",
     "1.4.4: Feat: Alpine Cup 2025 Maps Added",
@@ -1813,18 +1814,6 @@ end
 packSelected = nil
 missionPackData = nil
 
-selectLeviathanBtn = {
-    label = "Play\nLeviathan",
-    click_function = "selectLeviathan",
-    function_owner = self,
-    position = {-2, 5, -16.5},
-    rotation = {0, 0, 0},
-    height = 700,
-    width = 1500,
-    font_size = 200,
-    color = {1, 1, 1},
-    font_color = {0, 0, 0},
-}
 selectPariahNexusBtn = {
     label = "Play\nPariah Nexus",
     click_function = "selectPariahNexus",
@@ -1925,10 +1914,6 @@ randomWTCMissionBtn = {
     font_color = {0, 0, 0}
 }
 
-function selectLeviathan()
-    selectMissionPack(MISSION_PACK_LEVIATHAN)
-end
-
 function selectPariahNexus()
     selectMissionPack(MISSION_PACK_PARIAH_NEXUS)
 end
@@ -1944,26 +1929,16 @@ function selectMissionPack(packIndex)
 
     missionPackData = Global.getTable("missionPackData")[packSelected]
     deploymentDeck = getObjectFromGUID(missionPackData.deploymentDeck_GUID)
-    missionDeck = getObjectFromGUID(missionPackData.missionDeck_GUID)
     primaryDeck = getObjectFromGUID(missionPackData.primaryDeck_GUID)
-    gambitDeck = getObjectFromGUID(missionPackData.gambitDeck_GUID)
 
     deploymentDeck.setPosition({85, 0.94, 11})
     deploymentDeck.locked = false
     deploymentDeck.tooltip = true
     deploymentDeck.interactable = true
-    missionDeck.setPosition({85, 0.94, 8.3})
-    missionDeck.locked = false
-    missionDeck.tooltip = true
-    missionDeck.interactable = true
     primaryDeck.setPosition({85, 0.94, 5.6})
     primaryDeck.locked = false
     primaryDeck.tooltip = true
     primaryDeck.interactable = true
-    gambitDeck.setPosition({85, 0.94, 2.9})
-    gambitDeck.locked = false
-    gambitDeck.tooltip = true
-    gambitDeck.interactable = true
 
     writeMenus()
 end
@@ -2022,20 +1997,14 @@ end
 function updateMission()
     canChangeMission = false
     Global.call("moveAllFromZoneToDeck", {zone = "deployment", deck = "deployment"})
-    Global.call("moveAllFromZoneToDeck", {zone = "mission", deck = "mission"})
     Global.call("moveAllFromZoneToDeck", {zone = "primary", deck = "primary"})
 
     if selectedMission == 0 then
-        missionSelectionDispBtn.label = "?"
         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment"})
-        Global.call("moveOneFromDeckToZone", {deck = "mission", zone = "mission"})
         Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary"})
     else
-        mission = missionPackData.tournamentMissions[selectedMission]
-        missionSelectionDispBtn.label = mission.name
-        Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment", card = mission.deployment})
-        Global.call("moveOneFromDeckToZone", {deck = "mission", zone = "mission", card = mission.mission})
-        Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary", card = mission.primary})
+        Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment"})
+        Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary"})
     end
     writeMenus()
 
@@ -2109,14 +2078,6 @@ areaBtn = {
     position = {menuX - 3, 5, menuZ }, rotation = {0, 0, 0}, height = 1500, width = 2600,
     font_size = 300, color = {1, 1, 1}, font_color = {0, 0, 0}
 }
-engagePlaced = false
-engageLblOpen = "Hide\nLeviathan\nEngage"
-engageLblClosed = "Show\nLeviathan\nEngage"
-engageBtn = {
-    label = engageLblClosed, click_function = "showHideEngage", function_owner = self,
-    position = {menuX + 3, 5, menuZ}, rotation = {0, 0, 0}, height = 1500, width = 2600,
-    font_size = 300, color = {1, 1, 1}, font_color = {0, 0, 0}
-}
 stratreservesPlaced = false
 stratreservesLblOpen = "Hide\nStrat Reserves"
 stratreservesLblClosed = "Show\nStrat Reserves"
@@ -2133,17 +2094,9 @@ deployIngameBtn = {
     position = {menuX + 27, 5, menuZ}, rotation = {0, 0, 0}, height = 1500, width = 2600,
     font_size = 300, color = {1, 1, 1}, font_color = {0, 0, 0}
 }
-investigatePlaced = false
-investigateLblOpen = "Hide\nInvestigate Signals"
-investigateLblClosed = "Show\nInvestigate Signals"
-investigateBtn = {
-    label = investigateLblClosed, click_function = "showHideInvestigateSignals", function_owner = self,
-    position = {menuX + 15, 5, menuZ}, rotation = {0, 0, 0}, height = 1500, width = 2600,
-    font_size = 300, color = {1, 1, 1}, font_color = {0, 0, 0}
-}
 containmentPlaced = false
-containmentLblOpen = "Hide\nContainment"
-containmentLblClosed = "Show\nContainment"
+containmentLblOpen = "Hide\n9\" Zone"
+containmentLblClosed = "Show\n9\" Zone"
 containmentBtn = {
     label = containmentLblClosed, click_function = "showHideContainment", function_owner = self,
     position = {menuX + 21, 5, menuZ}, rotation = {0, 0, 0}, height = 1500, width = 2600,
@@ -2188,9 +2141,7 @@ function writeDeployMenu()
 
     self.createButton(areaBtn)
     self.createButton(quartersBtn)
-    self.createButton(engageBtn)
     self.createButton(stratreservesBtn)
-    self.createButton(investigateBtn)
     self.createButton(containmentBtn)
 
     if gameMode == "game" then
@@ -2211,11 +2162,9 @@ end
 
 function writeIngameMenu()
     self.createButton(areaBtn)
-    self.createButton(engageBtn)
     self.createButton(quartersBtn)
-    self.createButton(stratreservesBtn)
-    self.createButton(investigateBtn)
     self.createButton(containmentBtn)
+    self.createButton(stratreservesBtn)
     self.createButton(deployIngameBtn)
     self.createButton(IncrementRedCpBtn)
     self.createButton(IncrementBlueCpBtn)
@@ -2485,45 +2434,6 @@ function showHideAreaDeny()
     writeMenus()
 end
 
-function showHideEngage()
-    if not engagePlaced then
-        engageBtn.label = engageLblOpen
-
-        local mat = getObjectFromGUID(mat_GUID)
-        local lineScale = {x = 0, y = deployLineHeight, z = 0.02}
-        local mapBase = mat.getScale().z * sizeMulti -- short edge
-        local mapHeight = mat.getScale().x * sizeMulti -- long edge
-
-        -- Engage lines
-        xLength = (mapHeight / 2) - 3
-        zLength = (mapBase / 2) - 3
-        lineScale.x = xLength
-        --(linePos, lineRot, lineScale, color, orientation, type)
-        spawnLine({(xLength / 2) + 3, deployLineHeight, -3}, {0, 0, 0}, lineScale, "White", "engage")
-        spawnLine({(xLength / 2) + 3, deployLineHeight, 3}, {0, 0, 0}, lineScale, "White", "engage")
-        spawnLine({((xLength / 2) * -1) - 3, deployLineHeight, -3}, {0, 0, 0}, lineScale, "White", "engage")
-        spawnLine({((xLength / 2) * -1) - 3, deployLineHeight, 3}, {0, 0, 0}, lineScale, "White", "engage")
-        lineScale.x = zLength
-        spawnLine({-3, deployLineHeight, (zLength / 2) + 3}, {0, 90, 0}, lineScale, "White", "engage")
-        spawnLine({3, deployLineHeight, (zLength / 2) + 3}, {0, 90, 0}, lineScale, "White", "engage")
-        spawnLine({-3, deployLineHeight, (((zLength / 2) * -1) - 3)}, {0, 90, 0}, lineScale, "White", "engage")
-        spawnLine({3, deployLineHeight, (((zLength / 2) * -1) - 3)}, {0, 90, 0}, lineScale, "White", "engage")
-
-        engagePlaced = true
-    else
-        engageBtn.label = engageLblClosed
-
-        for i, obj in ipairs(getAllObjects()) do
-            if obj.getGMNotes() == "engage" then
-                obj.destroy()
-            end
-        end
-        engagePlaced = false
-    end
-
-    writeMenus()
-end
-
 function showHideQuarters()
     if quartersPlaced == false then -- place
         quartersBtn.label = quartersLblOpen
@@ -2609,24 +2519,6 @@ function showHideStratreserves()
     --writeMenus()
 end
 
-function showHideInvestigateSignals()
-    if not investigatePlaced then
-        investigateBtn.label = investigateLblOpen
-        drawCornerQuarterCircles(9, "investigate")
-        investigatePlaced = true
-    else
-        investigateBtn.label = investigateLblClosed
-
-        for i, obj in ipairs(getAllObjects()) do
-            if obj.getGMNotes() == "investigate" then
-                obj.destroy()
-            end
-        end
-        investigatePlaced = false
-    end
-
-    writeMenus()
-end
 
 function showHideContainment()
     if not containmentPlaced then

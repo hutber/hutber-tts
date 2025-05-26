@@ -11,7 +11,6 @@
 centerCircle_GUID = "51ee2f"
 quarterCircle_GUID = "51ee3f"
 templateObjective_GUID = "573333"
-templateObjective_Hutber_GUID = "a8aca1"
 startMenu_GUID = "738804"
 redDiceMat_GUID = "c57d70" -- diceTable
 blueDiceMat_GUID = "a84ed2" -- diceTable
@@ -21,6 +20,8 @@ redMissionManager_GUID = "cff35b"
 blueMissionManager_GUID = "471de1"
 
 -- Hutber IDs
+templateObjective_Hutber_GUID = "a8aca1"
+
 redControlBoard_GUID = "5a328f"
 blueControlBoard_GUID = "32ed4c"
 
@@ -74,12 +75,17 @@ blueHandZone_GUID = "731345"
 redHiddenZone_GUID = "28419e"
 blueHiddenZone_GUID = "e1e91a"
 deploymentCardZone_GUID = "dcf95b"
-missionCardZone_GUID = "cdecf2"
 primaryCardZone_GUID = "740abc"
 secondary11CardZone_GUID = "0ec215"
 secondary12CardZone_GUID = "d865d4"
 secondary21CardZone_GUID = "3c8d71"
 secondary22CardZone_GUID = "88cac4"
+challengerCardZone_GUID = "cdecf2"
+
+deploymentDeck_GUID = "2dc2e8"
+challengerDeck_GUID = "ffdf05"
+primaryDeck_GUID = "d26e9c"
+redSecondaryDeck_GUID = "c0fb49"
 
 CPMissionBook_GUID = "731ec4"
 
@@ -91,42 +97,18 @@ Global.setTable("teamModels", teamModels)
 GUID reference for primary / mission / deployment cards
 Yeah, I could use variables but I didn't, oh well
 
-Leviathan:
-----------
-
-Sites of Power ec78cd
-Scorched Earth 3ad5a3
-Purge the Foe 5444d4
-Priority Targets f97708
-Deploy Servo-Skulls 44ff29
-Take and Hold 884291
-Supply Drop a34ae1
-The Ritual 646b49
-Vital Ground 6fc1c2
-
-Chilling Rain db0022
-Hidden Supplies 0dc3c3
-Scrambler Fields aea986
-Chosen Battlefield 876ac7
-
-Hammer and Anvil 117c77
-Dawn of War 7e4b95
-Sweeping Engagement 381d7c
-Search and Destroy ad4220
-Crucible of Battle 3c0679
-
 Pariah Nexus:
 -------------
 
-Burden of Trust 85718e
+Burden of Trust 299a75
 Linchpin 540fd0
-Purge the Foe d9d35a
+Purge the Foe 903575
 Scorched Earth 6860de
-Supply Drop 981226
-Take and Hold bffd57
+Supply Drop 244a21
+Take and Hold 72c0f4
 Terraform 7fa6d0
 The Ritual 7067e2
-Unexploded Ordnance 41f293
+Unexploded Ordnance 5ed8dc
 
 Adapt or Die 9650f1
 Fog of War c58f11
@@ -148,112 +130,66 @@ Tipping Point 77cde6
 
 ]]--
 
-MISSION_PACK_LEVIATHAN = 1
-MISSION_PACK_PARIAH_NEXUS = 2
+MISSION_PACK_PARIAH_NEXUS = 1
 LOCKED_IN_SECONDARIES = 0
 packSelected = nil
 missionPackData = {
     {
-        id = MISSION_PACK_LEVIATHAN,
-        name = "Leviathan",
-        deploymentDeck_GUID = "a30deb",
-        missionDeck_GUID = "1665ca",
-        primaryDeck_GUID = "3ca4a6",
-        gambitDeck_GUID = "d0a9f9",
-        fixedSecondaryDeck_GUID = "30c8fe",
-        redSecondaryDeck_GUID = "2c6243",
-        blueSecondaryDeck_GUID = nil,
-        tournamentMissions = {
-            -- Take and Hold / Chilling Rain / Search and Destroy
-            {name = "A", primary = "884291", mission = "db0022", deployment = "ad4220"},
-            -- Priority Targets / Hidden Supplies / Search and Destroy
-            {name = "B", primary = "f97708", mission = "0dc3c3", deployment = "ad4220"},
-            -- The Ritual / Scrambler Fields / Sweeping Engagement
-            {name = "C", primary = "646b49", mission = "aea986", deployment = "381d7c"},
-            -- Deploy Servo-skulls / Chilling Rain / Search and Destroy
-            {name = "D", primary = "44ff29", mission = "db0022", deployment = "ad4220"},
-            -- Take and Hold / Chosen Battlefield / Sweeping Engagement
-            {name = "E", primary = "884291", mission = "876ac7", deployment = "381d7c"},
-            -- Supply Drop / Chilling Rain / Search and Destroy
-            {name = "F", primary = "a34ae1", mission = "db0022", deployment = "ad4220"},
-            -- Sites of Power / Chilling Rain / Hammer and Anvil
-            {name = "G", primary = "ec78cd", mission = "db0022", deployment = "117c77"},
-            -- The Ritual / Chilling Rain / Hammer and Anvil
-            {name = "H", primary = "646b49", mission = "db0022", deployment = "117c77"},
-            -- Take and Hold / Hidden Supplies / Hammer and Anvil
-            {name = "I", primary = "884291", mission = "0dc3c3", deployment = "117c77"},
-            -- Priority Targets / Chilling Rain / Crucible of Battle
-            {name = "J", primary = "f97708", mission = "db0022", deployment = "3c0679"},
-            -- Deploy Servo-skulls / Hidden Supplies / Crucible of Battle
-            {name = "K", primary = "44ff29", mission = "0dc3c3", deployment = "3c0679"},
-            -- Scorched Earth / Chilling Rain / Dawn of War
-            {name = "L", primary = "3ad5a3", mission = "db0022", deployment = "7e4b95"},
-            -- Purge the Foe / Chilling Rain / Crucible of Battle
-            {name = "M", primary = "5444d4", mission = "db0022", deployment = "3c0679"},
-            -- Priority Targets / Chosen Battlefield / Dawn of War
-            {name = "N", primary = "f97708", mission = "876ac7", deployment = "7e4b95"},
-            -- Vital Ground / Chilling Rain / Crucible of Battle
-            {name = "O", primary = "6fc1c2", mission = "db0022", deployment = "3c0679"}
-        }
-    },
-    {
         id = MISSION_PACK_PARIAH_NEXUS,
-        name = "Pariah Nexus",
+        name = "Chapter Approved 2025",
         deploymentDeck_GUID = "2dc2e8",
-        missionDeck_GUID = "ffdf05",
         primaryDeck_GUID = "d26e9c",
-        gambitDeck_GUID = "79d2ae",
         fixedSecondaryDeck_GUID = "b55459",
         redSecondaryDeck_GUID = "c0fb49",
         blueSecondaryDeck_GUID = nil,
         tournamentMissions = {
             -- A: Take and Hold / Raise Banners / Tipping Point
-            {name = "A", primary = "bffd57", mission = "62e744", deployment = "77cde6"},
+            {name = "A", primary = "72c0f4", deployment = "77cde6"},
             -- B: Purge the Foe / Smoke and Mirrors / Tipping Point
-            {name = "B", primary = "d9d35a", mission = "25b5a6", deployment = "77cde6"},
+            {name = "B", primary = "903575", deployment = "77cde6"},
             -- C: Linchpin / Fog of War / Tipping Point
-            {name = "C", primary = "540fd0", mission = "c58f11", deployment = "77cde6"},
+            {name = "C", primary = "46009c", deployment = "77cde6"},
             -- D: Scorched Earth / Swift Action / Tipping Point
-            {name = "D", primary = "6860de", mission = "dc273c", deployment = "77cde6"},
+            {name = "D", primary = "b41088", deployment = "77cde6"},
             -- E: Take and Hold / Prepared Positions / Hammer and Anvil
-            {name = "E", primary = "bffd57", mission = "9789b7", deployment = "97f3f0"},
+            {name = "E", primary = "72c0f4", deployment = "97f3f0"},
             -- F: Burden of Trust / Hidden Supplies / Hammer and Anvil
-            {name = "F", primary = "85718e", mission = "c4fe8c", deployment = "97f3f0"},
+            {name = "F", primary = "299a75", deployment = "97f3f0"},
             -- G: The Ritual / Stalwarts / Hammer and Anvil
-            {name = "G", primary = "7067e2", mission = "8b7dbc", deployment = "97f3f0"},
+            {name = "G", primary = "9a3807", deployment = "97f3f0"},
             -- H: Supply Drop / Smoke and Mirrors / Hammer and Anvil
-            {name = "H", primary = "981226", mission = "25b5a6", deployment = "97f3f0"},
+            {name = "H", primary = "244a21", deployment = "97f3f0"},
             -- I: Burden of Trust / Prepared Positions / Search and Destroy
-            {name = "I", primary = "85718e", mission = "9789b7", deployment = "09c961"},
+            {name = "I", primary = "299a75", deployment = "09c961"},
             -- J: Linchpin / Raise Banners / Search and Destroy
-            {name = "J", primary = "540fd0", mission = "62e744", deployment = "09c961"},
+            {name = "J", primary = "46009c", deployment = "09c961"},
             -- K: Scorched Earth / Stalwarts / Search and Destroy
-            {name = "K", primary = "6860de", mission = "8b7dbc", deployment = "09c961"},
+            {name = "K", primary = "b41088", deployment = "09c961"},
             -- L: Take and Hold / Hidden Supplies / Search and Destroy
-            {name = "L", primary = "bffd57", mission = "c4fe8c", deployment = "09c961"},
+            {name = "L", primary = "72c0f4", deployment = "09c961"},
             -- M: Purge the Foe / Rapid Escalation / Crucible of Battle
-            {name = "M", primary = "d9d35a", mission = "d35008", deployment = "e96d18"},
+            {name = "M", primary = "903575", deployment = "e96d18"},
             -- N: The Ritual / Swift Action / Crucible of Battle
-            {name = "N", primary = "7067e2", mission = "dc273c", deployment = "e96d18"},
+            {name = "N", primary = "9a3807", deployment = "e96d18"},
             -- O: Terraform / Stalwarts / Crucible of Battle
-            {name = "O", primary = "7fa6d0", mission = "8b7dbc", deployment = "e96d18"},
+            {name = "O", primary = "7fa6d0", deployment = "e96d18"},
             -- P: Scorched Earth / Inspired Leadership / Crucible of Battle
-            {name = "P", primary = "6860de", mission = "499169", deployment = "e96d18"},
+            {name = "P", primary = "b41088", deployment = "e96d18"},
             -- Q: Supply Drop / Rapid Escalation / Sweeping Engagement
-            {name = "Q", primary = "981226", mission = "d35008", deployment = "c6edf3"},
+            {name = "Q", primary = "244a21", deployment = "c6edf3"},
             -- R: Terraform / Swift Action / Sweeping Engagement
-            {name = "R", primary = "7fa6d0", mission = "dc273c", deployment = "c6edf3"},
+            {name = "R", primary = "7fa6d0", deployment = "c6edf3"},
             -- S: Linchpin / Raise Banners / Dawn of War
-            {name = "S", primary = "540fd0", mission = "62e744", deployment = "7f45dc"},
+            {name = "S", primary = "46009c", deployment = "7f45dc"},
             -- T: Unexploded Ordnance / Inspired Leadership / Dawn of War
-            {name = "T", primary = "41f293", mission = "499169", deployment = "7f45dc"}
+            {name = "T", primary = "5ed8dc", deployment = "7f45dc"}
         }
     },
 }
 
 turnOrder = {}
 nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
-allowMenu = true
+allowMenu = false
 allowAutoSeat = true
 redPlayerID = ""
 bluePlayerID = ""
@@ -670,7 +606,7 @@ end
 
 function moveOneFromDeckToZone(params)
     local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
-    local deckObj = getObjectFromGUID(missionPackData[packSelected][params.deck .. "Deck_GUID"])
+    local deckObj = getObjectFromGUID(Global.getVar(params.deck .. "Deck_GUID"))
     local takeParams = {}
     takeParams.position = zoneObj.getPosition()
     takeParams.flip = true
