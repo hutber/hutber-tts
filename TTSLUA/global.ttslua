@@ -86,6 +86,7 @@ deploymentDeck_GUID = "2dc2e8"
 challengerDeck_GUID = "ffdf05"
 primaryDeck_GUID = "d26e9c"
 redSecondaryDeck_GUID = "c0fb49"
+blueSecondaryDeck_GUID = "e1da3b"
 
 CPMissionBook_GUID = "731ec4"
 
@@ -607,6 +608,27 @@ end
 function moveOneFromDeckToZone(params)
     local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
     local deckObj = getObjectFromGUID(Global.getVar(params.deck .. "Deck_GUID"))
+    local takeParams = {}
+    takeParams.position = zoneObj.getPosition()
+    takeParams.flip = true
+    takeParams.smooth = true
+    takeParams.callback_function = function(card)
+        Wait.frames(function()
+            card.locked = true
+        end)
+    end
+    if params["card"] then
+        takeParams.guid = params.card
+    else
+        deckObj.shuffle()
+    end
+    deckObj.takeObject(takeParams)
+end
+
+
+function moveOneFromDeckToZoneBlue(params)
+    local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
+    local deckObj = getObjectFromGUID(missionPackData[packSelected][params.deck .. "Deck_GUID"])
     local takeParams = {}
     takeParams.position = zoneObj.getPosition()
     takeParams.flip = true

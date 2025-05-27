@@ -752,7 +752,7 @@ function drawSecondary2()
 
     if not fixedSecondaryCard1_Blue then
         if #secondary21ZoneObj.getObjects() < 1 then
-            Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary21"})
+            Global.call("moveOneFromDeckToZoneBlue", {deck = "blueSecondary", zone = "secondary21"})
             Wait.time(function()
                 local objs = secondary21ZoneObj.getObjects()
                 if #objs > 0 then
@@ -764,7 +764,7 @@ function drawSecondary2()
 
     if not fixedSecondaryCard2_Blue then
         if #secondary22ZoneObj.getObjects() < 1 then
-            Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary22"})
+            Global.call("moveOneFromDeckToZoneBlue", {deck = "blueSecondary", zone = "secondary22"})
             Wait.time(function()
                 local objs = secondary22ZoneObj.getObjects()
                 if #objs > 0 then
