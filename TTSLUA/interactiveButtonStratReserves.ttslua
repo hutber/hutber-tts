@@ -1,0 +1,88 @@
+-- FTC-GUID: 7b7ab8
+
+-- Shared variables
+mat_GUID         = Global.getVar("mat_GUID")
+deployLineHeight = 2.1
+sizeMulti        = 36
+local onState = 'https://steamusercontent-a.akamaihd.net/ugc/11957795369120189754/7FBE556ABCF98255CEB077831D44B255BC42A415/'
+local offState = 'https://steamusercontent-a.akamaihd.net/ugc/12916446593392721363/53FD560EC918104B95C6D7702DA914B390DFB492/'
+
+function onLoad(saved_data)
+    self.createButton({
+        click_function  = "showHideStratreserves",
+        function_owner  = self,
+        label           = "",
+        position        = {0, 0.2, 0},
+        width           = 2000,
+        height          = 2000,
+        color           = {0, 0, 0, 0}
+    })
+end
+
+function showHideStratreserves()
+    local state = Global.getVar("interactiveButtonStratReserves")
+    if state == 1 then
+        Global.setVar("interactiveButtonStratReserves", 2)
+        params = {
+            image = onState,
+        }
+        drawLines()
+    else
+        Global.setVar("interactiveButtonStratReserves", 1)
+        params = {
+            image = offState,
+        }
+        removeLines()
+    end
+    self.setCustomObject(params)
+    self.reload()
+end
+
+-- Draw the two quarter‐lines
+function drawLines()
+    local playerSides = "None"
+
+    local mat = getObjectFromGUID(mat_GUID)
+    local lineScale = {x = 0, y = deployLineHeight, z = 0.02}
+    local mapBase = mat.getScale().z * sizeMulti -- short edge
+    local mapHeight = mat.getScale().x * sizeMulti -- long edge
+
+    -- Strategic reserves lines
+    --(linePos, lineRot, lineScale, color, orientation, type)
+    lineScale.x = mapHeight
+
+    spawnLine({0, deployLineHeight, (mapBase / 2) - 6}, {0, 0, 0}, lineScale, "White", "stratreserves")
+    spawnLine({0, deployLineHeight, -((mapBase / 2) - 6)}, {0, 0, 0}, lineScale, "White", "stratreserves")
+    lineScale.x = mapBase
+
+    spawnLine({(mapHeight / 2) - 6, deployLineHeight, 0}, {0, 90, 0}, lineScale, "White", "stratreserves")
+    spawnLine({-((mapHeight / 2) - 6), deployLineHeight, 0}, {0, 90, 0}, lineScale, "White", "stratreserves")
+end
+
+-- Remove any “quarter” GMNotes
+function removeLines()
+    for i, obj in ipairs(getAllObjects()) do
+        if obj.getGMNotes() == "stratreserves" then
+            obj.destroy()
+        end
+    end
+end
+
+-- Helper: spawn a BlockSquare with a given GMNote
+function spawnLine(linePos, lineRot, lineScale, color, gmNote)
+    local lineObj = spawnObject({
+        type     = "BlockSquare",
+        position = linePos,
+        rotation = lineRot,
+        scale    = lineScale
+    })
+    if lineObj then
+        lineObj.setLock(true)
+        lineObj.setGMNotes(gmNote)
+        lineObj.setColorTint(color)
+        local blockComp = lineObj.getComponent("BoxCollider")
+        if blockComp then
+            blockComp.set("enabled", false)
+        end
+    end
+end

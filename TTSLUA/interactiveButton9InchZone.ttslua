@@ -1,0 +1,80 @@
+-- FTC-GUID: 9a8b52
+
+mat_GUID         = Global.getVar("mat_GUID")
+deployLineHeight = 2.1
+sizeMulti        = 36
+local onState = 'https://steamusercontent-a.akamaihd.net/ugc/17763331424720594167/345790F0CAF1B7E35474BB7D83F4F6F03974963D/'
+local offState = 'https://steamusercontent-a.akamaihd.net/ugc/10999378060036050360/9F5C124A50E18E06CD6D9637022497C40211DA10/'
+
+function onLoad(saved_data)
+    self.createButton({
+        click_function  = "toggleQuarters",
+        function_owner  = self,
+        label           = "",
+        position        = {0, 0.2, 0},
+        width           = 2000,
+        height          = 2000,
+        color           = {0, 0, 0, 0}
+    })
+end
+
+function toggleQuarters()
+    local state = Global.getVar("interactiveButton9InchZone")
+    if state == 1 then
+        Global.setVar("interactiveButton9InchZone", 2)
+        params = {
+            image = onState,
+        }
+        drawLines()
+    else
+        Global.setVar("interactiveButton9InchZone", 1)
+        params = {
+            image = offState,
+        }
+        removeLines()
+    end
+    self.setCustomObject(params)
+    self.reload()
+end
+
+-- Draw the two quarter‐lines
+function drawLines()
+        local mat = getObjectFromGUID(mat_GUID)
+        local mapBase = mat.getScale().z * sizeMulti -- short edge
+        local mapHeight = mat.getScale().x * sizeMulti -- long edge
+        local lineScale = {x = mapHeight, y = deployLineHeight, z = 0.02}
+
+        spawnLine({0, deployLineHeight, (mapBase / 2) - 9}, {0, 0, 0}, lineScale, "White", "containment")
+        spawnLine({0, deployLineHeight, -((mapBase / 2) - 9)}, {0, 0, 0}, lineScale, "White", "containment")
+        lineScale.x = mapBase
+        spawnLine({(mapHeight / 2) - 9, deployLineHeight, 0}, {0, 90, 0}, lineScale, "White", "containment")
+        spawnLine({-((mapHeight / 2) - 9), deployLineHeight, 0}, {0, 90, 0}, lineScale, "White", "containment")
+
+end
+
+function removeLines()
+    for i, obj in ipairs(getAllObjects()) do
+        if obj.getGMNotes() == "containment" then
+            obj.destroy()
+        end
+    end
+end
+
+-- Helper: spawn a BlockSquare with a given GMNote
+function spawnLine(linePos, lineRot, lineScale, color, gmNote)
+    local lineObj = spawnObject({
+        type     = "BlockSquare",
+        position = linePos,
+        rotation = lineRot,
+        scale    = lineScale
+    })
+    if lineObj then
+        lineObj.setLock(true)
+        lineObj.setGMNotes(gmNote)
+        lineObj.setColorTint(color)
+        local blockComp = lineObj.getComponent("BoxCollider")
+        if blockComp then
+            blockComp.set("enabled", false)
+        end
+    end
+end

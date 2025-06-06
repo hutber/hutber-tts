@@ -40,6 +40,9 @@ blueLethalHits_GUID = "71ab21"
 RedVortexGUID = "be2cdb"
 BlueVortexGUID = "4b1a7b"
 
+redLethalFace = true
+blueLethalFace = true
+
 -- End Hutber IDS
 redVPCounter_GUID = "8b0541"
 blueVPCounter_GUID = "a77a54"
@@ -87,6 +90,12 @@ challengerDeck_GUID = "ffdf05"
 primaryDeck_GUID = "d26e9c"
 redSecondaryDeck_GUID = "c0fb49"
 blueSecondaryDeck_GUID = "e1da3b"
+
+interactiveButtonTableQuarters_State = 1
+interactiveButtonAreaDenial = 1
+interactiveButtonStratReserves = 1
+interactiveButtonDeploymentZones = 1
+interactiveButton9InchZone = 1
 
 CPMissionBook_GUID = "731ec4"
 
@@ -144,45 +153,45 @@ missionPackData = {
         redSecondaryDeck_GUID = "c0fb49",
         blueSecondaryDeck_GUID = nil,
         tournamentMissions = {
-            -- A: Take and Hold / Raise Banners / Tipping Point
-            {name = "A", primary = "72c0f4", deployment = "77cde6"},
-            -- B: Purge the Foe / Smoke and Mirrors / Tipping Point
+            -- A: Take and Hold / Tipping Point
+            {name = "A", primary = "bffd57", deployment = "77cde6"},
+            -- B: Purge the Foe / Tipping Point
             {name = "B", primary = "903575", deployment = "77cde6"},
-            -- C: Linchpin / Fog of War / Tipping Point
+            -- C: Linchpin / Tipping Point
             {name = "C", primary = "46009c", deployment = "77cde6"},
-            -- D: Scorched Earth / Swift Action / Tipping Point
+            -- D: Scorched Earth / Tipping Point
             {name = "D", primary = "b41088", deployment = "77cde6"},
-            -- E: Take and Hold / Prepared Positions / Hammer and Anvil
-            {name = "E", primary = "72c0f4", deployment = "97f3f0"},
-            -- F: Burden of Trust / Hidden Supplies / Hammer and Anvil
+            -- E: Take and Hold / Hammer and Anvil
+            {name = "E", primary = "bffd57", deployment = "97f3f0"},
+            -- F: Burden of Trust / Hammer and Anvil
             {name = "F", primary = "299a75", deployment = "97f3f0"},
-            -- G: The Ritual / Stalwarts / Hammer and Anvil
+            -- G: The Ritual / Hammer and Anvil
             {name = "G", primary = "9a3807", deployment = "97f3f0"},
-            -- H: Supply Drop / Smoke and Mirrors / Hammer and Anvil
+            -- H: Supply Drop / Hammer and Anvil
             {name = "H", primary = "244a21", deployment = "97f3f0"},
-            -- I: Burden of Trust / Prepared Positions / Search and Destroy
+            -- I: Burden of Trust / Search and Destroy
             {name = "I", primary = "299a75", deployment = "09c961"},
-            -- J: Linchpin / Raise Banners / Search and Destroy
+            -- J: Linchpin / Search and Destroy
             {name = "J", primary = "46009c", deployment = "09c961"},
-            -- K: Scorched Earth / Stalwarts / Search and Destroy
+            -- K: Scorched Earth / Search and Destroy
             {name = "K", primary = "b41088", deployment = "09c961"},
-            -- L: Take and Hold / Hidden Supplies / Search and Destroy
-            {name = "L", primary = "72c0f4", deployment = "09c961"},
-            -- M: Purge the Foe / Rapid Escalation / Crucible of Battle
+            -- L: Take and Hold / Search and Destroy
+            {name = "L", primary = "bffd57", deployment = "09c961"},
+            -- M: Purge the Foe / Crucible of Battle
             {name = "M", primary = "903575", deployment = "e96d18"},
-            -- N: The Ritual / Swift Action / Crucible of Battle
+            -- N: The Ritual / Crucible of Battle
             {name = "N", primary = "9a3807", deployment = "e96d18"},
-            -- O: Terraform / Stalwarts / Crucible of Battle
+            -- O: Terraform / Crucible of Battle
             {name = "O", primary = "7fa6d0", deployment = "e96d18"},
-            -- P: Scorched Earth / Inspired Leadership / Crucible of Battle
+            -- P: Scorched Earth / Crucible of Battle
             {name = "P", primary = "b41088", deployment = "e96d18"},
-            -- Q: Supply Drop / Rapid Escalation / Sweeping Engagement
+            -- Q: Supply Drop / Sweeping Engagement
             {name = "Q", primary = "244a21", deployment = "c6edf3"},
-            -- R: Terraform / Swift Action / Sweeping Engagement
+            -- R: Terraform / Sweeping Engagement
             {name = "R", primary = "7fa6d0", deployment = "c6edf3"},
-            -- S: Linchpin / Raise Banners / Dawn of War
+            -- S: Linchpin / Dawn of War
             {name = "S", primary = "46009c", deployment = "7f45dc"},
-            -- T: Unexploded Ordnance / Inspired Leadership / Dawn of War
+            -- T: Unexploded Ordnance / Dawn of War
             {name = "T", primary = "5ed8dc", deployment = "7f45dc"}
         }
     },

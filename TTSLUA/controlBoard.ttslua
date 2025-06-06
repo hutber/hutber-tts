@@ -48,6 +48,7 @@ local RedControlBoard = {
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
     CustomCounter = "021302",
+    lethalFace = "redLethalFace",
     bagIds = {
         d12  ="b9c441",
         greyD12 = "fbf744",
@@ -105,11 +106,16 @@ local RedControlBoard = {
             title = "Toggle the display of the custom counter",
             customHiddenPosition = -1.32
         },
-         {
-             name = "Rotation 5 Degrees",
-             state = false,
-             title = "Toggle between 5 and native degrees for rotation"
-         }
+         --{
+         --    name = "Rotation 5 Degrees",
+         --    state = false,
+         --    title = "Toggle between 5 and native degrees for rotation"
+         --}
+        --  {
+        --     name = "Hide Hutber",
+        --     state = true,
+        --     title = "Hide Jamie Hutber's models from the table"
+        -- }
     }
 }
 
@@ -122,6 +128,7 @@ local BlueControlBoard = {
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
     CustomCounter = "7f211",
+    lethalFace = "blueLethalFace",
     bagIds = {
         d12  ="ab15ef",
         greyD12 = "c3c404",
@@ -610,6 +617,8 @@ function toggleOption(player, index)
     elseif option.name == "Reserves Board" then
         toggleObjectState(board.ReservesBoardGUID, option.state)
         toggleObjectState(board.ReservesOldBoardGUID, not option.state)
+    elseif option.name == "Hide Hutber" then
+        Global.setVar(board.lethalFace, option.state and true or false)
     elseif option.name == "Fast Rolling" then
         Global.setVar(
             expectedColor == "Red" and "redDiceSpawnTime" or "blueDiceSpawnTime",

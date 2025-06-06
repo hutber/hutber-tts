@@ -187,31 +187,57 @@ sustainedLethalHitsBtn = {
     font_size=500, color="White", font_color={0,0,0}
 }
 copyOthersDiceBtn = {
-    label="Grab Oppos Dice", tooltip="Click here to copy all the dice from the oppos dice mat",
-    click_function="importOpposDice", function_owner=self,
-    position={-6.45, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3850, scale={0.1,0.1,0.1},
-    font_size=500, color="White", font_color={0,0,0}
+    tooltip="Copy opposite player's dice",
+    click_function = "importOpposDice",
+    function_owner = self,
+    position       = {-7.5, Yoffset, 0.86},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = (currentMat == "Red" and "Blue" or "Red"), -- Button changes color based on current player
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = (currentMat == "Red") and {0, 0, 1, 1} or {1, 0, 0, 1},
+    label = (currentMat == "Red") and "Copy Blue's Dice" or "Copy Red's Dice", 
+    press_color = {0.27, 0.27, 0.27, 1}, 
+    scale = {0.5, 0.5, 0.5}
 }
 
-auto1D6 = {
-    label="1D6 Advance", tooltip="Auto roll 1D6",
-    click_function="autoRoll1D6", function_owner=self,
-    position={-6.52, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=3050, scale={0.1,0.1,0.1},
-    font_size=500, color="White", font_color={0,0,0}
+local auto1D6 = {
+    label          = "Instant 1D6",
+    tooltip="Roll 1D6 Instantly",
+    click_function = "autoRoll1D6",
+    function_owner = self,
+    position       = {-7.5, Yoffset, 0.52},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
 }
-auto2D6 = {
-    label = "2D6 Charge", tooltip = "Auto roll 2D6",
-    click_function = "autoRoll2D6", function_owner = self,
-    position = {-5.8, Yoffset, -1.1}, rotation = {0, 0, 0},
-    height = 1000, width = 3050, scale = {0.1, 0.1, 0.1},
-    font_size = 500, color = "White", font_color = {0, 0, 0}
+
+local auto2D6 = {
+    label          = "Instant 2D6",
+    tooltip="Roll 2D6 Instantly",
+    click_function = "autoRoll2D6",
+    function_owner = self,
+    position       = {-7.5, Yoffset, 0.18},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
 }
+
+
 local revertRollBtn = {
     label          = "Revert Roll",
     tooltip="It takes 1 second after rolling to 'lock in'",
     click_function = "revertRoll",
     function_owner = self,
-    position       = {-7.5, Yoffset, 0.36},
+    position       = {-7.5, Yoffset, -0.16},
     rotation       = { 0, 0, 0 },
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
@@ -224,7 +250,7 @@ local revertRollBtn = {
 -- Background Box (Soft Off-White for a Professional Look)
 local customDiceInputBG = {
     label = "", click_function = "none", function_owner = self,
-    position = {-7.5, Yoffset, -0.3}, rotation = {0, 0, 0},
+    position = {-7.5, Yoffset, -0.82}, rotation = {0, 0, 0},
     width = 1300, height = 375, font_size = 100,
     color = {0.95, 0.95, 0.95, 1}, -- Soft off-white
     scale = {0.5, 0.5, 0.5}
@@ -233,7 +259,7 @@ local customDiceInputBG = {
 -- Input Field (Bright White)
 local customDiceInput = {
     label = "Enter Dice #", input_function = "setCustomDiceCount", function_owner = self,
-    position = {-7.5, Yoffset, -0.28}, rotation = {0, 0, 0},
+    position = {-7.5, Yoffset, -0.82}, rotation = {0, 0, 0},
     width = 1100, height = 225, font_size = 180, alignment = 2, scale = {0.5, 0.5, 0.5},
     color = {1, 1, 1, 1}, -- Pure white
     font_color = {0.2, 0.2, 0.2} -- Dark gray text
@@ -242,7 +268,7 @@ local customDiceInput = {
 -- Modern Black "Spawn Dice" Button
 local customDiceSpawnButton = {
     label = "Spawn Dice", click_function = "spawnCustomDice", function_owner = self,
-    position = {-7.5, Yoffset, 0}, rotation = {0, 0, 0},
+    position = {-7.5, Yoffset, -0.50}, rotation = {0, 0, 0},
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -459,73 +485,72 @@ function spawnCustomDice(_, player, _)
 end
 
 function autoRoll(obj, player, alt, numDice)
-    numDice = numDice or 1 -- Default to 1 die if numDice is not provided
+    numDice = numDice or 1
     local total = 0
-
-    -- Determine direction based on currentMat
     local directionMultiplier = (currentMat == "Blue") and 1 or -1
-
-    -- Start position
     local startX = self.getPosition().x + (currentMat == "Blue" and -16 or 16)
     local startY = self.getPosition().y + 1
     local startZ = self.getPosition().z
-
-    -- If lastSpawnPosition exists, start from there
     if lastSpawnPosition then
         startX = lastSpawnPosition.x
         startY = lastSpawnPosition.y
         startZ = lastSpawnPosition.z
     end
+    local diceColors = {
+        {0.627, 0.124, 0.941}, -- purple
+        {1, 0.341, 0.2},       -- orange
+        {0.203, 0.674, 0.325}, -- green
+        {0.160, 0.596, 0.965}, -- blue
+        {0.898, 0.223, 0.509}, -- pink
+        {0.254, 0.211, 0.098}, -- brown
+        {1, 0.298, 0.298},     -- red
+        {0.345, 0.184, 0.506}, -- indigo
+        {0.988, 0.761, 0.498}, -- light orange
+        {0.847, 0.647, 0.125}, -- gold
+    }
 
+    local colorIndex = math.random(#diceColors)
+    local rollColor = diceColors[colorIndex]
     for i = 1, numDice do
-        local result = math.random(6) -- Roll a single D6
+        local result = math.random(6)
         total = total + result
-        printToAll(player .. " rolled a D6: " .. result, {1, 1, 1}) -- Display individual result
-
-        -- Calculate the position for the dice
+        printToAll(player .. " rolled a D6: " .. result, stringColorToRGB(player))
         local position = {
-            x = startX + directionMultiplier * (i - 1) * 1.5, -- Adjust x position based on direction
+            x = startX + directionMultiplier * (i - 1) * 1.5,
             y = startY,
             z = startZ
         }
-
-        -- Spawn the dice object
         local die = spawnObject({
             type = "Die_6_Rounded",
             position = position,
             rotation = {0, 180, 0}
         })
-
         if die then
-            die.setValue(result) -- Set the dice value to the rolled result
-            die.setColorTint({0.627, 0.124999948, 0.941}) -- Set to the requested purple color
+            die.setValue(result)
+            die.setColorTint(rollColor)
             die.setCustomObject({
                 type = 1,
                 image = customDiceImage,
                 face = 1,
-                font_color = {0, 0, 0} -- Set dice dot numbers to black
+                font_color = {0, 0, 0}
             })
-            diceCount = diceCount + 1 -- Increment the dice count
-
-            -- Update last spawn position
+            diceCount = diceCount + 1
             lastSpawnPosition = {
-                x = position.x + directionMultiplier * 1.5, -- Move 1.5 units in the correct direction
+                x = position.x + directionMultiplier * 1.5,
                 y = position.y,
                 z = position.z
             }
-
-            -- Reset position after 5 dice rolls
             if diceCount >= 5 then
-                lastSpawnPosition = nil -- Reset back to the original starting position
-                diceCount = 0 -- Reset dice count
+                lastSpawnPosition = nil
+                diceCount = 0
             end
         else
             printToColor("Failed to spawn a die for roll " .. i, player, "Red")
         end
     end
-
-    printToAll(player .. " rolled a total of " .. total .. " (" .. numDice .. "D6)", {0, 1, 0}) -- Display total
+    printToAll(player .. " rolled a total of " .. total .. " (" .. numDice .. "D6)", stringColorToRGB(player))
 end
+
 
 
 -- Reset the last spawn position and dice count when the dice area is cleared
@@ -1051,15 +1076,18 @@ function ensureLethalHitsObjects()
                 nickname = "Red Lethal Hits",
                 description = "This is the area for lethal hits (Red)."
             })
-            redLethalHitsObject.setCustomObject({
-                image = lethalHitsImageURL,
-                thickness = 0.2,
-                merge_distance_pixels = 15,
-                stand_up = false,
-                stackable = false
-            })
-            redLethalHitsObject.setLock(true)
-            spawnedObjects.Red.lethalHits = redLethalHitsObject
+            print(Global.getVar("redLethalFace"))
+            if(Global.getVar("redLethalFace")) then
+                redLethalHitsObject.setCustomObject({
+                    image = lethalHitsImageURL,
+                    thickness = 0.2,
+                    merge_distance_pixels = 15,
+                    stand_up = false,
+                    stackable = false
+                })
+                redLethalHitsObject.setLock(true)
+                spawnedObjects.Red.lethalHits = redLethalHitsObject
+            end
         end
     elseif currentMat == "Blue" then
         if not spawnedObjects.Blue.lethalHits then
@@ -1071,15 +1099,17 @@ function ensureLethalHitsObjects()
                 nickname = "Blue Lethal Hits",
                 description = "This is the area for lethal hits (Blue)."
             })
-            blueLethalHitsObject.setCustomObject({
-                image = lethalHitsImageURL,
-                thickness = 0.2,
-                merge_distance_pixels = 15,
-                stand_up = false,
-                stackable = false
-            })
-            blueLethalHitsObject.setLock(true)
-            spawnedObjects.Blue.lethalHits = blueLethalHitsObject
+            if(Global.getVar("blueLethalFace")) then
+                blueLethalHitsObject.setCustomObject({
+                    image = lethalHitsImageURL,
+                    thickness = 0.2,
+                    merge_distance_pixels = 15,
+                    stand_up = false,
+                    stackable = false
+                })
+                blueLethalHitsObject.setLock(true)
+                spawnedObjects.Blue.lethalHits = blueLethalHitsObject
+            end
         end
     else
         print("Error: Unknown mat type '" .. tostring(currentMat) .. "'.")
