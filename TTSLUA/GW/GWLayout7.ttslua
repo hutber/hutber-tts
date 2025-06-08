@@ -1,5 +1,11 @@
 -- FTC-GUID: 0f4666,51ab31
-
+    -- TO CHANGE THE SIZE OF THE AREA FOR THE MAP LOADING/DELETING, READ THIS
+    -- Change the zoneScale size to match a zone you create in game (as reference)
+    -- Be sure the zone extends below the table too
+    -- This should be the same as the Saving Tool for your table.
+    -------------------------------------------------------------
+    zoneScale = {x=60.12, y=73, z=44.04} --60x44 Strike Force
+    -------------------------------------------------------------
     function onLoad()
         self.createButton({
             label = "Load Map",
@@ -48,7 +54,12 @@
         local objects = zone.getObjects()
 
         for i, obj in ipairs(objects) do
-            if obj.getGUID() ~= "e7ca6e" --Exclude Map Buidler Table
+            ----------------------------------------------
+             --IMPORTANT! Keep the map card from deleting speficic stuff here
+            ----------------------------------------------
+            if obj.getGMNotes() ~= "MapExclude" -- As black player, right click and add "MapExclude" to anything you dont want deleted. You may have to temporarily make your table interactable to do this, with its scripting.
+                and
+                obj.getGUID() ~= "e7ca6e" --Exclude Map Buidler Table
                 and
                 obj.getGUID() ~= "6012bf" --...and ForceOrg Table...
                 and
@@ -64,14 +75,11 @@
         zone.destruct()
     end
     function loadMap(objectClicked, clickerColor, altClickUsed)
-        -------------------
+        ----------
         -- Spawn the scripting zone, which uses the callback above that deletes everything then deletes itself.
         local scriptzoneParams = {                  -- Define the parameters for the scripting zone
             position = {x=0, y=26, z=0},
-            --scale = {x=30.15, y=73, z=22.03}, --Kill Team Size
-            --scale = {x=30.15, y=73, z=44.04}, --Incursion and Combat Patrol Size
-            scale = {x=60.12, y=73, z=44.04}, --Strike Force Size
-            --scale = {x=90.07, y=73, z=44.04}, --Onslaught Size
+            scale = zoneScale,
             type = 'ScriptingTrigger',              -- Use the ScriptingTrigger type to spawn a Scripting Zone
             callback_function = scriptzoneCallback, -- Specify the function to call when the zone is created
             callback_owner = self,
@@ -91,16 +99,13 @@
         end, .5)
     end
 
-    -----------------------------------------------------------------------------------------------------------------
+    -----------------------------
     -- This function runs when the Clear Map button is clicked on the Map Card
     function clearMap(objectClicked, clickerColor, altClickUsed)
 
         local scriptzoneParams = {                  -- Define the parameters for the scripting zone
             position = {x=0, y=26, z=0},
-            --scale = {x=30.15, y=73, z=22.03}, --Kill Team Size
-            --scale = {x=30.15, y=73, z=44.04}, --Incursion and Combat Patrol Size
-            scale = {x=60.12, y=73, z=44.04}, --Strike Force Size
-            --scale = {x=90.07, y=73, z=44.04}, --Onslaught Size
+            scale = zoneScale,
             type = 'ScriptingTrigger',              -- Use the ScriptingTrigger type to spawn a Scripting Zone
             callback_function = scriptzoneCallback, -- Specify the function to call when the zone is created
             callback_owner = self,
@@ -112,19 +117,962 @@
 
 
 objectJSONs = {
-    [[{
-      "GUID": "7f414f",
+  [[{
+  "GUID": "7f414f",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 0.0,
+    "posY": -10.13,
+    "posZ": 0.0,
+    "rotX": 0.0,
+    "rotY": 0.0,
+    "rotZ": 0.0,
+    "scaleX": 1.666,
+    "scaleY": 1.06,
+    "scaleZ": 1.2206
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": true,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/2031721158054099239/CA52105B60D971262255CFC6808797FBE077231B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 4,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "\nBCBtype = \"terrain\"\nfunction onload() \r\n    self.interactable = false\r\n    self.gizmo_selectable = true\r\nend",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "a6761a",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": -21.00022,
+    "posY": 1.03039086,
+    "posZ": -11.9996758,
+    "rotX": -5.835069E-05,
+    "rotY": 179.998825,
+    "rotZ": -5.843143E-05,
+    "scaleX": 6.00000334,
+    "scaleY": 0.100000016,
+    "scaleZ": 12.0000029
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.235293925,
+    "g": 0.184313536,
+    "b": 0.137254715,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "2498b2",
       "Name": "Custom_Model",
       "Transform": {
-        "posX": 0.0,
-        "posY": -10.13,
-        "posZ": 0.0,
-        "rotX": 0.0,
-        "rotY": 0.0,
-        "rotZ": 0.0,
-        "scaleX": 1.666,
-        "scaleY": 1.06,
-        "scaleZ": 1.2206
+        "posX": -0.46741423,
+        "posY": 0.4986517,
+        "posZ": 0.160155624,
+        "rotX": -0.000191291969,
+        "rotY": 270.0,
+        "rotZ": -0.0010636613,
+        "scaleX": 0.3230799,
+        "scaleY": 44.8559227,
+        "scaleZ": 0.07858656
+      },
+      "Nickname": "Ruins |[CAFF70] Area Terrain ",
+      "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.9999998,
+        "g": 0.992171347,
+        "b": 0.9999998
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomMesh": {
+        "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+        "NormalURL": "",
+        "ColliderURL": "",
+        "Convex": true,
+        "MaterialIndex": 1,
+        "TypeIndex": 0,
+        "CastShadows": true
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "ChildObjects": [
+        {
+          "GUID": "a7c1c2",
+          "Name": "Custom_Model",
+          "Transform": {
+            "posX": 1.00729418,
+            "posY": 6.865681E-05,
+            "posZ": -3.86936617,
+            "rotX": 0.001237247,
+            "rotY": 270.0,
+            "rotZ": -0.002410763,
+            "scaleX": 4.05526638,
+            "scaleY": 1.00000012,
+            "scaleZ": 0.121620342
+          },
+          "Nickname": "Ruins |[CAFF70] Area Terrain ",
+          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+          "GMNotes": "",
+          "AltLookAngle": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "ColorDiffuse": {
+            "r": 0.9999998,
+            "g": 0.992171347,
+            "b": 0.9999998
+          },
+          "LayoutGroupSortIndex": 0,
+          "Value": 0,
+          "Locked": true,
+          "Grid": true,
+          "Snap": true,
+          "IgnoreFoW": false,
+          "MeasureMovement": false,
+          "DragSelectable": true,
+          "Autoraise": true,
+          "Sticky": true,
+          "Tooltip": true,
+          "GridProjection": false,
+          "HideWhenFaceDown": false,
+          "Hands": false,
+          "CustomMesh": {
+            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+            "NormalURL": "",
+            "ColliderURL": "",
+            "Convex": true,
+            "MaterialIndex": 1,
+            "TypeIndex": 0,
+            "CastShadows": true
+          },
+          "LuaScript": "",
+          "LuaScriptState": "",
+          "XmlUI": ""
+        }
+      ]
+    }
+  ]
+}]],
+  [[{
+  "GUID": "8dd1ca",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -20.6509247,
+    "posY": 1.08040154,
+    "posZ": -7.101107,
+    "rotX": 0.000619222468,
+    "rotY": 14.9938345,
+    "rotZ": 0.0005031213,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "Convex": false,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "a6761a",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": -0.0582327433,
+      "y": 0.5001804,
+      "z": -0.40821293
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "f1878a",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": -18.979147,
+    "posY": 1.0303874,
+    "posZ": 7.899822,
+    "rotX": 1.66743951E-06,
+    "rotY": 180.041183,
+    "rotZ": -1.47082674E-05,
+    "scaleX": 6.000004,
+    "scaleY": 0.099999994,
+    "scaleZ": 12.0000057
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.2352939,
+    "g": 0.1843135,
+    "b": 0.137254685,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "089659",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -18.5289154,
+    "posY": 1.08038855,
+    "posZ": 11.8888073,
+    "rotX": 0.0004522322,
+    "rotY": 358.829956,
+    "rotZ": -1.98459674E-07,
+    "scaleX": 2.48351026,
+    "scaleY": 4.485573,
+    "scaleZ": 0.4715124
+  },
+  "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "b0954c",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -19.0809746,
+    "posY": 1.08041942,
+    "posZ": -8.516174,
+    "rotX": 0.00303090364,
+    "rotY": 75.00481,
+    "rotZ": -0.000242976326,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "Convex": false,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "a6761a",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": -0.319885522,
+      "y": 0.500235856,
+      "z": -0.290288538
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "958a98",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -18.9582024,
+    "posY": 1.44813943,
+    "posZ": 2.59247565,
+    "rotX": -2.54257448E-05,
+    "rotY": 75.91797,
+    "rotZ": -6.53343E-05,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638941847941/4FA8C16AB31E60359628A386550FCEF906734C07/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "f1878a",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": -0.00412647845,
+      "y": 4.17752075,
+      "z": 0.442277282
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "8f8f0c",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -17.8612919,
+    "posY": 1.08038771,
+    "posZ": 3.44833422,
+    "rotX": 6.71691453E-07,
+    "rotY": 135.9489,
+    "rotZ": -9.722677E-06,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "Convex": false,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "f1878a",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": -0.186842188,
+      "y": 0.5000016,
+      "z": 0.370890051
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "080f2a",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -17.14346,
+    "posY": 1.44813991,
+    "posZ": 13.3743057,
+    "rotX": 3.28678937E-07,
+    "rotY": 0.00395140331,
+    "rotZ": 1.6096541E-05,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638941847941/4FA8C16AB31E60359628A386550FCEF906734C07/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "f1878a",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": -0.305291951,
+      "y": 4.17751932,
+      "z": -0.456316471
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "2b0287",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -16.6760845,
+    "posY": 1.44813991,
+    "posZ": 12.7856827,
+    "rotX": -1.80991151E-06,
+    "rotY": 359.896881,
+    "rotZ": 1.49394818E-05,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638941847941/4FA8C16AB31E60359628A386550FCEF906734C07/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "f1878a",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": -0.3832582,
+      "y": 4.177518,
+      "z": -0.407292634
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "f08bd1",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -16.196579,
+    "posY": 1.08038819,
+    "posZ": 8.764896,
+    "rotX": 0.000116403338,
+    "rotY": 270.0464,
+    "rotZ": -7.42612747E-06,
+    "scaleX": 3.051199,
+    "scaleY": 4.48947048,
+    "scaleZ": 0.471066445
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "ac7e35",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": -9.477584,
+    "posY": 1.03039455,
+    "posZ": -9.027749,
+    "rotX": -0.0001505629,
+    "rotY": -0.00540609332,
+    "rotZ": -0.000394653034,
+    "scaleX": 5.000002,
+    "scaleY": 0.100000016,
+    "scaleZ": 10.0000019
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.235293925,
+    "g": 0.184313536,
+    "b": 0.137254715,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "332aea",
+      "Name": "BlockSquare",
+      "Transform": {
+        "posX": 0.09999047,
+        "posY": 8.59063657E-05,
+        "posZ": 0.799960256,
+        "rotX": 0.000423560123,
+        "rotY": 0.00996829849,
+        "rotZ": 0.0008023695,
+        "scaleX": 0.8000001,
+        "scaleY": 1.0,
+        "scaleZ": 0.600000143
       },
       "Nickname": "",
       "Description": "",
@@ -135,9 +1083,10 @@ objectJSONs = {
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
+        "r": 0.2299999,
+        "g": 0.1816999,
+        "b": 0.1333999,
+        "a": 0.9607843
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -150,265 +1099,372 @@ objectJSONs = {
       "Autoraise": true,
       "Sticky": true,
       "Tooltip": true,
-      "GridProjection": true,
+      "GridProjection": false,
       "HideWhenFaceDown": false,
       "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1043093746445949836/0C23DD875258EF8FC61815E47D834AB753F5BA67/",
-        "NormalURL": "",
-        "ColliderURL": "",
-        "Convex": true,
-        "MaterialIndex": 3,
-        "TypeIndex": 4,
-        "CustomShader": {
-          "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
-          },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
-        },
-        "CastShadows": true
-      },
-      "LuaScript": "\nBCBtype = \"terrain\"\nfunction onload() \r\n    self.interactable = false\r\n    self.gizmo_selectable = true\r\nend",
+      "LuaScript": "",
       "LuaScriptState": "",
       "XmlUI": ""
-    }]],
-    [[{
-      "GUID": "e56d80",
+    }
+  ]
+}]],
+  [[{
+  "GUID": "4e7a9d",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -9.443257,
+    "posY": 1.08490849,
+    "posZ": -13.8136253,
+    "rotX": -0.0001029054,
+    "rotY": -0.00330751832,
+    "rotZ": -0.000427670864,
+    "scaleX": 2.381273,
+    "scaleY": 4.485593,
+    "scaleZ": 0.471519679
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "e28baf",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -8.977171,
+    "posY": 1.08133245,
+    "posZ": 1.81194019,
+    "rotX": -0.000102909682,
+    "rotY": -0.0027559814,
+    "rotZ": 0.0004177779,
+    "scaleX": 1.95518434,
+    "scaleY": 4.48559332,
+    "scaleZ": 0.471512645
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "d66cc9",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -8.366482,
+    "posY": 1.08040273,
+    "posZ": -5.931543,
+    "rotX": -0.000471841166,
+    "rotY": 329.975739,
+    "rotZ": 0.005091035,
+    "scaleX": 0.7000004,
+    "scaleY": 0.7000002,
+    "scaleZ": 0.7000004
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992165864,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": false,
+  "Snap": false,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1030707799276647654/A666ED668EBE4CE92239C849AC33FA6268201EE7/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1030707799276647728/C98DEAEA6FB0F4758F16BB9698ED67BDACB3D040/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1030707799276647819/6756DB1DA28553218412AE6F325080297EC3E911/",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "JointFixed": {
+    "ConnectedBodyGUID": "ac7e35",
+    "EnableCollision": false,
+    "Axis": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Anchor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ConnectedAnchor": {
+      "x": 0.222279087,
+      "y": 0.5000232,
+      "z": 0.30960986
+    },
+    "BreakForce": "Infinity",
+    "BreakTorgue": "Infinity"
+  }
+}]],
+  [[{
+  "GUID": "f6bf2d",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -7.166773,
+    "posY": 1.08036,
+    "posZ": -10.74402,
+    "rotX": 0.005319278,
+    "rotY": 89.99184,
+    "rotZ": -0.000103957362,
+    "scaleX": 3.19548154,
+    "scaleY": 4.48946953,
+    "scaleZ": 0.471068144
+  },
+  "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "9cf807",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": -7.160595,
+    "posY": 1.08029556,
+    "posZ": -0.928235054,
+    "rotX": -0.0004015077,
+    "rotY": 269.99707,
+    "rotZ": -0.000315903948,
+    "scaleX": 2.829347,
+    "scaleY": 4.48947048,
+    "scaleZ": 0.471069664
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "3222c8",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": -3.945993,
+    "posY": 1.04768157,
+    "posZ": 12.9420338,
+    "rotX": 0.0125794169,
+    "rotY": 179.995728,
+    "rotZ": -0.00222193915,
+    "scaleX": 6.0,
+    "scaleY": 0.1,
+    "scaleZ": 12.0
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.2352938,
+    "g": 0.184313416,
+    "b": 0.1372546,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "bbfc70",
       "Name": "Custom_Model",
       "Transform": {
-        "posX": -22.0005932,
-        "posY": 1.08112884,
-        "posZ": -7.0028944,
-        "rotX": 0.2345321,
-        "rotY": 359.950043,
-        "rotZ": 0.0499728769,
-        "scaleX": 0.8213413,
-        "scaleY": 1.05181932,
-        "scaleZ": 1.05182219
+        "posX": -0.1590606,
+        "posY": -0.681101561,
+        "posZ": -0.31843853,
+        "rotX": 0.000235410727,
+        "rotY": 180.003082,
+        "rotZ": -0.00224568578,
+        "scaleX": 0.317976564,
+        "scaleY": 44.8562775,
+        "scaleZ": 0.0392947346
       },
-      "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891695/7D30E9BF25563CB0319C9D88A3F22093B3A3F557/",
-        "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-        "Convex": false,
-        "MaterialIndex": 1,
-        "TypeIndex": 0,
-        "CastShadows": true
-      },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "a6761a",
-          "Name": "BlockSquare",
-          "Transform": {
-            "posX": 1.21285951,
-            "posY": -0.06851686,
-            "posZ": -4.751494,
-            "rotX": 0.234490588,
-            "rotY": 180.047318,
-            "rotZ": 0.05016627,
-            "scaleX": 7.30512476,
-            "scaleY": 0.0950733945,
-            "scaleZ": 11.4087763
-          },
-          "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.235293955,
-            "g": 0.184313565,
-            "b": 0.137254745,
-            "a": 0.9607843
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "\nBCBtype = \"terrain\"\n",
-          "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "2498b2",
-              "Name": "Custom_Model",
-              "Transform": {
-                "posX": -0.46741423,
-                "posY": 0.4986517,
-                "posZ": 0.160155624,
-                "rotX": -0.000191291969,
-                "rotY": 270.0,
-                "rotZ": -0.0010636613,
-                "scaleX": 0.3230799,
-                "scaleY": 44.8559227,
-                "scaleZ": 0.07858656
-              },
-              "Nickname": "Ruins |[CAFF70] Area Terrain ",
-              "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 0.9999998,
-                "g": 0.992171347,
-                "b": 0.9999998
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "CustomMesh": {
-                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                "NormalURL": "",
-                "ColliderURL": "",
-                "Convex": true,
-                "MaterialIndex": 1,
-                "TypeIndex": 0,
-                "CastShadows": true
-              },
-              "LuaScript": "",
-              "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "a7c1c2",
-                  "Name": "Custom_Model",
-                  "Transform": {
-                    "posX": 1.00729418,
-                    "posY": 6.865681E-05,
-                    "posZ": -3.86936617,
-                    "rotX": 0.001237247,
-                    "rotY": 270.0,
-                    "rotZ": -0.002410763,
-                    "scaleX": 4.05526638,
-                    "scaleY": 1.00000012,
-                    "scaleZ": 0.121620342
-                  },
-                  "Nickname": "Ruins |[CAFF70] Area Terrain ",
-                  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.9999998,
-                    "g": 0.992171347,
-                    "b": 0.9999998
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "CustomMesh": {
-                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                    "NormalURL": "",
-                    "ColliderURL": "",
-                    "Convex": true,
-                    "MaterialIndex": 1,
-                    "TypeIndex": 0,
-                    "CastShadows": true
-                  },
-                  "LuaScript": "",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }]],
-    [[{
-      "GUID": "e28baf",
-      "Name": "Custom_Model",
-      "Transform": {
-        "posX": -18.5386429,
-        "posY": 1.0823288,
-        "posZ": 11.8119154,
-        "rotX": -0.000129724722,
-        "rotY": 0.005228591,
-        "rotZ": 359.9384,
-        "scaleX": 2.483511,
-        "scaleY": 4.485573,
-        "scaleZ": 0.471512556
-      },
-      "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+      "Nickname": "",
       "Description": "",
       "GMNotes": "",
       "AltLookAngle": {
@@ -445,23 +1501,23 @@ objectJSONs = {
         "TypeIndex": 0,
         "CastShadows": true
       },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
+      "LuaScript": "",
       "LuaScriptState": "",
       "XmlUI": "",
       "ChildObjects": [
         {
-          "GUID": "9cf807",
+          "GUID": "5b799e",
           "Name": "Custom_Model",
           "Transform": {
-            "posX": 0.9345053,
-            "posY": 0.00029659,
-            "posZ": -6.254762,
-            "rotX": 0.06174942,
+            "posX": 0.950787365,
+            "posY": 0.009036978,
+            "posZ": -8.080882,
+            "rotX": 0.0,
             "rotY": 270.0,
-            "rotZ": -0.000116616866,
-            "scaleX": 6.471083,
-            "scaleY": 1.00086951,
-            "scaleZ": 0.189677313
+            "rotZ": -0.00296831015,
+            "scaleX": 7.86000967,
+            "scaleY": 0.999992251,
+            "scaleZ": 0.246350378
           },
           "Nickname": "Ruins |[CAFF70] Area Terrain ",
           "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
@@ -505,21 +1561,21 @@ objectJSONs = {
           "XmlUI": "",
           "ChildObjects": [
             {
-              "GUID": "f97185",
+              "GUID": "c05f3b",
               "Name": "Custom_Model",
               "Transform": {
-                "posX": -1.91962576,
-                "posY": 3.08232375E-05,
-                "posZ": 5.922009,
-                "rotX": 0.232682139,
-                "rotY": 269.9662,
-                "rotZ": 0.0496596657,
-                "scaleX": 2.03438044,
-                "scaleY": 0.263647228,
-                "scaleZ": 0.3879211
+                "posX": -1.017544,
+                "posY": -0.009080606,
+                "posZ": 3.72124481,
+                "rotX": -0.0030867462,
+                "rotY": 90.0,
+                "rotZ": 6.213506E-05,
+                "scaleX": 4.034993,
+                "scaleY": 1.00000024,
+                "scaleZ": 0.127221689
               },
-              "Nickname": "",
-              "Description": "",
+              "Nickname": "Ruins |[CAFF70] Area Terrain ",
+              "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
               "GMNotes": "",
               "AltLookAngle": {
                 "x": 0.0,
@@ -527,9 +1583,9 @@ objectJSONs = {
                 "z": 0.0
               },
               "ColorDiffuse": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 0.9999998,
+                "g": 0.992171347,
+                "b": 0.9999998
               },
               "LayoutGroupSortIndex": 0,
               "Value": 0,
@@ -546,1054 +1602,86 @@ objectJSONs = {
               "HideWhenFaceDown": false,
               "Hands": false,
               "CustomMesh": {
-                "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891695/7D30E9BF25563CB0319C9D88A3F22093B3A3F557/",
+                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                 "NormalURL": "",
-                "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-                "Convex": false,
+                "ColliderURL": "",
+                "Convex": true,
                 "MaterialIndex": 1,
                 "TypeIndex": 0,
                 "CastShadows": true
               },
               "LuaScript": "",
               "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "f1878a",
-                  "Name": "BlockSquare",
-                  "Transform": {
-                    "posX": -0.0112691177,
-                    "posY": -0.06011554,
-                    "posZ": -4.215479,
-                    "rotX": 359.767334,
-                    "rotY": 0.0288059171,
-                    "rotZ": 359.950348,
-                    "scaleX": 6.260852,
-                    "scaleY": 0.08448592,
-                    "scaleZ": 10.138279
-                  },
-                  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-                  "Description": "",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.235293925,
-                    "g": 0.184313536,
-                    "b": 0.137254715,
-                    "a": 0.9607843
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "LuaScript": "\nBCBtype = \"terrain\"\n",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }]],
-    [[{
-      "GUID": "9fd1c1",
-      "Name": "Custom_Model",
-      "Transform": {
-        "posX": -10.4999952,
-        "posY": 1.07207823,
-        "posZ": -2.50007915,
-        "rotX": 359.833679,
-        "rotY": 30.0014858,
-        "rotZ": 359.977264,
-        "scaleX": 0.8118907,
-        "scaleY": 0.8149075,
-        "scaleZ": 0.81490767
-      },
-      "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature. THIS IS ONE TERRAIN FEATURE[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891538/9A308089E740B14C0F3726E7E0A8716F35214372/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891695/7D30E9BF25563CB0319C9D88A3F22093B3A3F557/",
-        "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891538/9A308089E740B14C0F3726E7E0A8716F35214372/",
-        "Convex": false,
-        "MaterialIndex": 1,
-        "TypeIndex": 0,
-        "CastShadows": true
-      },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "ac7e35",
-          "Name": "BlockSquare",
-          "Transform": {
-            "posX": 2.15551925,
-            "posY": -0.03951346,
-            "posZ": -3.71954441,
-            "rotX": 0.155358344,
-            "rotY": 329.996033,
-            "rotZ": 359.936523,
-            "scaleX": 6.152749,
-            "scaleY": 0.122713342,
-            "scaleZ": 12.2827015
-          },
-          "Nickname": "",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.235293955,
-            "g": 0.184313565,
-            "b": 0.137254745,
-            "a": 0.9607843
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "332aea",
-              "Name": "BlockSquare",
-              "Transform": {
-                "posX": 0.09999047,
-                "posY": 8.59063657E-05,
-                "posZ": 0.799960256,
-                "rotX": 0.000423560123,
-                "rotY": 0.00996829849,
-                "rotZ": 0.0008023695,
-                "scaleX": 0.8000001,
-                "scaleY": 1.0,
-                "scaleZ": 0.600000143
-              },
-              "Nickname": "",
-              "Description": "",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 0.2299999,
-                "g": 0.1816999,
-                "b": 0.1333999,
-                "a": 0.9607843
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "LuaScript": "",
-              "LuaScriptState": "",
               "XmlUI": ""
             }
           ]
-        },
-        {
-          "GUID": "f6bf2d",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": 5.6773324,
-            "posY": 0.024395369,
-            "posZ": -4.12554836,
-            "rotX": 0.06841526,
-            "rotY": 59.9934578,
-            "rotZ": 0.15540202,
-            "scaleX": 3.924913,
-            "scaleY": 5.50917768,
-            "scaleZ": 0.579672337
-          },
-          "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "\nBCBtype = \"terrain\"\n",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "4e7a9d",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": 5.139335,
-            "posY": 0.0432763025,
-            "posZ": -8.7844305,
-            "rotX": 0.155408353,
-            "rotY": 329.998138,
-            "rotZ": 359.9365,
-            "scaleX": 2.93027449,
-            "scaleY": 5.50442076,
-            "scaleZ": 0.5791533
-          },
-          "Nickname": "Ruins |[CAFF70] Area Terrain ",
-          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "9cf807",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": -0.360809326,
-            "posY": -0.008385843,
-            "posZ": 6.309865,
-            "rotX": 359.936523,
-            "rotY": 239.998642,
-            "rotZ": 359.844177,
-            "scaleX": 3.47519946,
-            "scaleY": 5.509178,
-            "scaleZ": 0.5796743
-          },
-          "Nickname": "Ruins |[CAFF70] Area Terrain ",
-          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "e28baf",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": -3.985988,
-            "posY": -0.0137863373,
-            "posZ": 8.107426,
-            "rotX": 0.155408949,
-            "rotY": 329.9987,
-            "rotZ": 359.937347,
-            "scaleX": 2.40595126,
-            "scaleY": 5.50442028,
-            "scaleZ": 0.5791447
-          },
-          "Nickname": "Ruins |[CAFF70] Area Terrain ",
-          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
         }
       ]
-    }]],
-    [[{
-      "GUID": "608d92",
+    }
+  ]
+}]],
+  [[{
+  "GUID": "bd24d0",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": 3.945993,
+    "posY": 1.0680697,
+    "posZ": -12.9420338,
+    "rotX": 0.0125794178,
+    "rotY": -0.00427934062,
+    "rotZ": -0.00222193915,
+    "scaleX": 6.0,
+    "scaleY": 0.1,
+    "scaleZ": 12.0
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.235293776,
+    "g": 0.184313387,
+    "b": 0.137254566,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "bbfc70",
       "Name": "Custom_Model",
       "Transform": {
-        "posX": -2.00210547,
-        "posY": 1.11569643,
-        "posZ": 7.022021,
-        "rotX": 1.14301145,
-        "rotY": 61.8430519,
-        "rotZ": 359.908844,
-        "scaleX": 0.6997475,
-        "scaleY": 0.725601256,
-        "scaleZ": 0.7255949
+        "posX": -0.1590606,
+        "posY": -0.681101561,
+        "posZ": -0.31843853,
+        "rotX": 0.000235410727,
+        "rotY": 180.003082,
+        "rotZ": -0.00224568578,
+        "scaleX": 0.317976564,
+        "scaleY": 44.8562775,
+        "scaleZ": 0.0392947346
       },
-      "Nickname": "Ruin (2\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1715295569649176112/D8495CFEB826A5C2AA5AE8C41FFD18AC6BC6EF4F/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1715295569649175837/EE1E9BC22F647E173C9CE418EF39DF6FDE0DB84F/",
-        "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1715295569649176112/D8495CFEB826A5C2AA5AE8C41FFD18AC6BC6EF4F/",
-        "Convex": true,
-        "MaterialIndex": 3,
-        "TypeIndex": 4,
-        "CustomShader": {
-          "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
-          },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
-        },
-        "CastShadows": true
-      },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "e3a46e",
-          "Name": "BlockSquare",
-          "Transform": {
-            "posX": 0.00215204456,
-            "posY": -0.11773584,
-            "posZ": 0.004510983,
-            "rotX": 0.459168971,
-            "rotY": 118.162682,
-            "rotZ": 358.9493,
-            "scaleX": 5.556825,
-            "scaleY": 0.137816757,
-            "scaleZ": 8.504529
-          },
-          "Nickname": "Ruin (2\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.320303351,
-            "g": 0.287353158,
-            "b": 0.162024826,
-            "a": 0.9607843
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "\nBCBtype = \"terrain\"\n",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        }
-      ]
-    }]],
-    [[{
-      "GUID": "ca48f6",
-      "Name": "Custom_Model",
-      "Transform": {
-        "posX": 2.00217938,
-        "posY": 1.11553,
-        "posZ": -7.042968,
-        "rotX": 1.14300334,
-        "rotY": 241.843048,
-        "rotZ": 359.908844,
-        "scaleX": 0.6997475,
-        "scaleY": 0.725601256,
-        "scaleZ": 0.7255949
-      },
-      "Nickname": "Ruin (2\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1715295569649176112/D8495CFEB826A5C2AA5AE8C41FFD18AC6BC6EF4F/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1715295569649175837/EE1E9BC22F647E173C9CE418EF39DF6FDE0DB84F/",
-        "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1715295569649176112/D8495CFEB826A5C2AA5AE8C41FFD18AC6BC6EF4F/",
-        "Convex": true,
-        "MaterialIndex": 3,
-        "TypeIndex": 4,
-        "CustomShader": {
-          "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
-          },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
-        },
-        "CastShadows": true
-      },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "e3a46e",
-          "Name": "BlockSquare",
-          "Transform": {
-            "posX": 0.00215204456,
-            "posY": -0.11773584,
-            "posZ": 0.004510983,
-            "rotX": 0.459168971,
-            "rotY": 118.162682,
-            "rotZ": 358.9493,
-            "scaleX": 5.556825,
-            "scaleY": 0.137816757,
-            "scaleZ": 8.504529
-          },
-          "Nickname": "Ruin (2\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.320303351,
-            "g": 0.287353158,
-            "b": 0.162024826,
-            "a": 0.9607843
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "\nBCBtype = \"terrain\"\n",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        }
-      ]
-    }]],
-    [[{
-      "GUID": "27bb86",
-      "Name": "Custom_Model",
-      "Transform": {
-        "posX": 10.4999962,
-        "posY": 1.072092,
-        "posZ": 2.50008059,
-        "rotX": 359.83374,
-        "rotY": 210.00148,
-        "rotZ": 359.97702,
-        "scaleX": 0.8118907,
-        "scaleY": 0.8149075,
-        "scaleZ": 0.81490767
-      },
-      "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature. THIS IS ONE TERRAIN FEATURE[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891538/9A308089E740B14C0F3726E7E0A8716F35214372/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891695/7D30E9BF25563CB0319C9D88A3F22093B3A3F557/",
-        "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891538/9A308089E740B14C0F3726E7E0A8716F35214372/",
-        "Convex": false,
-        "MaterialIndex": 1,
-        "TypeIndex": 0,
-        "CastShadows": true
-      },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "ac7e35",
-          "Name": "BlockSquare",
-          "Transform": {
-            "posX": 2.15551925,
-            "posY": -0.03951346,
-            "posZ": -3.71954441,
-            "rotX": 0.155358344,
-            "rotY": 329.996033,
-            "rotZ": 359.936523,
-            "scaleX": 6.152749,
-            "scaleY": 0.122713342,
-            "scaleZ": 12.2827015
-          },
-          "Nickname": "",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.235293955,
-            "g": 0.184313565,
-            "b": 0.137254745,
-            "a": 0.9607843
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "332aea",
-              "Name": "BlockSquare",
-              "Transform": {
-                "posX": 0.09999047,
-                "posY": 8.59063657E-05,
-                "posZ": 0.799960256,
-                "rotX": 0.000423560123,
-                "rotY": 0.00996829849,
-                "rotZ": 0.0008023695,
-                "scaleX": 0.8000001,
-                "scaleY": 1.0,
-                "scaleZ": 0.600000143
-              },
-              "Nickname": "",
-              "Description": "",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 0.2299999,
-                "g": 0.1816999,
-                "b": 0.1333999,
-                "a": 0.9607843
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "LuaScript": "",
-              "LuaScriptState": "",
-              "XmlUI": ""
-            }
-          ]
-        },
-        {
-          "GUID": "f6bf2d",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": 5.6773324,
-            "posY": 0.024395369,
-            "posZ": -4.12554836,
-            "rotX": 0.06841526,
-            "rotY": 59.9934578,
-            "rotZ": 0.15540202,
-            "scaleX": 3.924913,
-            "scaleY": 5.50917768,
-            "scaleZ": 0.579672337
-          },
-          "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "\nBCBtype = \"terrain\"\n",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "4e7a9d",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": 5.139335,
-            "posY": 0.0432763025,
-            "posZ": -8.7844305,
-            "rotX": 0.155408353,
-            "rotY": 329.998138,
-            "rotZ": 359.9365,
-            "scaleX": 2.93027449,
-            "scaleY": 5.50442076,
-            "scaleZ": 0.5791533
-          },
-          "Nickname": "Ruins |[CAFF70] Area Terrain ",
-          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "9cf807",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": -0.360809326,
-            "posY": -0.008385843,
-            "posZ": 6.309865,
-            "rotX": 359.936523,
-            "rotY": 239.998642,
-            "rotZ": 359.844177,
-            "scaleX": 3.47519946,
-            "scaleY": 5.509178,
-            "scaleZ": 0.5796743
-          },
-          "Nickname": "Ruins |[CAFF70] Area Terrain ",
-          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "e28baf",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": -3.985988,
-            "posY": -0.0137863373,
-            "posZ": 8.107426,
-            "rotX": 0.155408949,
-            "rotY": 329.9987,
-            "rotZ": 359.937347,
-            "scaleX": 2.40595126,
-            "scaleY": 5.50442028,
-            "scaleZ": 0.5791447
-          },
-          "Nickname": "Ruins |[CAFF70] Area Terrain ",
-          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        }
-      ]
-    }]],
-    [[{
-      "GUID": "304b3a",
-      "Name": "Custom_Model",
-      "Transform": {
-        "posX": 18.5386448,
-        "posY": 1.07525849,
-        "posZ": -11.8119183,
-        "rotX": -0.000142324978,
-        "rotY": 180.005234,
-        "rotZ": 359.938354,
-        "scaleX": 2.483511,
-        "scaleY": 4.485573,
-        "scaleZ": 0.471512556
-      },
-      "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+      "Nickname": "",
       "Description": "",
       "GMNotes": "",
       "AltLookAngle": {
@@ -1630,23 +1718,23 @@ objectJSONs = {
         "TypeIndex": 0,
         "CastShadows": true
       },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
+      "LuaScript": "",
       "LuaScriptState": "",
       "XmlUI": "",
       "ChildObjects": [
         {
-          "GUID": "9cf807",
+          "GUID": "5b799e",
           "Name": "Custom_Model",
           "Transform": {
-            "posX": 0.9345053,
-            "posY": 0.00029659,
-            "posZ": -6.254762,
-            "rotX": 0.06174942,
+            "posX": 0.950787365,
+            "posY": 0.009036978,
+            "posZ": -8.080882,
+            "rotX": 0.0,
             "rotY": 270.0,
-            "rotZ": -0.000116616866,
-            "scaleX": 6.471083,
-            "scaleY": 1.00086951,
-            "scaleZ": 0.189677313
+            "rotZ": -0.00296831015,
+            "scaleX": 7.86000967,
+            "scaleY": 0.999992251,
+            "scaleZ": 0.246350378
           },
           "Nickname": "Ruins |[CAFF70] Area Terrain ",
           "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
@@ -1690,21 +1778,21 @@ objectJSONs = {
           "XmlUI": "",
           "ChildObjects": [
             {
-              "GUID": "f97185",
+              "GUID": "c05f3b",
               "Name": "Custom_Model",
               "Transform": {
-                "posX": -1.91962576,
-                "posY": 3.08232375E-05,
-                "posZ": 5.922009,
-                "rotX": 0.232682139,
-                "rotY": 269.9662,
-                "rotZ": 0.0496596657,
-                "scaleX": 2.03438044,
-                "scaleY": 0.263647228,
-                "scaleZ": 0.3879211
+                "posX": -1.017544,
+                "posY": -0.009080606,
+                "posZ": 3.72124481,
+                "rotX": -0.0030867462,
+                "rotY": 90.0,
+                "rotZ": 6.213506E-05,
+                "scaleX": 4.034993,
+                "scaleY": 1.00000024,
+                "scaleZ": 0.127221689
               },
-              "Nickname": "",
-              "Description": "",
+              "Nickname": "Ruins |[CAFF70] Area Terrain ",
+              "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
               "GMNotes": "",
               "AltLookAngle": {
                 "x": 0.0,
@@ -1712,9 +1800,9 @@ objectJSONs = {
                 "z": 0.0
               },
               "ColorDiffuse": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 0.9999998,
+                "g": 0.992171347,
+                "b": 0.9999998
               },
               "LayoutGroupSortIndex": 0,
               "Value": 0,
@@ -1731,86 +1819,86 @@ objectJSONs = {
               "HideWhenFaceDown": false,
               "Hands": false,
               "CustomMesh": {
-                "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891695/7D30E9BF25563CB0319C9D88A3F22093B3A3F557/",
+                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
                 "NormalURL": "",
-                "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-                "Convex": false,
+                "ColliderURL": "",
+                "Convex": true,
                 "MaterialIndex": 1,
                 "TypeIndex": 0,
                 "CastShadows": true
               },
               "LuaScript": "",
               "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "f1878a",
-                  "Name": "BlockSquare",
-                  "Transform": {
-                    "posX": -0.0112691177,
-                    "posY": -0.06011554,
-                    "posZ": -4.215479,
-                    "rotX": 359.767334,
-                    "rotY": 0.0288059171,
-                    "rotZ": 359.950348,
-                    "scaleX": 6.260852,
-                    "scaleY": 0.08448592,
-                    "scaleZ": 10.138279
-                  },
-                  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-                  "Description": "",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.235293925,
-                    "g": 0.184313536,
-                    "b": 0.137254715,
-                    "a": 0.9607843
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "LuaScript": "\nBCBtype = \"terrain\"\n",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
+              "XmlUI": ""
             }
           ]
         }
       ]
-    }]],
-    [[{
-      "GUID": "58794d",
-      "Name": "Custom_Model",
+    }
+  ]
+}]],
+  [[{
+  "GUID": "cf888c",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": 9.477584,
+    "posY": 1.05078268,
+    "posZ": 9.027749,
+    "rotX": -0.0001505629,
+    "rotY": 179.9946,
+    "rotZ": -0.000394653034,
+    "scaleX": 5.000002,
+    "scaleY": 0.100000016,
+    "scaleZ": 10.0000019
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.2352939,
+    "g": 0.1843135,
+    "b": 0.137254685,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "332aea",
+      "Name": "BlockSquare",
       "Transform": {
-        "posX": 22.000597,
-        "posY": 1.08112812,
-        "posZ": 7.00289,
-        "rotX": 0.234530285,
-        "rotY": 179.950058,
-        "rotZ": 0.04997371,
-        "scaleX": 0.8213413,
-        "scaleY": 1.05181932,
-        "scaleZ": 1.05182219
+        "posX": 0.09999047,
+        "posY": 8.59063657E-05,
+        "posZ": 0.799960256,
+        "rotX": 0.000423560123,
+        "rotY": 0.00996829849,
+        "rotZ": 0.0008023695,
+        "scaleX": 0.8000001,
+        "scaleY": 1.0,
+        "scaleZ": 0.600000143
       },
-      "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+      "Nickname": "",
       "Description": "",
       "GMNotes": "",
       "AltLookAngle": {
@@ -1819,9 +1907,794 @@ objectJSONs = {
         "z": 0.0
       },
       "ColorDiffuse": {
+        "r": 0.2299999,
+        "g": 0.1816999,
+        "b": 0.1333999,
+        "a": 0.9607843
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    }
+  ]
+}]],
+  [[{
+  "GUID": "c1da86",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 8.977171,
+    "posY": 1.22212791,
+    "posZ": -1.81194019,
+    "rotX": -0.000102909682,
+    "rotY": 179.997238,
+    "rotZ": 0.0004177779,
+    "scaleX": 1.95518434,
+    "scaleY": 4.48559332,
+    "scaleZ": 0.471512645
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "576754",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 7.160595,
+    "posY": 1.221117,
+    "posZ": 0.928235054,
+    "rotX": -0.0004015077,
+    "rotY": 89.99707,
+    "rotZ": -0.000315903948,
+    "scaleX": 2.829347,
+    "scaleY": 4.48947048,
+    "scaleZ": 0.471069664
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "b50cae",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 7.166773,
+    "posY": 1.22112226,
+    "posZ": 10.74402,
+    "rotX": 0.005319278,
+    "rotY": 269.991821,
+    "rotZ": -0.000103957784,
+    "scaleX": 3.19548154,
+    "scaleY": 4.48946953,
+    "scaleZ": 0.471068144
+  },
+  "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "6809ed",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 9.443257,
+    "posY": 1.22567844,
+    "posZ": 13.8136253,
+    "rotX": -0.0001029054,
+    "rotY": 179.996689,
+    "rotZ": -0.000427670864,
+    "scaleX": 2.381273,
+    "scaleY": 4.485593,
+    "scaleZ": 0.471519679
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "a463b3",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 8.366482,
+    "posY": 1.22118592,
+    "posZ": 5.931543,
+    "rotX": -0.000471841166,
+    "rotY": 149.975754,
+    "rotZ": 0.005091035,
+    "scaleX": 0.7000004,
+    "scaleY": 0.7000002,
+    "scaleZ": 0.7000004
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992165864,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": false,
+  "Snap": false,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1030707799276647654/A666ED668EBE4CE92239C849AC33FA6268201EE7/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1030707799276647728/C98DEAEA6FB0F4758F16BB9698ED67BDACB3D040/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1030707799276647819/6756DB1DA28553218412AE6F325080297EC3E911/",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "b1e6b1",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 17.8612919,
+    "posY": 1.22116351,
+    "posZ": -3.44833422,
+    "rotX": 6.716916E-07,
+    "rotY": 315.9489,
+    "rotZ": -9.72267753E-06,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "Convex": false,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
         "r": 1.0,
         "g": 1.0,
         "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "f9eb9e",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": 18.979147,
+    "posY": 1.05077553,
+    "posZ": -7.899822,
+    "rotX": 1.66743951E-06,
+    "rotY": 0.0411824,
+    "rotZ": -1.47082656E-05,
+    "scaleX": 6.000004,
+    "scaleY": 0.099999994,
+    "scaleZ": 12.0000057
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.235293865,
+    "g": 0.184313476,
+    "b": 0.137254655,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "02d3d4",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 18.5289154,
+    "posY": 1.22116423,
+    "posZ": -11.8888073,
+    "rotX": 0.000452232256,
+    "rotY": 178.829971,
+    "rotZ": -1.98460071E-07,
+    "scaleX": 2.48351026,
+    "scaleY": 4.485573,
+    "scaleZ": 0.4715124
+  },
+  "Nickname": "Ruin (9\")  [sup]Barricade parts of this terrain feature are considered as 2\" high. Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "0e3ff3",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 16.196579,
+    "posY": 1.22116446,
+    "posZ": -8.764896,
+    "rotX": 0.000116403338,
+    "rotY": 90.04639,
+    "rotZ": -7.426128E-06,
+    "scaleX": 3.051199,
+    "scaleY": 4.48947048,
+    "scaleZ": 0.471066445
+  },
+  "Nickname": "Ruins |[CAFF70] Area Terrain ",
+  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.9999998,
+    "g": 0.992171347,
+    "b": 0.9999998
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 1,
+    "TypeIndex": 0,
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "1b5f26",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 16.6760845,
+    "posY": 1.5889163,
+    "posZ": -12.7856827,
+    "rotX": -1.80991128E-06,
+    "rotY": 179.896851,
+    "rotZ": 1.49394809E-05,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638941847941/4FA8C16AB31E60359628A386550FCEF906734C07/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "5adb47",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 17.14346,
+    "posY": 1.58891606,
+    "posZ": -13.3743057,
+    "rotX": 3.28678937E-07,
+    "rotY": 180.003952,
+    "rotZ": 1.6096541E-05,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638941847941/4FA8C16AB31E60359628A386550FCEF906734C07/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "4b6bf0",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 19.0809746,
+    "posY": 1.22119665,
+    "posZ": 8.516174,
+    "rotX": 0.00303090387,
+    "rotY": 255.004822,
+    "rotZ": -0.000242976224,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "Convex": false,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "bfa51e",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": 21.00022,
+    "posY": 1.05077887,
+    "posZ": 11.9996758,
+    "rotX": -5.835069E-05,
+    "rotY": -0.00116477464,
+    "rotZ": -5.843143E-05,
+    "scaleX": 6.00000334,
+    "scaleY": 0.100000016,
+    "scaleZ": 12.0000029
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.2352939,
+    "g": 0.1843135,
+    "b": 0.137254685,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "2498b2",
+      "Name": "Custom_Model",
+      "Transform": {
+        "posX": -0.46741423,
+        "posY": 0.4986517,
+        "posZ": 0.160155624,
+        "rotX": -0.000191291969,
+        "rotY": 270.0,
+        "rotZ": -0.0010636613,
+        "scaleX": 0.3230799,
+        "scaleY": 44.8559227,
+        "scaleZ": 0.07858656
+      },
+      "Nickname": "Ruins |[CAFF70] Area Terrain ",
+      "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.9999998,
+        "g": 0.992171347,
+        "b": 0.9999998
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1838,243 +2711,35 @@ objectJSONs = {
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891695/7D30E9BF25563CB0319C9D88A3F22093B3A3F557/",
+        "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
+        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
         "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399871832891845/3F6D3FC61E2D12329A75B0193BDE1D5289D232DE/",
-        "Convex": false,
+        "ColliderURL": "",
+        "Convex": true,
         "MaterialIndex": 1,
         "TypeIndex": 0,
         "CastShadows": true
       },
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
+      "LuaScript": "",
       "LuaScriptState": "",
       "XmlUI": "",
       "ChildObjects": [
         {
-          "GUID": "a6761a",
-          "Name": "BlockSquare",
-          "Transform": {
-            "posX": 1.21285951,
-            "posY": -0.06851686,
-            "posZ": -4.751494,
-            "rotX": 0.234490588,
-            "rotY": 180.047318,
-            "rotZ": 0.05016627,
-            "scaleX": 7.30512476,
-            "scaleY": 0.0950733945,
-            "scaleZ": 11.4087763
-          },
-          "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.235293955,
-            "g": 0.184313565,
-            "b": 0.137254745,
-            "a": 0.9607843
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "\nBCBtype = \"terrain\"\n",
-          "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "2498b2",
-              "Name": "Custom_Model",
-              "Transform": {
-                "posX": -0.46741423,
-                "posY": 0.4986517,
-                "posZ": 0.160155624,
-                "rotX": -0.000191291969,
-                "rotY": 270.0,
-                "rotZ": -0.0010636613,
-                "scaleX": 0.3230799,
-                "scaleY": 44.8559227,
-                "scaleZ": 0.07858656
-              },
-              "Nickname": "Ruins |[CAFF70] Area Terrain ",
-              "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 0.9999998,
-                "g": 0.992171347,
-                "b": 0.9999998
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "CustomMesh": {
-                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                "NormalURL": "",
-                "ColliderURL": "",
-                "Convex": true,
-                "MaterialIndex": 1,
-                "TypeIndex": 0,
-                "CastShadows": true
-              },
-              "LuaScript": "",
-              "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "a7c1c2",
-                  "Name": "Custom_Model",
-                  "Transform": {
-                    "posX": 1.00729418,
-                    "posY": 6.865681E-05,
-                    "posZ": -3.86936617,
-                    "rotX": 0.001237247,
-                    "rotY": 270.0,
-                    "rotZ": -0.002410763,
-                    "scaleX": 4.05526638,
-                    "scaleY": 1.00000012,
-                    "scaleZ": 0.121620342
-                  },
-                  "Nickname": "Ruins |[CAFF70] Area Terrain ",
-                  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.9999998,
-                    "g": 0.992171347,
-                    "b": 0.9999998
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "CustomMesh": {
-                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                    "NormalURL": "",
-                    "ColliderURL": "",
-                    "Convex": true,
-                    "MaterialIndex": 1,
-                    "TypeIndex": 0,
-                    "CastShadows": true
-                  },
-                  "LuaScript": "",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }]],
-    [[{
-      "GUID": "3222c8",
-      "Name": "BlockSquare",
-      "Transform": {
-        "posX": -5.0,
-        "posY": 1.04765129,
-        "posZ": 16.0,
-        "rotX": 0.0,
-        "rotY": 179.995743,
-        "rotZ": -0.00222189329,
-        "scaleX": 6.0,
-        "scaleY": 0.1,
-        "scaleZ": 12.0
-      },
-      "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.235293835,
-        "g": 0.184313446,
-        "b": 0.137254626,
-        "a": 0.9607843
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "bbfc70",
+          "GUID": "a7c1c2",
           "Name": "Custom_Model",
           "Transform": {
-            "posX": -0.1590606,
-            "posY": -0.681101561,
-            "posZ": -0.31843853,
-            "rotX": 0.000235410727,
-            "rotY": 180.003082,
-            "rotZ": -0.00224568578,
-            "scaleX": 0.317976564,
-            "scaleY": 44.8562775,
-            "scaleZ": 0.0392947346
+            "posX": 1.00729418,
+            "posY": 6.865681E-05,
+            "posZ": -3.86936617,
+            "rotX": 0.001237247,
+            "rotY": 270.0,
+            "rotZ": -0.002410763,
+            "scaleX": 4.05526638,
+            "scaleY": 1.00000012,
+            "scaleZ": 0.121620342
           },
-          "Nickname": "",
-          "Description": "",
+          "Nickname": "Ruins |[CAFF70] Area Terrain ",
+          "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
           "GMNotes": "",
           "AltLookAngle": {
             "x": 0.0,
@@ -2112,340 +2777,188 @@ objectJSONs = {
           },
           "LuaScript": "",
           "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "5b799e",
-              "Name": "Custom_Model",
-              "Transform": {
-                "posX": 0.950787365,
-                "posY": 0.009036978,
-                "posZ": -8.080882,
-                "rotX": 0.0,
-                "rotY": 270.0,
-                "rotZ": -0.00296831015,
-                "scaleX": 7.86000967,
-                "scaleY": 0.999992251,
-                "scaleZ": 0.246350378
-              },
-              "Nickname": "Ruins |[CAFF70] Area Terrain ",
-              "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 0.9999998,
-                "g": 0.992171347,
-                "b": 0.9999998
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "CustomMesh": {
-                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                "NormalURL": "",
-                "ColliderURL": "",
-                "Convex": true,
-                "MaterialIndex": 1,
-                "TypeIndex": 0,
-                "CastShadows": true
-              },
-              "LuaScript": "",
-              "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "c05f3b",
-                  "Name": "Custom_Model",
-                  "Transform": {
-                    "posX": -1.017544,
-                    "posY": -0.009080606,
-                    "posZ": 3.72124481,
-                    "rotX": -0.0030867462,
-                    "rotY": 90.0,
-                    "rotZ": 6.213506E-05,
-                    "scaleX": 4.034993,
-                    "scaleY": 1.00000024,
-                    "scaleZ": 0.127221689
-                  },
-                  "Nickname": "Ruins |[CAFF70] Area Terrain ",
-                  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.9999998,
-                    "g": 0.992171347,
-                    "b": 0.9999998
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "CustomMesh": {
-                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                    "NormalURL": "",
-                    "ColliderURL": "",
-                    "Convex": true,
-                    "MaterialIndex": 1,
-                    "TypeIndex": 0,
-                    "CastShadows": true
-                  },
-                  "LuaScript": "",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
-            }
-          ]
+          "XmlUI": ""
         }
       ]
-    }]],
-    [[{
-      "GUID": "40958f",
-      "Name": "BlockSquare",
-      "Transform": {
-        "posX": 5.0,
-        "posY": 1.01493859,
-        "posZ": -16.0,
-        "rotX": 0.0126057919,
-        "rotY": -0.00107791822,
-        "rotZ": -0.00220702239,
-        "scaleX": 6.0,
-        "scaleY": 0.1,
-        "scaleZ": 12.0
+    }
+  ]
+}]],
+  [[{
+  "GUID": "19cf94",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 18.9582024,
+    "posY": 1.58891487,
+    "posZ": -2.59247565,
+    "rotX": -2.54257484E-05,
+    "rotY": 255.917938,
+    "rotZ": -6.53343E-05,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638941847941/4FA8C16AB31E60359628A386550FCEF906734C07/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "",
+    "Convex": true,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
       },
-      "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "b35b38",
+  "Name": "Custom_Model",
+  "Transform": {
+    "posX": 20.6509247,
+    "posY": 1.22117591,
+    "posZ": 7.101107,
+    "rotX": 0.0006192225,
+    "rotY": 194.993835,
+    "rotZ": 0.0005031213,
+    "scaleX": 1.6499995,
+    "scaleY": 1.6499995,
+    "scaleZ": 1.6499995
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomMesh": {
+    "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/9926034607152690186/E551AB93C9E5EE4F372F8E528A777750FB397BD1/",
+    "NormalURL": "",
+    "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1774951638942014544/3F4AF4D7F98292F537A8E3478CBCB0C69315A68A/",
+    "Convex": false,
+    "MaterialIndex": 3,
+    "TypeIndex": 0,
+    "CustomShader": {
+      "SpecularColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
       },
-      "ColorDiffuse": {
-        "r": 0.2352938,
-        "g": 0.184313416,
-        "b": 0.1372546,
-        "a": 0.9607843
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "\nBCBtype = \"terrain\"\n",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "bbfc70",
-          "Name": "Custom_Model",
-          "Transform": {
-            "posX": -0.1590606,
-            "posY": -0.681101561,
-            "posZ": -0.31843853,
-            "rotX": 0.000235410727,
-            "rotY": 180.003082,
-            "rotZ": -0.00224568578,
-            "scaleX": 0.317976564,
-            "scaleY": 44.8562775,
-            "scaleZ": 0.0392947346
-          },
-          "Nickname": "",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 0.9999998,
-            "g": 0.992171347,
-            "b": 0.9999998
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomMesh": {
-            "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-            "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-            "NormalURL": "",
-            "ColliderURL": "",
-            "Convex": true,
-            "MaterialIndex": 1,
-            "TypeIndex": 0,
-            "CastShadows": true
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "5b799e",
-              "Name": "Custom_Model",
-              "Transform": {
-                "posX": 0.950787365,
-                "posY": 0.009036978,
-                "posZ": -8.080882,
-                "rotX": 0.0,
-                "rotY": 270.0,
-                "rotZ": -0.00296831015,
-                "scaleX": 7.86000967,
-                "scaleY": 0.999992251,
-                "scaleZ": 0.246350378
-              },
-              "Nickname": "Ruins |[CAFF70] Area Terrain ",
-              "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 0.9999998,
-                "g": 0.992171347,
-                "b": 0.9999998
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "CustomMesh": {
-                "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                "NormalURL": "",
-                "ColliderURL": "",
-                "Convex": true,
-                "MaterialIndex": 1,
-                "TypeIndex": 0,
-                "CastShadows": true
-              },
-              "LuaScript": "",
-              "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "c05f3b",
-                  "Name": "Custom_Model",
-                  "Transform": {
-                    "posX": -1.017544,
-                    "posY": -0.009080606,
-                    "posZ": 3.72124481,
-                    "rotX": -0.0030867462,
-                    "rotY": 90.0,
-                    "rotZ": 6.213506E-05,
-                    "scaleX": 4.034993,
-                    "scaleY": 1.00000024,
-                    "scaleZ": 0.127221689
-                  },
-                  "Nickname": "Ruins |[CAFF70] Area Terrain ",
-                  "Description": "[00BFFF]Scaleable\nBreachable\nLight Cover\nDefensible\nObscuring",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.9999998,
-                    "g": 0.992171347,
-                    "b": 0.9999998
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "CustomMesh": {
-                    "MeshURL": "https://pastebin.com/raw/RwY2qFkX",
-                    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1728793836126825819/4AED9FF76F5886B4EECEF38631FD9E229CFBE13B/",
-                    "NormalURL": "",
-                    "ColliderURL": "",
-                    "Convex": true,
-                    "MaterialIndex": 1,
-                    "TypeIndex": 0,
-                    "CastShadows": true
-                  },
-                  "LuaScript": "",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }]],
+      "SpecularIntensity": 0.0,
+      "SpecularSharpness": 2.0,
+      "FresnelStrength": 0.0
+    },
+    "CastShadows": true
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "332aea",
+  "Name": "BlockSquare",
+  "Transform": {
+    "posX": -20.99545,
+    "posY": 1.03038776,
+    "posZ": -19.9996738,
+    "rotX": 9.36865854E-06,
+    "rotY": 89.99969,
+    "rotZ": -2.20619222E-05,
+    "scaleX": 4.0,
+    "scaleY": 0.100000009,
+    "scaleZ": 5.99999857
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 0.22999984,
+    "g": 0.181699842,
+    "b": 0.133399844,
+    "a": 0.9607843
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": false,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+
 }
 

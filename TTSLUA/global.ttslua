@@ -110,26 +110,16 @@ Yeah, I could use variables but I didn't, oh well
 Pariah Nexus:
 -------------
 
-Burden of Trust 299a75
+Burden of Trust 85718e
 Linchpin 540fd0
-Purge the Foe 903575
+Purge the Foe d9d35a
 Scorched Earth 6860de
-Supply Drop 244a21
-Take and Hold 72c0f4
+Supply Drop 981226
+Take and Hold bffd57
 Terraform 7fa6d0
+Hidden Supplies 85718f
 The Ritual 7067e2
-Unexploded Ordnance 5ed8dc
-
-Adapt or Die 9650f1
-Fog of War c58f11
-Hidden Supplies c4fe8c
-Inspired Leadership 499169
-Prepared Positions 9789b7
-Raise Banners 62e744
-Rapid Escalation d35008
-Smoke and Mirrors 25b5a6
-Stalwarts 8b7dbc
-Swift Action dc273c
+Unexploded Ordnance 41f293
 
 Crucible of Battle e96d18
 Dawn of War 7f45dc
@@ -155,51 +145,51 @@ missionPackData = {
         tournamentMissions = {
             -- A: Take and Hold / Tipping Point
             {name = "A", primary = "bffd57", deployment = "77cde6"},
-            -- B: Purge the Foe / Tipping Point
-            {name = "B", primary = "903575", deployment = "77cde6"},
+            -- B: Supply Drop / Tipping Point
+            {name = "B", primary = "981226", deployment = "77cde6"},
             -- C: Linchpin / Tipping Point
-            {name = "C", primary = "46009c", deployment = "77cde6"},
+            {name = "C", primary = "540fd0", deployment = "77cde6"},
             -- D: Scorched Earth / Tipping Point
-            {name = "D", primary = "b41088", deployment = "77cde6"},
+            {name = "D", primary = "6860de", deployment = "77cde6"},
             -- E: Take and Hold / Hammer and Anvil
             {name = "E", primary = "bffd57", deployment = "97f3f0"},
-            -- F: Burden of Trust / Hammer and Anvil
-            {name = "F", primary = "299a75", deployment = "97f3f0"},
-            -- G: The Ritual / Hammer and Anvil
-            {name = "G", primary = "9a3807", deployment = "97f3f0"},
+            -- F: Hidden Supplies / Hammer and Anvil
+            {name = "F", primary = "85718f", deployment = "97f3f0"},
+            -- G: Purge the Foe / Hammer and Anvil
+            {name = "G", primary = "d9d35a", deployment = "97f3f0"},
             -- H: Supply Drop / Hammer and Anvil
-            {name = "H", primary = "244a21", deployment = "97f3f0"},
-            -- I: Burden of Trust / Search and Destroy
-            {name = "I", primary = "299a75", deployment = "09c961"},
+            {name = "H", primary = "981226", deployment = "97f3f0"},
+            -- I: Hidden Supplies / Search and Destroy
+            {name = "I", primary = "85718f", deployment = "09c961"},
             -- J: Linchpin / Search and Destroy
-            {name = "J", primary = "46009c", deployment = "09c961"},
+            {name = "J", primary = "540fd0", deployment = "09c961"},
             -- K: Scorched Earth / Search and Destroy
-            {name = "K", primary = "b41088", deployment = "09c961"},
+            {name = "K", primary = "6860de", deployment = "09c961"},
             -- L: Take and Hold / Search and Destroy
             {name = "L", primary = "bffd57", deployment = "09c961"},
             -- M: Purge the Foe / Crucible of Battle
-            {name = "M", primary = "903575", deployment = "e96d18"},
-            -- N: The Ritual / Crucible of Battle
-            {name = "N", primary = "9a3807", deployment = "e96d18"},
+            {name = "M", primary = "d9d35a", deployment = "e96d18"},
+            -- N: Hidden Supplies / Crucible of Battle
+            {name = "N", primary = "85718f", deployment = "e96d18"},
             -- O: Terraform / Crucible of Battle
             {name = "O", primary = "7fa6d0", deployment = "e96d18"},
             -- P: Scorched Earth / Crucible of Battle
-            {name = "P", primary = "b41088", deployment = "e96d18"},
+            {name = "P", primary = "6860de", deployment = "e96d18"},
             -- Q: Supply Drop / Sweeping Engagement
-            {name = "Q", primary = "244a21", deployment = "c6edf3"},
+            {name = "Q", primary = "981226", deployment = "c6edf3"},
             -- R: Terraform / Sweeping Engagement
             {name = "R", primary = "7fa6d0", deployment = "c6edf3"},
             -- S: Linchpin / Dawn of War
-            {name = "S", primary = "46009c", deployment = "7f45dc"},
-            -- T: Unexploded Ordnance / Dawn of War
-            {name = "T", primary = "5ed8dc", deployment = "7f45dc"}
+            {name = "S", primary = "540fd0", deployment = "7f45dc"},
+            -- T: Purge the Foe / Dawn of War
+            {name = "T", primary = "d9d35a", deployment = "7f45dc"}
         }
     },
 }
 
 turnOrder = {}
 nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
-allowMenu = false
+allowMenu = true
 allowAutoSeat = true
 redPlayerID = ""
 bluePlayerID = ""

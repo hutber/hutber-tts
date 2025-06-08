@@ -622,16 +622,18 @@ function pName(p, obj, clicker, alt)
 	self.setDescription(JSON.encode_pretty(params))
 end
 
+fixedCard2Scale = {1.99723673, 0.913603365, 1.99723673}
+
 -- Fixed positions and rotations for Red secondary cards
-redFixedCard1Pos = {29.4090519, 0.913603365, 25.2370052}
+redFixedCard1Pos = {32.867672, 0.913603365, 22.1438656}
 redFixedCard1Rot = {0.000001649019, 0, -5.261423e-7}
-redFixedCard2Pos = {27.2025013, 0.913603365, 25.2787457}
+redFixedCard2Pos = {36.9046, 0.913603365, 22.14139}
 redFixedCard2Rot = {0.00000158226567, 0, -5.17774538e-7}
 
 -- Fixed positions and rotations for Blue secondary cards (using negatives)
-blueFixedCard1Pos = {-29.4090519, 0.913603365, -25.2370052}
+blueFixedCard1Pos = {-32.867672, 0.913603365, -22.1438656}
 blueFixedCard1Rot = {0.000001649019, 180, -5.261423e-7}
-blueFixedCard2Pos = {-27.2025013, 0.913603365, -25.2787457}
+blueFixedCard2Pos = {-36.9046, 0.913603365, -22.14139}
 blueFixedCard2Rot = {0.00000158226567, 180, -5.17774538e-7}
 
 -- Global variables to hold the center clones separately for each color.
@@ -655,9 +657,11 @@ function copySecondaryCardToCenter(card, index, playerColor)
         if index == 1 then
             cloneParams.position = redFixedCard1Pos
             cloneParams.rotation = redFixedCard1Rot
+            cloneParams.scale = fixedCard2Scale
         elseif index == 2 then
             cloneParams.position = redFixedCard2Pos
             cloneParams.rotation = redFixedCard2Rot
+            cloneParams.scale = fixedCard2Scale
         else
             print("copySecondaryCardToCenter: Unknown index for Red: " .. index)
             return
@@ -666,9 +670,11 @@ function copySecondaryCardToCenter(card, index, playerColor)
         if index == 1 then
             cloneParams.position = blueFixedCard1Pos
             cloneParams.rotation = blueFixedCard1Rot
+            cloneParams.scale = fixedCard2Scale
         elseif index == 2 then
             cloneParams.position = blueFixedCard2Pos
             cloneParams.rotation = blueFixedCard2Rot
+            cloneParams.scale = fixedCard2Scale
         else
             print("copySecondaryCardToCenter: Unknown index for Blue: " .. index)
             return

@@ -85,11 +85,12 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.5.4: Feat: Updated GW maps 7 & 8 and updated mission selection with new CA 2025",
     "1.5.3: Fix: Made the auto buttons have random colours",
     "1.5.2: Feat: Updated copy players buttons and 1D6 2D6 auto buttons in better place",
-    "1.5.0: Feat: CA 2025 Cards Added PN Moved to Legacy HUGE thank you to pants99 for this work. It was beautiful code!",
-    "1.5.0: Feat: For Priah Nexus Missions, https://steamcommunity.com/sharedfiles/filedetails/?id=3492154265",
-    "1.5.0: Feat: New Stat Check site v0.02 published https://stats.hutber.com",
+    -- "1.5.0: Feat: CA 2025 Cards Added PN Moved to Legacy HUGE thank you to pants99 for this work. It was beautiful code!",
+    -- "1.5.0: Feat: For Priah Nexus Missions, https://steamcommunity.com/sharedfiles/filedetails/?id=3492154265",
+    -- "1.5.0: Feat: New Stat Check site v0.02 published https://stats.hutber.com",
     --"1.4.5: Fix: pastebin changes their RAW URL, which broke GW Map 1. Updated to new after losing 3-2 at UKTC :D",
     --"1.4.4: Fix: Removed 5 dice because everybody only needs 1!! (For the deployment order)",
     --"1.4.4: Feat: Alpine Cup 2025 Maps Added",
@@ -356,6 +357,7 @@ function onObjectClick(player_color, object_clicked)
         ["3c8a1b"] = -6.19999981,
         ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
+        ["64b6bb"] = -6.19999981,
         ["4bb528"] = -6.19999981,
         ["7abc5a"] = -6.19999981
     }
@@ -510,6 +512,7 @@ function confirmDoublesGame()
         ["3c8a1b"] = -6.19999981,
         ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
+        ["64b6bb"] = -6.19999981,
         ["4bb528"] = -6.19999981,
         ["7abc5a"] = -6.19999981
     }
@@ -625,6 +628,7 @@ function confirmSizeGame()
         ["8a7c7a"] = 1.19999981,
         ["3c8a1b"] = 1.19999981,
         ["8395b2"] = 1.19999981,
+        ["64b6bb"] = 1.19999981,
         ["4bb528"] = 1.19999981
     }
 
@@ -1986,18 +1990,45 @@ function updateMission()
     canChangeMission = false
     Global.call("moveAllFromZoneToDeck", {zone = "deployment", deck = "deployment"})
     Global.call("moveAllFromZoneToDeck", {zone = "primary", deck = "primary"})
-
+print(selectedMission)
     if selectedMission == 0 then
+        missionSelectionDispBtn.label = "?"
         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment"})
         Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary"})
     else
-        Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment"})
-        Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary"})
+        mission = missionPackData.tournamentMissions[selectedMission]
+        missionSelectionDispBtn.label = mission.name
+        Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment", card = mission.deployment})
+        Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary", card = mission.primary})
     end
     writeMenus()
 
     Wait.time(function() canChangeMission = true end, 0.3)
 end
+
+
+-- function updateMission()
+--     canChangeMission = false
+--     Global.call("moveAllFromZoneToDeck", {zone = "deployment", deck = "deployment"})
+--     Global.call("moveAllFromZoneToDeck", {zone = "mission", deck = "mission"})
+--     Global.call("moveAllFromZoneToDeck", {zone = "primary", deck = "primary"})
+
+--     if selectedMission == 0 then
+--         missionSelectionDispBtn.label = "?"
+--         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment"})
+--         Global.call("moveOneFromDeckToZone", {deck = "mission", zone = "mission"})
+--         Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary"})
+--     else
+--         mission = missionPackData.tournamentMissions[selectedMission]
+--         missionSelectionDispBtn.label = mission.name
+--         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment", card = mission.deployment})
+--         Global.call("moveOneFromDeckToZone", {deck = "mission", zone = "mission", card = mission.mission})
+--         Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary", card = mission.primary})
+--     end
+--     writeMenus()
+
+--     Wait.time(function() canChangeMission = true end, 0.3)
+-- end
 
 -- END MISSION MANAGER
 

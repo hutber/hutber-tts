@@ -48,7 +48,7 @@ local RedControlBoard = {
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
     CustomCounter = "021302",
-    lethalFace = "redLethalFace",
+    -- lethalFace = "redLethalFace",
     bagIds = {
         d12  ="b9c441",
         greyD12 = "fbf744",
@@ -128,7 +128,7 @@ local BlueControlBoard = {
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
     CustomCounter = "7f211",
-    lethalFace = "blueLethalFace",
+    -- lethalFace = "blueLethalFace",
     bagIds = {
         d12  ="ab15ef",
         greyD12 = "c3c404",
@@ -184,13 +184,13 @@ local BlueControlBoard = {
             name = "Custom Counter",
             state = false,
             title = "Toggle the display of the custom counter",
-            customHiddenPosition =  -1.32
-        },
-        {
-            name = "Rotation 5 Degrees",
-            state = false,
-            title = "Toggle between 5 and native degrees for rotation"
+            customHiddenPosition =  -1.3
         }
+        -- {
+        --     name = "Rotation 5 Degrees",
+        --     state = false,
+        --     title = "Toggle between 5 and native degrees for rotation"
+        -- }
     }
 }
 
