@@ -182,7 +182,14 @@ missionPackData = {
             -- S: Linchpin / Dawn of War
             {name = "S", primary = "540fd0", deployment = "7f45dc"},
             -- T: Purge the Foe / Dawn of War
-            {name = "T", primary = "d9d35a", deployment = "7f45dc"}
+            {name = "T", primary = "d9d35a", deployment = "7f45dc"},
+            -- A: Terraform / Tipping Point
+            {name = "V", primary = "7fa6d0", deployment = "77cde6"},
+            -- A: Terraform / Tipping Point
+            {name = "W", primary = "d9d35a", deployment = "e96d18"},
+            {name = "X", primary = "85718f", deployment = "09c961"},
+            {name = "Y", primary = "540fd0", deployment = "97f3f0"},
+            {name = "Z", primary = "bffd57", deployment = "09c961"}
         }
     },
 }

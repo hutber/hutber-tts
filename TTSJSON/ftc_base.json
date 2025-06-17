@@ -474,17 +474,17 @@
       "GUID": "64b6bb",
       "Name": "CardCustom",
       "Transform": {
-        "posX": 9.072426,
-        "posY": -3.13362837,
-        "posZ": 8.511801,
-        "rotX": 4.68816376,
-        "rotY": 285.0189,
-        "rotZ": 1.25295043,
+        "posX": 18.3576412,
+        "posY": -3.18491971,
+        "posZ": 7.91937876,
+        "rotX": 6.205372,
+        "rotY": 285.1289,
+        "rotZ": 1.6714884,
         "scaleX": 1,
         "scaleY": 1,
         "scaleZ": 1
       },
-      "Nickname": "",
+      "Nickname": "Corrr a bloody new thing!!",
       "Description": "",
       "GMNotes": "",
       "AltLookAngle": {
@@ -3853,20 +3853,20 @@
     },
     {
       "GUID": "7abc5a",
-      "Name": "Custom_Tile",
+      "Name": "CardCustom",
       "Transform": {
-        "posX": -23.5,
-        "posY": 0.96,
-        "posZ": -0.05,
-        "rotX": 0,
-        "rotY": -90,
-        "rotZ": 0,
-        "scaleX": 5,
-        "scaleY": 5,
-        "scaleZ": 5
+        "posX": -20.501873,
+        "posY": 1,
+        "posZ": -0.9917256,
+        "rotX": -7.18223536e-10,
+        "rotY": 269.975739,
+        "rotZ": -5.076651e-9,
+        "scaleX": 5.80817366,
+        "scaleY": 1,
+        "scaleZ": 5.80817366
       },
-      "Nickname": "How to setup Saving ",
-      "Description": "Detection zone for red lethal hits",
+      "Nickname": "",
+      "Description": "",
       "GMNotes": "",
       "AltLookAngle": {
         "x": 0,
@@ -3874,27 +3874,37 @@
         "z": 0
       },
       "ColorDiffuse": {
-        "r": 1,
-        "g": 0,
-        "b": 0
+        "r": 0.713235259,
+        "g": 0.713235259,
+        "b": 0.713235259
       },
-      "CustomImage": {
-        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/34439408742531843/6F7C26869E8FB737269C0073F7FB927FAC4EB18F/",
-        "ImageSecondaryURL": "",
-        "WidthScale": 1
-      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
       "Locked": true,
-      "Grid": false,
-      "Snap": false,
+      "Grid": true,
+      "Snap": true,
       "IgnoreFoW": false,
       "MeasureMovement": false,
-      "DragSelectable": false,
-      "Autoraise": false,
-      "Sticky": false,
-      "Tooltip": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
       "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
+      "HideWhenFaceDown": true,
+      "Hands": true,
+      "CardID": 183900,
+      "SidewaysCard": false,
+      "CustomDeck": {
+        "1839": {
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13119830141340760389/8DCF2A94F832B028F6FB085EA72E518B6A138DF2/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/13119830141340760389/8DCF2A94F832B028F6FB085EA72E518B6A138DF2/",
+          "NumWidth": 1,
+          "NumHeight": 1,
+          "BackIsHidden": true,
+          "UniqueBack": false,
+          "Type": 0
+        }
+      },
       "LuaScript": "",
       "LuaScriptState": "",
       "XmlUI": ""
@@ -8522,7 +8532,7 @@
         "Order": 0
       },
       "LuaScript": "",
-      "LuaScriptState":"{\"ml\":{\"e0a21f\":{\"lock\":true,\"pos\":{\"x\":-10.686058,\"y\":0.9751,\"z\":-2.75516939},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"282eef\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":10.3349266},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"57ec5b\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":4.844073},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"29b7f4\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-0.5171205},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"684897\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-5.7346406},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"7cdd34\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-11.2339907},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d257a9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":10.3268509},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"005ab9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":4.823626},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"919f4c\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-0.641958654},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6f9044\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-5.77987432},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"0dccdf\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-11.0767365},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"243f54\":{\"lock\":true,\"pos\":{\"x\":-24.4872169,\"y\":0.9751,\"z\":15.2365255},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"3abec3\":{\"lock\":true,\"pos\":{\"x\":-10.6176167,\"y\":0.9751,\"z\":15.2365255},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"4f2daa\":{\"lock\":true,\"pos\":{\"x\":-10.6176167,\"y\":0.9751,\"z\":-14.4426394},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"bdc0fa\":{\"lock\":true,\"pos\":{\"x\":-17.5614777,\"y\":0.9751,\"z\":9.283935},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"aa0419\":{\"lock\":true,\"pos\":{\"x\":-17.5614777,\"y\":0.9751,\"z\":3.41999388},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"f8f956\":{\"lock\":true,\"pos\":{\"x\":-17.5434265,\"y\":0.9751,\"z\":15.2177382},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"f30a3b\":{\"lock\":true,\"pos\":{\"x\":-17.5434265,\"y\":0.9751,\"z\":-8.691918},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"5b73b1\":{\"lock\":true,\"pos\":{\"x\":-17.5434265,\"y\":0.9751,\"z\":-14.4803553},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d4c201\":{\"lock\":true,\"pos\":{\"x\":-17.5434265,\"y\":0.9751,\"z\":-2.79642129},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"04cbeb\":{\"lock\":true,\"pos\":{\"x\":-10.64456,\"y\":0.9751,\"z\":9.316869},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"8664a1\":{\"lock\":true,\"pos\":{\"x\":-10.64456,\"y\":0.9751,\"z\":-8.658978},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"3e1971\":{\"lock\":true,\"pos\":{\"x\":-10.64456,\"y\":0.9751,\"z\":3.3125205},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"33cdf2\":{\"lock\":true,\"pos\":{\"x\":-24.4908485,\"y\":0.9751,\"z\":9.311309},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6b0fb3\":{\"lock\":true,\"pos\":{\"x\":-24.4908485,\"y\":0.9751,\"z\":3.36057544},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"694018\":{\"lock\":true,\"pos\":{\"x\":-24.4908485,\"y\":0.9751,\"z\":-2.77350974},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6b2edf\":{\"lock\":true,\"pos\":{\"x\":-24.4908485,\"y\":0.9751,\"z\":-8.664544},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"61856a\":{\"lock\":true,\"pos\":{\"x\":-24.4908485,\"y\":0.9751,\"z\":-14.4225626},\"rot\":{\"x\":0,\"y\":180,\"z\":0}}}}",
+      "LuaScriptState":"{\"ml\":{\"282eef\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":10.3349266},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"57ec5b\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":4.844073},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"29b7f4\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-0.5171205},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"684897\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-5.7346406},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"7cdd34\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-11.2339907},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d257a9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":10.3268509},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"005ab9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":4.823626},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"919f4c\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-0.641958654},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6f9044\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-5.77987432},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"0dccdf\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-11.0767365},\"rot\":{\"x\":0,\"y\":180,\"z\":0}}}}",
       "XmlUI": "",
       "ContainedObjects": [
         {
@@ -8570,7 +8580,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "354": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880484052/C11ABE2D0989C736AF848133E8544924B8CAA077/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/14261203463632550384/595C83B036DE35C384C02A8210D6CC68E592CC00/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8628,7 +8638,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "6": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880588478/36EC06F413D030B9003C36C29927350345E6314B/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13431448319046274904/73E3DBB91FCFE8ACF7C856BA081997340FFA8202/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8686,7 +8696,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "5": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880585926/632CB9F2E9E755081BFC03EA2FD17EC1D26571BF/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10175279282734730160/C82104F63C069EE389C7409B5652D49A0EB60FFE/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8744,7 +8754,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "4": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880582445/7032B2BFB73B590A5D702643700FBBE4202D73FF/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/12385898114197453270/AC9610B172A7DD74D0EC5788CAD00BE59811F6FC/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8802,7 +8812,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "7": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880592310/04B56625FEFC4D3E15FCD8B1C3222B6EC80C3519/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10175279282734730160/C82104F63C069EE389C7409B5652D49A0EB60FFE/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8860,7 +8870,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "9": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880588478/36EC06F413D030B9003C36C29927350345E6314B/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13431448319046274904/73E3DBB91FCFE8ACF7C856BA081997340FFA8202/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8918,7 +8928,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "10": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880592310/04B56625FEFC4D3E15FCD8B1C3222B6EC80C3519/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10175279282734730160/C82104F63C069EE389C7409B5652D49A0EB60FFE/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -8976,7 +8986,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "11": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880592310/04B56625FEFC4D3E15FCD8B1C3222B6EC80C3519/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10175279282734730160/C82104F63C069EE389C7409B5652D49A0EB60FFE/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -9034,7 +9044,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "8": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880484052/C11ABE2D0989C736AF848133E8544924B8CAA077/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/14261203463632550384/595C83B036DE35C384C02A8210D6CC68E592CC00/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,
@@ -9054,9 +9064,9 @@
             "posX": -3.305,
             "posY": 0.9751034,
             "posZ": -11.0767365,
-            "rotX": -8.325138e-8,
-            "rotY": 180.0167,
-            "rotZ": -2.111172e-7,
+            "rotX": 2.21421971e-7,
+            "rotY": 180.017639,
+            "rotZ": 9.78395747e-8,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9092,1051 +9102,7 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "12": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880588478/36EC06F413D030B9003C36C29927350345E6314B/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "3abec3",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -10.6176167,
-            "posY": 0.9751034,
-            "posZ": 15.18518,
-            "rotX": 2.68416644e-9,
-            "rotY": 180.00853,
-            "rotZ": -7.463027e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Nickname": "UKTC teams R1 standard",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2400,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "24": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880484052/C11ABE2D0989C736AF848133E8544924B8CAA077/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R6 standard",
-          "GUID": "4f2daa",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -10.5951195,
-            "posY": 0.9751034,
-            "posZ": -14.4426394,
-            "rotX": -8.902269e-9,
-            "rotY": 180.00853,
-            "rotZ": 7.706804e-9,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2300,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "23": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880683137/8E7B5C0D3695E99B8CDD3173716B1253AE9BECB0/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R2 light",
-          "GUID": "bdc0fa",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -17.5614777,
-            "posY": 0.9751034,
-            "posZ": 9.283935,
-            "rotX": 3.15070414e-9,
-            "rotY": 180.008514,
-            "rotZ": -6.91470845e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 1600,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "16": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880656504/D1BC56FA9CA234A4116F93D48D03C907DCBABC99/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R3 light",
-          "GUID": "aa0419",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -17.6565132,
-            "posY": 0.9751034,
-            "posZ": 3.41999388,
-            "rotX": -1.491653e-8,
-            "rotY": 180.00853,
-            "rotZ": 2.113376e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 200,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "2": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880670145/6762760E5BE756F6BEFCD740AFE6C47D810FCB0B/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/10791071673581242/E710A69735A01208EFCAE0A13B7FD487275388FB/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R5 light",
-          "GUID": "f30a3b",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -17.608305,
-            "posY": 0.9751034,
-            "posZ": -8.691918,
-            "rotX": 2.784416e-8,
-            "rotY": 180.008514,
-            "rotZ": 2.51765442e-10,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2900,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "29": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880656504/D1BC56FA9CA234A4116F93D48D03C907DCBABC99/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R6 heavy",
-          "GUID": "61856a",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -24.52338,
-            "posY": 0.9751034,
-            "posZ": -14.4225626,
-            "rotX": 1.41059289e-7,
-            "rotY": 180.00853,
-            "rotZ": 4.89901772e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2100,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "21": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880685188/C5059F7BF3DDE9059FABBAF33AC17541152941DB/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R6 light",
-          "GUID": "5b73b1",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -17.5428257,
-            "posY": 0.9751034,
-            "posZ": -14.4803553,
-            "rotX": 1.28880956e-7,
-            "rotY": 180.0085,
-            "rotZ": 5.73475631e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2200,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "22": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880681124/980DFCE93F241FFDE5F2EAFABE56AA2D7374ECB7/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R4 light",
-          "GUID": "d4c201",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -17.6743641,
-            "posY": 0.9751034,
-            "posZ": -2.79642129,
-            "rotX": 2.36552609e-7,
-            "rotY": 180.008545,
-            "rotZ": 3.53322775e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2000,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "20": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880675851/50FE997A564D274916EB4FBFB61907700A56CE23/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R2 standard",
-          "GUID": "04cbeb",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -10.64456,
-            "posY": 0.9751034,
-            "posZ": 9.316869,
-            "rotX": -3.16079918e-9,
-            "rotY": 180.00853,
-            "rotZ": 5.07198763e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2500,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "25": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880592310/04B56625FEFC4D3E15FCD8B1C3222B6EC80C3519/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R5 standard",
-          "GUID": "8664a1",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -10.6913967,
-            "posY": 0.9751034,
-            "posZ": -8.658978,
-            "rotX": -8.658058e-7,
-            "rotY": 180.00853,
-            "rotZ": -5.84204471e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2800,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "28": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880592310/04B56625FEFC4D3E15FCD8B1C3222B6EC80C3519/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R5 heavy",
-          "GUID": "6b2edf",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -24.5376968,
-            "posY": 0.9751034,
-            "posZ": -8.664544,
-            "rotX": -2.9263056e-8,
-            "rotY": 180.00853,
-            "rotZ": -4.05555163e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 3000,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "30": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880659023/087A48F2A8915912F46B77D9E5BF4548A63F272A/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R4 heavy",
-          "GUID": "694018",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -24.6925964,
-            "posY": 0.9751034,
-            "posZ": -2.77350974,
-            "rotX": -4.74311719e-8,
-            "rotY": 180.00853,
-            "rotZ": -5.85868918e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 1900,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "19": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880677875/118201852202FC23B1E8A616297E5344E19F68C2/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R3 heavy",
-          "GUID": "6b0fb3",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -24.644804,
-            "posY": 0.9751034,
-            "posZ": 3.36057544,
-            "rotX": -3.3500978e-8,
-            "rotY": 180.00853,
-            "rotZ": -2.970502e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 1700,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "17": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880672775/D47B4C02EEC4F52F6FBD45B4ECDDCAA523138876/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R2 heavy",
-          "GUID": "33cdf2",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -24.4908485,
-            "posY": 0.9751034,
-            "posZ": 9.311309,
-            "rotX": 4.116822e-8,
-            "rotY": 180.00853,
-            "rotZ": 3.74917555e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 1500,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "15": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880659023/087A48F2A8915912F46B77D9E5BF4548A63F272A/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R3 standard",
-          "GUID": "3e1971",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -10.5945625,
-            "posY": 0.9751034,
-            "posZ": 3.3125205,
-            "rotX": -1.35695348e-8,
-            "rotY": 180.00853,
-            "rotZ": -3.31272e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2600,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "26": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880585926/632CB9F2E9E755081BFC03EA2FD17EC1D26571BF/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R1 heavy",
-          "GUID": "243f54",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -24.4872169,
-            "posY": 0.9751034,
-            "posZ": 15.2365255,
-            "rotX": -3.572071e-8,
-            "rotY": 180.00853,
-            "rotZ": -4.588054e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 1300,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "13": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880629862/BABD00165068769DD4E5BAC8DA2217B07C276D96/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "Nickname": "UKTC teams R1 light",
-          "GUID": "f8f956",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -17.5434265,
-            "posY": 0.9751034,
-            "posZ": 15.2177382,
-            "rotX": -9.74701564e-8,
-            "rotY": 180.008514,
-            "rotZ": 2.95385369e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 1400,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "14": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880627685/1EA4CA1ADB8DBCFE45279A729BEBE76F717C559C/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "e0a21f",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": -11.4946146,
-            "posY": 0.913602948,
-            "posZ": 53.2999954,
-            "rotX": -0.00000162373726,
-            "rotY": 180.00853,
-            "rotZ": 4.787778e-7,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Nickname": "UKTC teams R4 standard",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": false,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 2700,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "27": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/19797001880588478/36EC06F413D030B9003C36C29927350345E6314B/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13431448319046274904/73E3DBB91FCFE8ACF7C856BA081997340FFA8202/",
               "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
               "NumWidth": 1,
               "NumHeight": 1,

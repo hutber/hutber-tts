@@ -85,6 +85,8 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.5.5: Feat: Added Random UKTC Mission selector",
+    "1.5.5: Feat: UKTC Maps updated with Beta Maps. All thanks to Minyiky for this work!",
     "1.5.4: Feat: Updated GW maps 7 & 8 and updated mission selection with new CA 2025",
     "1.5.3: Fix: Made the auto buttons have random colours",
     "1.5.2: Feat: Updated copy players buttons and 1D6 2D6 auto buttons in better place",
@@ -1825,10 +1827,10 @@ missionHeaderBtn = {
     label = "M I S S I O N   S E L E C T I O N",
     click_function = "none",
     function_owner = self,
-    position = {9.20, 5, -17.1},
+    position = {2.20, 5, -17.1},
     rotation = {0, 0, 0},
     height = 250,
-    width = 4750,
+    width = 5550,
     font_size = 200,
     color = {1, 1, 1},
     font_color = {0, 0, 0},
@@ -1837,7 +1839,7 @@ randomiseMissionBtn = {
     label = "Fully\nRandom",
     click_function = "randomiseMission",
     function_owner = self,
-    position = {5.00, 5, -16.2},
+    position = {-3.00, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
@@ -1849,7 +1851,7 @@ missionSelectionDownBtn = {
     label = "<-",
     click_function = "missionSelectionDown",
     function_owner = self,
-    position = {6.65, 5, -16.2},
+    position = {-1.30, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
@@ -1861,7 +1863,7 @@ missionSelectionDispBtn = {
     label = "?",
     click_function = "none",
     function_owner = self,
-    position = {8.35, 5, -16.2},
+    position = {0.35, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
@@ -1873,7 +1875,7 @@ missionSelectionUpBtn = {
     label = "->",
     click_function = "missionSelectionUp",
     function_owner = self,
-    position = {10.00, 5, -16.2},
+    position = {2.00, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
@@ -1885,25 +1887,37 @@ randomTournamentMissionBtn = {
     label = "Random\nGW",
     click_function = "randomTournamentMission",
     function_owner = self,
-    position = {11.70, 5, -16.2},
+    position = {3.70, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
     font_size = 160,
-    color = {1, 1, 1},
-    font_color = {0, 0, 0}
+    color = {1, 1, 0},
+    font_color = {1, 0, 0}
 }
 randomWTCMissionBtn = {
     label = "Random\nWTC",
     click_function = "randomWTCMission",
     function_owner = self,
-    position = {13.35, 5, -16.2},
+    position = {5.35, 5, -16.2},
     rotation = {0, 0, 0},
     height = 550,
     width = 750,
     font_size = 160,
-    color = {1, 1, 1},
-    font_color = {0, 0, 0}
+    color = {0, 0, 1},
+    font_color = {1, 1, 1}
+}
+randomUKTCMissionBtn = {
+    label = "Random\nUKTC",
+    click_function = "randomUKTCMission",
+    function_owner = self,
+    position = {7, 5, -16.2},
+    rotation = {0, 0, 0},
+    height = 550,
+    width = 750,
+    font_size = 160,
+    color = {0, 0, 0},
+    font_color = {1, 1, 1}
 }
 
 function selectPariahNexus()
@@ -1968,7 +1982,48 @@ end
 function randomWTCMission()
     if canChangeMission then
         math.randomseed(os.time())
-        local chars = {"B","C","H","J","L","N","P"}
+        local chars = {"H","F","O","N","C","D","R"}
+        local randomChar = chars[math.random(#chars)]
+        local foundIndex
+        for i, mission in ipairs(missionPackData.tournamentMissions) do
+            if mission and mission.name == randomChar then
+                foundIndex = i
+                break
+            end
+        end
+        if foundIndex then
+            selectedMission = foundIndex
+            updateMission()
+        end
+    end
+end
+
+
+function randomUKTCMission()
+    if canChangeMission then
+        math.randomseed(os.time())
+        local chars = {"H","F","O","N","C","D","R"}
+        local randomChar = chars[math.random(#chars)]
+        local foundIndex
+        for i, mission in ipairs(missionPackData.tournamentMissions) do
+            if mission and mission.name == randomChar then
+                foundIndex = i
+                break
+            end
+        end
+        if foundIndex then
+            selectedMission = foundIndex
+            updateMission()
+        end
+    end
+end
+
+
+
+function randomUKTCMission()
+    if canChangeMission then
+        math.randomseed(os.time())
+        local chars = {"V","W","Y","X","Z"}
         local randomChar = chars[math.random(#chars)]
         local foundIndex
         for i, mission in ipairs(missionPackData.tournamentMissions) do
@@ -2080,7 +2135,7 @@ IncrementBlueCpBtn = {
     font_size = 600, color = {0, 0, 1}, font_color = {1, 1, 1}
 }
 
-notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/FDv42GsRnk"
+notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/Drpzcwwmm6"
 position = {menuX, 5, menuZ}
 
 function writeMenus()
@@ -2126,6 +2181,7 @@ function writeDeployMenu()
             self.createButton(randomiseMissionBtn)
             self.createButton(randomTournamentMissionBtn)
             self.createButton(randomWTCMissionBtn)
+            self.createButton(randomUKTCMissionBtn)
             self.createButton(missionSelectionDownBtn)
             self.createButton(missionSelectionUpBtn)
             self.createButton(missionSelectionDispBtn)
