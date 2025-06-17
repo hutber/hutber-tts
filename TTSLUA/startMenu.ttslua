@@ -2376,8 +2376,16 @@ function passTurn(obj, player_color_click, alt_click)
             orangePCounter.Counter.increment() -- Increment Orange CP
             Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
         else
-            Wait.time(function() broadcastToAll("Red CPs incremented!", "Red") end, 0.3)
-        end
+        <Panel id="feedbackPopup" width="400" height="380" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
+                <InputField id="feedbackEmail" placeholder="Email" />
+                <Dropdown id="feedbackLike">
+                    <Option value="Yes">Yes</Option>
+                    <Option value="No">No</Option>
+                    <Option value="I fucking HATE IT">I fucking HATE IT</Option>
+                </Dropdown>
+    local email = Global.UI.getAttribute("feedbackEmail", "text") or ""
+    local like = Global.UI.getAttribute("feedbackLike", "value") or "Yes"
+    broadcastToAll("Feedback from " .. name .. " (" .. email .. ") - Likes lethal face: " .. like .. " - " .. msg, {1,1,1})
     end
 
     if simulation then
