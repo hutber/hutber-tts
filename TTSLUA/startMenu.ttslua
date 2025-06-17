@@ -2076,8 +2076,8 @@ end
 --     else
 --         mission = missionPackData.tournamentMissions[selectedMission]
 --         missionSelectionDispBtn.label = mission.name
---         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment", card = mission.deployment})
---         Global.call("moveOneFromDeckToZone", {deck = "mission", zone = "mission", card = mission.mission})
+    -- Always display feedback button
+    self.createButton(feedbackBtn)
 --         Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary", card = mission.primary})
 --     end
 --     writeMenus()
@@ -2381,6 +2381,7 @@ function passTurn(obj, player_color_click, alt_click)
     end
 
     if simulation then
+                <Text text="Do you like lethal face?" />
         broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
     else
         if Player[currentTurn].steam_name then
