@@ -3855,9 +3855,9 @@
       "GUID": "7abc5a",
       "Name": "CardCustom",
       "Transform": {
-        "posX": -20.501873,
+        "posX": -20.5075722,
         "posY": 1,
-        "posZ": -0.9917256,
+        "posZ": 0.0440250263,
         "rotX": -7.18223536e-10,
         "rotY": 269.975739,
         "rotZ": -5.076651e-9,
@@ -3892,12 +3892,12 @@
       "GridProjection": false,
       "HideWhenFaceDown": true,
       "Hands": true,
-      "CardID": 183900,
+      "CardID": 185200,
       "SidewaysCard": false,
       "CustomDeck": {
-        "1839": {
-          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13119830141340760389/8DCF2A94F832B028F6FB085EA72E518B6A138DF2/",
-          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/13119830141340760389/8DCF2A94F832B028F6FB085EA72E518B6A138DF2/",
+        "1852": {
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13384680555232722885/B3BA2EE113126AFDCF9F3CB7981B89B8E37E9139/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/13384680555232722885/B3BA2EE113126AFDCF9F3CB7981B89B8E37E9139/",
           "NumWidth": 1,
           "NumHeight": 1,
           "BackIsHidden": true,
@@ -26162,7 +26162,7 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomImage": {
-        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/1995688026065763410/50AC065E415C7ABAB0908943E0BEF138C29044D4/",
+        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/15226569520214315705/6BECFE1F76A779A82FCC5C4B37800154111CE5AE/",
         "ImageSecondaryURL": "",
         "ImageScalar": 1,
         "WidthScale": 0,
@@ -26219,7 +26219,7 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomImage": {
-        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/1995688026065763345/38EE47EA553FF9B21D5374E97B440CB09CFA38A7/",
+        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/15226569520214315705/6BECFE1F76A779A82FCC5C4B37800154111CE5AE/",
         "ImageSecondaryURL": "",
         "ImageScalar": 1,
         "WidthScale": 0,
@@ -38148,7 +38148,7 @@
       "Transform": {
         "posX": 47.0,
         "posY": 0.9611332,
-        "posZ": 0.0,
+        "posZ": 7.0,
         "rotX": 90.0,
         "rotY": 90.0,
         "rotZ": 0.0,

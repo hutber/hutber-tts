@@ -203,6 +203,38 @@ bluePlayerID = ""
 redDiceSpawnTime = "slow"
 blueDiceSpawnTime = "slow"
 
+-- storage for the latest edits
+feedbackName    = ""
+feedbackEmail   = ""
+feedbackType    = ""
+feedbackLike    = "Yes"
+feedbackMessage = ""
+
+-- callback for the Name field
+function onNameChanged(player, newText)
+    feedbackName = newText
+end
+
+-- callback for the Email field
+function onEmailChanged(player, newText)
+    feedbackEmail = newText
+end
+
+-- callback for the Type dropdown
+function onTypeChanged(player, newValue)
+    feedbackType = newValue
+end
+
+-- callback for the Like dropdown
+function onLikeChanged(player, newValue)
+    feedbackLike = newValue
+end
+
+-- callback for the Message field
+function onMessageChanged(player, newText)
+    feedbackMessage = newText
+end
+
 local monitoredID = "5c328f"  -- Original injection detector
 local monitoredID2 = "899f22" -- Malicious script detected object
 local warningInterval

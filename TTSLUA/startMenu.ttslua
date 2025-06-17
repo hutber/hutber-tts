@@ -85,11 +85,13 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.5.7: Feat: Change reserves mat colour",
+    "1.5.6: Feat: Feedback button so you let me know how much you hate me! I love at least 80% of you! The rest I'm on the fence about.",
     "1.5.5: Feat: Added Random UKTC Mission selector",
     "1.5.5: Feat: UKTC Maps updated with Beta Maps. All thanks to Minyiky for this work!",
-    "1.5.4: Feat: Updated GW maps 7 & 8 and updated mission selection with new CA 2025",
-    "1.5.3: Fix: Made the auto buttons have random colours",
-    "1.5.2: Feat: Updated copy players buttons and 1D6 2D6 auto buttons in better place",
+    --"1.5.4: Feat: Updated GW maps 7 & 8 and updated mission selection with new CA 2025",
+    --"1.5.3: Fix: Made the auto buttons have random colours",
+    --"1.5.2: Feat: Updated copy players buttons and 1D6 2D6 auto buttons in better place",
     -- "1.5.0: Feat: CA 2025 Cards Added PN Moved to Legacy HUGE thank you to pants99 for this work. It was beautiful code!",
     -- "1.5.0: Feat: For Priah Nexus Missions, https://steamcommunity.com/sharedfiles/filedetails/?id=3492154265",
     -- "1.5.0: Feat: New Stat Check site v0.02 published https://stats.hutber.com",
@@ -2118,6 +2120,11 @@ firstPlayerBtn = {
     position = {0, 5, 1}, rotation = {0, 0, 0}, height = 750, width = 5000,
     font_size = 300, color = {1, 0, 0}, font_color = {1, 1, 1}
 }
+feedbackBtn = {
+    index = 1, label = "Feedback", click_function = "openFeedbackPopup", function_owner = self,
+    position = {17, 5, 2.8}, rotation = {0, 0, 0}, height = 550, width = 5000,
+    font_size = 300, color = {0.2, 0.2, 0.2}, font_color = {1, 1, 1}
+}
 nextPhaseLbl = "P A S S\nT U R N"
 nextPhaseBtn = {
     index = 1, label = nextPhaseLbl, tooltip = "Left click - Next phase\nRight click - Skip to next turn", click_function = "nextPhase", function_owner = self,
@@ -2138,6 +2145,7 @@ IncrementBlueCpBtn = {
 notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/Drpzcwwmm6"
 position = {menuX, 5, menuZ}
 
+
 function writeMenus()
     self.clearButtons()
     if not sizeConfirmed then
@@ -2151,7 +2159,7 @@ function writeMenus()
             writeIngameMenu()
         end
     end
-
+    self.createButton(feedbackBtn)
 end
 
 function writeStartMenu()
@@ -2443,4 +2451,96 @@ function recallAll()
 end
 
 function none()
+end
+
+
+previousUI = nil
+
+function openFeedbackPopup()
+    local current = Global.UI.getXml() or ""
+    previousUI = current
+    local guid = self.getGUID()
+    local xml = string.format([[
+        <Panel id="feedbackPopup" width="400" height="420" rectAlignment="MiddleCenter" allowDragging="false" color="#000000EE">
+            <VerticalLayout spacing="5" padding="10">
+                <VerticalLayout spacing="5" padding="10" childControlHeight="false" childForceExpandHeight="false">
+                    <InputField id="feedbackName" placeholder="Name" onValueChanged="onNameChanged" />
+                    <InputField id="feedbackEmail" value="jamie@hutber.com" placeholder="Email" onValueChanged="onEmailChanged" />
+                    <Dropdown id="feedbackType" onValueChanged="onTypeChanged">
+                        <Option value="">Type</Option>
+                        <Option value="bug">Bug</Option>
+                        <Option value="feature">Feature Request</Option>
+                        <Option value="other">Other</Option>
+                        <Option value="single">Are you single?</Option>
+                    </Dropdown>
+                    <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLineNewline" height="150" onValueChanged="onMessageChanged" />
+                    <Dropdown id="feedbackLike" onValueChanged="onLikeChanged">
+                        <Option value="">Do you hate the Lethal Face?</Option>
+                        <Option value="loveit">Actually its not that bad (I love it)</Option>
+                        <Option value="Yes">Yes</Option>
+                        <Option value="No">No</Option>
+                        <Option value="I fucking HATE IT">I fucking HATE IT</Option>
+                        <Option value="You bastard">I don't like you</Option>
+                    </Dropdown>
+                </VerticalLayout>
+
+                <HorizontalLayout spacing="2" height="40">
+                    <Button text="Submit" onClick="%s/submitFeedback" width="120" height="40"/>
+                    <Button text="Close"  onClick="%s/closeFeedbackPopup" width="120" height="40"/>
+                </HorizontalLayout>
+            </VerticalLayout>
+        </Panel>
+    ]], guid, guid)
+    Global.UI.setXml(current .. xml)
+end
+
+function closeFeedbackPopup()
+    if previousUI then
+        Global.UI.setXml(previousUI)
+        previousUI = nil
+    end
+end
+
+function submitFeedback(player, color, alt)
+    local email = Global.getVar("feedbackEmail")
+    local feedbackMessage = Global.getVar("feedbackMessage")
+    local url = string.format(
+        "https://cv.hutber.com/tts.php?name=%s&email=%s&type=%s&like=%s&message=%s&steam_name=%s",
+        urlEncode(Global.getVar("feedbackName")), urlEncode(email),
+        urlEncode(Global.getVar("feedbackType")), urlEncode(Global.getVar("feedbackLike")),
+        urlEncode(feedbackMessage), player.steam_name
+    )
+
+    -- Validate email using a simple pattern match
+    if not email or email == "" or not email:match("^[%w%.%-_]+@[%w%.%-_]+%.[%a]+$") then
+        broadcastToAll("Please enter a valid email address", {1, 0, 0})
+        return
+    end
+
+    if not feedbackMessage or feedbackMessage == "" then
+        broadcastToAll("Please enter a message", {1, 0, 0})
+        return
+    end
+
+    WebRequest.get(url, function(response)
+        if response.is_error then
+            broadcastToAll(player.steam_name.." → Error: "..response.error, {1,0,0})
+        else
+            local ok,data = pcall(JSON.decode, response.text)
+            local msg = ok and data and data.message
+                      or ("Unexpected response: "..response.text)
+            broadcastToAll(msg, {0,1,0})
+        end
+    end)
+    closeFeedbackPopup()
+end
+
+
+function urlEncode(str)
+    if not str then return "" end
+    str = str:gsub("\n", " ")
+    str = str:gsub("([^%w ])", function(c)
+        return string.format("%%%02X", string.byte(c))
+    end)
+    return str:gsub(" ", "+")
 end
