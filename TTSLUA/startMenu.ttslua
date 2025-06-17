@@ -2041,8 +2041,8 @@ end
 
 
 
-function updateMission()
-    canChangeMission = false
+    position = {17, 5, 3}, rotation = {0, 0, 0}, height = 750, width = 5000,
+notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/Drpzcwwmm6"
     Global.call("moveAllFromZoneToDeck", {zone = "deployment", deck = "deployment"})
     Global.call("moveAllFromZoneToDeck", {zone = "primary", deck = "primary"})
 print(selectedMission)
@@ -2376,21 +2376,34 @@ function passTurn(obj, player_color_click, alt_click)
             orangePCounter.Counter.increment() -- Increment Orange CP
             Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
         else
-            Wait.time(function() broadcastToAll("Red CPs incremented!", "Red") end, 0.3)
-        end
-    end
+    local xml = string.format([[        
+        <Panel id="feedbackPopup" width="400" height="420" rectAlignment="MiddleCenter" allowDragging="false" color="#000000EE">
+                <VerticalLayout spacing="5" padding="10" childControlHeight="false" childForceExpandHeight="false">
+                    <InputField id="feedbackName" placeholder="Name" />
+                    <InputField id="feedbackEmail" placeholder="Email" />
+                    <Dropdown id="feedbackType">
+                        <Option value="">Type</Option>
+                        <Option value="bug">Bug</Option>
+                        <Option value="feature">Feature Request</Option>
+                        <Option value="other">Other</Option>
+                        <Option value="single">Are you single?</Option>
+                    </Dropdown>
+                    <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLineNewline" height="150"/>
+                    <Dropdown id="feedbackLike">
+                        <Option value="">Do you hate the Lethal Face?</Option>
+                        <Option value="loveit">Actually its not that bad (I love it)</Option>
+                        <Option value="Yes">Yes</Option>
+                        <Option value="No">No</Option>
+                        <Option value="I fucking HATE IT">I fucking HATE IT</Option>
+                        <Option value="You bastard">I don't like you</Option>
+                    </Dropdown>
+                </VerticalLayout>
 
-    if simulation then
-        broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
-    else
-        if Player[currentTurn].steam_name then
-            broadcastToAll("It's " .. Player[currentTurn].steam_name .. " turn", currentTurn)
-        else
-            broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
-        end
-    end
-    writeMenus()
-end
+                <HorizontalLayout spacing="2" height="40">
+                    <Button text="Close"  onClick="%s/closeFeedbackPopup" width="120" height="40"/>
+    local ftype = Global.UI.getAttribute("feedbackType", "value") or ""
+        "https://webhook.site/8682e017-6a5f-41ce-a89f-3ce4af80cea8?name=%s&email=%s&type=%s&like=%s&message=%s",
+        urlEncode(name), urlEncode(email), urlEncode(ftype), urlEncode(like), urlEncode(msg)
 
 
 function startCustomTurns()
