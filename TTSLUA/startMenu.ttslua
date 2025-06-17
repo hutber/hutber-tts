@@ -2259,7 +2259,7 @@ function startGame(obj, player, alt)
             forceStartCounter = 0
         end
 
-        -- Count the number of players (if needed later)
+    if(singlesMode ~= "singles") then
         local playerList = Player.getPlayers()
         local numberOfPlayers = 0
         for i, p in ipairs(playerList) do
