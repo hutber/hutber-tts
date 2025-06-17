@@ -2076,8 +2076,8 @@ end
 --     else
 --         mission = missionPackData.tournamentMissions[selectedMission]
 --         missionSelectionDispBtn.label = mission.name
-    -- Always display feedback button
-    self.createButton(feedbackBtn)
+--         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment", card = mission.deployment})
+--         Global.call("moveOneFromDeckToZone", {deck = "mission", zone = "mission", card = mission.mission})
 --         Global.call("moveOneFromDeckToZone", {deck = "primary", zone = "primary", card = mission.primary})
 --     end
 --     writeMenus()
@@ -2120,7 +2120,7 @@ firstPlayerBtn = {
 }
 feedbackBtn = {
     index = 1, label = "Feedback", click_function = "openFeedbackPopup", function_owner = self,
-    position = {0, 5, 3}, rotation = {0, 0, 0}, height = 750, width = 5000,
+    position = {17, 5, 3}, rotation = {0, 0, 0}, height = 750, width = 5000,
     font_size = 300, color = {0.2, 0.2, 0.2}, font_color = {1, 1, 1}
 }
 nextPhaseLbl = "P A S S\nT U R N"
@@ -2143,6 +2143,9 @@ IncrementBlueCpBtn = {
 notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/Drpzcwwmm6"
 position = {menuX, 5, menuZ}
 
+-- Always display feedback button
+self.createButton(feedbackBtn)
+
 function writeMenus()
     self.clearButtons()
     if not sizeConfirmed then
@@ -2163,7 +2166,6 @@ function writeStartMenu()
     if gameMode ~= "game" then return end
     self.createButton(startBtn)
     self.createButton(firstPlayerBtn)
-    self.createButton(feedbackBtn)
 end
 
 function writeDeployMenu()
@@ -2259,7 +2261,7 @@ function startGame(obj, player, alt)
             forceStartCounter = 0
         end
 
-    if(singlesMode ~= "singles") then
+        -- Count the number of players (if needed later)
         local playerList = Player.getPlayers()
         local numberOfPlayers = 0
         for i, p in ipairs(playerList) do
@@ -2381,7 +2383,6 @@ function passTurn(obj, player_color_click, alt_click)
     end
 
     if simulation then
-                <Text text="Do you like lethal face?" />
         broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
     else
         if Player[currentTurn].steam_name then
@@ -2451,7 +2452,6 @@ end
 
 function none()
 end
-
 previousUI = nil
 
 function openFeedbackPopup()
@@ -2459,22 +2459,44 @@ function openFeedbackPopup()
     previousUI = current
     local guid = self.getGUID()
     local xml = string.format([[
-        <Panel id="feedbackPopup" width="400" height="380" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
-            <VerticalLayout spacing="5" padding="10">
-                <InputField id="feedbackName" placeholder="Name" />
-                <InputField id="feedbackEmail" placeholder="Email" />
-                <Dropdown id="feedbackLike">
-                    <Option value="Yes">Yes</Option>
-                    <Option value="No">No</Option>
-                    <Option value="I fucking HATE IT">I fucking HATE IT</Option>
-                </Dropdown>
-                <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLine"/>
-                <HorizontalLayout spacing="10">
-                    <Button text="Submit" onClick="%s/submitFeedback" width="120" height="40"/>
-                    <Button text="Close" onClick="%s/closeFeedbackPopup" width="120" height="40"/>
-                </HorizontalLayout>
-            </VerticalLayout>
-        </Panel>
+<Panel id="feedbackPopup" width="400" height="380" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
+    <VerticalLayout spacing="5" padding="10">
+        <!-- This horizontal layout will keep its children on one line -->
+        <HorizontalLayout 
+            childControlWidth="true"
+            childControlHeight="false"
+            childForceExpandWidth="true"
+            childForceExpandHeight="false">
+            
+            <InputField id="feedbackName" placeholder="Name" height="40">
+                <!-- split remaining space equally -->
+                <LayoutElement minWidth="0" flexibleWidth="1" />
+            </InputField>
+            
+            <InputField id="feedbackEmail" placeholder="Email" height="40">
+                <LayoutElement minWidth="0" flexibleWidth="1" />
+            </InputField>
+            
+        </HorizontalLayout>
+
+        <Dropdown id="feedbackLike">
+            <Option value="">Do you hate the Letahl Face?</Option>
+            <Option value="loveit">Actually its not that bad (I love it)</Option>
+            <Option value="Yes">Yes</Option>
+            <Option value="No">No</Option>
+            <Option value="I fucking HATE IT">I fucking HATE IT</Option>
+            <Option value="You bastard">I don't like you</Option>
+        </Dropdown>
+
+        <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLine"/>
+
+        <HorizontalLayout spacing="10">
+            <Button text="Submit" onClick="%s/submitFeedback" width="120" height="40"/>
+            <Button text="Close"  onClick="%s/closeFeedbackPopup" width="120" height="40"/>
+        </HorizontalLayout>
+    </VerticalLayout>
+</Panel>
+
     ]], guid, guid)
     Global.UI.setXml(current .. xml)
 end
