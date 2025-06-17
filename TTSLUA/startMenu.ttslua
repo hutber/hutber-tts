@@ -2118,6 +2118,11 @@ firstPlayerBtn = {
     position = {0, 5, 1}, rotation = {0, 0, 0}, height = 750, width = 5000,
     font_size = 300, color = {1, 0, 0}, font_color = {1, 1, 1}
 }
+feedbackBtn = {
+    index = 1, label = "Feedback", click_function = "openFeedbackPopup", function_owner = self,
+    position = {0, 5, 3}, rotation = {0, 0, 0}, height = 750, width = 5000,
+    font_size = 300, color = {0.2, 0.2, 0.2}, font_color = {1, 1, 1}
+}
 nextPhaseLbl = "P A S S\nT U R N"
 nextPhaseBtn = {
     index = 1, label = nextPhaseLbl, tooltip = "Left click - Next phase\nRight click - Skip to next turn", click_function = "nextPhase", function_owner = self,
@@ -2158,6 +2163,7 @@ function writeStartMenu()
     if gameMode ~= "game" then return end
     self.createButton(startBtn)
     self.createButton(firstPlayerBtn)
+    self.createButton(feedbackBtn)
 end
 
 function writeDeployMenu()
@@ -2443,4 +2449,37 @@ function recallAll()
 end
 
 function none()
+end
+
+previousUI = nil
+
+function openFeedbackPopup()
+    local current = Global.UI.getXml() or ""
+    previousUI = current
+    Global.UI.setXml(current .. [[
+        <Panel id="feedbackPopup" width="400" height="300" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
+            <VerticalLayout spacing="5" padding="10">
+                <InputField id="feedbackName" placeholder="Name" />
+                <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLine"/>
+                <HorizontalLayout spacing="10">
+                    <Button text="Submit" onClick="]]..self.getGUID()..[[/submitFeedback" width="120" height="40"/>
+                    <Button text="Close" onClick="]]..self.getGUID()..[[/closeFeedbackPopup" width="120" height="40"/>
+                </HorizontalLayout>
+            </VerticalLayout>
+        </Panel>
+    ]])
+end
+
+function closeFeedbackPopup()
+    if previousUI then
+        Global.UI.setXml(previousUI)
+        previousUI = nil
+    end
+end
+
+function submitFeedback(obj, color, alt)
+    local name = Global.UI.getAttribute("feedbackName", "text") or "Anonymous"
+    local msg = Global.UI.getAttribute("feedbackMessage", "text") or ""
+    broadcastToAll("Feedback from " .. name .. ": " .. msg, {1,1,1})
+    closeFeedbackPopup()
 end
