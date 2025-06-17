@@ -2375,19 +2375,9 @@ function passTurn(obj, player_color_click, alt_click)
             blueCpCounter.Counter.increment()
             orangePCounter.Counter.increment() -- Increment Orange CP
             Wait.time(function() broadcastToAll("Both CPs incremented!", "White") end, 0.3)
-    local guid = self.getGUID()
-    local xml = string.format([[
-        <Panel id="feedbackPopup" width="400" height="380" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
-                <InputField id="feedbackEmail" placeholder="Email" />
-                <Dropdown id="feedbackLike">
-                    <Option value="Yes">Yes</Option>
-                    <Option value="No">No</Option>
-                    <Option value="I fucking HATE IT">I fucking HATE IT</Option>
-                </Dropdown>
-                    <Button text="Submit" onClick="%s/submitFeedback" width="120" height="40"/>
-                    <Button text="Close" onClick="%s/closeFeedbackPopup" width="120" height="40"/>
-    ]], guid, guid)
-    Global.UI.setXml(current .. xml)
+        else
+            Wait.time(function() broadcastToAll("Red CPs incremented!", "Red") end, 0.3)
+        end
     end
 
     if simulation then
@@ -2466,18 +2456,26 @@ previousUI = nil
 function openFeedbackPopup()
     local current = Global.UI.getXml() or ""
     previousUI = current
-    Global.UI.setXml(current .. [[
-        <Panel id="feedbackPopup" width="400" height="300" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
+    local guid = self.getGUID()
+    local xml = string.format([[
+        <Panel id="feedbackPopup" width="400" height="380" rectAlignment="MiddleCenter" allowDragging="true" color="#000000EE">
             <VerticalLayout spacing="5" padding="10">
                 <InputField id="feedbackName" placeholder="Name" />
+                <InputField id="feedbackEmail" placeholder="Email" />
+                <Dropdown id="feedbackLike">
+                    <Option value="Yes">Yes</Option>
+                    <Option value="No">No</Option>
+                    <Option value="I fucking HATE IT">I fucking HATE IT</Option>
+                </Dropdown>
                 <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLine"/>
                 <HorizontalLayout spacing="10">
-                    <Button text="Submit" onClick="]]..self.getGUID()..[[/submitFeedback" width="120" height="40"/>
-                    <Button text="Close" onClick="]]..self.getGUID()..[[/closeFeedbackPopup" width="120" height="40"/>
+                    <Button text="Submit" onClick="%s/submitFeedback" width="120" height="40"/>
+                    <Button text="Close" onClick="%s/closeFeedbackPopup" width="120" height="40"/>
                 </HorizontalLayout>
             </VerticalLayout>
         </Panel>
-    ]])
+    ]], guid, guid)
+    Global.UI.setXml(current .. xml)
 end
 
 function closeFeedbackPopup()
@@ -2489,7 +2487,9 @@ end
 
 function submitFeedback(obj, color, alt)
     local name = Global.UI.getAttribute("feedbackName", "text") or "Anonymous"
+    local email = Global.UI.getAttribute("feedbackEmail", "text") or ""
+    local like = Global.UI.getAttribute("feedbackLike", "value") or "Yes"
     local msg = Global.UI.getAttribute("feedbackMessage", "text") or ""
-    broadcastToAll("Feedback from " .. name .. ": " .. msg, {1,1,1})
+    broadcastToAll("Feedback from " .. name .. " (" .. email .. ") - Likes lethal face: " .. like .. " - " .. msg, {1,1,1})
     closeFeedbackPopup()
 end
