@@ -478,8 +478,12 @@ function getWeaponMapAttacks(weaponMapData)
 end
 
 function getBonusAttackAppendum(appendum)
-  if tonumber(appendum) ~= nil then
-    return tonumber(appendum)
+  if appendum == nil then
+    return 0
+  end
+  local num = tonumber(appendum)
+  if num ~= nil then
+    return num
   end
 
   if string.find(appendum, "D") ~= nil then
@@ -692,11 +696,21 @@ end
 
 function parseWeaponAttack(stats)
   local stat = getWeaponStatValue(stats, "A")
-  return tonumber(stat) or 0
+  if stat == nil then
+    return 0
+  end
+  local num = tonumber(stat)
+  if num then
+    return num
+  end
+  return 0
 end
 
 function parseWeaponBonusAttack(stats)
   local stat = getWeaponStatValue(stats, "A")
+  if stat == nil then
+    return nil
+  end
   if tonumber(stat) == nil then
     return stat
   end
