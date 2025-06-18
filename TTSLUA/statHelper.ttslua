@@ -1,0 +1,5 @@
+-- FTC-GUID: 7c7c20,8v7a72
+
+onLoad = function()
+    print("Stat Helper loaded")
+end

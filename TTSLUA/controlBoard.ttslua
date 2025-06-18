@@ -43,7 +43,7 @@ local RedControlBoard = {
     VortexGUID = "be2cdb",
     CustomDiceMat_GUID = "acae21",
     DiceMat_GUID = "c57d70",
-    StatHelper_GUID = "863da2",
+    StatHelper_GUID = "7c7c20",
     SelectionHighlighterGUID = "27de4f",
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
@@ -77,7 +77,7 @@ local RedControlBoard = {
             name = "Stat Helper",
             state = false,
             title = "Auto generate dice for selected units",
-            customHiddenPosition = {-3.82076836, 0.5, 34.74994}
+            customHiddenPosition = {-4.48431635, 1, 33.286}
         },
         {
             name = "Vortex",
@@ -123,7 +123,7 @@ local BlueControlBoard = {
     VortexGUID = "4b1a7b",
     CustomDiceMat_GUID = "839fcc",
     DiceMat_GUID = "a84ed2",
-    StatHelper_GUID = "863da8",
+    StatHelper_GUID = "8v7a72",
     SelectionHighlighterGUID = "84c3a4",
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
@@ -157,7 +157,7 @@ local BlueControlBoard = {
             name = "Stat Helper",
             state = false,
             title = "Auto generate dice for selected units",
-            customHiddenPosition = {3.82076836, 0.5, -34.7402}
+            customHiddenPosition = {4.48431635, 1, -33.286}
         },
         {
             name = "Vortex",

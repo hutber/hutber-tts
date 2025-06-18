@@ -215,7 +215,7 @@
   "DecalPallet": [],
   "LuaScript": "",
   "LuaScriptState": "{\"svredPlayerID\":\"\"}",
-  "XmlUI":   "<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->\r\n<Defaults>\r\n  <Button width=\"550\" height=\"300\" fontSize=\"40\" onClick=\"\" fontStyle=\"Bold\"/>\r\n  <Text fontSize=\"100\" color=\"#000000\" fontStyle=\"Bold\"/>\r\n</Defaults>\r\n\r\n<Panel id=\"redirect\" active=\"false\" position=\"0 0 0\" scale=\"0.6 0.6 0.6\" offsetXY=\"0 0\" color=\"#dbeaf9\" width=\"1200\" height=\"800\" rectAlignment=\"MiddleCenter\">\r\n  <Text offsetXY=\"0 350\" fontSize=\"80\" color=\"#E74C3C\" fontStyle=\"Bold\">WARNING</Text>\r\n\r\n  <Text id=\"coreRedirect\" offsetXY=\"0 0\" fontSize=\"40\" color=\"#ECF0F1\">\r\n      PLEASE WAIT FOR LOADING\r\n  </Text>\r\n\r\n  <Button id=\"closeRedirectBtn\" active=\"true\" offsetXY=\"0 -400\" color=\"#1A1A1A\" textColor=\"#FFFFFF\" width=\"500\" height=\"100\" fontSize=\"40\" fontStyle=\"Bold\" onClick=\"closeRedir\" outline=\"#E74C3C\" outlineSize=\"5\" roundEdges=\"true\">CLOSE</Button>\r\n</Panel>\r\n\r\n<Panel id=\"main\" active=\"false\" position=\"0 0 0\" scale=\"0.5 0.5 0.5\" offsetXY=\"0 0\" color=\"#dbeaf9\" outline=\"#34495E\" outlineSize=\"8\" width=\"1600\" height=\"1000\" rectAlignment=\"MiddleCenter\" visibility=\"Diamonds\">\r\n  <Text offsetXY=\"0 400\" fontSize=\"70\" color=\"#2C3E50\" fontStyle=\"Bold\">CHOOSE YOUR SEAT</Text>\r\n\r\n  <Button id=\"redBtn\" offsetXY=\"-400 150\" color=\"#DA1917\" textColor=\"#FFFFFF\" width=\"500\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToRed\">Red Player</Button>\r\n  <Button id=\"blueBtn\" offsetXY=\"400 150\" color=\"#1E87FF\" textColor=\"#FFFFFF\" width=\"500\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToBlue\">Blue Player</Button>\r\n\r\n  <Text fontSize=\"50\" color=\"#E74C3C\" offsetXY=\"0 -50\" fontStyle=\"Bold\">USE OTHER PLAYER COLORS AT YOUR OWN RISK!</Text>\r\n\r\n  <Button id=\"greyBtn\" offsetXY=\"0 -200\" color=\"#BDC3C7\" textColor=\"#2C3E50\" width=\"1000\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToGray\">Spectator</Button>\r\n\r\n  <Button id=\"closeBtn\" offsetXY=\"0 -500\" color=\"#2C3E50\" textColor=\"#FFFFFF\" width=\"500\" height=\"100\" fontSize=\"40\" fontStyle=\"Bold\" onClick=\"closeMenu\" outline=\"#34495E\" outlineSize=\"5\" roundEdges=\"true\">CLOSE MENU</Button>\r\n</Panel>\r\n\r\n<Panel id=\"passTurn\" active=\"true\" position=\"525 495 0\" scale=\"0.5 0.5 0.5\" offsetXY=\"40 0\" color=\"#00000000\" visibility=\"Black\">\r\n  <Button id=\"passTurnBtn\" offsetXY=\"0 0\" color=\"#C0392B\" textColor=\"#FFFFFF\" width=\"200\" height=\"180\" fontSize=\"40\" fontStyle=\"Bold\" roundEdges=\"true\" onClick=\"nextPhase\"></Button>\r\n  <Text id=\"passTurnTxt\" offsetXY=\"0 0\" color=\"#FFFFFF\" width=\"180\" height=\"180\" fontSize=\"35\" fontStyle=\"Bold\" onClick=\"nextPhase\">NEXT PHASE</Text>\r\n</Panel>",
+  "XmlUI": "<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->\r\n<Defaults>\r\n  <Button width=\"550\" height=\"300\" fontSize=\"40\" onClick=\"\" fontStyle=\"Bold\"/>\r\n  <Text fontSize=\"100\" color=\"#000000\" fontStyle=\"Bold\"/>\r\n</Defaults>\r\n\r\n<Panel id=\"redirect\" active=\"false\" position=\"0 0 0\" scale=\"0.6 0.6 0.6\" offsetXY=\"0 0\" color=\"#dbeaf9\" width=\"1200\" height=\"800\" rectAlignment=\"MiddleCenter\">\r\n  <Text offsetXY=\"0 350\" fontSize=\"80\" color=\"#E74C3C\" fontStyle=\"Bold\">WARNING</Text>\r\n\r\n  <Text id=\"coreRedirect\" offsetXY=\"0 0\" fontSize=\"40\" color=\"#ECF0F1\">\r\n      PLEASE WAIT FOR LOADING\r\n  </Text>\r\n\r\n  <Button id=\"closeRedirectBtn\" active=\"true\" offsetXY=\"0 -400\" color=\"#1A1A1A\" textColor=\"#FFFFFF\" width=\"500\" height=\"100\" fontSize=\"40\" fontStyle=\"Bold\" onClick=\"closeRedir\" outline=\"#E74C3C\" outlineSize=\"5\" roundEdges=\"true\">CLOSE</Button>\r\n</Panel>\r\n\r\n<Panel id=\"main\" active=\"false\" position=\"0 0 0\" scale=\"0.5 0.5 0.5\" offsetXY=\"0 0\" color=\"#dbeaf9\" outline=\"#34495E\" outlineSize=\"8\" width=\"1600\" height=\"1000\" rectAlignment=\"MiddleCenter\" visibility=\"Diamonds\">\r\n  <Text offsetXY=\"0 400\" fontSize=\"70\" color=\"#2C3E50\" fontStyle=\"Bold\">CHOOSE YOUR SEAT</Text>\r\n\r\n  <Button id=\"redBtn\" offsetXY=\"-400 150\" color=\"#DA1917\" textColor=\"#FFFFFF\" width=\"500\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToRed\">Red Player</Button>\r\n  <Button id=\"blueBtn\" offsetXY=\"400 150\" color=\"#1E87FF\" textColor=\"#FFFFFF\" width=\"500\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToBlue\">Blue Player</Button>\r\n\r\n  <Text fontSize=\"50\" color=\"#E74C3C\" offsetXY=\"0 -50\" fontStyle=\"Bold\">USE OTHER PLAYER COLORS AT YOUR OWN RISK!</Text>\r\n\r\n  <Button id=\"greyBtn\" offsetXY=\"0 -200\" color=\"#BDC3C7\" textColor=\"#2C3E50\" width=\"1000\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToGray\">Spectator</Button>\r\n\r\n  <Button id=\"closeBtn\" offsetXY=\"0 -500\" color=\"#2C3E50\" textColor=\"#FFFFFF\" width=\"500\" height=\"100\" fontSize=\"40\" fontStyle=\"Bold\" onClick=\"closeMenu\" outline=\"#34495E\" outlineSize=\"5\" roundEdges=\"true\">CLOSE MENU</Button>\r\n</Panel>\r\n\r\n<Panel id=\"passTurn\" active=\"true\" position=\"525 495 0\" scale=\"0.5 0.5 0.5\" offsetXY=\"40 0\" color=\"#00000000\" visibility=\"Black\">\r\n  <Button id=\"passTurnBtn\" offsetXY=\"0 0\" color=\"#C0392B\" textColor=\"#FFFFFF\" width=\"200\" height=\"180\" fontSize=\"40\" fontStyle=\"Bold\" roundEdges=\"true\" onClick=\"nextPhase\"></Button>\r\n  <Text id=\"passTurnTxt\" offsetXY=\"0 0\" color=\"#FFFFFF\" width=\"180\" height=\"180\" fontSize=\"35\" fontStyle=\"Bold\" onClick=\"nextPhase\">NEXT PHASE</Text>\r\n</Panel>",
   "VectorLines": [
     {
       "points3": [
@@ -470,186 +470,6 @@
   ],
   "ObjectStates": [
     {
-      "GUID": "7c7c20",
-      "Name": "Chip_100",
-      "Transform": {
-        "posX": -4.16885567,
-        "posY": -4.02278423,
-        "posZ": 33.2889366,
-        "rotX": 356.8226,
-        "rotY": 180.015366,
-        "rotZ": -0.000905320456,
-        "scaleX": 1,
-        "scaleY": 1,
-        "scaleZ": 1
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "ColorDiffuse": {
-        "r": 1,
-        "g": 1,
-        "b": 1
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0.5 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
-    },
-    {
-      "GUID": "8v7a72",
-      "Name": "Chip_100",
-      "Transform": {
-        "posX": 4.16885567,
-        "posY": -4.02278423,
-        "posZ": -33.2889366,
-        "rotX": 356.9289,
-        "rotY": 0.0168352723,
-        "rotZ": -0.0000479672381,
-        "scaleX": 1,
-        "scaleY": 1,
-        "scaleZ": 1
-      },
-      "Nickname": "Blue WH Stats Helper",
-      "Description": "Blue WH Stats Helper",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "ColorDiffuse": {
-        "r": 1,
-        "g": 1,
-        "b": 1
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0.5 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
-    },
-    {
-      "GUID": "863da2",
-      "Name": "Checker_red",
-      "Transform": {
-        "posX": 65.82076836,
-        "posY": -4,
-        "posZ": 75,
-        "rotX": 0,
-        "rotY": 180.021637,
-        "rotZ": 0,
-        "scaleX": 1,
-        "scaleY": 1,
-        "scaleZ": 1
-      },
-      "Nickname": "Red WH Stats Helper",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "ColorDiffuse": {
-        "r": 1,
-        "g": 0,
-        "b": 0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": false,
-      "Sticky": true,
-      "Tooltip": false,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"0 0 -50\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
-    },
-    {
-      "GUID": "863da8",
-      "Name": "Checker_red",
-      "Transform": {
-        "posX": 65,
-        "posY": -5,
-        "posZ": 75,
-        "rotX": 0,
-        "rotY": 0.0000100179122,
-        "rotZ": 0,
-        "scaleX": 1,
-        "scaleY": 1,
-        "scaleZ": 1
-      },
-      "Nickname": "Blue WH Stats Helper",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "ColorDiffuse": {
-        "r": 1,
-        "g": 0,
-        "b": 0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": false,
-      "Sticky": true,
-      "Tooltip": false,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"0 0 -50\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
-    },
-    {
       "GUID": "64b6bb",
       "Name": "CardCustom",
       "Transform": {
@@ -716,7 +536,7 @@
         "posZ": 20,
         "rotX": 45.0000076,
         "rotY": 270,
-        "rotZ": -0.00000162089475,
+        "rotZ": -1.62089475E-06,
         "scaleX": 3,
         "scaleY": 1,
         "scaleZ": 3
@@ -772,9 +592,9 @@
         "posX": 51.8294678,
         "posY": 0.999999464,
         "posZ": -42,
-        "rotX": -4.52026654e-7,
+        "rotX": -4.52026654E-07,
         "rotY": 270.01593,
-        "rotZ": -0.00000160382342,
+        "rotZ": -1.60382342E-06,
         "scaleX": 1.69734128,
         "scaleY": 1,
         "scaleZ": 1.69734128
@@ -829,9 +649,9 @@
         "posX": 51.8294678,
         "posY": 0.999999464,
         "posZ": -34,
-        "rotX": -4.52026654e-7,
+        "rotX": -4.52026654E-07,
         "rotY": 270.01593,
-        "rotZ": -0.00000160382342,
+        "rotZ": -1.60382342E-06,
         "scaleX": 1.69734128,
         "scaleY": 1,
         "scaleZ": 1.69734128
@@ -886,9 +706,9 @@
         "posX": 51.8294678,
         "posY": 0.999999464,
         "posZ": -26,
-        "rotX": -4.52026654e-7,
+        "rotX": -4.52026654E-07,
         "rotY": 270.01593,
-        "rotZ": -0.00000160382342,
+        "rotZ": -1.60382342E-06,
         "scaleX": 1.69734128,
         "scaleY": 1,
         "scaleZ": 1.69734128
@@ -943,9 +763,9 @@
         "posX": 51.8294678,
         "posY": 0.999999464,
         "posZ": -18,
-        "rotX": -4.52026654e-7,
+        "rotX": -4.52026654E-07,
         "rotY": 270.01593,
-        "rotZ": -0.00000160382342,
+        "rotZ": -1.60382342E-06,
         "scaleX": 1.69734128,
         "scaleY": 1,
         "scaleZ": 1.69734128
@@ -1000,9 +820,9 @@
         "posX": 51.8294678,
         "posY": 0.9999993,
         "posZ": -10,
-        "rotX": -4.52026654e-7,
+        "rotX": -4.52026654E-07,
         "rotY": 270.01593,
-        "rotZ": -0.00000160382342,
+        "rotZ": -1.60382342E-06,
         "scaleX": 1.69734128,
         "scaleY": 1,
         "scaleZ": 1.69734128
@@ -1822,9 +1642,9 @@
         "posX": 31.1113758,
         "posY": 0.949998,
         "posZ": 40.44045,
-        "rotX": 0.0000015222347,
-        "rotY": 0.000026798567,
-        "rotZ": -5.32769832e-7,
+        "rotX": 1.5222347E-06,
+        "rotY": 2.6798567E-05,
+        "rotZ": -5.32769832E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -1985,9 +1805,9 @@
         "posX": 33.04293,
         "posY": 0.949998,
         "posZ": 40.46212,
-        "rotX": 0.00000161914954,
+        "rotX": 1.61914954E-06,
         "rotY": 0.000194724838,
-        "rotZ": -5.17261071e-7,
+        "rotZ": -5.17261071E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -2148,9 +1968,9 @@
         "posX": 35.0203438,
         "posY": 0.949998,
         "posZ": 40.4350662,
-        "rotX": 0.000001794519,
+        "rotX": 1.794519E-06,
         "rotY": 359.986572,
-        "rotZ": -4.63334345e-7,
+        "rotZ": -4.63334345E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -2311,9 +2131,9 @@
         "posX": 29.1569481,
         "posY": 0.949998,
         "posZ": 40.4440842,
-        "rotX": 0.00000169411385,
+        "rotX": 1.69411385E-06,
         "rotY": 0.0028655997,
-        "rotZ": -4.887415e-7,
+        "rotZ": -4.887415E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -2479,9 +2299,9 @@
         "posX": 27.1980152,
         "posY": 0.9499981,
         "posZ": 40.43803,
-        "rotX": 0.00000162284539,
+        "rotX": 1.62284539E-06,
         "rotY": 359.990753,
-        "rotZ": -5.939031e-7,
+        "rotZ": -5.939031E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -2642,9 +2462,9 @@
         "posX": -31.1113758,
         "posY": 0.949998,
         "posZ": -40.44045,
-        "rotX": 0.0000015222347,
+        "rotX": 1.5222347E-06,
         "rotY": 180,
-        "rotZ": -5.32769832e-7,
+        "rotZ": -5.32769832E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -2805,9 +2625,9 @@
         "posX": -33.04293,
         "posY": 0.949998,
         "posZ": -40.46212,
-        "rotX": 0.00000161914954,
+        "rotX": 1.61914954E-06,
         "rotY": 180,
-        "rotZ": -5.17261071e-7,
+        "rotZ": -5.17261071E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -3133,7 +2953,7 @@
         "posZ": -40.4440842,
         "rotX": -0.0,
         "rotY": 180,
-        "rotZ": 4.51207484e-7,
+        "rotZ": 4.51207484E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -3299,9 +3119,9 @@
         "posX": -27.1980152,
         "posY": 0.9499981,
         "posZ": -40.43803,
-        "rotX": 0.00000162284539,
+        "rotX": 1.62284539E-06,
         "rotY": 180,
-        "rotZ": -5.939031e-7,
+        "rotZ": -5.939031E-07,
         "scaleX": 1.9,
         "scaleY": 0.1,
         "scaleZ": 1.9
@@ -3522,7 +3342,7 @@
         "posZ": 20,
         "rotX": 45.0000153,
         "rotY": 270.000061,
-        "rotZ": 0.000004829674,
+        "rotZ": 4.829674E-06,
         "scaleX": 6,
         "scaleY": 1,
         "scaleZ": 6
@@ -3573,7 +3393,7 @@
         "posZ": 0,
         "rotX": 45.0000153,
         "rotY": 270.000061,
-        "rotZ": 0.000004829674,
+        "rotZ": 4.829674E-06,
         "scaleX": 6,
         "scaleY": 1,
         "scaleZ": 6
@@ -3679,7 +3499,7 @@
         "posX": 42,
         "posY": -0.940184832,
         "posZ": 36.9678841,
-        "rotX": -5.225335e-7,
+        "rotX": -5.225335E-07,
         "rotY": 270.001343,
         "rotZ": 180,
         "scaleX": 3.37806225,
@@ -3985,9 +3805,9 @@
         "posX": 31.0983677,
         "posY": 1.14999807,
         "posZ": 36.65884,
-        "rotX": -0.00000159877766,
+        "rotX": -1.59877766E-06,
         "rotY": 180.015915,
-        "rotZ": 5.434207e-7,
+        "rotZ": 5.434207E-07,
         "scaleX": 1.5,
         "scaleY": 1,
         "scaleZ": 1.5
@@ -4037,9 +3857,9 @@
         "posX": -20.5075722,
         "posY": 1,
         "posZ": 0.0440250263,
-        "rotX": -7.18223536e-10,
+        "rotX": -7.18223536E-10,
         "rotY": 269.975739,
-        "rotZ": -5.076651e-9,
+        "rotZ": -5.076651E-09,
         "scaleX": 5.80817366,
         "scaleY": 1,
         "scaleZ": 5.80817366
@@ -4191,9 +4011,9 @@
         "posX": 21.7954922,
         "posY": -2,
         "posZ": 5.340162,
-        "rotX": 2.442605e-7,
+        "rotX": 2.442605E-07,
         "rotY": 270.0197,
-        "rotZ": 1.90196957e-7,
+        "rotZ": 1.90196957E-07,
         "scaleX": 2,
         "scaleY": 1,
         "scaleZ": 2
@@ -4249,9 +4069,9 @@
         "posX": 12.9397011,
         "posY": -5,
         "posZ": -4.98342562,
-        "rotX": -2.72293278e-7,
+        "rotX": -2.72293278E-07,
         "rotY": 89.9898,
-        "rotZ": 9.35065657e-7,
+        "rotZ": 9.35065657E-07,
         "scaleX": 2,
         "scaleY": 2,
         "scaleZ": 2
@@ -8671,9 +8491,9 @@
         "posX": 22.0231667,
         "posY": -5,
         "posZ": 12.32625,
-        "rotX": -1.87513891e-7,
+        "rotX": -1.87513891E-07,
         "rotY": 90.00932,
-        "rotZ": 4.16213851e-7,
+        "rotZ": 4.16213851E-07,
         "scaleX": 2,
         "scaleY": 2,
         "scaleZ": 2
@@ -8711,7 +8531,7 @@
         "Order": 0
       },
       "LuaScript": "",
-      "LuaScriptState":"{\"ml\":{\"282eef\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":10.3349266},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"57ec5b\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":4.844073},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"29b7f4\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-0.5171205},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"684897\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-5.7346406},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"7cdd34\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-11.2339907},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d257a9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":10.3268509},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"005ab9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":4.823626},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"919f4c\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-0.641958654},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6f9044\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-5.77987432},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"0dccdf\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-11.0767365},\"rot\":{\"x\":0,\"y\":180,\"z\":0}}}}",
+      "LuaScriptState": "{\"ml\":{\"282eef\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":10.3349266},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"57ec5b\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":4.844073},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"29b7f4\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-0.5171205},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"684897\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-5.7346406},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"7cdd34\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-11.2339907},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d257a9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":10.3268509},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"005ab9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":4.823626},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"919f4c\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-0.641958654},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6f9044\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-5.77987432},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"0dccdf\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-11.0767365},\"rot\":{\"x\":0,\"y\":180,\"z\":0}}}}",
       "XmlUI": "",
       "ContainedObjects": [
         {
@@ -8779,9 +8599,9 @@
             "posX": 3.727447,
             "posY": 0.9751034,
             "posZ": -5.7346406,
-            "rotX": 5.31860529e-8,
+            "rotX": 5.31860529E-08,
             "rotY": 180.015762,
-            "rotZ": 3.86706454e-8,
+            "rotZ": 3.86706454E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -8837,9 +8657,9 @@
             "posX": 3.69017887,
             "posY": 0.9751034,
             "posZ": -0.5171205,
-            "rotX": -2.00591529e-7,
+            "rotX": -2.00591529E-07,
             "rotY": 180.015762,
-            "rotZ": -5.83247335e-8,
+            "rotZ": -5.83247335E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -8895,9 +8715,9 @@
             "posX": 3.5818193,
             "posY": 0.9751034,
             "posZ": 4.844073,
-            "rotX": 3.539042e-7,
+            "rotX": 3.539042E-07,
             "rotY": 180.015762,
-            "rotZ": 3.75426934e-9,
+            "rotZ": 3.75426934E-09,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -8953,9 +8773,9 @@
             "posX": 3.6780715,
             "posY": 0.9751034,
             "posZ": -11.2339907,
-            "rotX": -5.969985e-7,
+            "rotX": -5.969985E-07,
             "rotY": 180.015778,
-            "rotZ": -8.14667942e-8,
+            "rotZ": -8.14667942E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9011,9 +8831,9 @@
             "posX": -3.29014039,
             "posY": 0.9751034,
             "posZ": 10.3268509,
-            "rotX": 3.672976e-7,
+            "rotX": 3.672976E-07,
             "rotY": 180.015778,
-            "rotZ": 3.7683904e-8,
+            "rotZ": 3.7683904E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9069,9 +8889,9 @@
             "posX": -3.34024525,
             "posY": 0.9751034,
             "posZ": 4.823626,
-            "rotX": 1.87202872e-7,
+            "rotX": 1.87202872E-07,
             "rotY": 180.015778,
-            "rotZ": 7.313416e-8,
+            "rotZ": 7.313416E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9127,9 +8947,9 @@
             "posX": -3.36314559,
             "posY": 0.975103259,
             "posZ": -0.641958654,
-            "rotX": 7.813652e-9,
+            "rotX": 7.813652E-09,
             "rotY": 180.017609,
-            "rotZ": -2.96764746e-8,
+            "rotZ": -2.96764746E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9185,9 +9005,9 @@
             "posX": -3.35315275,
             "posY": 0.9751034,
             "posZ": -5.77987432,
-            "rotX": -1.19979461e-7,
+            "rotX": -1.19979461E-07,
             "rotY": 180.015121,
-            "rotZ": 7.044296e-8,
+            "rotZ": 7.044296E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9243,9 +9063,9 @@
             "posX": -3.305,
             "posY": 0.9751034,
             "posZ": -11.0767365,
-            "rotX": 2.21421971e-7,
+            "rotX": 2.21421971E-07,
             "rotY": 180.017639,
-            "rotZ": 9.78395747e-8,
+            "rotZ": 9.78395747E-08,
             "scaleX": 1.5,
             "scaleY": 1,
             "scaleZ": 1.5
@@ -9294,7 +9114,8 @@
           "LuaScriptState": "",
           "XmlUI": ""
         }
-      ]},
+      ]
+    },
     {
       "GUID": "7aca71",
       "Name": "Bag",
@@ -9302,9 +9123,9 @@
         "posX": 65.92593,
         "posY": 1,
         "posZ": 37.65188,
-        "rotX": 5.793369e-7,
+        "rotX": 5.793369E-07,
         "rotY": 89.97503,
-        "rotZ": 0.00000178623941,
+        "rotZ": 1.78623941E-06,
         "scaleX": 1.05000091,
         "scaleY": 1.05000091,
         "scaleZ": 1.05000091
@@ -9341,7 +9162,7 @@
       "Bag": {
         "Order": 0
       },
-      "LuaScript": "-- FTC-GUID: 7aca71\r\n-- Utility memory bag by Directsun\r\n-- Version 2.5\r\n-- Fork of Memory Bag 2.0 by MrStump\r\n\r\nfunction updateSave()\r\n    local data_to_save = {[\"ml\"]=memoryList}\r\n    saved_data = JSON.encode(data_to_save)\r\n    self.script_state = saved_data\r\nend\r\n\r\nfunction combineMemoryFromBagsWithin()\r\n  local bagObjList = self.getObjects()\r\n  for _, bagObj in ipairs(bagObjList) do\r\n    local data = bagObj.lua_script_state\r\n      if data ~= nil then\r\n        local j = JSON.decode(data)\r\n        if j ~= nil and j.ml ~= nil then\r\n          for guid, entry in pairs(j.ml) do\r\n            memoryList[guid] = entry\r\n          end\r\n        end\r\n      end\r\n    end\r\nend\r\n\r\nfunction updateMemoryWithMoves()\r\n    print(\"updating memory with moves\")\r\n    memoryList = memoryListBackup\r\n    --get the first transposed object's coordinates\r\n    local obj = getObjectFromGUID(moveGuid)\r\n\r\n    -- p1 is where needs to go, p2 is where it was\r\n    local refObjPos = memoryList[moveGuid].pos\r\n    local deltaPos = findOffsetDistance(obj.getPosition(), refObjPos, nil)\r\n    local movedRotation = obj.getRotation()\r\n    for guid, entry in pairs(memoryList) do\r\n        memoryList[guid].pos.x = entry.pos.x - deltaPos.x\r\n        memoryList[guid].pos.y = entry.pos.y - deltaPos.y\r\n        memoryList[guid].pos.z = entry.pos.z - deltaPos.z\r\n        -- memoryList[guid].rot.x = movedRotation.x\r\n        -- memoryList[guid].rot.y = movedRotation.y\r\n        -- memoryList[guid].rot.z = movedRotation.z\r\n    end\r\n\r\n    --theList[obj.getGUID()] = {\r\n    --    pos={x=round(pos.x,4), y=round(pos.y,4), z=round(pos.z,4)},\r\n    --    rot={x=round(rot.x,4), y=round(rot.y,4), z=round(rot.z,4)},\r\n    --    lock=obj.getLock()\r\n    --}\r\n    moveList = {}\r\nend\r\n\r\nfunction onload(saved_data)\r\n    fresh = true\r\n    if saved_data ~= \"\" then\r\n        local loaded_data = JSON.decode(saved_data)\r\n        --Set up information off of loaded_data\r\n        memoryList = loaded_data.ml\r\n    else\r\n        --Set up information for if there is no saved saved data\r\n        memoryList = {}\r\n    end\r\n\r\n    moveList = {}\r\n    moveGuid = nil\r\n\r\n    createMemoryActionButtons()\r\nend\r\n\r\n\r\n--Beginning Setup\r\n\r\n\r\n\r\n--Triggered by Transpose button\r\nfunction buttonClick_transpose()\r\n    moveGuid = nil\r\n    broadcastToAll(\"Select one object and move it- all objects will move relative to the new location\", {0.75, 0.75, 1})\r\n    memoryListBackup = duplicateTable(memoryList)\r\n    memoryList = {}\r\n    moveList = {}\r\n    self.clearButtons()\r\n    createButtonsOnAllObjects(true)\r\n    createSetupActionButtons(true)\r\nend\r\n\r\nfunction getAllObjectsInMemory()\r\n  local objTable = {}\r\n  local curObj = {}\r\n\r\n  for guid in pairs(memoryListBackup) do\r\n    curObj = getObjectFromGUID(guid)\r\n    table.insert(objTable, curObj)\r\n  end\r\n\r\n  return objTable\r\n  -- return getAllObjects()\r\nend\r\n\r\n--Creates selection buttons on objects\r\nfunction createButtonsOnAllObjects(move)\r\n    local howManyButtons = 0\r\n\r\n    local objsToHaveButtons = {}\r\n    if move == true then\r\n      objsToHaveButtons = getAllObjectsInMemory()\r\n    else\r\n      objsToHaveButtons = getAllObjects()\r\n    end\r\n\r\n    for _, obj in ipairs(objsToHaveButtons) do\r\n        print(_)\r\n        if obj ~= self then\r\n            local dummyIndex = howManyButtons\r\n            --On a normal bag, the button positions aren't the same size as the bag.\r\n            globalScaleFactor = 1.25 * 1\/self.getScale().x\r\n            --Super sweet math to set button positions\r\n            local selfPos = self.getPosition()\r\n            local objPos = obj.getPosition()\r\n            local deltaPos = findOffsetDistance(selfPos, objPos, obj)\r\n            local objPos = rotateLocalCoordinates(deltaPos, self)\r\n            objPos.x = -objPos.x * globalScaleFactor\r\n            objPos.y = objPos.y * globalScaleFactor\r\n            objPos.z = objPos.z * globalScaleFactor\r\n            --Offset rotation of bag\r\n            local rot = self.getRotation()\r\n            rot.y = -rot.y + 180\r\n            --Create function\r\n            local funcName = \"selectButton_\" .. howManyButtons\r\n            local func = function() buttonClick_selection(dummyIndex, obj, move) end\r\n            local color = {0.75,0.25,0.25,0.6}\r\n            local colorMove = {0,0,1,0.6}\r\n            if move == true then\r\n              color = colorMove\r\n            end\r\n            self.setVar(funcName, func)\r\n            self.createButton({\r\n                click_function=funcName, function_owner=self,\r\n                position=objPos, rotation=rot, height=1000, width=1000,\r\n                color=color,\r\n            })\r\n            howManyButtons = howManyButtons + 1\r\n        end\r\n    end\r\nend\r\n\r\n--Creates submit and cancel buttons\r\nfunction createSetupActionButtons(move)\r\n    self.createButton({\r\n        label=\"Cancel\", click_function=\"buttonClick_cancel\", function_owner=self,\r\n        position={0,0.3,-2}, rotation={0,180,0}, height=350, width=1100,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\n\r\n    self.createButton({\r\n        label=\"Submit\", click_function=\"buttonClick_submit\", function_owner=self,\r\n        position={0,0.3,-2.8}, rotation={0,180,0}, height=350, width=1100,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\n\r\n    if move == false then\r\n      self.createButton({\r\n          label=\"Add\", click_function=\"buttonClick_add\", function_owner=self,\r\n          position={0,0.3,-3.6}, rotation={0,180,0}, height=350, width=1100,\r\n          font_size=250, color={0,0,0}, font_color={0.25,1,0.25}\r\n      })\r\n\r\n        if fresh == false then\r\n            self.createButton({\r\n                label=\"Set New\", click_function=\"buttonClick_setNew\", function_owner=self,\r\n                position={0,0.3,-4.4}, rotation={0,180,0}, height=350, width=1100,\r\n                font_size=250, color={0,0,0}, font_color={0.75,0.75,1}\r\n            })\r\n            self.createButton({\r\n                label=\"Remove\", click_function=\"buttonClick_remove\", function_owner=self,\r\n                position={0,0.3,-5.2}, rotation={0,180,0}, height=350, width=1100,\r\n                font_size=250, color={0,0,0}, font_color={1,0.25,0.25}\r\n            })\r\n        end\r\n    end\r\n\r\n    self.createButton({\r\n        label=\"Reset\", click_function=\"buttonClick_reset\", function_owner=self,\r\n        position={-2,0.3,0}, rotation={0,270,0}, height=350, width=800,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\nend\r\n\r\n\r\n--During Setup\r\n\r\n\r\n--Checks or unchecks buttons\r\nfunction buttonClick_selection(index, obj, move)\r\n    local colorMove = {0,0,1,0.6}\r\n    local color = {0,1,0,0.6}\r\n\r\n    previousGuid = selectedGuid\r\n    selectedGuid = obj.getGUID()\r\n\r\n    theList = memoryList\r\n    if move == true then\r\n       theList = moveList\r\n       if previousGuid ~= nil and previousGuid ~= selectedGuid then\r\n         local prevObj = getObjectFromGUID(previousGuid)\r\n         prevObj.highlightOff()\r\n         self.editButton({index=previousIndex, color=colorMove})\r\n         theList[previousGuid] = nil\r\n       end\r\n       previousIndex = index\r\n    end\r\n\r\n    if theList[selectedGuid] == nil then\r\n        self.editButton({index=index, color=color})\r\n        --Adding pos\/rot to memory table\r\n        local pos, rot = obj.getPosition(), obj.getRotation()\r\n        --I need to add it like this or it won't save due to indexing issue\r\n        theList[obj.getGUID()] = {\r\n            pos={x=round(pos.x,4), y=round(pos.y,4), z=round(pos.z,4)},\r\n            rot={x=round(rot.x,4), y=round(rot.y,4), z=round(rot.z,4)},\r\n            lock=obj.getLock()\r\n        }\r\n        obj.highlightOn({0,1,0})\r\n    else\r\n      color = {0.75,0.25,0.25,0.6}\r\n      if move == true then\r\n        color = colorMove\r\n      end\r\n        self.editButton({index=index, color=color})\r\n        theList[obj.getGUID()] = nil\r\n        obj.highlightOff()\r\n    end\r\nend\r\n\r\n--Cancels selection process\r\nfunction buttonClick_cancel()\r\n    memoryList = memoryListBackup\r\n    moveList = {}\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    removeAllHighlights()\r\n    broadcastToAll(\"Selection Canceled\", {1,1,1})\r\n    moveGuid = nil\r\nend\r\n\r\n--Saves selections\r\nfunction buttonClick_submit()\r\n    fresh = false\r\n    if next(moveList) ~= nil then\r\n        for guid in pairs(moveList) do\r\n            moveGuid = guid\r\n        end\r\n        if memoryListBackup[moveGuid] == nil then\r\n            broadcastToAll(\"Item selected for moving is not already in memory\", {1, 0.25, 0.25})\r\n        else\r\n            broadcastToAll(\"Moving all items in memory relative to new objects position!\", {0.75, 0.75, 1})\r\n            self.clearButtons()\r\n            createMemoryActionButtons()\r\n            local count = 0\r\n            for guid in pairs(moveList) do\r\n                moveGuid = guid\r\n                count = count + 1\r\n                local obj = getObjectFromGUID(guid)\r\n                if obj ~= nil then obj.highlightOff() end\r\n            end\r\n            updateMemoryWithMoves()\r\n            updateSave()\r\n            buttonClick_place()\r\n        end\r\n    elseif next(memoryList) == nil and moveGuid == nil then\r\n      memoryList = memoryListBackup\r\n      broadcastToAll(\"No selections made.\", {0.75, 0.25, 0.25})\r\n    end\r\n    combineMemoryFromBagsWithin()\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    local count = 0\r\n    for guid in pairs(memoryList) do\r\n        count = count + 1\r\n        local obj = getObjectFromGUID(guid)\r\n        if obj ~= nil then obj.highlightOff() end\r\n    end\r\n    broadcastToAll(count..\" Objects Saved\", {1,1,1})\r\n    updateSave()\r\n    moveGuid = nil\r\nend\r\n\r\nfunction combineTables(first_table, second_table)\r\n  for k,v in pairs(second_table) do first_table[k] = v end\r\nend\r\n\r\nfunction buttonClick_add()\r\n    fresh = false\r\n    combineTables(memoryList, memoryListBackup)\r\n    broadcastToAll(\"Adding internal bags and selections to existing memory\", {0.25, 0.75, 0.25})\r\n    combineMemoryFromBagsWithin()\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    local count = 0\r\n    for guid in pairs(memoryList) do\r\n        count = count + 1\r\n        local obj = getObjectFromGUID(guid)\r\n        if obj ~= nil then obj.highlightOff() end\r\n    end\r\n    broadcastToAll(count..\" Objects Saved\", {1,1,1})\r\n    updateSave()\r\nend\r\n\r\nfunction buttonClick_remove()\r\n        broadcastToAll(\"Removing Selected Entries From Memory\", {1.0, 0.25, 0.25})\r\n        self.clearButtons()\r\n        createMemoryActionButtons()\r\n        local count = 0\r\n        for guid in pairs(memoryList) do\r\n            count = count + 1\r\n            memoryListBackup[guid] = nil\r\n            local obj = getObjectFromGUID(guid)\r\n            if obj ~= nil then obj.highlightOff() end\r\n        end\r\n        broadcastToAll(count..\" Objects Removed\", {1,1,1})\r\n        memoryList = memoryListBackup\r\n        updateSave()\r\nend\r\n\r\nfunction buttonClick_setNew()\r\n    broadcastToAll(\"Setting new position relative to items in memory\", {0.75, 0.75, 1})\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    local count = 0\r\n    for _, obj in ipairs(getAllObjects()) do\r\n        guid = obj.guid\r\n        if memoryListBackup[guid] ~= nil then\r\n            count = count + 1\r\n            memoryListBackup[guid].pos = obj.getPosition()\r\n            memoryListBackup[guid].rot = obj.getRotation()\r\n            memoryListBackup[guid].lock = obj.getLock()\r\n        end\r\n    end\r\n    broadcastToAll(count..\" Objects Saved\", {1,1,1})\r\n    memoryList = memoryListBackup\r\n    updateSave()\r\nend\r\n\r\n--Resets bag to starting status\r\nfunction buttonClick_reset()\r\n    fresh = true\r\n    memoryList = {}\r\n    self.clearButtons()\r\n    createSetupButton()\r\n    removeAllHighlights()\r\n    broadcastToAll(\"Tool Reset\", {1,1,1})\r\n    updateSave()\r\nend\r\n\r\n\r\n--After Setup\r\n\r\n\r\n--Creates recall and place buttons\r\nfunction createMemoryActionButtons()\r\n    self.createButton({\r\n        label=\"Show Tokens\", click_function=\"buttonClick_place\", function_owner=self,\r\n        position={0,0.2,-2}, rotation={0,180,0}, height=350, width=1600,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\n    self.createButton({\r\n        label=\"Recall\", click_function=\"buttonClick_recall\", function_owner=self,\r\n        position={0,0.2,-2.8}, rotation={0,180,0}, height=350, width=800,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\nend\r\n\r\n--Sends objects from bag\/table to their saved position\/rotation\r\nfunction buttonClick_place()\r\n    local bagObjList = self.getObjects()\r\n    for guid, entry in pairs(memoryList) do\r\n        local obj = getObjectFromGUID(guid)\r\n        --If obj is out on the table, move it to the saved pos\/rot\r\n        if obj ~= nil then\r\n            obj.setPositionSmooth(entry.pos)\r\n            obj.setRotationSmooth(entry.rot)\r\n            obj.setLock(entry.lock)\r\n        else\r\n            --If obj is inside of the bag\r\n            for _, bagObj in ipairs(bagObjList) do\r\n                if bagObj.guid == guid then\r\n                    local item = self.takeObject({\r\n                        guid=guid, position=entry.pos, rotation=entry.rot, smooth=false\r\n                    })\r\n                    item.setLock(entry.lock)\r\n                    break\r\n                end\r\n            end\r\n        end\r\n    end\r\n    local obj = getObjectFromGUID(\"7abc5a\")\r\n    if(obj) then\r\n        destroyObject(obj)\r\n    end\r\n    broadcastToAll(\"Objects Placed\", {1,1,1})\r\nend\r\n\r\n--Recalls objects to bag from table\r\nfunction buttonClick_recall()\r\n    for guid, entry in pairs(memoryList) do\r\n        local obj = getObjectFromGUID(guid)\r\n        if obj ~= nil then self.putObject(obj) end\r\n    end\r\n    broadcastToAll(\"Objects Recalled\", {1,1,1})\r\nend\r\n\r\n\r\n--Utility functions\r\n\r\n\r\n--Find delta (difference) between 2 x\/y\/z coordinates\r\nfunction findOffsetDistance(p1, p2, obj)\r\n    local yOffset = 0\r\n    if obj ~= nil then\r\n        local bounds = obj.getBounds()\r\n        yOffset = (bounds.size.y - bounds.offset.y)\r\n    end\r\n    local deltaPos = {}\r\n    deltaPos.x = (p2.x-p1.x)\r\n    deltaPos.y = (p2.y-p1.y) + yOffset\r\n    deltaPos.z = (p2.z-p1.z)\r\n    return deltaPos\r\nend\r\n\r\n--Used to rotate a set of coordinates by an angle\r\nfunction rotateLocalCoordinates(desiredPos, obj)\r\n\tlocal objPos, objRot = obj.getPosition(), obj.getRotation()\r\n    local angle = math.rad(objRot.y)\r\n\tlocal x = desiredPos.x * math.cos(angle) - desiredPos.z * math.sin(angle)\r\n\tlocal z = desiredPos.x * math.sin(angle) + desiredPos.z * math.cos(angle)\r\n\t--return {x=objPos.x+x, y=objPos.y+desiredPos.y, z=objPos.z+z}\r\n    return {x=x, y=desiredPos.y, z=z}\r\nend\r\n\r\nfunction rotateMyCoordinates(desiredPos, obj)\r\n\tlocal angle = math.rad(obj.getRotation().y)\r\n  local x = desiredPos.x * math.sin(angle)\r\n\tlocal z = desiredPos.z * math.cos(angle)\r\n    return {x=x, y=desiredPos.y, z=z}\r\nend\r\n\r\n--Coroutine delay, in seconds\r\nfunction wait(time)\r\n    local start = os.time()\r\n    repeat coroutine.yield(0) until os.time() > start + time\r\nend\r\n\r\n--Duplicates a table (needed to prevent it making reference to the same objects)\r\nfunction duplicateTable(oldTable)\r\n    local newTable = {}\r\n    for k, v in pairs(oldTable) do\r\n        newTable[k] = v\r\n    end\r\n    return newTable\r\nend\r\n\r\n--Moves scripted highlight from all objects\r\nfunction removeAllHighlights()\r\n    for _, obj in ipairs(getAllObjects()) do\r\n        obj.highlightOff()\r\n    end\r\nend\r\n\r\n--Round number (num) to the Nth decimal (dec)\r\nfunction round(num, dec)\r\n  local mult = 10^(dec or 0)\r\n  return math.floor(num * mult + 0.5) \/ mult\r\nend",
+      "LuaScript": "-- FTC-GUID: 7aca71\r\n-- Utility memory bag by Directsun\r\n-- Version 2.5\r\n-- Fork of Memory Bag 2.0 by MrStump\r\n\r\nfunction updateSave()\r\n    local data_to_save = {[\"ml\"]=memoryList}\r\n    saved_data = JSON.encode(data_to_save)\r\n    self.script_state = saved_data\r\nend\r\n\r\nfunction combineMemoryFromBagsWithin()\r\n  local bagObjList = self.getObjects()\r\n  for _, bagObj in ipairs(bagObjList) do\r\n    local data = bagObj.lua_script_state\r\n      if data ~= nil then\r\n        local j = JSON.decode(data)\r\n        if j ~= nil and j.ml ~= nil then\r\n          for guid, entry in pairs(j.ml) do\r\n            memoryList[guid] = entry\r\n          end\r\n        end\r\n      end\r\n    end\r\nend\r\n\r\nfunction updateMemoryWithMoves()\r\n    print(\"updating memory with moves\")\r\n    memoryList = memoryListBackup\r\n    --get the first transposed object's coordinates\r\n    local obj = getObjectFromGUID(moveGuid)\r\n\r\n    -- p1 is where needs to go, p2 is where it was\r\n    local refObjPos = memoryList[moveGuid].pos\r\n    local deltaPos = findOffsetDistance(obj.getPosition(), refObjPos, nil)\r\n    local movedRotation = obj.getRotation()\r\n    for guid, entry in pairs(memoryList) do\r\n        memoryList[guid].pos.x = entry.pos.x - deltaPos.x\r\n        memoryList[guid].pos.y = entry.pos.y - deltaPos.y\r\n        memoryList[guid].pos.z = entry.pos.z - deltaPos.z\r\n        -- memoryList[guid].rot.x = movedRotation.x\r\n        -- memoryList[guid].rot.y = movedRotation.y\r\n        -- memoryList[guid].rot.z = movedRotation.z\r\n    end\r\n\r\n    --theList[obj.getGUID()] = {\r\n    --    pos={x=round(pos.x,4), y=round(pos.y,4), z=round(pos.z,4)},\r\n    --    rot={x=round(rot.x,4), y=round(rot.y,4), z=round(rot.z,4)},\r\n    --    lock=obj.getLock()\r\n    --}\r\n    moveList = {}\r\nend\r\n\r\nfunction onload(saved_data)\r\n    fresh = true\r\n    if saved_data ~= \"\" then\r\n        local loaded_data = JSON.decode(saved_data)\r\n        --Set up information off of loaded_data\r\n        memoryList = loaded_data.ml\r\n    else\r\n        --Set up information for if there is no saved saved data\r\n        memoryList = {}\r\n    end\r\n\r\n    moveList = {}\r\n    moveGuid = nil\r\n\r\n    createMemoryActionButtons()\r\nend\r\n\r\n\r\n--Beginning Setup\r\n\r\n\r\n\r\n--Triggered by Transpose button\r\nfunction buttonClick_transpose()\r\n    moveGuid = nil\r\n    broadcastToAll(\"Select one object and move it- all objects will move relative to the new location\", {0.75, 0.75, 1})\r\n    memoryListBackup = duplicateTable(memoryList)\r\n    memoryList = {}\r\n    moveList = {}\r\n    self.clearButtons()\r\n    createButtonsOnAllObjects(true)\r\n    createSetupActionButtons(true)\r\nend\r\n\r\nfunction getAllObjectsInMemory()\r\n  local objTable = {}\r\n  local curObj = {}\r\n\r\n  for guid in pairs(memoryListBackup) do\r\n    curObj = getObjectFromGUID(guid)\r\n    table.insert(objTable, curObj)\r\n  end\r\n\r\n  return objTable\r\n  -- return getAllObjects()\r\nend\r\n\r\n--Creates selection buttons on objects\r\nfunction createButtonsOnAllObjects(move)\r\n    local howManyButtons = 0\r\n\r\n    local objsToHaveButtons = {}\r\n    if move == true then\r\n      objsToHaveButtons = getAllObjectsInMemory()\r\n    else\r\n      objsToHaveButtons = getAllObjects()\r\n    end\r\n\r\n    for _, obj in ipairs(objsToHaveButtons) do\r\n        print(_)\r\n        if obj ~= self then\r\n            local dummyIndex = howManyButtons\r\n            --On a normal bag, the button positions aren't the same size as the bag.\r\n            globalScaleFactor = 1.25 * 1/self.getScale().x\r\n            --Super sweet math to set button positions\r\n            local selfPos = self.getPosition()\r\n            local objPos = obj.getPosition()\r\n            local deltaPos = findOffsetDistance(selfPos, objPos, obj)\r\n            local objPos = rotateLocalCoordinates(deltaPos, self)\r\n            objPos.x = -objPos.x * globalScaleFactor\r\n            objPos.y = objPos.y * globalScaleFactor\r\n            objPos.z = objPos.z * globalScaleFactor\r\n            --Offset rotation of bag\r\n            local rot = self.getRotation()\r\n            rot.y = -rot.y + 180\r\n            --Create function\r\n            local funcName = \"selectButton_\" .. howManyButtons\r\n            local func = function() buttonClick_selection(dummyIndex, obj, move) end\r\n            local color = {0.75,0.25,0.25,0.6}\r\n            local colorMove = {0,0,1,0.6}\r\n            if move == true then\r\n              color = colorMove\r\n            end\r\n            self.setVar(funcName, func)\r\n            self.createButton({\r\n                click_function=funcName, function_owner=self,\r\n                position=objPos, rotation=rot, height=1000, width=1000,\r\n                color=color,\r\n            })\r\n            howManyButtons = howManyButtons + 1\r\n        end\r\n    end\r\nend\r\n\r\n--Creates submit and cancel buttons\r\nfunction createSetupActionButtons(move)\r\n    self.createButton({\r\n        label=\"Cancel\", click_function=\"buttonClick_cancel\", function_owner=self,\r\n        position={0,0.3,-2}, rotation={0,180,0}, height=350, width=1100,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\n\r\n    self.createButton({\r\n        label=\"Submit\", click_function=\"buttonClick_submit\", function_owner=self,\r\n        position={0,0.3,-2.8}, rotation={0,180,0}, height=350, width=1100,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\n\r\n    if move == false then\r\n      self.createButton({\r\n          label=\"Add\", click_function=\"buttonClick_add\", function_owner=self,\r\n          position={0,0.3,-3.6}, rotation={0,180,0}, height=350, width=1100,\r\n          font_size=250, color={0,0,0}, font_color={0.25,1,0.25}\r\n      })\r\n\r\n        if fresh == false then\r\n            self.createButton({\r\n                label=\"Set New\", click_function=\"buttonClick_setNew\", function_owner=self,\r\n                position={0,0.3,-4.4}, rotation={0,180,0}, height=350, width=1100,\r\n                font_size=250, color={0,0,0}, font_color={0.75,0.75,1}\r\n            })\r\n            self.createButton({\r\n                label=\"Remove\", click_function=\"buttonClick_remove\", function_owner=self,\r\n                position={0,0.3,-5.2}, rotation={0,180,0}, height=350, width=1100,\r\n                font_size=250, color={0,0,0}, font_color={1,0.25,0.25}\r\n            })\r\n        end\r\n    end\r\n\r\n    self.createButton({\r\n        label=\"Reset\", click_function=\"buttonClick_reset\", function_owner=self,\r\n        position={-2,0.3,0}, rotation={0,270,0}, height=350, width=800,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\nend\r\n\r\n\r\n--During Setup\r\n\r\n\r\n--Checks or unchecks buttons\r\nfunction buttonClick_selection(index, obj, move)\r\n    local colorMove = {0,0,1,0.6}\r\n    local color = {0,1,0,0.6}\r\n\r\n    previousGuid = selectedGuid\r\n    selectedGuid = obj.getGUID()\r\n\r\n    theList = memoryList\r\n    if move == true then\r\n       theList = moveList\r\n       if previousGuid ~= nil and previousGuid ~= selectedGuid then\r\n         local prevObj = getObjectFromGUID(previousGuid)\r\n         prevObj.highlightOff()\r\n         self.editButton({index=previousIndex, color=colorMove})\r\n         theList[previousGuid] = nil\r\n       end\r\n       previousIndex = index\r\n    end\r\n\r\n    if theList[selectedGuid] == nil then\r\n        self.editButton({index=index, color=color})\r\n        --Adding pos/rot to memory table\r\n        local pos, rot = obj.getPosition(), obj.getRotation()\r\n        --I need to add it like this or it won't save due to indexing issue\r\n        theList[obj.getGUID()] = {\r\n            pos={x=round(pos.x,4), y=round(pos.y,4), z=round(pos.z,4)},\r\n            rot={x=round(rot.x,4), y=round(rot.y,4), z=round(rot.z,4)},\r\n            lock=obj.getLock()\r\n        }\r\n        obj.highlightOn({0,1,0})\r\n    else\r\n      color = {0.75,0.25,0.25,0.6}\r\n      if move == true then\r\n        color = colorMove\r\n      end\r\n        self.editButton({index=index, color=color})\r\n        theList[obj.getGUID()] = nil\r\n        obj.highlightOff()\r\n    end\r\nend\r\n\r\n--Cancels selection process\r\nfunction buttonClick_cancel()\r\n    memoryList = memoryListBackup\r\n    moveList = {}\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    removeAllHighlights()\r\n    broadcastToAll(\"Selection Canceled\", {1,1,1})\r\n    moveGuid = nil\r\nend\r\n\r\n--Saves selections\r\nfunction buttonClick_submit()\r\n    fresh = false\r\n    if next(moveList) ~= nil then\r\n        for guid in pairs(moveList) do\r\n            moveGuid = guid\r\n        end\r\n        if memoryListBackup[moveGuid] == nil then\r\n            broadcastToAll(\"Item selected for moving is not already in memory\", {1, 0.25, 0.25})\r\n        else\r\n            broadcastToAll(\"Moving all items in memory relative to new objects position!\", {0.75, 0.75, 1})\r\n            self.clearButtons()\r\n            createMemoryActionButtons()\r\n            local count = 0\r\n            for guid in pairs(moveList) do\r\n                moveGuid = guid\r\n                count = count + 1\r\n                local obj = getObjectFromGUID(guid)\r\n                if obj ~= nil then obj.highlightOff() end\r\n            end\r\n            updateMemoryWithMoves()\r\n            updateSave()\r\n            buttonClick_place()\r\n        end\r\n    elseif next(memoryList) == nil and moveGuid == nil then\r\n      memoryList = memoryListBackup\r\n      broadcastToAll(\"No selections made.\", {0.75, 0.25, 0.25})\r\n    end\r\n    combineMemoryFromBagsWithin()\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    local count = 0\r\n    for guid in pairs(memoryList) do\r\n        count = count + 1\r\n        local obj = getObjectFromGUID(guid)\r\n        if obj ~= nil then obj.highlightOff() end\r\n    end\r\n    broadcastToAll(count..\" Objects Saved\", {1,1,1})\r\n    updateSave()\r\n    moveGuid = nil\r\nend\r\n\r\nfunction combineTables(first_table, second_table)\r\n  for k,v in pairs(second_table) do first_table[k] = v end\r\nend\r\n\r\nfunction buttonClick_add()\r\n    fresh = false\r\n    combineTables(memoryList, memoryListBackup)\r\n    broadcastToAll(\"Adding internal bags and selections to existing memory\", {0.25, 0.75, 0.25})\r\n    combineMemoryFromBagsWithin()\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    local count = 0\r\n    for guid in pairs(memoryList) do\r\n        count = count + 1\r\n        local obj = getObjectFromGUID(guid)\r\n        if obj ~= nil then obj.highlightOff() end\r\n    end\r\n    broadcastToAll(count..\" Objects Saved\", {1,1,1})\r\n    updateSave()\r\nend\r\n\r\nfunction buttonClick_remove()\r\n        broadcastToAll(\"Removing Selected Entries From Memory\", {1.0, 0.25, 0.25})\r\n        self.clearButtons()\r\n        createMemoryActionButtons()\r\n        local count = 0\r\n        for guid in pairs(memoryList) do\r\n            count = count + 1\r\n            memoryListBackup[guid] = nil\r\n            local obj = getObjectFromGUID(guid)\r\n            if obj ~= nil then obj.highlightOff() end\r\n        end\r\n        broadcastToAll(count..\" Objects Removed\", {1,1,1})\r\n        memoryList = memoryListBackup\r\n        updateSave()\r\nend\r\n\r\nfunction buttonClick_setNew()\r\n    broadcastToAll(\"Setting new position relative to items in memory\", {0.75, 0.75, 1})\r\n    self.clearButtons()\r\n    createMemoryActionButtons()\r\n    local count = 0\r\n    for _, obj in ipairs(getAllObjects()) do\r\n        guid = obj.guid\r\n        if memoryListBackup[guid] ~= nil then\r\n            count = count + 1\r\n            memoryListBackup[guid].pos = obj.getPosition()\r\n            memoryListBackup[guid].rot = obj.getRotation()\r\n            memoryListBackup[guid].lock = obj.getLock()\r\n        end\r\n    end\r\n    broadcastToAll(count..\" Objects Saved\", {1,1,1})\r\n    memoryList = memoryListBackup\r\n    updateSave()\r\nend\r\n\r\n--Resets bag to starting status\r\nfunction buttonClick_reset()\r\n    fresh = true\r\n    memoryList = {}\r\n    self.clearButtons()\r\n    createSetupButton()\r\n    removeAllHighlights()\r\n    broadcastToAll(\"Tool Reset\", {1,1,1})\r\n    updateSave()\r\nend\r\n\r\n\r\n--After Setup\r\n\r\n\r\n--Creates recall and place buttons\r\nfunction createMemoryActionButtons()\r\n    self.createButton({\r\n        label=\"Show Tokens\", click_function=\"buttonClick_place\", function_owner=self,\r\n        position={0,0.2,-2}, rotation={0,180,0}, height=350, width=1600,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\n    self.createButton({\r\n        label=\"Recall\", click_function=\"buttonClick_recall\", function_owner=self,\r\n        position={0,0.2,-2.8}, rotation={0,180,0}, height=350, width=800,\r\n        font_size=250, color={0,0,0}, font_color={1,1,1}\r\n    })\r\nend\r\n\r\n--Sends objects from bag/table to their saved position/rotation\r\nfunction buttonClick_place()\r\n    local bagObjList = self.getObjects()\r\n    for guid, entry in pairs(memoryList) do\r\n        local obj = getObjectFromGUID(guid)\r\n        --If obj is out on the table, move it to the saved pos/rot\r\n        if obj ~= nil then\r\n            obj.setPositionSmooth(entry.pos)\r\n            obj.setRotationSmooth(entry.rot)\r\n            obj.setLock(entry.lock)\r\n        else\r\n            --If obj is inside of the bag\r\n            for _, bagObj in ipairs(bagObjList) do\r\n                if bagObj.guid == guid then\r\n                    local item = self.takeObject({\r\n                        guid=guid, position=entry.pos, rotation=entry.rot, smooth=false\r\n                    })\r\n                    item.setLock(entry.lock)\r\n                    break\r\n                end\r\n            end\r\n        end\r\n    end\r\n    local obj = getObjectFromGUID(\"7abc5a\")\r\n    if(obj) then\r\n        destroyObject(obj)\r\n    end\r\n    broadcastToAll(\"Objects Placed\", {1,1,1})\r\nend\r\n\r\n--Recalls objects to bag from table\r\nfunction buttonClick_recall()\r\n    for guid, entry in pairs(memoryList) do\r\n        local obj = getObjectFromGUID(guid)\r\n        if obj ~= nil then self.putObject(obj) end\r\n    end\r\n    broadcastToAll(\"Objects Recalled\", {1,1,1})\r\nend\r\n\r\n\r\n--Utility functions\r\n\r\n\r\n--Find delta (difference) between 2 x/y/z coordinates\r\nfunction findOffsetDistance(p1, p2, obj)\r\n    local yOffset = 0\r\n    if obj ~= nil then\r\n        local bounds = obj.getBounds()\r\n        yOffset = (bounds.size.y - bounds.offset.y)\r\n    end\r\n    local deltaPos = {}\r\n    deltaPos.x = (p2.x-p1.x)\r\n    deltaPos.y = (p2.y-p1.y) + yOffset\r\n    deltaPos.z = (p2.z-p1.z)\r\n    return deltaPos\r\nend\r\n\r\n--Used to rotate a set of coordinates by an angle\r\nfunction rotateLocalCoordinates(desiredPos, obj)\r\n\tlocal objPos, objRot = obj.getPosition(), obj.getRotation()\r\n    local angle = math.rad(objRot.y)\r\n\tlocal x = desiredPos.x * math.cos(angle) - desiredPos.z * math.sin(angle)\r\n\tlocal z = desiredPos.x * math.sin(angle) + desiredPos.z * math.cos(angle)\r\n\t--return {x=objPos.x+x, y=objPos.y+desiredPos.y, z=objPos.z+z}\r\n    return {x=x, y=desiredPos.y, z=z}\r\nend\r\n\r\nfunction rotateMyCoordinates(desiredPos, obj)\r\n\tlocal angle = math.rad(obj.getRotation().y)\r\n  local x = desiredPos.x * math.sin(angle)\r\n\tlocal z = desiredPos.z * math.cos(angle)\r\n    return {x=x, y=desiredPos.y, z=z}\r\nend\r\n\r\n--Coroutine delay, in seconds\r\nfunction wait(time)\r\n    local start = os.time()\r\n    repeat coroutine.yield(0) until os.time() > start + time\r\nend\r\n\r\n--Duplicates a table (needed to prevent it making reference to the same objects)\r\nfunction duplicateTable(oldTable)\r\n    local newTable = {}\r\n    for k, v in pairs(oldTable) do\r\n        newTable[k] = v\r\n    end\r\n    return newTable\r\nend\r\n\r\n--Moves scripted highlight from all objects\r\nfunction removeAllHighlights()\r\n    for _, obj in ipairs(getAllObjects()) do\r\n        obj.highlightOff()\r\n    end\r\nend\r\n\r\n--Round number (num) to the Nth decimal (dec)\r\nfunction round(num, dec)\r\n  local mult = 10^(dec or 0)\r\n  return math.floor(num * mult + 0.5) / mult\r\nend",
       "LuaScriptState": "{\"ml\":{\"cb09a6\":{\"pos\":{\"x\":73,\"y\":0.95,\"z\":31},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb0ab0\":{\"pos\":{\"x\":73,\"y\":0.9499981,\"z\":29},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true}, \"cb09ba\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":25},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09bb\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":23},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb19b3\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":19},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b3\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":17},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b1\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":15},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b2\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":13},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09a7\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":33},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09c7\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":31},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb0bb0\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":29},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb19ba\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":25},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb29ba\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":23},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09a9\":{\"pos\":{\"x\":73,\"y\":0.94999826,\"z\":33},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09a8\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":33},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb19b8\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":19},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b8\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":17},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b4\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":15},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b5\":{\"pos\":{\"x\":71,\"y\":0.94999826,\"z\":13},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b0\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":31},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb0cb0\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":29},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09a4\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":25},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09c5\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":23},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb19b9\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":19},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b9\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":17},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b7\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":15},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"cb09b6\":{\"pos\":{\"x\":69,\"y\":0.94999826,\"z\":13},\"rot\":{\"x\":0,\"y\":270,\"z\":0},\"lock\":true},\"76e2d9\":{\"pos\":{\"x\":67.47655,\"y\":1.2,\"z\":33.45},\"rot\":{\"x\":90,\"y\":90,\"z\":0},\"lock\":false}}}",
       "XmlUI": "",
       "ContainedObjects": [
@@ -9782,9 +9603,9 @@
             "posX": 75.49269,
             "posY": 5.088416,
             "posZ": 27.28688,
-            "rotX": -4.427872e-7,
+            "rotX": -4.427872E-07,
             "rotY": 270,
-            "rotZ": -0.00000138651887,
+            "rotZ": -1.38651887E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -9945,9 +9766,9 @@
             "posX": 73.49269,
             "posY": 5.088416,
             "posZ": 27.28688,
-            "rotX": -5.68909456e-7,
+            "rotX": -5.68909456E-07,
             "rotY": 270,
-            "rotZ": -0.00000169968018,
+            "rotZ": -1.69968018E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -10108,9 +9929,9 @@
             "posX": 71.49269,
             "posY": 5.088416,
             "posZ": 27.28688,
-            "rotX": -4.55065333e-7,
+            "rotX": -4.55065333E-07,
             "rotY": 270,
-            "rotZ": -0.00000160001275,
+            "rotZ": -1.60001275E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -10271,9 +10092,9 @@
             "posX": 71.49269,
             "posY": 5.088423,
             "posZ": 25.28688,
-            "rotX": -4.584881e-7,
+            "rotX": -4.584881E-07,
             "rotY": 270,
-            "rotZ": -0.00000142951524,
+            "rotZ": -1.42951524E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -10439,9 +10260,9 @@
             "posX": 75.49269,
             "posY": 5.0884223,
             "posZ": 23.28688,
-            "rotX": -3.715083e-7,
+            "rotX": -3.715083E-07,
             "rotY": 270,
-            "rotZ": -0.000001734149,
+            "rotZ": -1.734149E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -10607,9 +10428,9 @@
             "posX": 73.49269,
             "posY": 5.0884223,
             "posZ": 23.28688,
-            "rotX": -6.072974e-7,
+            "rotX": -6.072974E-07,
             "rotY": 270,
-            "rotZ": -0.00000160990578,
+            "rotZ": -1.60990578E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -10775,9 +10596,9 @@
             "posX": 71.49269,
             "posY": 5.0884223,
             "posZ": 23.28688,
-            "rotX": -5.08779237e-7,
+            "rotX": -5.08779237E-07,
             "rotY": 270,
-            "rotZ": -0.00000139286067,
+            "rotZ": -1.39286067E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -10943,9 +10764,9 @@
             "posX": 75.49269,
             "posY": 5.08842325,
             "posZ": 19.28688,
-            "rotX": -4.26123847e-7,
+            "rotX": -4.26123847E-07,
             "rotY": 270,
-            "rotZ": -0.00000168546194,
+            "rotZ": -1.68546194E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -11106,9 +10927,9 @@
             "posX": 73.49269,
             "posY": 5.08842325,
             "posZ": 19.28688,
-            "rotX": -4.48493779e-7,
+            "rotX": -4.48493779E-07,
             "rotY": 270,
-            "rotZ": -0.00000165778306,
+            "rotZ": -1.65778306E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -11269,9 +11090,9 @@
             "posX": 71.49269,
             "posY": 5.08842325,
             "posZ": 19.28688,
-            "rotX": -5.22967071e-7,
+            "rotX": -5.22967071E-07,
             "rotY": 270,
-            "rotZ": -0.00000168554664,
+            "rotZ": -1.68554664E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -11432,9 +11253,9 @@
             "posX": 75.49269,
             "posY": 5.08842325,
             "posZ": 17.28688,
-            "rotX": -3.70378643e-7,
+            "rotX": -3.70378643E-07,
             "rotY": 270,
-            "rotZ": -0.00000168325687,
+            "rotZ": -1.68325687E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -11595,9 +11416,9 @@
             "posX": 73.49269,
             "posY": 5.088423,
             "posZ": 17.28688,
-            "rotX": -4.58682138e-7,
+            "rotX": -4.58682138E-07,
             "rotY": 270,
-            "rotZ": -0.00000139576036,
+            "rotZ": -1.39576036E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -11758,9 +11579,9 @@
             "posX": 71.49269,
             "posY": 5.088423,
             "posZ": 17.28688,
-            "rotX": -4.352099e-7,
+            "rotX": -4.352099E-07,
             "rotY": 270,
-            "rotZ": -0.00000147594665,
+            "rotZ": -1.47594665E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -11921,9 +11742,9 @@
             "posX": 75.49269,
             "posY": 5.088423,
             "posZ": 13.2868814,
-            "rotX": -5.844455e-7,
+            "rotX": -5.844455E-07,
             "rotY": 270,
-            "rotZ": -0.000001738078,
+            "rotZ": -1.738078E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -12084,9 +11905,9 @@
             "posX": 73.49269,
             "posY": 5.088423,
             "posZ": 13.2868814,
-            "rotX": -4.428837e-7,
+            "rotX": -4.428837E-07,
             "rotY": 270,
-            "rotZ": -0.0000015031228,
+            "rotZ": -1.5031228E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -12247,9 +12068,9 @@
             "posX": 71.49269,
             "posY": 5.088423,
             "posZ": 13.2868814,
-            "rotX": -4.50823933e-7,
+            "rotX": -4.50823933E-07,
             "rotY": 270,
-            "rotZ": -0.000001836369,
+            "rotZ": -1.836369E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -12410,9 +12231,9 @@
             "posX": 75.49269,
             "posY": 5.088423,
             "posZ": 11.2868814,
-            "rotX": -4.938195e-7,
+            "rotX": -4.938195E-07,
             "rotY": 270,
-            "rotZ": -0.00000154564634,
+            "rotZ": -1.54564634E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -12573,9 +12394,9 @@
             "posX": 73.49269,
             "posY": 5.088423,
             "posZ": 11.2868814,
-            "rotX": -6.09068138e-7,
+            "rotX": -6.09068138E-07,
             "rotY": 270,
-            "rotZ": -0.00000152922189,
+            "rotZ": -1.52922189E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -12736,9 +12557,9 @@
             "posX": 71.49269,
             "posY": 5.088423,
             "posZ": 11.2868814,
-            "rotX": -4.17452782e-7,
+            "rotX": -4.17452782E-07,
             "rotY": 270,
-            "rotZ": -0.00000178928906,
+            "rotZ": -1.78928906E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -12899,9 +12720,9 @@
             "posX": 75.49269,
             "posY": 5.088423,
             "posZ": 9.286881,
-            "rotX": -4.403768e-7,
+            "rotX": -4.403768E-07,
             "rotY": 270,
-            "rotZ": -0.00000178081473,
+            "rotZ": -1.78081473E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -13067,9 +12888,9 @@
             "posX": 73.49269,
             "posY": 5.088423,
             "posZ": 9.286881,
-            "rotX": -5.014449e-7,
+            "rotX": -5.014449E-07,
             "rotY": 270,
-            "rotZ": -0.00000150538028,
+            "rotZ": -1.50538028E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -13230,9 +13051,9 @@
             "posX": 71.49269,
             "posY": 5.088423,
             "posZ": 9.286881,
-            "rotX": -5.041931e-7,
+            "rotX": -5.041931E-07,
             "rotY": 270,
-            "rotZ": -0.00000155073246,
+            "rotZ": -1.55073246E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -13393,9 +13214,9 @@
             "posX": 75.49269,
             "posY": 5.088423,
             "posZ": 7.286892,
-            "rotX": -4.48961146e-7,
+            "rotX": -4.48961146E-07,
             "rotY": 270,
-            "rotZ": -0.000001425531,
+            "rotZ": -1.425531E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -13561,9 +13382,9 @@
             "posX": 73.49269,
             "posY": 5.088423,
             "posZ": 7.286892,
-            "rotX": -4.6348373e-7,
+            "rotX": -4.6348373E-07,
             "rotY": 270,
-            "rotZ": -0.000001729781,
+            "rotZ": -1.729781E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -13724,9 +13545,9 @@
             "posX": 71.49269,
             "posY": 5.088423,
             "posZ": 7.286892,
-            "rotX": -5.539399e-7,
+            "rotX": -5.539399E-07,
             "rotY": 270,
-            "rotZ": -0.00000169271607,
+            "rotZ": -1.69271607E-06,
             "scaleX": 1.9,
             "scaleY": 0.1,
             "scaleZ": 1.9
@@ -13889,9 +13710,9 @@
         "posX": 13.29429,
         "posY": -5,
         "posZ": 12.32625,
-        "rotX": -0.00000163813888,
+        "rotX": -1.63813888E-06,
         "rotY": 89.979805,
-        "rotZ": -0.00000193936285,
+        "rotZ": -1.93936285E-06,
         "scaleX": 2,
         "scaleY": 2,
         "scaleZ": 2
@@ -13997,9 +13818,9 @@
             "posX": 2.48464561,
             "posY": 0.975103438,
             "posZ": -0.3266357,
-            "rotX": 9.988642e-8,
+            "rotX": 9.988642E-08,
             "rotY": 270.000671,
-            "rotZ": -9.397315e-8,
+            "rotZ": -9.397315E-08,
             "scaleX": 3.31565976,
             "scaleY": 1,
             "scaleZ": 3.31565976
@@ -14218,7 +14039,7 @@
             "posZ": -0.44,
             "rotX": -6.26,
             "rotY": 270,
-            "rotZ": 1.80,
+            "rotZ": 1.8,
             "scaleX": 1,
             "scaleY": 1,
             "scaleZ": 1
@@ -14274,7 +14095,7 @@
             "posX": -10.3708,
             "posY": 1.00649929,
             "posZ": -0.412700027,
-            "rotX": -4.97717636e-8,
+            "rotX": -4.97717636E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1.5,
@@ -14374,9 +14195,9 @@
                 "posX": 1.31824386,
                 "posY": 1.0121088,
                 "posZ": 0.4122539,
-                "rotX": 0.000023060149,
+                "rotX": 2.3060149E-05,
                 "rotY": 179.950974,
-                "rotZ": -0.0000402655678,
+                "rotZ": -4.02655678E-05,
                 "scaleX": 1.5,
                 "scaleY": 1,
                 "scaleZ": 1.5
@@ -14666,7 +14487,7 @@
             "posX": -20.5342178,
             "posY": 1.00649917,
             "posZ": -0.3943793,
-            "rotX": -8.42515959e-8,
+            "rotX": -8.42515959E-08,
             "rotY": 179.999908,
             "rotZ": 180,
             "scaleX": 1.5,
@@ -14766,9 +14587,9 @@
                 "posX": 1.31824386,
                 "posY": 1.0121088,
                 "posZ": 0.4122539,
-                "rotX": 0.000023060149,
+                "rotX": 2.3060149E-05,
                 "rotY": 179.950974,
-                "rotZ": -0.0000402655678,
+                "rotZ": -4.02655678E-05,
                 "scaleX": 1.5,
                 "scaleY": 1,
                 "scaleZ": 1.5
@@ -15000,7 +14821,7 @@
                 "posZ": 0.8607292,
                 "rotX": -0.000600614236,
                 "rotY": 179.949326,
-                "rotZ": -0.0000403871672,
+                "rotZ": -4.03871672E-05,
                 "scaleX": 1.5,
                 "scaleY": 1,
                 "scaleZ": 1.5
@@ -15058,7 +14879,7 @@
             "posX": -10.3708,
             "posY": 0.996871233,
             "posZ": 6.5873,
-            "rotX": -5.43434275e-8,
+            "rotX": -5.43434275E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1.5,
@@ -15372,7 +15193,7 @@
             "posX": -10.3708,
             "posY": 1.01131332,
             "posZ": 13.5873,
-            "rotX": 4.5284e-8,
+            "rotX": 4.5284E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1.5,
@@ -15772,7 +15593,7 @@
                 "posX": 14.2839565,
                 "posY": 1.07701838,
                 "posZ": -0.949468851,
-                "rotX": 0.00009021203,
+                "rotX": 9.021203E-05,
                 "rotY": 179.950974,
                 "rotZ": -0.000350374961,
                 "scaleX": 1.5,
@@ -15890,7 +15711,7 @@
             "posX": 0.937499046,
             "posY": 1.0121088,
             "posZ": 0.553782463,
-            "rotX": 4.96255375e-8,
+            "rotX": 4.96255375E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1.5,
@@ -15948,7 +15769,7 @@
             "posX": -10.3708,
             "posY": 0.9920572,
             "posZ": -7.4127,
-            "rotX": 3.81399836e-8,
+            "rotX": 3.81399836E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1.5,
@@ -16183,9 +16004,9 @@
         "posX": 12.9833994,
         "posY": -3,
         "posZ": -12.1371355,
-        "rotX": 5.00610838e-7,
+        "rotX": 5.00610838E-07,
         "rotY": 269.9765,
-        "rotZ": -1.66532566e-8,
+        "rotZ": -1.66532566E-08,
         "scaleX": 2,
         "scaleY": 1,
         "scaleZ": 2
@@ -16241,9 +16062,9 @@
         "posX": 21.7954922,
         "posY": -3,
         "posZ": -12.1371355,
-        "rotX": 5.00610838e-7,
+        "rotX": 5.00610838E-07,
         "rotY": 269.9765,
-        "rotZ": -1.66532566e-8,
+        "rotZ": -1.66532566E-08,
         "scaleX": 2,
         "scaleY": 1,
         "scaleZ": 2
@@ -16299,9 +16120,9 @@
         "posX": 22.0231667,
         "posY": -5,
         "posZ": -4.98342562,
-        "rotX": -2.72293278e-7,
+        "rotX": -2.72293278E-07,
         "rotY": 89.9898,
-        "rotZ": 9.35065657e-7,
+        "rotZ": 9.35065657E-07,
         "scaleX": 2,
         "scaleY": 2,
         "scaleZ": 2
@@ -18432,9 +18253,9 @@
         "posX": 13.2366428,
         "posY": -3,
         "posZ": 5.340162,
-        "rotX": -1.533123e-7,
+        "rotX": -1.533123E-07,
         "rotY": 269.999939,
-        "rotZ": 7.888284e-8,
+        "rotZ": 7.888284E-08,
         "scaleX": 2,
         "scaleY": 1,
         "scaleZ": 2
@@ -20481,9 +20302,9 @@
         "posX": 31.23572,
         "posY": -5,
         "posZ": 43.37514,
-        "rotX": -0.00000264236019,
+        "rotX": -2.64236019E-06,
         "rotY": 180,
-        "rotZ": -5.73148924e-8,
+        "rotZ": -5.73148924E-08,
         "scaleX": 3.6,
         "scaleY": 3.6,
         "scaleZ": 3.6
@@ -20565,9 +20386,9 @@
         "posX": -31.23572,
         "posY": -5,
         "posZ": -43.37514,
-        "rotX": -0.00000264236019,
+        "rotX": -2.64236019E-06,
         "rotY": 0,
-        "rotZ": -5.73148924e-8,
+        "rotZ": -5.73148924E-08,
         "scaleX": 3.6,
         "scaleY": 3.6,
         "scaleZ": 3.6
@@ -21407,9 +21228,9 @@
         "posX": -0.319923073,
         "posY": -1.10000026,
         "posZ": 93.7472839,
-        "rotX": -7.526409e-8,
+        "rotX": -7.526409E-08,
         "rotY": 359.982666,
-        "rotZ": -0.00000742933025,
+        "rotZ": -7.42933025E-06,
         "scaleX": 3.75,
         "scaleY": 1.0,
         "scaleZ": 3.75
@@ -23498,9 +23319,9 @@
         "posX": 68.34854,
         "posY": -5,
         "posZ": -63.2423248,
-        "rotX": 0.000002495925,
+        "rotX": 2.495925E-06,
         "rotY": 359.993134,
-        "rotZ": -8.10718348e-7,
+        "rotZ": -8.10718348E-07,
         "scaleX": 3,
         "scaleY": 3,
         "scaleZ": 3
@@ -23544,9 +23365,9 @@
             "posX": 0,
             "posY": 7.18299866,
             "posZ": 0,
-            "rotX": 4.44650219e-8,
+            "rotX": 4.44650219E-08,
             "rotY": 359.993134,
-            "rotZ": 5.18434462e-10,
+            "rotZ": 5.18434462E-10,
             "scaleX": 1.5,
             "scaleY": 1.5,
             "scaleZ": 1.5
@@ -23587,9 +23408,9 @@
               "GUID": "6fb2cf",
               "Name": "Custom_Assetbundle",
               "Transform": {
-                "posX": -0.0000184482979,
+                "posX": -1.84482979E-05,
                 "posY": 0.28299582,
-                "posZ": -1.63822293e-7,
+                "posZ": -1.63822293E-07,
                 "rotX": 0.0004609494,
                 "rotY": 120.004173,
                 "rotZ": 180.000046,
@@ -25678,7 +25499,6 @@
         "Convex": true,
         "MaterialIndex": 3,
         "TypeIndex": 6,
-
         "CastShadows": true
       },
       "Bag": {
@@ -25734,7 +25554,6 @@
         "Convex": true,
         "MaterialIndex": 3,
         "TypeIndex": 6,
-
         "CastShadows": true
       },
       "Bag": {
@@ -25790,7 +25609,6 @@
         "Convex": true,
         "MaterialIndex": 3,
         "TypeIndex": 6,
-
         "CastShadows": true
       },
       "Bag": {
@@ -25846,7 +25664,6 @@
         "Convex": true,
         "MaterialIndex": 3,
         "TypeIndex": 6,
-
         "CastShadows": true
       },
       "Bag": {
@@ -26088,7 +25905,6 @@
         "Convex": true,
         "MaterialIndex": 1,
         "TypeIndex": 4,
-
         "CastShadows": true
       },
       "LuaScript": "",
@@ -26202,7 +26018,7 @@
         "posZ": -20,
         "rotX": 45.0000153,
         "rotY": 270.000061,
-        "rotZ": 0.000004829674,
+        "rotZ": 4.829674E-06,
         "scaleX": 6,
         "scaleY": 1,
         "scaleZ": 6
@@ -26252,8 +26068,8 @@
         "posY": 1.03509665,
         "posZ": 84.0386047,
         "rotX": 359.85672,
-        "rotY": -0.0000358097932,
-        "rotZ": -0.00000239440146,
+        "rotY": -3.58097932E-05,
+        "rotZ": -2.39440146E-06,
         "scaleX": 10,
         "scaleY": 1,
         "scaleZ": 10
@@ -26308,9 +26124,9 @@
         "posX": 1.64756453,
         "posY": 1.00000179,
         "posZ": -83.27986,
-        "rotX": -0.00000159654621,
+        "rotX": -1.59654621E-06,
         "rotY": 180,
-        "rotZ": 5.099938e-7,
+        "rotZ": 5.099938E-07,
         "scaleX": 10,
         "scaleY": 1,
         "scaleZ": 10
@@ -26601,7 +26417,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27120,7 +26935,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27170,7 +26984,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27220,7 +27033,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27390,7 +27202,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "-- FTC-GUID: 573333,764a2e,6d45cf,33e32b,f32864,a91751\r\nkeepForTerrainEditor = true\r\n",
@@ -27440,7 +27251,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27490,7 +27300,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27660,7 +27469,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "-- FTC-GUID: 573333,764a2e,6d45cf,33e32b,f32864,a91751\r\nkeepForTerrainEditor = true\r\n",
@@ -27710,7 +27518,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27760,7 +27567,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -27930,7 +27736,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "-- FTC-GUID: 573333,764a2e,6d45cf,33e32b,f32864,a91751\r\nkeepForTerrainEditor = true\r\n",
@@ -27980,7 +27785,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -28030,7 +27834,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -28200,7 +28003,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "-- FTC-GUID: 573333,764a2e,6d45cf,33e32b,f32864,a91751\r\nkeepForTerrainEditor = true\r\n",
@@ -28250,7 +28052,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -28300,7 +28101,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -28470,7 +28270,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "-- FTC-GUID: 573333,764a2e,6d45cf,33e32b,f32864,a91751\r\nkeepForTerrainEditor = true\r\n",
@@ -28520,7 +28319,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -28570,7 +28368,6 @@
             "Convex": true,
             "MaterialIndex": 1,
             "TypeIndex": 0,
-
             "CastShadows": true
           },
           "LuaScript": "",
@@ -28674,7 +28471,7 @@
         "posX": 74,
         "posY": 1,
         "posZ": -1,
-        "rotX": -0.00000160005129,
+        "rotX": -1.60005129E-06,
         "rotY": 180.012192,
         "rotZ": 180,
         "scaleX": 1,
@@ -28769,7 +28566,7 @@
             "z": -1
           },
           "Rotation": {
-            "x": -2.035555e-13,
+            "x": -2.035555E-13,
             "y": 270.0122,
             "z": 180
           },
@@ -29130,9 +28927,9 @@
             "posX": 33.8096275,
             "posY": 0.949999,
             "posZ": 6.25911045,
-            "rotX": -4.69661572e-8,
+            "rotX": -4.69661572E-08,
             "rotY": 270,
-            "rotZ": -0.00000117987281,
+            "rotZ": -1.17987281E-06,
             "scaleX": 0.5,
             "scaleY": 1,
             "scaleZ": 0.5
@@ -29191,7 +28988,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Action in progress (blue)[/i][/b]",
@@ -29294,7 +29091,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Action in progress (red)[/i][/b]",
@@ -29397,7 +29194,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Action completed (red)[/i][/b]",
@@ -29500,7 +29297,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Action completed (blue)[/i][/b]",
@@ -29598,7 +29395,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Cannot fire overwatch[/i][/b]",
@@ -29696,7 +29493,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Gains Objective Secured[/i][/b]",
@@ -29794,7 +29591,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Cannot perform actions[/i][/b]",
@@ -29892,7 +29689,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Fights last[/i][/b]",
@@ -29990,7 +29787,7 @@
             "rotY": 270.0,
             "rotZ": 0.0,
             "scaleX": 1.9,
-            "scaleY": 0.10,
+            "scaleY": 0.1,
             "scaleZ": 1.9
           },
           "Nickname": "[b][i]Smoke[/i][/b]",
@@ -31666,9 +31463,9 @@
         "posX": 31.0983677,
         "posY": 1.14999807,
         "posZ": 36.65884,
-        "rotX": -0.00000159877766,
+        "rotX": -1.59877766E-06,
         "rotY": 180.015915,
-        "rotZ": 5.434207e-7,
+        "rotZ": 5.434207E-07,
         "scaleX": 1.5,
         "scaleY": 1,
         "scaleZ": 1.5
@@ -31809,7 +31606,7 @@
         "posZ": -36.7212,
         "rotX": 0.00010578223,
         "rotY": 0.0488397852,
-        "rotZ": -0.0000149340549,
+        "rotZ": -1.49340549E-05,
         "scaleX": 1.5,
         "scaleY": 1,
         "scaleZ": 1.5
@@ -31858,7 +31655,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Ignore modifiers to hit rolls[/i][/b]",
@@ -31956,7 +31753,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Stealth[/i][/b]",
@@ -32054,7 +31851,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Add 1 to hit rolls[/i][/b]",
@@ -32152,7 +31949,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Subtract 1 from hit rolls[/i][/b]",
@@ -32250,7 +32047,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Re-roll 1s to hit[/i][/b]",
@@ -32348,7 +32145,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Re-roll hit rolls[/i][/b]",
@@ -32446,7 +32243,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Unmodified hit rolls of 1, 2 or 3 automatically fail[/i][/b]",
@@ -32544,7 +32341,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Cannot re-roll hit rolls[/i][/b]",
@@ -32642,7 +32439,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Add 1 to wound rolls[/i][/b]",
@@ -32740,7 +32537,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Subtract 1 from wound rolls[/i][/b]",
@@ -32838,7 +32635,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Re-roll 1s to wound[/i][/b]",
@@ -32936,7 +32733,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Re-roll wound rolls[/i][/b]",
@@ -33034,7 +32831,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Cannot re-roll wound rolls[/i][/b]",
@@ -33132,7 +32929,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Unmodified wound rolls of 1, 2 or 3 automatically fail[/i][/b]",
@@ -33230,7 +33027,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Has gained the benefit of cover[/i][/b]",
@@ -33328,7 +33125,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Targets do not receive the benefit of cover[/i][/b]",
@@ -33426,7 +33223,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Does not receive the benefit of cover[/i][/b]",
@@ -33524,7 +33321,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Add 1 to saving throws[/i][/b]",
@@ -33622,7 +33419,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Subtract 1 from saving throws[/i][/b]",
@@ -33720,7 +33517,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Improve armour penetration by 1[/i][/b]",
@@ -33818,7 +33615,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Worsen armour penetration by 1[/i][/b]",
@@ -33916,7 +33713,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]4+ invulnerable save[/i][/b]",
@@ -34014,7 +33811,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]5+ invulnerable save[/i][/b]",
@@ -34112,7 +33909,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]6+ invulnerable save[/i][/b]",
@@ -34210,7 +34007,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Ignore wounds on 4+[/i][/b]",
@@ -34308,7 +34105,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Ignore wounds on 5+[/i][/b]",
@@ -34406,7 +34203,7 @@
         "rotY": 270.0,
         "rotZ": 0.0,
         "scaleX": 1.9,
-        "scaleY": 0.10,
+        "scaleY": 0.1,
         "scaleZ": 1.9
       },
       "Nickname": "[b][i]Ignore wounds on 6+[/i][/b]",
@@ -35133,7 +34930,7 @@
         "posX": -40.9592438,
         "posY": 3.07473969,
         "posZ": -56.1081352,
-        "rotX": -0.00000160000775,
+        "rotX": -1.60000775E-06,
         "rotY": 90.00556,
         "rotZ": 3.19558552,
         "scaleX": 1.0,
@@ -38372,6 +38169,96 @@
       "XmlUI": ""
     },
     {
+      "GUID": "863da2",
+      "Name": "Checker_red",
+      "Transform": {
+        "posX": 65.82076836,
+        "posY": -4,
+        "posZ": 75,
+        "rotX": 0,
+        "rotY": 180.021637,
+        "rotZ": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "scaleZ": 1
+      },
+      "Nickname": "Red WH Stats Helper",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 1,
+        "g": 0,
+        "b": 0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": false,
+      "Sticky": true,
+      "Tooltip": false,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"0 0 -50\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
+    },
+    {
+      "GUID": "863da8",
+      "Name": "Checker_red",
+      "Transform": {
+        "posX": 65,
+        "posY": -5,
+        "posZ": 75,
+        "rotX": 0,
+        "rotY": 1.00179122E-05,
+        "rotZ": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "scaleZ": 1
+      },
+      "Nickname": "Blue WH Stats Helper",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 1,
+        "g": 0,
+        "b": 0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": false,
+      "Sticky": true,
+      "Tooltip": false,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"0 0 -50\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
+    },
+    {
       "GUID": "be2cdb",
       "Name": "Custom_Assetbundle_Bag",
       "Transform": {
@@ -38494,7 +38381,7 @@
         "posX": 74.75,
         "posY": 0.973883569,
         "posZ": 8.05,
-        "rotX": -4.320841e-7,
+        "rotX": -4.320841E-07,
         "rotY": 270,
         "rotZ": 180,
         "scaleX": 1,
@@ -38718,7 +38605,7 @@
             "posX": -5.17530251,
             "posY": 1.09764,
             "posZ": 7.265357,
-            "rotX": -1.08471049e-7,
+            "rotX": -1.08471049E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -38779,7 +38666,7 @@
             "posX": -4.61792326,
             "posY": 1.09384263,
             "posZ": 7.18739843,
-            "rotX": 7.10398851e-9,
+            "rotX": 7.10398851E-09,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -38840,7 +38727,7 @@
             "posX": -5.13384676,
             "posY": 1.07739878,
             "posZ": 7.2978487,
-            "rotX": 1.78068248e-7,
+            "rotX": 1.78068248E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -38901,7 +38788,7 @@
             "posX": -5.051126,
             "posY": 1.067861,
             "posZ": 7.06958961,
-            "rotX": -1.35568357e-7,
+            "rotX": -1.35568357E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -38962,7 +38849,7 @@
             "posX": -4.750141,
             "posY": 1.05910623,
             "posZ": 7.30969858,
-            "rotX": 1.226096e-7,
+            "rotX": 1.226096E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -39023,7 +38910,7 @@
             "posX": -4.365032,
             "posY": 1.04947233,
             "posZ": 7.212378,
-            "rotX": -2.780032e-7,
+            "rotX": -2.780032E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -39084,7 +38971,7 @@
             "posX": -4.23348331,
             "posY": 1.0154475,
             "posZ": 7.321577,
-            "rotX": -6.81768952e-8,
+            "rotX": -6.81768952E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -39145,7 +39032,7 @@
             "posX": -4.4735,
             "posY": 0.9736048,
             "posZ": 7.13475561,
-            "rotX": -3.117385e-8,
+            "rotX": -3.117385E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -39206,7 +39093,7 @@
             "posX": -4.47447348,
             "posY": 0.9736048,
             "posZ": 3.57049,
-            "rotX": -1.91424718e-7,
+            "rotX": -1.91424718E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -39267,7 +39154,7 @@
             "posX": -4.47447348,
             "posY": 0.9736048,
             "posZ": 3.57049,
-            "rotX": -1.91424718e-7,
+            "rotX": -1.91424718E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40057,7 +39944,6 @@
           "Type": 0
         }
       },
-
       "LuaScript": "",
       "LuaScriptState": "",
       "XmlUI": "",
@@ -40069,7 +39955,7 @@
             "posX": -6.16850853,
             "posY": 1.08614111,
             "posZ": -0.7083418,
-            "rotX": 1.41090808e-7,
+            "rotX": 1.41090808E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40130,7 +40016,7 @@
             "posX": -6.353649,
             "posY": 1.06785941,
             "posZ": -1.23600864,
-            "rotX": 4.89569842e-8,
+            "rotX": 4.89569842E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40191,7 +40077,7 @@
             "posX": -5.31825447,
             "posY": 1.05757487,
             "posZ": -0.824556947,
-            "rotX": 0.000004492357,
+            "rotX": 4.492357E-06,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40252,7 +40138,7 @@
             "posX": -5.46608543,
             "posY": 1.04943609,
             "posZ": -0.981954157,
-            "rotX": -4.786244e-7,
+            "rotX": -4.786244E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40313,7 +40199,7 @@
             "posX": -5.95722628,
             "posY": 1.02540934,
             "posZ": -0.8421019,
-            "rotX": -2.43197917e-7,
+            "rotX": -2.43197917E-07,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40374,7 +40260,7 @@
             "posX": -6.083283,
             "posY": 0.9736048,
             "posZ": -0.81446147,
-            "rotX": 3.08584376e-8,
+            "rotX": 3.08584376E-08,
             "rotY": 180,
             "rotZ": 180,
             "scaleX": 1,
@@ -40430,7 +40316,6 @@
         }
       ]
     },
-
     {
       "GUID": "cdecf2",
       "Name": "ScriptingTrigger",

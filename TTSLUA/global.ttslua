@@ -71,7 +71,6 @@ tableSideBottom_GUID = "f938a2"
 tableSideTop_GUID = "35b95f"
 tableSideLeft_GUID = "9f95fd"
 tableSideRight_GUID = "5af8f2"
-extractTerrain_GUID = "70b9f6"
 
 redHandZone_GUID = "f7d85a"
 blueHandZone_GUID = "731345"
