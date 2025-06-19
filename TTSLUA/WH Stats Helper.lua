@@ -478,8 +478,12 @@ function getWeaponMapAttacks(weaponMapData)
 end
 
 function getBonusAttackAppendum(appendum)
-  if tonumber(appendum) ~= nil then
-    return tonumber(appendum)
+  if appendum == nil then
+    return 0
+  end
+  local num = tonumber(appendum)
+  if num ~= nil then
+    return num
   end
 
   if string.find(appendum, "D") ~= nil then
@@ -518,24 +522,6 @@ function getBonusAttackValue(bonusAttack)
   return result
 end
 
-function getBonusAttackAppendum(appendum)
-  if tonumber(appendum) != nil then
-    return tonumber(appendum)
-  end
-  if string.find(appendum, "D") != nil then
-    local split = splitStr(appendum, "D")
-    local count = (#split == 2) and tonumber(split[1]) or 1
-    local value = (#split == 2) and tonumber(split[2]) or tonumber(split[1])
-    local result = 0
-    for i = 1, count do
-      local rnd = math.random(value)
-      printMessage("Rolling one D"..value..", the value is: "..rnd)
-      result = result + rnd
-    end
-    return result
-  end
-  return 0
-end
 
 function getWeaponDescription(weaponData)
   return "[c6c930]"..weaponData.name.." [-]"
@@ -693,28 +679,6 @@ function parseFigureData(figure)
   return result
 end
 
-function parseWeaponBlock(arr, fromIndex)
-  local result = {}
-  local i = fromIndex
-  while i < #arr do
-    table.insert(result, {
-      name = parseWeaponName(arr[i + 1]),
-      stats = removeColorTags(arr[i + 2]),
-      range = parseRange(arr[i + 2]),
-      attack = parseWeaponAttack(arr[i + 2]),
-      bonusAttack = parseWeaponBonusAttack(arr[i + 2]),
-      accuracy = parseWeaponAccuracy(arr[i + 2]) or "",
-      strength = getWeaponStatValue(arr[i + 2], "S") or "",
-      ap = getWeaponStatValue(arr[i + 2], "AP") or "",
-      damage = getWeaponStatValue(arr[i + 2], "D") or ""
-    })
-    if getBlockName(arr[i + 3]) != nil then
-      return result
-    end
-    i = i + 2
-  end
-  return result
-end
 
 function removeColorTags(str)
   str = string.gsub(str, "%[7bc596%]", "")
@@ -732,11 +696,21 @@ end
 
 function parseWeaponAttack(stats)
   local stat = getWeaponStatValue(stats, "A")
-  return tonumber(stat) or 0
+  if stat == nil then
+    return 0
+  end
+  local num = tonumber(stat)
+  if num then
+    return num
+  end
+  return 0
 end
 
 function parseWeaponBonusAttack(stats)
   local stat = getWeaponStatValue(stats, "A")
+  if stat == nil then
+    return nil
+  end
   if tonumber(stat) == nil then
     return stat
   end
