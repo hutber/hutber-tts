@@ -196,8 +196,8 @@ copyOthersDiceBtn = {
     color = (currentMat == "Red" and "Blue" or "Red"), -- Button changes color based on current player
     font_color = {1, 1, 1}, -- White text for high contrast
     hover_color = (currentMat == "Red") and {0, 0, 1, 1} or {1, 0, 0, 1},
-    label = (currentMat == "Red") and "Copy Blue's Dice" or "Copy Red's Dice", 
-    press_color = {0.27, 0.27, 0.27, 1}, 
+    label = (currentMat == "Red") and "Copy Blue's Dice" or "Copy Red's Dice",
+    press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
 }
 
@@ -1049,7 +1049,7 @@ function onload()
 
 end
 
-local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/34438955573517849/113D79186FC9E0B9769DB8D5D480D0B0842974DF/"
+local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/11677905561710342962/BB1A8DE3C56D9C08A18C3DCB69513D6ED03DAFF1/"
 
 local spawnedObjects = {
     Red = {
@@ -1071,7 +1071,7 @@ function ensureLethalHitsObjects()
             local redLethalHitsObject = spawnObject({
                 type = "Custom_Token",
                 position = {21.1, 0.87, 23.5},
-                rotation = {0, 0, 180},
+                rotation = {0, 0, 0},
                 scale = {0.7, 0.7, 0.7},
                 nickname = "Red Lethal Hits",
                 description = "This is the area for lethal hits (Red)."
@@ -1094,7 +1094,7 @@ function ensureLethalHitsObjects()
             local blueLethalHitsObject = spawnObject({
                 type = "Custom_Token",
                 position = {-21.1, 0.97, -23.5},
-                rotation = {0, 180, 180},
+                rotation = {0, 180, 0},
                 scale = {0.7, 0.7, 0.7},
                 nickname = "Blue Lethal Hits",
                 description = "This is the area for lethal hits (Blue)."

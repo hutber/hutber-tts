@@ -85,6 +85,8 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.5.9: Fix: Wrong deployment used for map 4 of UKTC",
+    "1.5.8: Fix: Updated Stat Helper to v2.14.2 & moved the coin so its easier to click plus AP on dice",
     "1.5.7: Feat: Change reserves mat colour",
     "1.5.6: Feat: Feedback button so you let me know how much you hate me! I love at least 80% of you! The rest I'm on the fence about.",
     "1.5.5: Feat: Added Random UKTC Mission selector",
@@ -357,9 +359,12 @@ function onObjectClick(player_color, object_clicked)
         ["03286d"] = -4.776464939,
         ["ca7711"] = -4.776464939,
         ["cd649d"] = -4.776464939,
+        ["bf09bd"] = -4.776464939,
+        ["bf09bd"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
-        ["8a7c7a"] = -6.19999981,
+        ["3c1373"] = -6.19999981,
+        ["8395b2"] = -6.19999981,
         ["8395b2"] = -6.19999981,
         ["64b6bb"] = -6.19999981,
         ["4bb528"] = -6.19999981,
@@ -513,9 +518,11 @@ function confirmDoublesGame()
         ["ca7711"] = -4.776464939,
         ["cd649d"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
+        ["bf09bd"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
         ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
+        ["3c1373"] = -6.19999981,
         ["64b6bb"] = -6.19999981,
         ["4bb528"] = -6.19999981,
         ["7abc5a"] = -6.19999981
@@ -629,8 +636,10 @@ function confirmSizeGame()
         ["ca7711"] = 0.776464939,
         ["cd649d"] = 0.776464939,
         ["9a7c3c"] = 0.776464939,
+        ["bf09bd"] = 0.776464939,
         ["8a7c7a"] = 1.19999981,
         ["3c8a1b"] = 1.19999981,
+        ["3c1373"] = 1.19999981,
         ["8395b2"] = 1.19999981,
         ["64b6bb"] = 1.19999981,
         ["4bb528"] = 1.19999981

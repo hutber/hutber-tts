@@ -473,108 +473,18 @@
       "GUID": "7c7c20",
       "Name": "Chip_100",
       "Transform": {
-        "posX": -4.16885567,
-        "posY": -4.02278423,
-        "posZ": 33.2889366,
-        "rotX": 356.8226,
-        "rotY": 180.015366,
-        "rotZ": -0.000905320456,
-        "scaleX": 1,
-        "scaleY": 1,
-        "scaleZ": 1
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "ColorDiffuse": {
-        "r": 1,
-        "g": 1,
-        "b": 1
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0.5 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
-    },
-    {
-      "GUID": "8v7a72",
-      "Name": "Chip_100",
-      "Transform": {
-        "posX": 4.16885567,
-        "posY": -4.02278423,
-        "posZ": -33.2889366,
-        "rotX": 356.9289,
-        "rotY": 0.0168352723,
-        "rotZ": -0.0000479672381,
-        "scaleX": 1,
-        "scaleY": 1,
-        "scaleZ": 1
-      },
-      "Nickname": "Blue WH Stats Helper",
-      "Description": "Blue WH Stats Helper",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "ColorDiffuse": {
-        "r": 1,
-        "g": 1,
-        "b": 1
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0.5 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"0\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
-    },
-    {
-      "GUID": "863da2",
-      "Name": "Checker_red",
-      "Transform": {
-        "posX": 65.82076836,
-        "posY": -4,
-        "posZ": 75,
-        "rotX": 0,
-        "rotY": 180.021637,
-        "rotZ": 0,
+        "posX": -4.078736,
+        "posY": -3.9824985,
+        "posZ": 34.7377625,
+        "rotX": -0.000007755247,
+        "rotY": 180.01973,
+        "rotZ": 5.32619765e-7,
         "scaleX": 1,
         "scaleY": 1,
         "scaleZ": 1
       },
       "Nickname": "Red WH Stats Helper",
-      "Description": "",
+      "Description": "This is a helper for Warhammer stats made by Ricu.\n\nIt will show you the stats of the weapon you select.\n\nYou can also draw a range to see how far it is.",
       "GMNotes": "",
       "AltLookAngle": {
         "x": 0,
@@ -583,8 +493,8 @@
       },
       "ColorDiffuse": {
         "r": 1,
-        "g": 0,
-        "b": 0
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -594,32 +504,32 @@
       "IgnoreFoW": false,
       "MeasureMovement": false,
       "DragSelectable": true,
-      "Autoraise": false,
+      "Autoraise": true,
       "Sticky": true,
-      "Tooltip": false,
+      "Tooltip": true,
       "GridProjection": false,
       "HideWhenFaceDown": false,
       "Hands": false,
       "LuaScript": "",
       "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"0 0 -50\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
+      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0.5 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
     },
     {
-      "GUID": "863da8",
-      "Name": "Checker_red",
+      "GUID": "b7ac7a",
+      "Name": "Chip_100",
       "Transform": {
-        "posX": 65,
-        "posY": -5,
-        "posZ": 75,
-        "rotX": 0,
-        "rotY": 0.0000100179122,
-        "rotZ": 0,
+        "posX": 4.16885567,
+        "posY": -4.02278423,
+        "posZ": -33.2889366,
+        "rotX": -0.000007755247,
+        "rotY": 0.01973,
+        "rotZ": 5.32619765e-7,
         "scaleX": 1,
         "scaleY": 1,
         "scaleZ": 1
       },
       "Nickname": "Blue WH Stats Helper",
-      "Description": "",
+      "Description": "This is a helper for Warhammer stats made by Ricu.\n\nIt will show you the stats of the weapon you select.\n\nYou can also draw a range to see how far it is.",
       "GMNotes": "",
       "AltLookAngle": {
         "x": 0,
@@ -628,8 +538,8 @@
       },
       "ColorDiffuse": {
         "r": 1,
-        "g": 0,
-        "b": 0
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -639,15 +549,15 @@
       "IgnoreFoW": false,
       "MeasureMovement": false,
       "DragSelectable": true,
-      "Autoraise": false,
+      "Autoraise": true,
       "Sticky": true,
-      "Tooltip": false,
+      "Tooltip": true,
       "GridProjection": false,
       "HideWhenFaceDown": false,
       "Hands": false,
       "LuaScript": "",
       "LuaScriptState": "",
-      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"0 0 -50\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
+      "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
     },
     {
       "GUID": "64b6bb",
@@ -655,7 +565,7 @@
       "Transform": {
         "posX": 18.3576412,
         "posY": -3.18491971,
-        "posZ": 7.91937876,
+        "posZ": -0.88728565,
         "rotX": 6.205372,
         "rotY": 285.1289,
         "rotZ": 1.6714884,
@@ -4185,15 +4095,229 @@
       "XmlUI": ""
     },
     {
+      "GUID": "bf09bd",
+      "Name": "Bag",
+      "Transform": {
+        "posX": 21.9318962,
+        "posY": -5,
+        "posZ": 2.30179262,
+        "rotX": -6.955005e-7,
+        "rotY": 89.9898,
+        "rotZ": 0.00000202107253,
+      "scaleX": 1.55000043,
+      "scaleY": 1.55000043,
+      "scaleZ": 1.55000043
+      },
+      "Nickname": "Marcus Miniatures Rumble 2025",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 0.674216032,
+        "g": 0.674216032,
+        "b": 0.674216032
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "MaterialIndex": -1,
+      "MeshIndex": -1,
+      "Bag": {
+        "Order": 0
+      },
+      "LuaScript": "",
+      "LuaScriptState": "{\"ml\":{\"ffe3cf\":{\"pos\":{\"x\":6.359433,\"y\":1.03149855,\"z\":0.321186781},\"rot\":{\"x\":-2.91276848e-7,\"y\":89.98459,\"z\":-2.586654e-7},\"lock\":true},\"a91bbe\":{\"pos\":{\"x\":0.272286117,\"y\":0.9751034,\"z\":0.3464895},\"rot\":{\"x\":3.44923556e-8,\"y\":180,\"z\":0.54207243e-8},\"lock\":true}}}",
+      "XmlUI": "",
+      "ContainedObjects": [
+        {
+          "GUID": "a91bbe",
+          "Name": "CardCustom",
+          "Transform": {
+            "posX": 0.272286117,
+            "posY": 0.9751034,
+            "posZ": 0.3464895,
+            "rotX": 3.44923556e-8,
+            "rotY": 179.994751,
+            "rotZ": 1.54207243e-8,
+            "scaleX": 1.5,
+            "scaleY": 1,
+            "scaleZ": 1.5
+          },
+          "Nickname": "Round 1 \nTipping Point \nTarraform\n",
+          "Description": "",
+          "GMNotes": "",
+          "AltLookAngle": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "ColorDiffuse": {
+            "r": 0.713235259,
+            "g": 0.713235259,
+            "b": 0.713235259
+          },
+          "LayoutGroupSortIndex": 0,
+          "Value": 0,
+          "Locked": false,
+          "Grid": true,
+          "Snap": true,
+          "IgnoreFoW": false,
+          "MeasureMovement": false,
+          "DragSelectable": true,
+          "Autoraise": true,
+          "Sticky": true,
+          "Tooltip": true,
+          "GridProjection": false,
+          "HideWhenFaceDown": true,
+          "Hands": true,
+          "CardID": 182100,
+          "SidewaysCard": false,
+          "CustomDeck": {
+            "1821": {
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10209217184366109842/3488F2646B5BDAE7749F07B82EA627CC4B16FA04/",
+              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/10209217184366109842/3488F2646B5BDAE7749F07B82EA627CC4B16FA04/",
+              "NumWidth": 1,
+              "NumHeight": 1,
+              "BackIsHidden": true,
+              "UniqueBack": false,
+              "Type": 1
+            }
+          },
+          "LuaScript": "",
+          "LuaScriptState": "",
+          "XmlUI": ""
+        },
+        {
+          "GUID": "ffe3cf",
+          "Name": "Notecard",
+          "Transform": {
+            "posX": 6.359433,
+            "posY": 1.03149855,
+            "posZ": 0.321186781,
+            "rotX": -2.91276848e-7,
+            "rotY": 89.98459,
+            "rotZ": -2.586654e-7,
+            "scaleX": 1,
+            "scaleY": 1,
+            "scaleZ": 1
+          },
+          "Nickname": "Marcus Miniatures Rumble 2025",
+          "Description": "Round 1 \nTipping Point \nTarraform\n",
+          "GMNotes": "",
+          "AltLookAngle": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "ColorDiffuse": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "LayoutGroupSortIndex": 0,
+          "Value": 0,
+          "Locked": true,
+          "Grid": true,
+          "Snap": true,
+          "IgnoreFoW": false,
+          "MeasureMovement": false,
+          "DragSelectable": true,
+          "Autoraise": true,
+          "Sticky": true,
+          "Tooltip": true,
+          "GridProjection": false,
+          "HideWhenFaceDown": false,
+          "Hands": false,
+          "LuaScript": "",
+          "LuaScriptState": "",
+          "XmlUI": ""
+        }
+      ]
+    },
+    {
+      "GUID": "3c1373",
+      "Name": "CardCustom",
+      "Transform": {
+        "posX": 22.30549,
+        "posY": -2,
+        "posZ": -2.765328,
+        "rotX": 0.0000457716,
+        "rotY": 269.9765,
+        "rotZ": -0.000233304745,
+        "scaleX": 2,
+        "scaleY": 1,
+        "scaleZ": 2
+      },
+      "Nickname": "Marcus Miniatures - My Local Competitive Scene and Maps",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 0.713235259,
+        "g": 0.713235259,
+        "b": 0.713235259
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": true,
+      "Hands": true,
+      "CardID": 186300,
+      "SidewaysCard": false,
+      "CustomDeck": {
+        "1863": {
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/12105009825832238501/A154DC8F1E3BF927F748D7FC45B18CD5E3E36C65/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/12105009825832238501/A154DC8F1E3BF927F748D7FC45B18CD5E3E36C65/",
+          "NumWidth": 1,
+          "NumHeight": 1,
+          "BackIsHidden": true,
+          "UniqueBack": false,
+          "Type": 0
+        }
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+
+    {
       "GUID": "3c8a1b",
       "Name": "CardCustom",
       "Transform": {
-        "posX": 21.7954922,
+        "posX": 22.1972027,
         "posY": -2,
-        "posZ": 5.340162,
-        "rotX": 2.442605e-7,
-        "rotY": 270.0197,
-        "rotZ": 1.90196957e-7,
+        "posZ": 12.198926,
+        "rotX": 0.0000102543854,
+        "rotY": 270.0014,
+        "rotZ": -0.0000543986462,
         "scaleX": 2,
         "scaleY": 1,
         "scaleZ": 2
@@ -4248,13 +4372,13 @@
       "Transform": {
         "posX": 12.9397011,
         "posY": -5,
-        "posZ": -4.98342562,
+        "posZ": -5.772934,
         "rotX": -2.72293278e-7,
         "rotY": 89.9898,
         "rotZ": 9.35065657e-7,
-        "scaleX": 2,
-        "scaleY": 2,
-        "scaleZ": 2
+        "scaleX": 1.55000043,
+        "scaleY": 1.55000043,
+        "scaleZ": 1.55000043
       },
       "Nickname": "WTC Layout",
       "Description": "",
@@ -8670,13 +8794,13 @@
       "Transform": {
         "posX": 22.0231667,
         "posY": -5,
-        "posZ": 12.32625,
+        "posZ": 17.31791,
         "rotX": -1.87513891e-7,
         "rotY": 90.00932,
         "rotZ": 4.16213851e-7,
-        "scaleX": 2,
-        "scaleY": 2,
-        "scaleZ": 2
+        "scaleX": 1.55000043,
+        "scaleY": 1.55000043,
+        "scaleZ": 1.55000043
       },
       "Nickname": "UKTC Layout",
       "Description": "",
@@ -13888,13 +14012,13 @@
       "Transform": {
         "posX": 13.29429,
         "posY": -5,
-        "posZ": 12.32625,
+        "posZ": 11.5563183,
         "rotX": -0.00000163813888,
         "rotY": 89.979805,
         "rotZ": -0.00000193936285,
-        "scaleX": 2,
-        "scaleY": 2,
-        "scaleZ": 2
+        "scaleX": 1.55000043,
+        "scaleY": 1.55000043,
+        "scaleZ": 1.55000043
       },
       "Nickname": "GW Layout",
       "Description": "",
@@ -16238,9 +16362,9 @@
       "GUID": "8a7c7a",
       "Name": "CardCustom",
       "Transform": {
-        "posX": 21.7954922,
+        "posX": 22.119688,
         "posY": -3,
-        "posZ": -12.1371355,
+        "posZ": -15.8608742,
         "rotX": 5.00610838e-7,
         "rotY": 269.9765,
         "rotZ": -1.66532566e-8,
@@ -16296,15 +16420,15 @@
       "GUID": "ca7711",
       "Name": "Bag",
       "Transform": {
-        "posX": 22.0231667,
+        "posX": 21.6974888,
         "posY": -5,
-        "posZ": -4.98342562,
+        "posZ": -10.8569927,
         "rotX": -2.72293278e-7,
         "rotY": 89.9898,
         "rotZ": 9.35065657e-7,
-        "scaleX": 2,
-        "scaleY": 2,
-        "scaleZ": 2
+      "scaleX": 1.55000043,
+      "scaleY": 1.55000043,
+      "scaleZ": 1.55000043
       },
       "Nickname": "Apline Cup Bag",
       "Description": "",
@@ -26286,7 +26410,7 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomImage": {
-        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/15226569520214315705/6BECFE1F76A779A82FCC5C4B37800154111CE5AE/",
+        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/12000207467571473799/5D9623BE46578293566FE8C530E36392481480AC/",
         "ImageSecondaryURL": "",
         "ImageScalar": 1,
         "WidthScale": 0,
@@ -26343,7 +26467,7 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomImage": {
-        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/15226569520214315705/6BECFE1F76A779A82FCC5C4B37800154111CE5AE/",
+        "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/12194557650466167299/0755B1A33E303866AB91BC8CEA35E6346B3E25DC/",
         "ImageSecondaryURL": "",
         "ImageScalar": 1,
         "WidthScale": 0,
