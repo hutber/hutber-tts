@@ -3,9 +3,17 @@ function none()
 end
 Yoffset=0.1
 
+-- Use a portrait orientation for controls so the dice mat leaves
+-- space on the left for spawned dice.  Small buttons form a second
+-- column beside the main one.
+local portraitStartX = 4.6
+local portraitStartZ = -0.87
+local portraitSpacing = 0.35
+local portraitColSpacing = 0.4
+
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
-    position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
+    position={portraitStartX, Yoffset ,portraitStartZ}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}
 }
 
@@ -15,7 +23,7 @@ selectAllLabel = "Select all dice"
 selectAllTooltip = "Left-click to select all dice. Right-click to switch to rolling dice."
 rollOrSelectAllBtn={
     label=rollAllLabel, tooltip=rollAllTooltip, click_function="RollOrSelectDice", function_owner=self,
-    position={-3.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -23,7 +31,7 @@ orderedRollLabel = "Ordered roll"
 orderedRollTooltip = "Roll all dice, and display them in the order they're rolled in rather than by results."
 orderedRollBtn={
     label=orderedRollLabel, tooltip=orderedRollTooltip, click_function="RollDiceOrdered", function_owner=self,
-    position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*2}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -31,74 +39,74 @@ orderedRollGroup2Label = "In 2s"
 orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
 orderedRollGroup2Btn={
     label=orderedRollGroup2Label, tooltip=orderedRollGroup2Tooltip, click_function="RollDiceOrderedGroup2", function_owner=self,
-    position={-1.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*3}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 orderedRollGroup3Label = "In 3s"
 orderedRollGroup3Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 3s."
 orderedRollGroup3Btn={
     label=orderedRollGroup3Label, tooltip=orderedRollGroup3Tooltip, click_function="RollDiceOrderedGroup3", function_owner=self,
-    position={-1.1, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*4}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
 add1d6Btn={
     label="+ 1d6", click_function="spawnDice1", function_owner=self,
-    position={-0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*5}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add2d6Btn={
     label="+ 2d6", click_function="spawnDice2", function_owner=self,
-    position={0.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX + portraitColSpacing, Yoffset ,portraitStartZ + portraitSpacing*5}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add5d6Btn={
     label="+ 5d6", click_function="spawnDice5", function_owner=self,
-    position={0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*6}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add10d6Btn={
     label="+ 10d6", click_function="spawnDice10", function_owner=self,
-    position={1.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX + portraitColSpacing, Yoffset ,portraitStartZ + portraitSpacing*6}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add25d6Btn={
     label="+ 25d6", click_function="spawnDice25", function_owner=self,
-    position={1.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*7}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
 colorBtnDimension=150
-colorBtnOffset=2.0
+colorBtnOffset=3.0
 color1Btn={
     label="", click_function="modifyMenu1", function_owner=self,
-    position={colorBtnOffset, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*11}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Red", font_color={0,0,0}
 }
 color2Btn={
     label="", click_function="modifyMenu2", function_owner=self,
-    position={colorBtnOffset+0.35, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX + portraitColSpacing, Yoffset ,portraitStartZ + portraitSpacing*11}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Blue", font_color={0,0,0}
 }
 color3Btn={
     label="", click_function="modifyMenu3", function_owner=self,
-    position={colorBtnOffset+0.35*2, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*12}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Black", font_color={0,0,0}
 }
 color4Btn={
     label="", click_function="modifyMenu4", function_owner=self,
-    position={colorBtnOffset+0.35*3, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX + portraitColSpacing, Yoffset ,portraitStartZ + portraitSpacing*12}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Green", font_color={0,0,0}
 }
 pipColorBtn=
 {
   index=17, label="White", click_function="swapPipColor", function_owner=self,
-  position={colorBtnOffset + 0.35 * 4 + 0.1, Yoffset, -0.87}, rotation={0, 0, 0}, height=50, width=250,
+  position={portraitStartX, Yoffset, portraitStartZ + portraitSpacing*13}, rotation={0, 0, 0}, height=50, width=250,
   font_size=60, color="White", font_color="Black"
 }
 customDiceBtn={
     label="Custom Dice", click_function="customDice", function_owner=self,
-    position={colorBtnOffset+0.35*9, Yoffset ,-0.85}, rotation={0,0,0}, height=50, width=420,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*14}, rotation={0,0,0}, height=50, width=420,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -107,13 +115,13 @@ clearDiceBtnLabel="Del\n"
 clearDiceBtntooltip="LMB Delete this row\nRMB Delete this row and lowers/uppers"
 clearDiceBtn={
     label=clearDiceBtnLabel, tooltip=clearDiceBtntooltip, click_function="filledInLater", function_owner=self,
-    position={-5.8, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    position={5.8, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
     font_size=350, color="Black", font_color="Red"
 }
 
 rollOrSelectDiceBtn={
     label="filled in later", tooltip="filled in later", click_function="filledInLater", function_owner=self,
-    position={-5.45, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    position={5.45, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
     font_size=350, color="White", font_color={0,0,0}
 }
 
@@ -123,7 +131,7 @@ lowerSign=" (-)"
 upperSign=" (+)"
 lowerUpperBtn={
     label="RMB\n- / +", tooltip="Changes to upper for the next click", click_function="toggleLowerUpper", function_owner=self,
-    position={-5.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
+    position={5.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
@@ -131,7 +139,7 @@ warningLbl="NO FAST REPETITIONS"
 warningLbl=""
 warningBtn={
     label=warningLbl, click_function="modifyMenu4", function_owner=self,
-    position={-1.75, Yoffset ,-0.67}, rotation={0,0,0}, height=0, width=0,
+    position={1.75, Yoffset ,-0.67}, rotation={0,0,0}, height=0, width=0,
     font_size=50, color="White", font_color="Red"
 }
 
@@ -399,37 +407,16 @@ function spawnDice(n,player)
     lastClick=currentTime
     local offset=#getDice()
     if offset+n>128 then printToColor("Dice limit reached!", player, "Orange")  end
-    local grid=0
-    local row=0
-    local col=0
-    for i=1, offset do
-        col=col+1
-        if col>4 then
-            col=0
-            row= row+1
-            if row > 4 then
-                row=0
-                grid=grid+1
-            end
-        end
-    end
-
     if offset+n>128 then n=128-offset end
     for i=1, n do
-    local die=spawnObject({
-        type              = diceType,
-        position          = self.positionToWorld({4-grid*1.5-col*0.25,0.5,-0.3+row*0.25}),
-        rotation          = self.getRotation() + Vector(0.0, 180.0, 0.0),
+        local pos = offset + i - 1
+        local column = math.floor(pos / 25)
+        local row = pos % 25
+        local die=spawnObject({
+            type     = diceType,
+            position = self.positionToWorld({4 - column*0.25,0.5,-0.3+row*0.25}),
+            rotation = self.getRotation() + Vector(0.0, 180.0, 0.0),
         })
-        col=col+1
-        if col>4 then
-            col=0
-            row= row+1
-            if row > 4 then
-                row=0
-                grid=grid+1
-            end
-        end
 
         if customDiceImage ~= nil then
             die.setCustomObject({
@@ -454,7 +441,7 @@ function onload()
     --defaultDivisionLabel="|"
     self.createButton({
         label="---", click_function="none", function_owner=Global,
-        position={-6.4,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=fontSize,
+        position={6.4,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=fontSize,
         font_color={1, 1, 1},
         scale={0.25, 0.25, 0.25},
 		alignment=2

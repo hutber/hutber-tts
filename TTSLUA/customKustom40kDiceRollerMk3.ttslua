@@ -213,18 +213,37 @@ function onObjectPickedUp(playerColor, obj)
 end
 
 function onObjectDestroyed(obj)
-	lastHolder[obj] = nil
+        lastHolder[obj] = nil
+end
+
+-- Surround the roller with a subtle frame so players can easily see
+-- the area where dice will appear when spawned.
+local frameGUID = nil
+local function createRollerFrame()
+    if frameGUID then return end
+    local pos = self.getPosition()
+    local frame = spawnObject({
+        type     = "BlockSquare",
+        position = {pos.x, pos.y + 0.1, pos.z},
+        scale    = {30, 0.2, 20},
+        sound    = false
+    })
+    frame.setColorTint({0.15, 0.15, 0.15})
+    frame.setLock(true)
+    frame.setName("Dice Roller Frame")
+    frameGUID = frame.getGUID()
 end
 
 function onLoad(save_state)
     if self.getDescription() == '' then
-		setDefaultState()
-	end
-	self.createButton(printLastBtn)
-	self.createButton(printLast5Btn)
+                setDefaultState()
+        end
+        self.createButton(printLastBtn)
+        self.createButton(printLast5Btn)
     self.createButton(printDiceChancesBtn)
     -- NEW CODE: Add the Show Stats button to the object
     self.createButton(showStatsBtn)
+    createRollerFrame()
 end
 
 function onSave()
@@ -369,20 +388,21 @@ function takeDiceOut(tab)
                                 newXPos = 20.4 + d12Xoffset - (Rows[diceGuids[key]] * data.Step)
                                 newZPos = -3.17 + ((((diceGuids[key] - 1) % 6) + 1) * data.Step)
             else
-				local pos = n - 1
-				local limit = 25
-				if groupSize > 1 then
-					pos = pos + math.floor(pos / groupSize)
-					local step = groupSize + 1
-					local maxGroups = math.floor(limit / step)
-					local remainder = limit % (step * maxGroups)
-					limit = limit - remainder
-				end
-				row = math.floor(pos / limit) + 1
-				col = pos % limit
-                                -- Same flip for ordered/no-row placement
+                                local pos = n - 1
+                                local limit = 25
+                                if groupSize > 1 then
+                                        pos = pos + math.floor(pos / groupSize)
+                                        local step = groupSize + 1
+                                        local maxGroups = math.floor(limit / step)
+                                        local remainder = limit % (step * maxGroups)
+                                        limit = limit - remainder
+                                end
+                                -- Flip orientation so dice fill columns of 25
+                                -- running down the Z axis before moving left.
+                                row = pos % limit
+                                col = math.floor(pos / limit)
                                 newXPos = 15.0 - (col * data.Step)
-                                newZPos = -3.17 + (row * data.Step)
+                                newZPos = -3.17 + ((row + 1) * data.Step)
             end
 
 			params.position = {
