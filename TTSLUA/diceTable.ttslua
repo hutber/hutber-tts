@@ -6,7 +6,7 @@ Yoffset=0.1
 -- Use a portrait orientation for controls so the dice mat leaves
 -- space on the left for spawned dice.  Small buttons form a second
 -- column beside the main one.
-local portraitStartX = 4.6
+local portraitStartX = 4.0
 local portraitStartZ = -0.87
 local portraitSpacing = 0.35
 local portraitColSpacing = 0.4
@@ -115,13 +115,13 @@ clearDiceBtnLabel="Del\n"
 clearDiceBtntooltip="LMB Delete this row\nRMB Delete this row and lowers/uppers"
 clearDiceBtn={
     label=clearDiceBtnLabel, tooltip=clearDiceBtntooltip, click_function="filledInLater", function_owner=self,
-    position={5.8, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    position={5.2, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
     font_size=350, color="Black", font_color="Red"
 }
 
 rollOrSelectDiceBtn={
     label="filled in later", tooltip="filled in later", click_function="filledInLater", function_owner=self,
-    position={5.45, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    position={4.85, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
     font_size=350, color="White", font_color={0,0,0}
 }
 
@@ -131,7 +131,7 @@ lowerSign=" (-)"
 upperSign=" (+)"
 lowerUpperBtn={
     label="RMB\n- / +", tooltip="Changes to upper for the next click", click_function="toggleLowerUpper", function_owner=self,
-    position={5.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
+    position={5.02, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
@@ -139,7 +139,7 @@ warningLbl="NO FAST REPETITIONS"
 warningLbl=""
 warningBtn={
     label=warningLbl, click_function="modifyMenu4", function_owner=self,
-    position={1.75, Yoffset ,-0.67}, rotation={0,0,0}, height=0, width=0,
+    position={1.15, Yoffset ,-0.67}, rotation={0,0,0}, height=0, width=0,
     font_size=50, color="White", font_color="Red"
 }
 
@@ -441,7 +441,7 @@ function onload()
     --defaultDivisionLabel="|"
     self.createButton({
         label="---", click_function="none", function_owner=Global,
-        position={6.4,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=fontSize,
+        position={5.8,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=fontSize,
         font_color={1, 1, 1},
         scale={0.25, 0.25, 0.25},
 		alignment=2
