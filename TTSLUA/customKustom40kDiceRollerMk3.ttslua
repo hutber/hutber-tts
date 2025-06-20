@@ -363,8 +363,11 @@ function takeDiceOut(tab)
             local newXPos
             local newZPos
             if displayInRows then
-				newXPos = 0 - d12Xoffset - 20.4 + (Rows[diceGuids[key]]* data.Step)
-				newZPos = -3.17 + ((((diceGuids[key] - 1) % 6) + 1) * data.Step)
+                                -- Spawn dice on the left side of the roller so the
+                                -- buttons can sit on the right.  Simply flip the
+                                -- X offset used for placement.
+                                newXPos = 20.4 + d12Xoffset - (Rows[diceGuids[key]] * data.Step)
+                                newZPos = -3.17 + ((((diceGuids[key] - 1) % 6) + 1) * data.Step)
             else
 				local pos = n - 1
 				local limit = 25
@@ -377,8 +380,9 @@ function takeDiceOut(tab)
 				end
 				row = math.floor(pos / limit) + 1
 				col = pos % limit
-				newXPos = 0 - 15.0 + (col * data.Step)
-				newZPos = -3.17 + (row * data.Step)
+                                -- Same flip for ordered/no-row placement
+                                newXPos = 15.0 - (col * data.Step)
+                                newZPos = -3.17 + (row * data.Step)
             end
 
 			params.position = {
