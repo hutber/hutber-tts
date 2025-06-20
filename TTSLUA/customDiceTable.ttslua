@@ -10,9 +10,18 @@ else
     currentMat="Red"
 end
 
+-- Buttons were previously laid out horizontally which took up a lot of table
+-- space.  In order to make the roller more compact we now place everything in a
+-- vertical ("portrait") column.  The spacing between each control is handled
+-- with a small z offset.
+
+local portraitStartX = -4.6
+local portraitStartZ = -0.87
+local portraitSpacing = 0.35
+
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
-    position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
+    position={portraitStartX, Yoffset ,portraitStartZ}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}
 }
 
@@ -22,7 +31,7 @@ selectAllLabel = "Select all dice"
 selectAllTooltip = "Left-click to select all dice. Right-click to switch to rolling dice."
 rollOrSelectAllBtn={
     label=rollAllLabel, tooltip=rollAllTooltip, click_function="RollOrSelectDice", function_owner=self,
-    position={-3.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -30,57 +39,57 @@ orderedRollLabel = "Ordered roll"
 orderedRollTooltip = "Roll all dice, and display them in the order they're rolled in rather than by results."
 orderedRollBtn={
     label=orderedRollLabel, tooltip=orderedRollTooltip, click_function="RollDiceOrdered", function_owner=self,
-    position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*2}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 orderedRollGroup2Label = "In 2s"
 orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
 orderedRollGroup2Btn={
     label=orderedRollGroup2Label, tooltip=orderedRollGroup2Tooltip, click_function="RollDiceOrderedGroup2", function_owner=self,
-    position={-1.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*3}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 orderedRollGroup3Label = "In 3s"
 orderedRollGroup3Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 3s."
 orderedRollGroup3Btn={
     label=orderedRollGroup3Label, tooltip=orderedRollGroup3Tooltip, click_function="RollDiceOrderedGroup3", function_owner=self,
-    position={-1.1, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*4}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
 add1d6Btn={
     label="+ 1d6", click_function="spawnDice1", function_owner=self,
-    position={-0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*5}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add2d6Btn={
     label="+ 2d6", click_function="spawnDice2", function_owner=self,
-    position={0.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*6}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add3d6Btn={
     label="+ 3d6", click_function="spawnDice3", function_owner=self,
-    position={0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*7}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add4d6Btn={
     label="+ 4d6", click_function="spawnDice4", function_owner=self,
-    position={1.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*8}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add5d6Btn={
     label="+ 5d6", click_function="spawnDice5", function_owner=self,
-    position={1.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*9}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add10d6Btn={
     label="+ 10d6", click_function="spawnDice10", function_owner=self,
-    position={2.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*10}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add25d6Btn={
     label="+ 25d6", click_function="spawnDice25", function_owner=self,
-    position={2.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*11}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -88,34 +97,34 @@ colorBtnDimension=150
 colorBtnOffset=3.0
 color1Btn={
     label="", click_function="modifyMenu1", function_owner=self,
-    position={colorBtnOffset, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*12}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Red", font_color={0,0,0}
 }
 color2Btn={
     label="", click_function="modifyMenu2", function_owner=self,
-    position={colorBtnOffset+0.35, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*13}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Blue", font_color={0,0,0}
 }
 color3Btn={
     label="", click_function="modifyMenu3", function_owner=self,
-    position={colorBtnOffset+0.35*2, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*14}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Black", font_color={0,0,0}
 }
 color4Btn={
     label="", click_function="modifyMenu4", function_owner=self,
-    position={colorBtnOffset+0.35*3, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*15}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Green", font_color={0,0,0}
 }
 pipColorBtn=
 {
   index=17, label="White", click_function="swapPipColor", function_owner=self,
-  position={colorBtnOffset + 0.35 * 4 + 0.1, Yoffset, -0.87}, rotation={0, 0, 0}, height=50, width=250,
+  position={portraitStartX, Yoffset, portraitStartZ + portraitSpacing*16}, rotation={0, 0, 0}, height=50, width=250,
   font_size=60, color="White", font_color="Black"
 }
 
 customDiceBtn={
     label="Custom Dice", click_function="customDice", function_owner=self,
-    position={colorBtnOffset+0.35*9, Yoffset ,-0.85}, rotation={0,0,0}, height=50, width=420,
+    position={portraitStartX, Yoffset ,portraitStartZ + portraitSpacing*17}, rotation={0,0,0}, height=50, width=420,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
