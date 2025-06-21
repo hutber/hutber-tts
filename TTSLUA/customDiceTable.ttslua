@@ -335,6 +335,10 @@ local moveBtnRightButton = {
     scale = {0.5, 0.5, 0.5}
 }
 local moveBtnInputText = ""
+-- Track the last known position for edited buttons so repeated moves build on
+-- the latest coordinates.  This avoids relying on `getButtons`, which can
+-- return stale data after runtime modifications.
+local moveBtnPositions = {}
 local customDiceCount = 1 -- Default number of dice
 
 lethalHitsThreshold = 6
@@ -1762,23 +1766,31 @@ local function moveButtonBy(index, dx, dz, player)
         end
         return
     end
-    local buttons = self.getButtons()
-    if not buttons or not buttons[index] then
-        if player then
-            printToColor('Invalid button id', player, 'Red')
+
+    local pos = moveBtnPositions[index]
+    if not pos then
+        local buttons = self.getButtons()
+        if not buttons or not buttons[index] then
+            if player then
+                printToColor('Invalid button id', player, 'Red')
+            end
+            return
         end
-        return
+        pos = {table.unpack(buttons[index].position)}
     end
-    local pos = buttons[index].position
-    self.editButton({ index = index, position = { pos[1] + dx, pos[2], pos[3] + dz } })
+
+    pos[1] = pos[1] + dx
+    pos[3] = pos[3] + dz
+    moveBtnPositions[index] = pos
+    self.editButton({ index = index, position = pos })
 end
 
 function moveBtnUp(_, player, _)
-    moveButtonBy(tonumber(moveBtnInputText), 0, 0.1, player)
+    moveButtonBy(tonumber(moveBtnInputText), 0, -0.1, player)
 end
 
 function moveBtnDown(_, player, _)
-    moveButtonBy(tonumber(moveBtnInputText), 0, -0.1, player)
+    moveButtonBy(tonumber(moveBtnInputText), 0, 0.1, player)
 end
 
 function moveBtnLeft(_, player, _)
