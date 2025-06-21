@@ -290,7 +290,7 @@ local customDiceSpawnButton = {
     scale = {0.5, 0.5, 0.5}
 }
 -- Input for specifying the button to move
-local moveBtnInput = {
+local moveBtnInputSpec = {
     index = 1,
     label = "btn id",
     input_function = "updateMoveBtnInput",
@@ -302,7 +302,7 @@ local moveBtnInput = {
 }
 
 -- Directional movement buttons
-local moveBtnUp = {
+local moveBtnUpButton = {
     label = "Up", click_function = "moveBtnUp", function_owner = self,
     position = {6.9, Yoffset, 1.54}, rotation = {0, 0, 0},
     width = 600, height = 300, font_size = 150,
@@ -310,7 +310,7 @@ local moveBtnUp = {
     hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
 }
-local moveBtnDown = {
+local moveBtnDownButton = {
     label = "Down", click_function = "moveBtnDown", function_owner = self,
     position = {6.9, Yoffset, 1.88}, rotation = {0, 0, 0},
     width = 600, height = 300, font_size = 150,
@@ -318,7 +318,7 @@ local moveBtnDown = {
     hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
 }
-local moveBtnLeft = {
+local moveBtnLeftButton = {
     label = "Left", click_function = "moveBtnLeft", function_owner = self,
     position = {6.5, Yoffset, 1.71}, rotation = {0, 0, 0},
     width = 600, height = 300, font_size = 150,
@@ -326,7 +326,7 @@ local moveBtnLeft = {
     hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
 }
-local moveBtnRight = {
+local moveBtnRightButton = {
     label = "Right", click_function = "moveBtnRight", function_owner = self,
     position = {7.3, Yoffset, 1.71}, rotation = {0, 0, 0},
     width = 600, height = 300, font_size = 150,
@@ -1102,12 +1102,12 @@ function onload()
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
     self.createInput(customDiceInput)
-    self.createInput(moveBtnInput)
+    self.createInput(moveBtnInputSpec)
     self.createButton(customDiceSpawnButton)
-    self.createButton(moveBtnUp)
-    self.createButton(moveBtnDown)
-    self.createButton(moveBtnLeft)
-    self.createButton(moveBtnRight)
+    self.createButton(moveBtnUpButton)
+    self.createButton(moveBtnDownButton)
+    self.createButton(moveBtnLeftButton)
+    self.createButton(moveBtnRightButton)
     self.createButton(customDiceInputBG)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
