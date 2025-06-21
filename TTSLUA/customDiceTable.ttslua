@@ -289,10 +289,10 @@ local customDiceSpawnButton = {
     press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
     scale = {0.5, 0.5, 0.5}
 }
--- Input for moving existing buttons on the fly
+-- Input for specifying the button to move
 local moveBtnInput = {
     index = 1,
-    label = "index,x,z",
+    label = "btn id",
     input_function = "updateMoveBtnInput",
     function_owner = self,
     position = {6.9, Yoffset, 1.20}, rotation = {0, 0, 0},
@@ -301,11 +301,35 @@ local moveBtnInput = {
     color = {1, 1, 1, 1}, font_color = {0.2, 0.2, 0.2}
 }
 
--- Button that triggers the reposition
-local moveBtnButton = {
-    label = "Move Btn", click_function = "applyMoveBtn", function_owner = self,
+-- Directional movement buttons
+local moveBtnUp = {
+    label = "Up", click_function = "moveBtnUp", function_owner = self,
     position = {6.9, Yoffset, 1.54}, rotation = {0, 0, 0},
-    width = 1300, height = 300, font_size = 150,
+    width = 600, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+local moveBtnDown = {
+    label = "Down", click_function = "moveBtnDown", function_owner = self,
+    position = {6.9, Yoffset, 1.88}, rotation = {0, 0, 0},
+    width = 600, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+local moveBtnLeft = {
+    label = "Left", click_function = "moveBtnLeft", function_owner = self,
+    position = {6.5, Yoffset, 1.71}, rotation = {0, 0, 0},
+    width = 600, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+local moveBtnRight = {
+    label = "Right", click_function = "moveBtnRight", function_owner = self,
+    position = {7.3, Yoffset, 1.71}, rotation = {0, 0, 0},
+    width = 600, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
     hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
@@ -1080,7 +1104,10 @@ function onload()
     self.createInput(customDiceInput)
     self.createInput(moveBtnInput)
     self.createButton(customDiceSpawnButton)
-    self.createButton(moveBtnButton)
+    self.createButton(moveBtnUp)
+    self.createButton(moveBtnDown)
+    self.createButton(moveBtnLeft)
+    self.createButton(moveBtnRight)
     self.createButton(customDiceInputBG)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
@@ -1726,15 +1753,38 @@ function updateMoveBtnInput(_, _, value, _)
 end
 
 -- Parse input and reposition the specified button
-function applyMoveBtn(_, player, _)
-    local index, x, z = string.match(moveBtnInputText or '', '%s*(%d+)%s*,%s*([%-%.%d]+)%s*,%s*([%-%.%d]+)')
+-- Helper to move a button by a small offset
+local function moveButtonBy(index, dx, dz, player)
+    index = tonumber(index)
     if not index then
-        printToColor('Format: index,x,z', player, 'Red')
+        if player then
+            printToColor('Enter a button id', player, 'Red')
+        end
         return
     end
-    index = tonumber(index)
-    x = tonumber(x)
-    z = tonumber(z)
-    self.editButton({ index = index, position = { x, Yoffset, z } })
-    printToColor('Moved button ' .. index .. ' to (' .. x .. ', ' .. z .. ')', player, 'Green')
+    local buttons = self.getButtons()
+    if not buttons or not buttons[index] then
+        if player then
+            printToColor('Invalid button id', player, 'Red')
+        end
+        return
+    end
+    local pos = buttons[index].position
+    self.editButton({ index = index, position = { pos[1] + dx, pos[2], pos[3] + dz } })
+end
+
+function moveBtnUp(_, player, _)
+    moveButtonBy(tonumber(moveBtnInputText), 0, 0.1, player)
+end
+
+function moveBtnDown(_, player, _)
+    moveButtonBy(tonumber(moveBtnInputText), 0, -0.1, player)
+end
+
+function moveBtnLeft(_, player, _)
+    moveButtonBy(tonumber(moveBtnInputText), -0.1, 0, player)
+end
+
+function moveBtnRight(_, player, _)
+    moveButtonBy(tonumber(moveBtnInputText), 0.1, 0, player)
 end
