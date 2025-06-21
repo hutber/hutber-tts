@@ -334,7 +334,28 @@ local moveBtnRightButton = {
     hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
 }
+
+-- Input for absolute positioning ("id,x,z") and the trigger button
+local moveBtnCoordsInput = {
+    index = 2,
+    label = "id,x,z",
+    input_function = "updateMoveBtnCoords",
+    function_owner = self,
+    position = {6.9, Yoffset, 2.22}, rotation = {0, 0, 0},
+    width = 1100, height = 225, font_size = 180,
+    alignment = 2, scale = {0.5, 0.5, 0.5},
+    color = {1, 1, 1, 1}, font_color = {0.2, 0.2, 0.2}
+}
+local moveBtnApplyButton = {
+    label = "Move Btn", click_function = "applyMoveBtn", function_owner = self,
+    position = {6.9, Yoffset, 2.56}, rotation = {0, 0, 0},
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
 local moveBtnInputText = ""
+local moveBtnCoordsText = ""
 -- Track the last known position for edited buttons so repeated moves build on
 -- the latest coordinates.  This avoids relying on `getButtons`, which can
 -- return stale data after runtime modifications.
@@ -1112,6 +1133,8 @@ function onload()
     self.createButton(moveBtnDownButton)
     self.createButton(moveBtnLeftButton)
     self.createButton(moveBtnRightButton)
+    self.createInput(moveBtnCoordsInput)
+    self.createButton(moveBtnApplyButton)
     self.createButton(customDiceInputBG)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
@@ -1647,7 +1670,7 @@ function checkDice ()
     diceSum = 0
 
     for _, obj in pairs(getAllObjects()) do
-        if obj != nil and obj.tag == 'Dice' and obj.resting then
+        if obj ~= nil and obj.tag == 'Dice' and obj.resting then
             local objPos = obj.getPosition()
             if objPos['x'] > leftBound and objPos['x'] < rightBound and objPos['z'] > lowerBound and objPos['z'] < upperBound and objPos['y'] < yupperBound and objPos['y'] > ylowerBound then
                 local value = obj.getValue()
@@ -1756,8 +1779,24 @@ function updateMoveBtnInput(_, _, value, _)
     moveBtnInputText = value
 end
 
+-- Update the absolute positioning text
+function updateMoveBtnCoords(_, _, value, _)
+    moveBtnCoordsText = value
+end
+
 -- Parse input and reposition the specified button
 -- Helper to move a button by a small offset
+local function getButtonPosition(idx)
+    local buttons = self.getButtons()
+    if not buttons then return nil end
+    for _, btn in ipairs(buttons) do
+        if btn.index == idx then
+            return { table.unpack(btn.position) }
+        end
+    end
+    return nil
+end
+
 local function moveButtonBy(index, dx, dz, player)
     index = tonumber(index)
     if not index then
@@ -1769,14 +1808,13 @@ local function moveButtonBy(index, dx, dz, player)
 
     local pos = moveBtnPositions[index]
     if not pos then
-        local buttons = self.getButtons()
-        if not buttons or not buttons[index] then
+        pos = getButtonPosition(index)
+        if not pos then
             if player then
                 printToColor('Invalid button id', player, 'Red')
             end
             return
         end
-        pos = {table.unpack(buttons[index].position)}
     end
 
     pos[1] = pos[1] + dx
@@ -1799,4 +1837,28 @@ end
 
 function moveBtnRight(_, player, _)
     moveButtonBy(tonumber(moveBtnInputText), 0.1, 0, player)
+end
+
+-- Move a button to an exact X/Z coordinate
+function applyMoveBtn(_, player, _)
+    if not moveBtnCoordsText or moveBtnCoordsText == "" then
+        printToColor('Format: id,x,z', player, 'Red')
+        return
+    end
+    local id, x, z = string.match(moveBtnCoordsText, "^%s*(%d+)%s*,%s*([%-%d%.]+)%s*,%s*([%-%d%.]+)%s*$")
+    id, x, z = tonumber(id), tonumber(x), tonumber(z)
+    if not (id and x and z) then
+        printToColor('Format: id,x,z', player, 'Red')
+        return
+    end
+
+    local pos = getButtonPosition(id)
+    if not pos then
+        printToColor('Invalid button id', player, 'Red')
+        return
+    end
+
+    pos[1], pos[3] = x, z
+    moveBtnPositions[id] = pos
+    self.editButton({ index = id, position = pos })
 end
