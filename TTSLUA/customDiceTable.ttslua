@@ -289,6 +289,28 @@ local customDiceSpawnButton = {
     press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
     scale = {0.5, 0.5, 0.5}
 }
+-- Input for moving existing buttons on the fly
+local moveBtnInput = {
+    index = 1,
+    label = "index,x,z",
+    input_function = "updateMoveBtnInput",
+    function_owner = self,
+    position = {6.9, Yoffset, 1.20}, rotation = {0, 0, 0},
+    width = 1100, height = 225, font_size = 180,
+    alignment = 2, scale = {0.5, 0.5, 0.5},
+    color = {1, 1, 1, 1}, font_color = {0.2, 0.2, 0.2}
+}
+
+-- Button that triggers the reposition
+local moveBtnButton = {
+    label = "Move Btn", click_function = "applyMoveBtn", function_owner = self,
+    position = {6.9, Yoffset, 1.54}, rotation = {0, 0, 0},
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1}, press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+local moveBtnInputText = ""
 local customDiceCount = 1 -- Default number of dice
 
 lethalHitsThreshold = 6
@@ -1056,7 +1078,9 @@ function onload()
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
     self.createInput(customDiceInput)
+    self.createInput(moveBtnInput)
     self.createButton(customDiceSpawnButton)
+    self.createButton(moveBtnButton)
     self.createButton(customDiceInputBG)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
 
@@ -1694,4 +1718,23 @@ function swapPipColor()
     setDiceType()
 
     self.editButton(pipColorBtn)
+end
+
+-- Store the text from the move button input
+function updateMoveBtnInput(_, _, value, _)
+    moveBtnInputText = value
+end
+
+-- Parse input and reposition the specified button
+function applyMoveBtn(_, player, _)
+    local index, x, z = string.match(moveBtnInputText or '', '%s*(%d+)%s*,%s*([%-%.%d]+)%s*,%s*([%-%.%d]+)')
+    if not index then
+        printToColor('Format: index,x,z', player, 'Red')
+        return
+    end
+    index = tonumber(index)
+    x = tonumber(x)
+    z = tonumber(z)
+    self.editButton({ index = index, position = { x, Yoffset, z } })
+    printToColor('Moved button ' .. index .. ' to (' .. x .. ', ' .. z .. ')', player, 'Green')
 end
