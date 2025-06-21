@@ -85,7 +85,7 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.5.9: Fix: Wrong deployment used for map 4 of UKTC",
+    "1.5.9: Fix: Wrong deployment used for map 4 of UKTC & GW map 7 fixed missing tile. Added Marcus Miniatures to the mod (My local RTT maps :D).",
     "1.5.8: Fix: Updated Stat Helper to v2.14.2 & moved the coin so its easier to click plus AP on dice",
     "1.5.7: Feat: Change reserves mat colour",
     "1.5.6: Feat: Feedback button so you let me know how much you hate me! I love at least 80% of you! The rest I'm on the fence about.",
