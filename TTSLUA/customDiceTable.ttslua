@@ -10,6 +10,41 @@ else
     currentMat="Red"
 end
 
+local MM_TO_INCH = 0.0393701
+local MEASURING_RING_Y_OFFSET = 0.17
+local VALID_BASE_SIZES_IN_MM = {
+    {x = 25, z = 25},
+    {x = 28, z = 28},
+    {x = 30, z = 30},
+    {x = 32, z = 32},
+    {x = 40, z = 40},
+    {x = 50, z = 50},
+    {x = 55, z = 55},
+    {x = 60, z = 60},
+    {x = 65, z = 65},
+    {x = 80, z = 80},
+    {x = 90, z = 90},
+    {x = 100, z = 100},
+    {x = 130, z = 130},
+    {x = 160, z = 160},
+    {x = 25, z = 75},
+    {x = 75, z = 25},
+    {x = 35.5, z = 60},
+    {x = 60, z = 35.5},
+    {x = 40, z = 95},
+    {x = 95, z = 40},
+    {x = 52, z = 90},
+    {x = 90, z = 52},
+    {x = 70, z = 105},
+    {x = 105, z = 70},
+    {x = 92, z = 120},
+    {x = 120, z = 92},
+    {x = 95, z = 150},
+    {x = 150, z = 95},
+    {x = 109, z = 170},
+    {x = 170, z = 109}
+}
+
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
     position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
@@ -208,6 +243,30 @@ saveRestoreBtn={
     label=savePositionLabel, tooltip=savePositionTip, click_function="saveOrRestore", function_owner=self,
     position={-4.62, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=5000, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
+}
+
+measure3Btn={
+    label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
+    position={-3.6, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
+    font_size=500, color='White', font_color={0,0,0}
+}
+
+measure6Btn={
+    label='6"', tooltip='Toggle 6" bubble', click_function='toggle6Bubble', function_owner=self,
+    position={-2.8, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
+    font_size=500, color='White', font_color={0,0,0}
+}
+
+measure9Btn={
+    label='9"', tooltip='Toggle 9" bubble', click_function='toggle9Bubble', function_owner=self,
+    position={-2.0, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
+    font_size=500, color='White', font_color={0,0,0}
+}
+
+measure12Btn={
+    label='12"', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
+    position={-1.2, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1700, scale={0.1,0.1,0.1},
+    font_size=500, color='White', font_color={0,0,0}
 }
 function saveOrRestore(obj, player_color, alt)
     local selected = Player[player_color].getSelectedObjects()
@@ -1045,6 +1104,19 @@ end
 function onload()
     addHotkey('Save position', savePositionClicked)
     addHotkey('Restore position', restorePositionClicked)
+    addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
+    addHotkey("Toggle 3 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(3, target)
+    end)
+    addHotkey("Toggle 6 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(6, target)
+    end)
+    addHotkey("Toggle 9 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(9, target)
+    end)
+    addHotkey("Toggle 12 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(12.01, target)
+    end)
     lastClick=os.time()
     defaultFontSize=500
     fontSize=defaultFontSize
@@ -1115,6 +1187,10 @@ function onload()
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
     self.createButton(saveRestoreBtn)
+    self.createButton(measure3Btn)
+    self.createButton(measure6Btn)
+    self.createButton(measure9Btn)
+    self.createButton(measure12Btn)
     self.createInput(customDiceInput)
     self.createButton(customDiceSpawnButton)
     self.createButton(customDiceInputBG)
@@ -1754,4 +1830,277 @@ function swapPipColor()
     setDiceType()
 
     self.editButton(pipColorBtn)
+end
+
+-- Added from controlBoard.ttslua
+function arrangeModelsWith2Inch(playerColor, value, id)
+    local playerObj = Player[playerColor]
+    if not playerObj then
+      print("Player object not found for color: " .. playerColor)
+      return
+    end
+
+    local objs = playerObj.getSelectedObjects()
+    if #objs < 2 then
+      print("Less than 2 objects selected; nothing to arrange.")
+      return
+    end
+
+    local minPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    local maxPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    for i = 2, #objs do
+      local p = objs[i].getPosition()
+      if p.x < minPos.x then minPos.x = p.x end
+      if p.z < minPos.z then minPos.z = p.z end
+      if p.x > maxPos.x then maxPos.x = p.x end
+      if p.z > maxPos.z then maxPos.z = p.z end
+    end
+
+    local dx = maxPos.x - minPos.x
+    local dz = maxPos.z - minPos.z
+    local mag = math.sqrt(dx * dx + dz * dz)
+    local d = {}
+    if mag < 0.0001 then
+      d.x, d.z = 1, 0
+    else
+      d.x, d.z = dx / mag, dz / mag
+    end
+
+    local items = {}
+    for _, obj in ipairs(objs) do
+      local pos = obj.getPosition()
+      local half = obj.getBoundsNormalized().size.x / 2
+      local proj = pos.x * d.x + pos.z * d.z
+      table.insert(items, { obj = obj, pos = pos, half = half, proj = proj })
+    end
+
+    table.sort(items, function(a, b) return a.proj < b.proj end)
+
+    local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
+    local cumulative = 0
+    local previousHalf = items[1].half
+
+    for i, item in ipairs(items) do
+      if i == 1 then
+        item.newPos = { x = anchorPos.x, y = item.pos.y, z = anchorPos.z }
+      else
+        cumulative = cumulative + previousHalf + 2 + item.half
+        item.newPos = {
+          x = anchorPos.x + d.x * cumulative,
+          y = item.pos.y,
+          z = anchorPos.z + d.z * cumulative
+        }
+        previousHalf = item.half
+      end
+    end
+
+    for _, item in ipairs(items) do
+      item.obj.setPositionSmooth(item.newPos)
+    end
+
+    print("Arranged " .. #items .. " models with a 2-inch gap along the detected orientation.")
+end
+
+function determineBaseInInches(model)
+    local savedBase = model.getTable("chosenBase")
+
+    if savedBase ~= nil then
+        return savedBase.base
+    else
+        local chosenBase =  VALID_BASE_SIZES_IN_MM[1]
+        local modelSize = model.getBoundsNormalized().size
+        local modelSizeX = modelSize.x
+        local modelSizeZ = modelSize.z
+        local closestSum = 10000000000
+        local chosenBaseIdx = 1
+
+        for k, base in pairs(VALID_BASE_SIZES_IN_MM) do
+            local baseInchX = (MM_TO_INCH - 0.001) * base.x
+            local baseInchZ = (MM_TO_INCH - 0.001) * base.z
+            if modelSizeX > baseInchX and modelSizeZ > baseInchZ then
+                local distSum = (modelSizeX - baseInchX) + (modelSizeZ - baseInchZ)
+                if distSum < closestSum then
+                    closestSum = distSum
+                    chosenBase = base
+                    chosenBaseIdx = k
+                end
+            end
+        end
+
+        if chosenBase == nil then
+            chosenBase = { x=modelSizeX/2, z=modelSizeZ/2}
+        else
+            chosenBase = {
+                x = (chosenBase.x * MM_TO_INCH)/2,
+                z = (chosenBase.z * MM_TO_INCH)/2
+            }
+        end
+
+        model.setTable("chosenBase", { baseIdx=chosenBaseIdx, base=chosenBase })
+
+        return chosenBase
+    end
+end
+
+function getCircleVectorPoints(radius, baseX, baseZ, obj)
+    local result = {}
+    local scaleFactor = 1/obj.getScale().x
+    local rotationDegrees =  obj.getRotation().y
+    local steps = 64
+    local degrees,sin,cos,toRads = 360/steps, math.sin, math.cos, math.rad
+
+    for i = 0,steps do
+        table.insert(result,{
+            x = cos(toRads(degrees*i))*((radius+baseX)*scaleFactor),
+            z = MEASURING_RING_Y_OFFSET,
+            y = sin(toRads(degrees*i))*((radius+baseZ)*scaleFactor)
+        })
+    end
+
+    return result
+end
+
+function getRectangleVectorPoints(radius, sizeX, sizeZ, obj)
+    local result = {}
+    local scaleFactor = 1/obj.getScale().x
+
+    sizeX = sizeX*scaleFactor
+    sizeZ = sizeZ*scaleFactor
+    radius = radius*scaleFactor
+
+    local steps = 65
+    local degrees,sin,cos,toRads = 360/(steps-1), math.sin, math.cos, math.rad
+    local xOffset,zOffset = sizeX,sizeZ
+    table.insert(result,{
+        x = (cos(toRads(degrees*0))*radius)+sizeX-0.001,
+        y = (sin(toRads(degrees*0))*radius)+sizeZ,
+        z = MEASURING_RING_Y_OFFSET
+    })
+
+    for i = 1,steps-1 do
+        if i == 16 then
+            table.insert(result,{ x= sizeX, y=(radius+sizeZ), z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-sizeX, y=(radius+sizeZ), z=MEASURING_RING_Y_OFFSET })
+            xOffset = -sizeX
+        elseif i == 33 then
+            table.insert(result,{ x=-radius-sizeX,       y= sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-radius-sizeX-0.001, y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-radius-sizeX,       y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            zOffset = -sizeZ
+        elseif i == 49 then
+            table.insert(result,{ x=-sizeX, y=-radius-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x= sizeX, y=-radius-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            xOffset = sizeX
+        elseif i == 65 then
+            table.insert(result,{ x=radius+sizeX,       y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=radius+sizeX-0.001, y= sizeZ, z=MEASURING_RING_Y_OFFSET })
+        else
+            table.insert(result,{
+                x = (cos(toRads(degrees*i))*radius)+xOffset,
+                y = (sin(toRads(degrees*i))*radius)+zOffset,
+                z = MEASURING_RING_Y_OFFSET
+            })
+        end
+    end
+    table.insert(result,{
+        x = (cos(toRads(degrees*0))*radius)+sizeX-0.001,
+        y = (sin(toRads(degrees*0))*radius)+sizeZ,
+        z = MEASURING_RING_Y_OFFSET
+    })
+
+    return result
+end
+
+function toggleMeasurementCircleForSelection(radius, playerColor)
+    local playerObj = Player[playerColor]
+    if not playerObj then return end
+    local objs = playerObj.getSelectedObjects()
+    for _, obj in ipairs(objs) do
+        changeMeasurementCircle(radius, obj)
+    end
+end
+
+function toggle3Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(3, playerColor)
+end
+
+function toggle6Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(6, playerColor)
+end
+
+function toggle9Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(9, playerColor)
+end
+
+function toggle12Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(12.01, playerColor)
+end
+
+function changeMeasurementCircle(newRequestedRadius, target, presetBase)
+    if target == nil then return end
+
+    local measuringRings = target.getTable("ym-measuring-circles")
+    local currentColor = "Teal"
+    local currentColorRadius
+
+    if measuringRings == nil then
+        measuringRings = {}
+        currentColorRadius = 0
+    else
+        for idx = #measuringRings, 1, -1 do
+            if (measuringRings[idx].name == currentColor) or
+               (measuringRings[idx].name == nil and currentColor == nil) then
+                currentColorRadius = measuringRings[idx].radius
+                table.remove(measuringRings, idx)
+            elseif measuringRings[idx].name == "base" then
+                table.remove(measuringRings, idx)
+            end
+        end
+
+        if currentColorRadius == nil then currentColorRadius = 0 end
+    end
+
+    local newRadius
+    if currentColorRadius == newRequestedRadius then
+        newRadius = 0
+    else
+        newRadius = newRequestedRadius
+    end
+
+    if newRadius ~= 0 then
+        local isRectangular = target.hasTag("rectangularMeasuring")
+        local measuring = {
+            name = currentColor,
+            color = Color.fromString(currentColor),
+            radius = newRadius,
+            thickness = 0.5,
+            rotation = {270, 0, 0}
+        }
+        local base = {
+            name = "base",
+            color = Color.fromString(currentColor),
+            thickness = 0.2,
+            rotation = {270, 0, 0}
+        }
+
+        local measuringPoints, basePoints
+        if isRectangular then
+            local modelBounds = target.getBoundsNormalized()
+            measuringPoints = getRectangleVectorPoints(newRadius, modelBounds.size.x / 2, modelBounds.size.z / 2, target)
+            basePoints = getRectangleVectorPoints(0, modelBounds.size.x / 2, modelBounds.size.z / 2, target)
+        else
+            local baseRadiuses = (presetBase == nil) and determineBaseInInches(target) or presetBase
+            measuringPoints = getCircleVectorPoints(newRadius, baseRadiuses.x, baseRadiuses.z, target)
+            basePoints = getCircleVectorPoints(0, baseRadiuses.x, baseRadiuses.z, target)
+        end
+
+        measuring.points = measuringPoints
+        base.points = basePoints
+
+        table.insert(measuringRings, measuring)
+        table.insert(measuringRings, base)
+    end
+
+    target.setVectorLines(measuringRings)
+    target.setTable("ym-measuring-circles", measuringRings)
 end
