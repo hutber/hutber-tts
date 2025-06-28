@@ -1916,6 +1916,22 @@ function arrangeModelsWith2Inch(a, b, c)
       }
     end
 
+    local count = #items
+
+    -- If we have more than 7 models, move one model at either end of the line
+    -- 2" away from the line of models. The remaining models stay in a line with
+    -- 2" spacing. This mirrors the typical coherency layout for large units.
+    if count > 7 then
+      local perp = { x = -d.z, z = d.x }
+      local offset = { x = perp.x * 2, z = perp.z * 2 }
+
+      items[1].newPos.x = items[1].newPos.x + offset.x
+      items[1].newPos.z = items[1].newPos.z + offset.z
+
+      items[count].newPos.x = items[count].newPos.x + offset.x
+      items[count].newPos.z = items[count].newPos.z + offset.z
+    end
+
     for _, item in ipairs(items) do
       item.obj.setPositionSmooth(item.newPos)
     end
