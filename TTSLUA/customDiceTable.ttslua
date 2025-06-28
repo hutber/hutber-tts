@@ -1927,10 +1927,20 @@ function arrangeModelsWith2Inch(a, b, c)
 
     table.sort(items, function(a, b) return a.proj < b.proj end)
 
-    local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
-    items[1].newPos = { x = anchorPos.x, y = items[1].pos.y, z = anchorPos.z }
+    local offsetCount = 0
+    if #items > 7 then
+      offsetCount = 2
+    end
 
-    for i = 2, #items do
+    local startIndex = 1
+    if offsetCount == 2 then
+      startIndex = 3
+    end
+
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+
+    for i = startIndex + 1, #items - offsetCount do
       local prev = items[i - 1]
       local gapDist = prev.half + 2 + items[i].half
       items[i].newPos = {
@@ -1938,6 +1948,20 @@ function arrangeModelsWith2Inch(a, b, c)
         y = items[i].pos.y,
         z = prev.newPos.z + d.z * gapDist
       }
+    end
+
+    if offsetCount == 2 then
+      local p = { x = -d.z, z = d.x }
+
+      -- start offsets
+      local baseStart = items[startIndex].newPos
+      items[1].newPos = { x = baseStart.x + p.x * 2, y = items[1].pos.y, z = baseStart.z + p.z * 2 }
+      items[2].newPos = { x = baseStart.x - p.x * 2, y = items[2].pos.y, z = baseStart.z - p.z * 2 }
+
+      -- end offsets
+      local baseEnd = items[#items - offsetCount].newPos
+      items[#items - 1].newPos = { x = baseEnd.x + p.x * 2, y = items[#items - 1].pos.y, z = baseEnd.z + p.z * 2 }
+      items[#items].newPos = { x = baseEnd.x - p.x * 2, y = items[#items].pos.y, z = baseEnd.z - p.z * 2 }
     end
 
     for _, item in ipairs(items) do
