@@ -1927,16 +1927,85 @@ function arrangeModelsWith2Inch(a, b, c)
 
     table.sort(items, function(a, b) return a.proj < b.proj end)
 
-    local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
-    items[1].newPos = { x = anchorPos.x, y = items[1].pos.y, z = anchorPos.z }
+    local offsetCount = 0
+    if #items > 7 then
+      offsetCount = 2
+    end
 
-    for i = 2, #items do
+    local startIndex = 1
+    if offsetCount == 2 then
+      startIndex = 3
+    end
+
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+
+    for i = startIndex + 1, #items - offsetCount do
       local prev = items[i - 1]
       local gapDist = prev.half + 2 + items[i].half
       items[i].newPos = {
         x = prev.newPos.x + d.x * gapDist,
         y = items[i].pos.y,
         z = prev.newPos.z + d.z * gapDist
+      }
+    end
+
+    if offsetCount == 2 then
+      -- Use a perpendicular vector for offsetting from the main line
+      local p = { x = -d.z, z = d.x }
+
+      -- normalise p (should already be unit length but just to be safe)
+      local lenP = math.sqrt(p.x * p.x + p.z * p.z)
+      if lenP > 0.0001 then
+        p.x, p.z = p.x / lenP, p.z / lenP
+      end
+
+      -- start offsets - models 1 and 2 move north-west and south-west
+      local baseStart = items[startIndex]
+      local baseStartPos = baseStart.newPos
+      local dist1 = baseStart.half + 2 + items[1].half
+      local dist2 = baseStart.half + 2 + items[2].half
+
+      local nw = { x = -d.x + p.x, z = -d.z + p.z }
+      local lenNW = math.sqrt(nw.x * nw.x + nw.z * nw.z)
+      nw.x, nw.z = nw.x / lenNW, nw.z / lenNW
+      items[1].newPos = {
+        x = baseStartPos.x + nw.x * dist1,
+        y = items[1].pos.y,
+        z = baseStartPos.z + nw.z * dist1
+      }
+
+      local sw = { x = -d.x - p.x, z = -d.z - p.z }
+      local lenSW = math.sqrt(sw.x * sw.x + sw.z * sw.z)
+      sw.x, sw.z = sw.x / lenSW, sw.z / lenSW
+      items[2].newPos = {
+        x = baseStartPos.x + sw.x * dist2,
+        y = items[2].pos.y,
+        z = baseStartPos.z + sw.z * dist2
+      }
+
+      -- end offsets - models n-1 and n move north-east and south-east
+      local baseEnd = items[#items - offsetCount]
+      local baseEndPos = baseEnd.newPos
+      local dist3 = baseEnd.half + 2 + items[#items - 1].half
+      local dist4 = baseEnd.half + 2 + items[#items].half
+
+      local ne = { x = d.x + p.x, z = d.z + p.z }
+      local lenNE = math.sqrt(ne.x * ne.x + ne.z * ne.z)
+      ne.x, ne.z = ne.x / lenNE, ne.z / lenNE
+      items[#items - 1].newPos = {
+        x = baseEndPos.x + ne.x * dist3,
+        y = items[#items - 1].pos.y,
+        z = baseEndPos.z + ne.z * dist3
+      }
+
+      local se = { x = d.x - p.x, z = d.z - p.z }
+      local lenSE = math.sqrt(se.x * se.x + se.z * se.z)
+      se.x, se.z = se.x / lenSE, se.z / lenSE
+      items[#items].newPos = {
+        x = baseEndPos.x + se.x * dist4,
+        y = items[#items].pos.y,
+        z = baseEndPos.z + se.z * dist4
       }
     end
 
