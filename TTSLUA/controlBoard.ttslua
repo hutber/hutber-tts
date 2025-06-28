@@ -106,6 +106,11 @@ local RedControlBoard = {
             title = "Toggle the display of the custom counter",
             customHiddenPosition = -1.32
         },
+        {
+            name = "Dice Helpers",
+            state = true,
+            title = "Toggle save/restore and bubble buttons on dice table"
+        },
          --{
          --    name = "Rotation 5 Degrees",
          --    state = false,
@@ -185,6 +190,11 @@ local BlueControlBoard = {
             state = false,
             title = "Toggle the display of the custom counter",
             customHiddenPosition =  -1.3
+        }
+        ,{
+            name = "Dice Helpers",
+            state = true,
+            title = "Toggle save/restore and bubble buttons on dice table"
         }
         -- {
         --     name = "Rotation 5 Degrees",
@@ -626,6 +636,8 @@ function toggleOption(player, index)
         )
     elseif option.name == "Custom Counter" then
         toggleObjectState(board.CustomCounter, option.state, option.customHiddenPosition)
+    elseif option.name == "Dice Helpers" then
+        toggleDiceHelpers(board, option.state)
     elseif option.name == "Rotation 5 Degrees" then
     print(expectedColor)
         toggleRotationAngle(board.CustomCounter, option.state)
@@ -706,6 +718,15 @@ function toggleDiceBags(board, state)
         else
             print("Dice bag object not found: " .. guid)
         end
+    end
+end
+
+function toggleDiceHelpers(board, state)
+    local obj = getObjectFromGUID(board.CustomDiceMat_GUID)
+    if obj then
+        obj.call('setExtraButtonsVisible', {state = state})
+    else
+        print('Dice table object not found: ' .. board.CustomDiceMat_GUID)
     end
 end
 

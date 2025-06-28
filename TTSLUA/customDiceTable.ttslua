@@ -292,6 +292,18 @@ gap2Btn={
     font_size=500, color='White', font_color={0,0,0}
 }
 
+local extraButtonDefs = {
+    save  = savePositionBtn,
+    restore = restorePositionBtn,
+    b1 = measure1Btn,
+    b3 = measure3Btn,
+    b6 = measure6Btn,
+    b9 = measure9Btn,
+    b12 = measure12Btn
+}
+local extraButtonIndices = {}
+local extraButtonsVisible = true
+
 function savePositionButton(obj, player_color, alt)
     savePositionClicked(player_color)
 end
@@ -1201,18 +1213,20 @@ function onload()
     self.createButton(auto1D6)
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
-    self.createButton(savePositionBtn)
-    self.createButton(restorePositionBtn)
-    self.createButton(measure1Btn)
-    self.createButton(measure3Btn)
-    self.createButton(measure6Btn)
-    self.createButton(measure9Btn)
-    self.createButton(measure12Btn)
+    extraButtonIndices.save = self.createButton(savePositionBtn)
+    extraButtonIndices.restore = self.createButton(restorePositionBtn)
+    extraButtonIndices.b1 = self.createButton(measure1Btn)
+    extraButtonIndices.b3 = self.createButton(measure3Btn)
+    extraButtonIndices.b6 = self.createButton(measure6Btn)
+    extraButtonIndices.b9 = self.createButton(measure9Btn)
+    extraButtonIndices.b12 = self.createButton(measure12Btn)
     self.createButton(gap2Btn)
     self.createInput(customDiceInput)
     self.createButton(customDiceSpawnButton)
     self.createButton(customDiceInputBG)
     if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
+
+    setExtraButtonsVisible({state = extraButtonsVisible})
 
 end
 
@@ -2129,4 +2143,28 @@ function changeMeasurementCircle(newRequestedRadius, target, presetBase)
 
     target.setVectorLines(measuringRings)
     target.setTable("ym-measuring-circles", measuringRings)
+end
+
+function setExtraButtonsVisible(params)
+    local visible = params.state
+    for name, idx in pairs(extraButtonIndices) do
+        local def = extraButtonDefs[name]
+        if visible then
+            self.editButton({
+                index = idx,
+                label = def.label,
+                tooltip = def.tooltip,
+                width = def.width,
+                height = def.height
+            })
+        else
+            self.editButton({
+                index = idx,
+                label = "",
+                tooltip = "",
+                width = 0,
+                height = 0
+            })
+        end
+    end
 end
