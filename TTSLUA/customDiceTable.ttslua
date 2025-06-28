@@ -1903,18 +1903,59 @@ function arrangeModelsWith2Inch(a, b, c)
 
     table.sort(items, function(a, b) return a.proj < b.proj end)
 
-    local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
-    items[1].newPos = { x = anchorPos.x, y = items[1].pos.y, z = anchorPos.z }
+    local count = #items
 
-    for i = 2, #items do
+    -- Determine the range of items that form the main line. When there are more
+    -- than seven models we reserve the first two and last two items for the
+    -- "off-line" coherency pattern.
+    local startIndex, endIndex = 1, count
+    if count > 7 then
+      startIndex = 3
+      endIndex = count - 2
+    end
+
+    -- Position the main line of models with 2" spacing.
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+    for i = startIndex + 1, endIndex do
       local prev = items[i - 1]
       local gapDist = prev.half + 2 + items[i].half
       items[i].newPos = {
         x = prev.newPos.x + d.x * gapDist,
         y = items[i].pos.y,
-        z = prev.newPos.z + d.z * gapDist
+        z = prev.newPos.z + d.z * gapDist,
       }
     end
+
+    if count > 7 then
+      local perp = { x = -d.z, z = d.x }
+      local offset = { x = perp.x * 2, z = perp.z * 2 }
+
+      -- Left cluster
+      items[1].newPos = {
+        x = items[startIndex].newPos.x + offset.x,
+        y = items[1].pos.y,
+        z = items[startIndex].newPos.z + offset.z,
+      }
+      items[2].newPos = {
+        x = items[startIndex].newPos.x - offset.x,
+        y = items[2].pos.y,
+        z = items[startIndex].newPos.z - offset.z,
+      }
+
+      -- Right cluster
+      items[count - 1].newPos = {
+        x = items[endIndex].newPos.x + offset.x,
+        y = items[count - 1].pos.y,
+        z = items[endIndex].newPos.z + offset.z,
+      }
+      items[count].newPos = {
+        x = items[endIndex].newPos.x - offset.x,
+        y = items[count].pos.y,
+        z = items[endIndex].newPos.z - offset.z,
+      }
+    end
+
 
     for _, item in ipairs(items) do
       item.obj.setPositionSmooth(item.newPos)

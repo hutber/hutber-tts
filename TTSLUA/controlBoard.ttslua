@@ -255,27 +255,57 @@ function arrangeModelsWith2Inch(playerColor, value, id)
     -- Sort items by their projection value
     table.sort(items, function(a, b) return a.proj < b.proj end)
 
-    -- Use the first item as the starting point. We'll anchor its new position at its current position.
-    local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
-    local startY = items[1].pos.y
-    local cumulative = items[1].half  -- start with half-width of first model
+    local count = #items
 
-    -- For each item, compute its new position along the direction d.
-    for i, item in ipairs(items) do
-      if i == 1 then
-        -- First item remains at its anchor position (preserve its original Y)
-        item.newPos = { x = anchorPos.x, y = item.pos.y, z = anchorPos.z }
-      else
-        -- Increase cumulative distance by: previous half + gap (2") + current half
-        local prev = items[i-1]
-        cumulative = cumulative + prev.half + 2 + item.half
-        -- New position is: anchorPos + d * cumulative (in X-Z), but use the model's original Y
-        item.newPos = {
-          x = anchorPos.x + d.x * cumulative,
-          y = item.pos.y,
-          z = anchorPos.z + d.z * cumulative
-        }
-      end
+    -- Determine which indices will form the main line. When more than seven
+    -- models are selected we keep the first two and last two models for
+    -- off-line placement.
+    local startIndex, endIndex = 1, count
+    if count > 7 then
+      startIndex = 3
+      endIndex = count - 2
+    end
+
+    -- Anchor the line starting at startIndex and space models by 2".
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+    for i = startIndex + 1, endIndex do
+      local prev = items[i-1]
+      local gapDist = prev.half + 2 + items[i].half
+      items[i].newPos = {
+        x = prev.newPos.x + d.x * gapDist,
+        y = items[i].pos.y,
+        z = prev.newPos.z + d.z * gapDist,
+      }
+    end
+
+    if count > 7 then
+      local perp = { x = -d.z, z = d.x }
+      local offset = { x = perp.x * 2, z = perp.z * 2 }
+
+      -- Left side cluster
+      items[1].newPos = {
+        x = items[startIndex].newPos.x + offset.x,
+        y = items[1].pos.y,
+        z = items[startIndex].newPos.z + offset.z,
+      }
+      items[2].newPos = {
+        x = items[startIndex].newPos.x - offset.x,
+        y = items[2].pos.y,
+        z = items[startIndex].newPos.z - offset.z,
+      }
+
+      -- Right side cluster
+      items[count - 1].newPos = {
+        x = items[endIndex].newPos.x + offset.x,
+        y = items[count - 1].pos.y,
+        z = items[endIndex].newPos.z + offset.z,
+      }
+      items[count].newPos = {
+        x = items[endIndex].newPos.x - offset.x,
+        y = items[count].pos.y,
+        z = items[endIndex].newPos.z - offset.z,
+      }
     end
 
     -- Apply the new positions to each model
