@@ -1138,9 +1138,9 @@ function restorePositionClicked(playerColor)
 end
 
 function onload()
+    addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
     addHotkey('Save position', savePositionClicked)
     addHotkey('Restore position', restorePositionClicked)
-    addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
     addHotkey("Toggle 1 Inch Measurment Circle", function(playerColor, target)
         changeMeasurementCircle(1, target)
     end)
