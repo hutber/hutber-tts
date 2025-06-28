@@ -221,7 +221,6 @@ function arrangeModelsWith2Inch(playerColor, value, id)
       return
     end
 
-    -- Determine overall orientation in the X-Z plane using the bounding box of the selected objects.
     local minPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
     local maxPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
     for i = 2, #objs do
@@ -242,43 +241,29 @@ function arrangeModelsWith2Inch(playerColor, value, id)
       d.x, d.z = dx / mag, dz / mag
     end
 
-    -- Build a list of items with their object, original position, and half-width (using bounds.x as an approximation)
     local items = {}
     for _, obj in ipairs(objs) do
       local pos = obj.getPosition()
       local half = obj.getBoundsNormalized().size.x / 2
-      -- Compute projection of the object's center along the direction d in the X-Z plane.
       local proj = pos.x * d.x + pos.z * d.z
       table.insert(items, { obj = obj, pos = pos, half = half, proj = proj })
     end
 
-    -- Sort items by their projection value
     table.sort(items, function(a, b) return a.proj < b.proj end)
 
-    -- Use the first item as the starting point. We'll anchor its new position at its current position.
     local anchorPos = { x = items[1].pos.x, z = items[1].pos.z }
-    local startY = items[1].pos.y
-    local cumulative = items[1].half  -- start with half-width of first model
+    items[1].newPos = { x = anchorPos.x, y = items[1].pos.y, z = anchorPos.z }
 
-    -- For each item, compute its new position along the direction d.
-    for i, item in ipairs(items) do
-      if i == 1 then
-        -- First item remains at its anchor position (preserve its original Y)
-        item.newPos = { x = anchorPos.x, y = item.pos.y, z = anchorPos.z }
-      else
-        -- Increase cumulative distance by: previous half + gap (2") + current half
-        local prev = items[i-1]
-        cumulative = cumulative + prev.half + 2 + item.half
-        -- New position is: anchorPos + d * cumulative (in X-Z), but use the model's original Y
-        item.newPos = {
-          x = anchorPos.x + d.x * cumulative,
-          y = item.pos.y,
-          z = anchorPos.z + d.z * cumulative
-        }
-      end
+    for i = 2, #items do
+      local prev = items[i - 1]
+      local gapDist = prev.half + 2 + items[i].half
+      items[i].newPos = {
+        x = prev.newPos.x + d.x * gapDist,
+        y = items[i].pos.y,
+        z = prev.newPos.z + d.z * gapDist
+      }
     end
 
-    -- Apply the new positions to each model
     for _, item in ipairs(items) do
       item.obj.setPositionSmooth(item.newPos)
     end
