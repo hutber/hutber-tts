@@ -45,6 +45,9 @@ local VALID_BASE_SIZES_IN_MM = {
     {x = 170, z = 109}
 }
 
+local savedPositions = {}
+local lastSaveLogTime = 0
+
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
     position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
@@ -1068,10 +1071,10 @@ function sustainedLethalHitsAction(_, color, alt)
 end
 
 function getObjectsPositionToSave(player, hoveredObject)
-  if #player.getSelectedObjects() != 0 then
+  if #player.getSelectedObjects() ~= 0 then
     return player.getSelectedObjects()
-  elseif hoveredObject != nil then
-    return table.insert({}, hoveredObject)
+  elseif hoveredObject ~= nil then
+    return {hoveredObject}
   end
   return nil
 end
@@ -1092,7 +1095,11 @@ function savePositionClicked(playerColor, hoveredObject)
     for i,v in ipairs(objects) do
       savePosition(v)
     end
-    printToColor(#objects.." objects positions saved!", playerColor)
+    local now = os.time()
+    if now ~= lastSaveLogTime then
+      printToColor(#objects.." objects positions saved!", playerColor)
+      lastSaveLogTime = now
+    end
   end
 end
 
