@@ -245,6 +245,12 @@ saveRestoreBtn={
     font_size=500, color="White", font_color={0,0,0}
 }
 
+measure1Btn={
+    label='1"', tooltip='Toggle 1" bubble', click_function='toggle1Bubble', function_owner=self,
+    position={-4.0, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
+    font_size=500, color='White', font_color={0,0,0}
+}
+
 measure3Btn={
     label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
     position={-3.6, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
@@ -1111,6 +1117,9 @@ function onload()
     addHotkey('Save position', savePositionClicked)
     addHotkey('Restore position', restorePositionClicked)
     addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
+    addHotkey("Toggle 1 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(1, target)
+    end)
     addHotkey("Toggle 3 Inch Measurment Circle", function(playerColor, target)
         changeMeasurementCircle(3, target)
     end)
@@ -1193,6 +1202,7 @@ function onload()
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
     self.createButton(saveRestoreBtn)
+    self.createButton(measure1Btn)
     self.createButton(measure3Btn)
     self.createButton(measure6Btn)
     self.createButton(measure9Btn)
@@ -2020,6 +2030,10 @@ function toggleMeasurementCircleForSelection(radius, playerColor)
     for _, obj in ipairs(objs) do
         changeMeasurementCircle(radius, obj)
     end
+end
+
+function toggle1Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(1, playerColor)
 end
 
 function toggle3Bubble(obj, playerColor, alt)
