@@ -241,44 +241,49 @@ savePositionLabel = "Save/Restore Position"
 savePositionTip   = "Left-click to SAVE position\nRight-click to Restore."
 saveRestoreBtn={
     label=savePositionLabel, tooltip=savePositionTip, click_function="saveOrRestore", function_owner=self,
-    position={-4.62, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=5000, scale={0.1,0.1,0.1},
-    font_size=500, color="White", font_color={0,0,0}
-}
-
-measure1Btn={
-    label='1"', tooltip='Toggle 1" bubble', click_function='toggle1Bubble', function_owner=self,
-    position={-4.0, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
-}
-
-measure3Btn={
-    label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
-    position={-3.6, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
-}
-
-measure6Btn={
-    label='6"', tooltip='Toggle 6" bubble', click_function='toggle6Bubble', function_owner=self,
-    position={-2.8, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
-}
-
-measure9Btn={
-    label='9"', tooltip='Toggle 9" bubble', click_function='toggle9Bubble', function_owner=self,
-    position={-2.0, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
-}
-
-measure12Btn={
-    label='12"', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
-    position={-1.2, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1700, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    position={-7.20, Yoffset ,-1.68}, rotation={0,0,0},     
+    width = 1500, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
 }
 
 gap2Btn={
     label='2" gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
-    position={-0.4, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    position={-7.71, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    font_size=750, color='White', font_color={0,0,0}
+}
+
+measure1Btn={
+    label='1"', tooltip='Toggle 1" bubble', click_function='toggle1Bubble', function_owner=self,
+    position={-7.83, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure3Btn={
+    label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
+    position={-7.53, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure6Btn={
+    label='6"', tooltip='Toggle 6" bubble', click_function='toggle6Bubble', function_owner=self,
+    position={-7.23, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure9Btn={
+    label='9"', tooltip='Toggle 9" bubble', click_function='toggle9Bubble', function_owner=self,
+    position={-6.93, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure12Btn={
+    label='12"', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
+    position={-6.63, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
 function saveOrRestore(obj, player_color, alt)
     local selected = Player[player_color].getSelectedObjects()
