@@ -1916,6 +1916,29 @@ function arrangeModelsWith2Inch(a, b, c)
       }
     end
 
+    -- If more than seven models are selected, offset one model at either end of
+    -- the line so each end forms a group of four (three in line, one 2" away).
+    if #items > 7 then
+      local perp = { x = -d.z, z = d.x }
+      local startIdx = 4
+      if items[startIdx] then
+        items[startIdx].newPos = {
+          x = items[startIdx].newPos.x + perp.x * 2,
+          y = items[startIdx].newPos.y,
+          z = items[startIdx].newPos.z + perp.z * 2
+        }
+      end
+
+      local endIdx = #items - 3
+      if items[endIdx] then
+        items[endIdx].newPos = {
+          x = items[endIdx].newPos.x - perp.x * 2,
+          y = items[endIdx].newPos.y,
+          z = items[endIdx].newPos.z - perp.z * 2
+        }
+      end
+    end
+
     for _, item in ipairs(items) do
       item.obj.setPositionSmooth(item.newPos)
     end

@@ -278,6 +278,33 @@ function arrangeModelsWith2Inch(playerColor, value, id)
       end
     end
 
+    -- If the unit has more than 7 models, offset one model at either end so
+    -- that groups of four form at the ends (three in line, one 2" away).
+    if #items > 7 then
+      -- Perpendicular direction to offset models away from the line
+      local perp = { x = -d.z, z = d.x }
+
+      -- Index of the model to offset at the start of the line
+      local startIdx = 4
+      if items[startIdx] then
+        items[startIdx].newPos = {
+          x = items[startIdx].newPos.x + perp.x * 2,
+          y = items[startIdx].newPos.y,
+          z = items[startIdx].newPos.z + perp.z * 2
+        }
+      end
+
+      -- Index of the model to offset at the end of the line
+      local endIdx = #items - 3
+      if items[endIdx] then
+        items[endIdx].newPos = {
+          x = items[endIdx].newPos.x - perp.x * 2,
+          y = items[endIdx].newPos.y,
+          z = items[endIdx].newPos.z - perp.z * 2
+        }
+      end
+    end
+
     -- Apply the new positions to each model
     for _, item in ipairs(items) do
       item.obj.setPositionSmooth(item.newPos)
