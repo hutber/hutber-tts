@@ -59,8 +59,8 @@ local RedControlBoard = {
         grey = "4433bb",
         green = "21569d",
         red = "14d612",
-        lightGrey = "791e47",
-        orange = "2ff2db",
+        -- lightGrey = "791e47",
+        -- orange = "2ff2db",
     },
     options = {
         {
@@ -139,8 +139,8 @@ local BlueControlBoard = {
         grey = "0e6250",
         green = "99582c",
         red = "31b11f",
-        lightGrey = "176bc4",
-        orange = "a65625",
+        -- lightGrey = "176bc4",
+        -- orange = "a65625",
     },
     options = {
         {

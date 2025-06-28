@@ -16,8 +16,6 @@ function onSave()
 end
 
 function onLoad(data)
-  addHotkey('Save position', savePositionClicked)
-  addHotkey('Restore position', restorePositionClicked)
   self.addContextMenuItem("Set Custom Dice", onSetCustomDiceClicked)
   self.addContextMenuItem("Reset Custom Dice", onResetCustomDiceClicked)
   self.addContextMenuItem("Set Spawn Position", onSetSpawnPositionClicked)
@@ -127,46 +125,6 @@ function saveCustomDie(die)
   customDieData.colorTint = die.getColorTint()
   customDieData.image = die.getCustomObject().image
 end
-
-function savePositionClicked(playerColor, hoveredObject)
-  savedPositions = {}
-  local objects = getObjectsPositionToSave(Player[playerColor], hoveredObject)
-
-  if objects != nil then
-    for i,v in ipairs(objects) do
-      savePosition(v)
-    end
-    printToColor(#objects.." objects positions saved!", playerColor)
-  end
-end
-
-function restorePositionClicked(playerColor)
-  for i,v in ipairs(savedPositions) do
-    local obj = getObjectFromGUID(v.guid)
-    if obj != nil then
-      obj.setRotation(v.rotation)
-      obj.setPositionSmooth(v.position, false, true)
-    end
-  end
-end
-
-function getObjectsPositionToSave(player, hoveredObject)
-  if #player.getSelectedObjects() != 0 then
-    return player.getSelectedObjects()
-  elseif hoveredObject != nil then
-    return table.insert({}, hoveredObject)
-  end
-  return nil
-end
-
-function savePosition(obj)
-  table.insert(savedPositions, {
-    guid = obj.getGUID(),
-    position = obj.getPosition(),
-    rotation = obj.getRotation()
-  })
-end
-
 function setCurrentSelection(player)
   if (#player.getSelectedObjects() == 0) then
     printMessage("Select some models first!")

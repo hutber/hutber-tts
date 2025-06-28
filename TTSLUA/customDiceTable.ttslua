@@ -201,6 +201,38 @@ copyOthersDiceBtn = {
     scale = {0.5, 0.5, 0.5}
 }
 
+local hasObjectSaved = false
+savePositionLabel = "Save/Restore Position"
+savePositionTip   = "Left-click to SAVE position\nRight-click to Restore."
+saveRestoreBtn={
+    label=savePositionLabel, tooltip=savePositionTip, click_function="saveOrRestore", function_owner=self,
+    position={-4.62, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=5000, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+function saveOrRestore(obj, player_color, alt)
+    local selected = Player[player_color].getSelectedObjects()
+    if not selected or #selected == 0 then
+        printToColor("Please first select a model to save its position", player_color)
+        return
+    end
+    for _, o in ipairs(selected) do
+        local guid = o.getGUID()
+        if guid == "acae21" or guid == "839fcc" then
+            printToColor("Please first select a model to save its position", player_color)
+            return
+        end
+    end
+    if alt then
+        restorePositionClicked(player_color)
+    else
+        hasObjectSaved = true
+        -- save all selected objects
+        for _, o in ipairs(selected) do
+            savePositionClicked(player_color, o)
+        end
+    end
+end
+
 local auto1D6 = {
     label          = "Instant 1D6",
     tooltip="Roll 1D6 Instantly",
@@ -971,8 +1003,48 @@ function sustainedLethalHitsAction(_, color, alt)
     end
 end
 
+function getObjectsPositionToSave(player, hoveredObject)
+  if #player.getSelectedObjects() != 0 then
+    return player.getSelectedObjects()
+  elseif hoveredObject != nil then
+    return table.insert({}, hoveredObject)
+  end
+  return nil
+end
+
+function savePosition(obj)
+  table.insert(savedPositions, {
+    guid = obj.getGUID(),
+    position = obj.getPosition(),
+    rotation = obj.getRotation()
+  })
+end
+
+function savePositionClicked(playerColor, hoveredObject)
+  savedPositions = {}
+  local objects = getObjectsPositionToSave(Player[playerColor], hoveredObject)
+
+  if objects != nil then
+    for i,v in ipairs(objects) do
+      savePosition(v)
+    end
+    printToColor(#objects.." objects positions saved!", playerColor)
+  end
+end
+
+function restorePositionClicked(playerColor)
+  for i,v in ipairs(savedPositions) do
+    local obj = getObjectFromGUID(v.guid)
+    if obj != nil then
+      obj.setRotation(v.rotation)
+      obj.setPositionSmooth(v.position, false, true)
+    end
+  end
+end
 
 function onload()
+    addHotkey('Save position', savePositionClicked)
+    addHotkey('Restore position', restorePositionClicked)
     lastClick=os.time()
     defaultFontSize=500
     fontSize=defaultFontSize
@@ -1042,6 +1114,7 @@ function onload()
     self.createButton(auto1D6)
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
+    self.createButton(saveRestoreBtn)
     self.createInput(customDiceInput)
     self.createButton(customDiceSpawnButton)
     self.createButton(customDiceInputBG)

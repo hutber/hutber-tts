@@ -85,12 +85,15 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.5.12: Fix: UKTC Map 5 Center RUins incorrectly placed, thanks @Cablenator",
+    "1.5.11: Feat: Added save/restore button for people who didn't know about the hotkeys",
+    "1.5.10: Fix: Make UKTC missions more clear update dice bags on display and moved control board up",
     "1.5.9: Fix: Wrong deployment used for map 4 of UKTC",
     "1.5.8: Fix: Updated Stat Helper to v2.14.2 & moved the coin so its easier to click plus AP on dice",
     "1.5.7: Feat: Change reserves mat colour",
     "1.5.6: Feat: Feedback button so you let me know how much you hate me! I love at least 80% of you! The rest I'm on the fence about.",
-    "1.5.5: Feat: Added Random UKTC Mission selector",
-    "1.5.5: Feat: UKTC Maps updated with Beta Maps. All thanks to Minyiky for this work!",
+    -- "1.5.5: Feat: Added Random UKTC Mission selector",
+    -- "1.5.5: Feat: UKTC Maps updated with Beta Maps. All thanks to Minyiky for this work!",
     --"1.5.4: Feat: Updated GW maps 7 & 8 and updated mission selection with new CA 2025",
     --"1.5.3: Fix: Made the auto buttons have random colours",
     --"1.5.2: Feat: Updated copy players buttons and 1D6 2D6 auto buttons in better place",

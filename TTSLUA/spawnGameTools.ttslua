@@ -5,8 +5,8 @@ Xoffset=-70
 
 
 
-XposReset=115.2
-ZposReset=15.75
+XposReset=112.2
+ZposReset=42.75
 resetBtnLbl="Reset Activation tokens\n(auto at phase change)"
 resetBtnR={ label=resetBtnLbl, click_function="resetTokens", function_owner=self,
             position={XposReset,Ypos,ZposReset}, rotation={0,0,0},
@@ -14,11 +14,11 @@ resetBtnR={ label=resetBtnLbl, click_function="resetTokens", function_owner=self
             font_size=200, color="White", font_color={0,0,0}
 }
 resetBtnB={ label=resetBtnLbl, click_function="resetTokens", function_owner=self,
-            position={XposReset+Xoffset,Ypos,-ZposReset}, rotation={0,180,0},
+            position={XposReset+Xoffset,Ypos,-ZposReset}, rotation={0,-180,0},
             height=500, width=2400,
             font_size=200, color="White", font_color={0,0,0}
 }
-
+ 
 activationWoundsOffset=5
 activationWoundsOffsetWidth=1800
 activationWoundsOffsetWidthFontSize=200

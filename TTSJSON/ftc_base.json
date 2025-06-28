@@ -473,9 +473,9 @@
       "GUID": "7c7c20",
       "Name": "Chip_100",
       "Transform": {
-        "posX": -4.078736,
+        "posX": -35.4904861,
         "posY": -3.9824985,
-        "posZ": 34.7377625,
+        "posZ": 97.14335,
         "rotX": -0.000007755247,
         "rotY": 180.01973,
         "rotZ": 5.32619765e-7,
@@ -518,9 +518,9 @@
       "GUID": "b7ac7a",
       "Name": "Chip_100",
       "Transform": {
-        "posX": 4.16885567,
-        "posY": -4.02278423,
-        "posZ": -33.2889366,
+        "posX": 35.4904861,
+        "posY": -3.9824985,
+        "posZ": -97.14335,
         "rotX": -0.000007755247,
         "rotY": 0.01973,
         "rotZ": 5.32619765e-7,
@@ -3985,8 +3985,8 @@
       "SidewaysCard": false,
       "CustomDeck": {
         "1852": {
-          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13384680555232722885/B3BA2EE113126AFDCF9F3CB7981B89B8E37E9139/",
-          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/13384680555232722885/B3BA2EE113126AFDCF9F3CB7981B89B8E37E9139/",
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/14178038359447116456/7334CA0EE5FDF7D4125F046CAF40E5EA5CFC1C22/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/14178038359447116456/7334CA0EE5FDF7D4125F046CAF40E5EA5CFC1C22/",
           "NumWidth": 1,
           "NumHeight": 1,
           "BackIsHidden": true,
@@ -4094,21 +4094,71 @@
       "LuaScriptState": "",
       "XmlUI": ""
     },
+{
+  "GUID": "bf09bd",
+  "Name": "Bag",
+  "Transform": {
+    "posX": 21.9318962,
+    "posY": -4.776464939,
+    "posZ": 2.30179262,
+    "rotX": -6.955005e-7,
+    "rotY": 89.9898,
+    "rotZ": 0.00000202107253,
+    "scaleX": 1.55000043,
+    "scaleY": 1.55000043,
+    "scaleZ": 1.55000043
+  },
+  "Nickname": "Marcus Miniatures Rumble 2025",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "ColorDiffuse": {
+    "r": 0.674216032,
+    "g": 0.674216032,
+    "b": 0.674216032
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "MaterialIndex": -1,
+  "MeshIndex": -1,
+  "Bag": {
+    "Order": 0
+  },
+  "LuaScript": "",
+  "LuaScriptState": "{\"ml\":{\"1c0237\":{\"lock\":true,\"pos\":{\"x\":0,\"y\":-2,\"z\":0},\"rot\":{\"x\":0,\"y\":270,\"z\":0}},\"4b8280\":{\"lock\":true,\"pos\":{\"x\":0.230599790811539,\"y\":0.975103318691254,\"z\":-5.13500022888184},\"rot\":{\"x\":-4.91979051275848E-07,\"y\":180.007202148438,\"z\":-1.88615828733418E-07}},\"7baca6\":{\"lock\":true,\"pos\":{\"x\":0.1619,\"y\":0.9751,\"z\":0.5266},\"rot\":{\"x\":0,\"y\":180.0086,\"z\":0}},\"a91bbe\":{\"lock\":true,\"pos\":{\"x\":0.22100031375885,\"y\":0.975103437900543,\"z\":6.09333419799805},\"rot\":{\"x\":-6.04464460707277E-08,\"y\":180,\"z\":-1.16218764389942E-07}},\"ffe3cf\":{\"lock\":true,\"pos\":{\"x\":6.3594331741333,\"y\":1.03149855136871,\"z\":0.321186780929565},\"rot\":{\"x\":-2.91276847974586E-07,\"y\":89.9845886230469,\"z\":-2.58665409091918E-07}}}}",
+  "XmlUI": "",
+  "ContainedObjects": [
     {
-      "GUID": "bf09bd",
-      "Name": "Bag",
+      "GUID": "7baca6",
+      "Name": "CardCustom",
       "Transform": {
-        "posX": 21.9318962,
-        "posY": -5,
-        "posZ": 2.30179262,
-        "rotX": -6.955005e-7,
-        "rotY": 89.9898,
-        "rotZ": 0.00000202107253,
-      "scaleX": 1.55000043,
-      "scaleY": 1.55000043,
-      "scaleZ": 1.55000043
+        "posX": 0.1619,
+        "posY": 0.9751,
+        "posZ": 0.5266,
+        "rotX": 0,
+        "rotY": 180.0086,
+        "rotZ": 0,
+        "scaleX": 1.5,
+        "scaleY": 1,
+        "scaleZ": 1.5
       },
-      "Nickname": "Marcus Miniatures Rumble 2025",
+      "Nickname": "Round 2 \nSearch & Destory \nSorched Earth\n",
       "Description": "",
       "GMNotes": "",
       "AltLookAngle": {
@@ -4117,9 +4167,183 @@
         "z": 0
       },
       "ColorDiffuse": {
-        "r": 0.674216032,
-        "g": 0.674216032,
-        "b": 0.674216032
+        "r": 0.713235259,
+        "g": 0.713235259,
+        "b": 0.713235259
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": true,
+      "Hands": true,
+      "CardID": 182300,
+      "SidewaysCard": false,
+      "CustomDeck": {
+        "1823": {
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/13166422901914770384/D954AB838F71E29A58700895B952DF1453823AAA/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/13166422901914770384/D954AB838F71E29A58700895B952DF1453823AAA/",
+          "NumWidth": 1,
+          "NumHeight": 1,
+          "BackIsHidden": true,
+          "UniqueBack": false,
+          "Type": 1
+        }
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "4b8280",
+      "Name": "CardCustom",
+      "Transform": {
+        "posX": 0.230599791,
+        "posY": 0.9751033,
+        "posZ": -5.135,
+        "rotX": -4.91979051e-7,
+        "rotY": 180.0072,
+        "rotZ": -1.88615829e-7,
+        "scaleX": 1.5,
+        "scaleY": 1,
+        "scaleZ": 1.5
+      },
+      "Nickname": "Round 3 \nHammer & Anvil \nTake and Hold\n",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 0.713235259,
+        "g": 0.713235259,
+        "b": 0.713235259
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": true,
+      "Hands": true,
+      "CardID": 182400,
+      "SidewaysCard": false,
+      "CustomDeck": {
+        "1824": {
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/12787193590437757849/5025B0F0E242A91AE4A6EB3E6833B0146853144F/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/12787193590437757849/5025B0F0E242A91AE4A6EB3E6833B0146853144F/",
+          "NumWidth": 1,
+          "NumHeight": 1,
+          "BackIsHidden": true,
+          "UniqueBack": false,
+          "Type": 1
+        }
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "a91bbe",
+      "Name": "CardCustom",
+      "Transform": {
+        "posX": 0.221000314,
+        "posY": 0.975103438,
+        "posZ": 6.093334,
+        "rotX": -6.04464461e-8,
+        "rotY": 180,
+        "rotZ": -1.16218764e-7,
+        "scaleX": 1.5,
+        "scaleY": 1,
+        "scaleZ": 1.5
+      },
+      "Nickname": "Round 1 \nTipping Point \nTarraform\n",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 0.713235259,
+        "g": 0.713235259,
+        "b": 0.713235259
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": true,
+      "Hands": true,
+      "CardID": 182100,
+      "SidewaysCard": false,
+      "CustomDeck": {
+        "1821": {
+          "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10209217184366109842/3488F2646B5BDAE7749F07B82EA627CC4B16FA04/",
+          "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/10209217184366109842/3488F2646B5BDAE7749F07B82EA627CC4B16FA04/",
+          "NumWidth": 1,
+          "NumHeight": 1,
+          "BackIsHidden": true,
+          "UniqueBack": false,
+          "Type": 1
+        }
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    },
+    {
+      "GUID": "ffe3cf",
+      "Name": "Notecard",
+      "Transform": {
+        "posX": 6.359433,
+        "posY": 1.03149855,
+        "posZ": 0.321186781,
+        "rotX": -2.91276848e-7,
+        "rotY": 89.98459,
+        "rotZ": -2.586654e-7,
+        "scaleX": 1,
+        "scaleY": 1,
+        "scaleZ": 1
+      },
+      "Nickname": "Marcus Miniatures Rumble 2025",
+      "Description": "Round 1 \nTipping Point \nTarraform\nRound 2\nSearch & Destory\nSorched Earth\nRound 3\nHammer & Anvil\nTake and Hold",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 1,
+        "g": 1,
+        "b": 1
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -4135,120 +4359,57 @@
       "GridProjection": false,
       "HideWhenFaceDown": false,
       "Hands": false,
-      "MaterialIndex": -1,
-      "MeshIndex": -1,
-      "Bag": {
-        "Order": 0
-      },
       "LuaScript": "",
-      "LuaScriptState": "{\"ml\":{\"ffe3cf\":{\"pos\":{\"x\":6.359433,\"y\":1.03149855,\"z\":0.321186781},\"rot\":{\"x\":-2.91276848e-7,\"y\":89.98459,\"z\":-2.586654e-7},\"lock\":true},\"a91bbe\":{\"pos\":{\"x\":0.272286117,\"y\":0.9751034,\"z\":0.3464895},\"rot\":{\"x\":3.44923556e-8,\"y\":180,\"z\":0.54207243e-8},\"lock\":true}}}",
-      "XmlUI": "",
-      "ContainedObjects": [
-        {
-          "GUID": "a91bbe",
-          "Name": "CardCustom",
-          "Transform": {
-            "posX": 0.272286117,
-            "posY": 0.9751034,
-            "posZ": 0.3464895,
-            "rotX": 3.44923556e-8,
-            "rotY": 179.994751,
-            "rotZ": 1.54207243e-8,
-            "scaleX": 1.5,
-            "scaleY": 1,
-            "scaleZ": 1.5
-          },
-          "Nickname": "Round 1 \nTipping Point \nTarraform\n",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 0.713235259,
-            "g": 0.713235259,
-            "b": 0.713235259
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": false,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": true,
-          "Hands": true,
-          "CardID": 182100,
-          "SidewaysCard": false,
-          "CustomDeck": {
-            "1821": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10209217184366109842/3488F2646B5BDAE7749F07B82EA627CC4B16FA04/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/10209217184366109842/3488F2646B5BDAE7749F07B82EA627CC4B16FA04/",
-              "NumWidth": 1,
-              "NumHeight": 1,
-              "BackIsHidden": true,
-              "UniqueBack": false,
-              "Type": 1
-            }
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        },
-        {
-          "GUID": "ffe3cf",
-          "Name": "Notecard",
-          "Transform": {
-            "posX": 6.359433,
-            "posY": 1.03149855,
-            "posZ": 0.321186781,
-            "rotX": -2.91276848e-7,
-            "rotY": 89.98459,
-            "rotZ": -2.586654e-7,
-            "scaleX": 1,
-            "scaleY": 1,
-            "scaleZ": 1
-          },
-          "Nickname": "Marcus Miniatures Rumble 2025",
-          "Description": "Round 1 \nTipping Point \nTarraform\n",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "ColorDiffuse": {
-            "r": 1,
-            "g": 1,
-            "b": 1
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": ""
-        }
-      ]
+      "LuaScriptState": "",
+      "XmlUI": ""
     },
+    {
+      "GUID": "1c0237",
+      "Name": "BlockSquare",
+      "Transform": {
+        "posX": 0,
+        "posY": -2,
+        "posZ": 0,
+        "rotX": 0,
+        "rotY": 270,
+        "rotZ": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "scaleZ": 1
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "ColorDiffuse": {
+        "r": 0.9264706,
+        "g": 0,
+        "b": 0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    }
+  ]
+},
     {
       "GUID": "3c1373",
       "Name": "CardCustom",
@@ -8835,9 +8996,54 @@
         "Order": 0
       },
       "LuaScript": "",
-      "LuaScriptState":"{\"ml\":{\"282eef\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":10.3349266},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"57ec5b\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":4.844073},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"29b7f4\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-0.5171205},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"684897\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-5.7346406},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"7cdd34\":{\"lock\":true,\"pos\":{\"x\":3.604922,\"y\":0.9751,\"z\":-11.2339907},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d257a9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":10.3268509},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"005ab9\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":4.823626},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"919f4c\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-0.641958654},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6f9044\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-5.77987432},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"0dccdf\":{\"lock\":true,\"pos\":{\"x\":-3.29014039,\"y\":0.9751,\"z\":-11.0767365},\"rot\":{\"x\":0,\"y\":180,\"z\":0}}}}",
+  "LuaScriptState": "{\"ml\":{\"005ab9\":{\"lock\":true,\"pos\":{\"x\":-8.7914,\"y\":0.9751,\"z\":4.078},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"0dccdf\":{\"lock\":true,\"pos\":{\"x\":-8.7914,\"y\":0.9751,\"z\":-11.8223},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"18a8d0\":{\"lock\":false,\"pos\":{\"x\":4.5521,\"y\":1.0315,\"z\":-1.018},\"rot\":{\"x\":0,\"y\":89.9687,\"z\":0}},\"282eef\":{\"lock\":true,\"pos\":{\"x\":-1.8963,\"y\":0.9751,\"z\":9.5893},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"29b7f4\":{\"lock\":true,\"pos\":{\"x\":-1.8963,\"y\":0.9751,\"z\":-1.2627},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"57ec5b\":{\"lock\":true,\"pos\":{\"x\":-1.8963,\"y\":0.9751,\"z\":4.0985},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"684897\":{\"lock\":true,\"pos\":{\"x\":-1.8963,\"y\":0.9751,\"z\":-6.4802},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"6f9044\":{\"lock\":true,\"pos\":{\"x\":-8.7914,\"y\":0.9751,\"z\":-6.5255},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"7cdd34\":{\"lock\":true,\"pos\":{\"x\":-1.8963,\"y\":0.9751,\"z\":-11.9796},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"919f4c\":{\"lock\":true,\"pos\":{\"x\":-8.7914,\"y\":0.9751,\"z\":-1.3875},\"rot\":{\"x\":0,\"y\":180,\"z\":0}},\"d257a9\":{\"lock\":true,\"pos\":{\"x\":-8.7914,\"y\":0.9751,\"z\":9.5813},\"rot\":{\"x\":0,\"y\":180,\"z\":0}}}}",
       "XmlUI": "",
       "ContainedObjects": [
+        {
+          "GUID": "18a8d0",
+          "Name": "Notecard",
+          "Transform": {
+            "posX": 4.5521,
+            "posY": 1.03149855,
+            "posZ": -1.01799977,
+            "rotX": 3.661507e-7,
+            "rotY": 89.9687,
+            "rotZ": 1.6278257e-7,
+            "scaleX": 1,
+            "scaleY": 1,
+            "scaleZ": 1
+          },
+          "Nickname": "UKTC Map Pack 2.0 - 24 June 2025",
+          "Description": "#- Letter - Primary\n1 -    V    - Terraform \n2 -    W   - Purge the Foe\n3 -    X    - Hidden Supplies\n4 -    Y    - Lunchpin\n5 -    Z    - Take and Hold  \n\n",
+          "GMNotes": "",
+          "AltLookAngle": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "ColorDiffuse": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "LayoutGroupSortIndex": 0,
+          "Value": 0,
+          "Locked": false,
+          "Grid": true,
+          "Snap": true,
+          "IgnoreFoW": false,
+          "MeasureMovement": false,
+          "DragSelectable": true,
+          "Autoraise": true,
+          "Sticky": true,
+          "Tooltip": true,
+          "GridProjection": false,
+          "HideWhenFaceDown": false,
+          "Hands": false,
+          "LuaScript": "",
+          "LuaScriptState": "",
+          "XmlUI": ""
+        },
         {
           "GUID": "282eef",
           "Name": "CardCustom",
@@ -8852,7 +9058,7 @@
             "scaleY": 1,
             "scaleZ": 1.5
           },
-          "Nickname": "UKTC singles R1",
+          "Nickname":  "V - UKTC singles R1",
           "Description": "",
           "GMNotes": "",
           "AltLookAngle": {
@@ -8910,7 +9116,7 @@
             "scaleY": 1,
             "scaleZ": 1.5
           },
-          "Nickname": "UKTC singles R4",
+          "Nickname": "Y - UKTC singles R4",
           "Description": "",
           "GMNotes": "",
           "AltLookAngle": {
@@ -8968,7 +9174,7 @@
             "scaleY": 1,
             "scaleZ": 1.5
           },
-          "Nickname": "UKTC singles R3",
+          "Nickname": "X - UKTC singles R3",
           "Description": "",
           "GMNotes": "",
           "AltLookAngle": {
@@ -9026,7 +9232,7 @@
             "scaleY": 1,
             "scaleZ": 1.5
           },
-          "Nickname": "UKTC singles R2",
+          "Nickname": "W - UKTC singles R2",
           "Description": "",
           "GMNotes": "",
           "AltLookAngle": {
@@ -9084,7 +9290,7 @@
             "scaleY": 1,
             "scaleZ": 1.5
           },
-          "Nickname": "UKTC singles R5",
+          "Nickname": "Z - UKTC singles R5",
           "Description": "",
           "GMNotes": "",
           "AltLookAngle": {
@@ -9115,8 +9321,8 @@
           "SidewaysCard": false,
           "CustomDeck": {
             "7": {
-              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/10175279282734730160/C82104F63C069EE389C7409B5652D49A0EB60FFE/",
-              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2360518176487106784/E87CCC457DE483FB2E086AD23E63A338F12C7BC5/",
+              "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/18202353693472193392/30FCAE243CE3FE443923C84ABA79F55BF5239A5D/",
+              "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/18202353693472193392/30FCAE243CE3FE443923C84ABA79F55BF5239A5D/",
               "NumWidth": 1,
               "NumHeight": 1,
               "BackIsHidden": true,
@@ -18611,9 +18817,9 @@
       "GUID": "32ed4c",
       "Name": "Custom_Model",
       "Transform": {
-        "posX": -32.5329132,
-        "posY": 1,
-        "posZ": 39.0291672,
+        "posX": -30.5,
+        "posY": 0.9136038,
+        "posZ": 30.45,
         "rotX": 0,
         "rotY": 180,
         "rotZ": 0,
@@ -18656,9 +18862,9 @@
       "GUID": "83ab2a",
       "Name": "Custom_Model",
       "Transform": {
-        "posX": 31.5516777,
-        "posY": 1,
-        "posZ": -38.423912,
+        "posX": 30.5,
+        "posY": 0.9136038,
+        "posZ": -30.45,
         "rotX": 0,
         "rotY": 360,
         "rotZ": 0,
@@ -18703,7 +18909,7 @@
       "Transform": {
         "posX": -42,
         "posY": 1,
-        "posZ": 48,
+        "posZ": 43.73,
         "rotX": 0,
         "rotY": 270.0,
         "rotZ": 0.0,
@@ -18712,7 +18918,7 @@
         "scaleZ": 7.8216
       },
       "Nickname": "",
-      "Description": "",
+      "Description": "Reds Hand Area",
       "GMNotes": "",
       "ColorDiffuse": {
         "r": 0.856,
@@ -18744,7 +18950,7 @@
       "Transform": {
         "posX": -42,
         "posY": 1,
-        "posZ": -57,
+        "posZ": -62,
         "rotX": 0,
         "rotY": 270.0,
         "rotZ": 0.0,
@@ -18753,7 +18959,7 @@
         "scaleZ": 7.8216
       },
       "Nickname": "",
-      "Description": "",
+      "Description": "Blue Hand Area",
       "GMNotes": "",
       "ColorDiffuse": {
         "r": 0.117999978,
@@ -29045,9 +29251,9 @@
       "GUID": "37e995",
       "Name": "BlockSquare",
       "Transform": {
-        "posX": -30.1999912,
-        "posY": 0.949998856,
-        "posZ": 29.925,
+        "posX": -27.43143,
+        "posY": 0.949997365,
+        "posZ": 82.98876,
         "rotX": -1.82773465E-06,
         "rotY": 180.0,
         "rotZ": 6.55655E-07,
@@ -29084,9 +29290,9 @@
       "GUID": "5fd19f",
       "Name": "BlockSquare",
       "Transform": {
-        "posX": -40.1999741,
-        "posY": 0.949999,
-        "posZ": 29.9250088,
+        "posX": -37.0760651,
+        "posY": 0.9499974,
+        "posZ": 83.06386,
         "rotX": -1.63128846E-06,
         "rotY": 180.0,
         "rotZ": 1.57938E-08,
@@ -29123,9 +29329,9 @@
       "GUID": "2e4f26",
       "Name": "BlockSquare",
       "Transform": {
-        "posX": 29.8001137,
-        "posY": 0.95,
-        "posZ": -29.9250126,
+        "posX": 32.5490265,
+        "posY": 0.9500015,
+        "posZ": -82.8985062,
         "rotX": 1.53984513E-06,
         "rotY": 4.769676E-06,
         "rotZ": -3.78714418E-07,
@@ -29162,9 +29368,9 @@
       "GUID": "bcf2a4",
       "Name": "BlockSquare",
       "Transform": {
-        "posX": 39.80004,
-        "posY": 0.9499999,
-        "posZ": -29.9250031,
+        "posX": 42.7021637,
+        "posY": 0.9500014,
+        "posZ": -83.20677,
         "rotX": 1.68056533E-06,
         "rotY": 1.38817961E-06,
         "rotZ": -9.247285E-07,
