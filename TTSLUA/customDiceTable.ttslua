@@ -45,9 +45,6 @@ local VALID_BASE_SIZES_IN_MM = {
     {x = 170, z = 109}
 }
 
-local savedPositions = {}
-local lastSaveLogTime = 0
-
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
     position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
@@ -238,67 +235,98 @@ copyOthersDiceBtn = {
     press_color = {0.27, 0.27, 0.27, 1},
     scale = {0.5, 0.5, 0.5}
 }
-savePositionBtn = {
-    label = "Save Pos",
-    tooltip = "Save selected models' positions",
-    click_function = "savePositionButton",
-    function_owner = self,
-    position = {-5.2, Yoffset, -1.1}, rotation = {0,0,0}, height = 1000, width = 2500, scale={0.1,0.1,0.1},
-    font_size = 500, color = "White", font_color = {0,0,0}
+
+local hasObjectSaved = false
+savePositionLabel = "Save"
+saveBtn={
+    label=savePositionLabel, tooltip=savePositionTip, click_function="save", function_owner=self,
+    position={-7.70, Yoffset ,-1.69}, rotation={0,0,0},     
+    width = 550, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+restorePositionLabel = "Restore Position"
+restoreBtn={
+    label=restorePositionLabel, click_function="restore", function_owner=self,
+    position={-6.76, Yoffset ,-1.69}, rotation={0,0,0},     
+    width = 1250, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
 }
 
-restorePositionBtn = {
-    label = "Restore Pos",
-    tooltip = "Restore last saved positions",
-    click_function = "restorePositionButton",
-    function_owner = self,
-    position = {-4.8, Yoffset, -1.1}, rotation = {0,0,0}, height = 1000, width = 2500, scale={0.1,0.1,0.1},
-    font_size = 500, color = "White", font_color = {0,0,0}
+gap2Btn={
+    label='2" Gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
+    position={-7.70, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    font_size=750, color='White', font_color={0,0,0}
 }
 
 measure1Btn={
     label='1"', tooltip='Toggle 1" bubble', click_function='toggle1Bubble', function_owner=self,
-    position={-4.0, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    position={-7.82, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
 
 measure3Btn={
     label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
-    position={-3.6, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    position={-7.52, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
 
 measure6Btn={
     label='6"', tooltip='Toggle 6" bubble', click_function='toggle6Bubble', function_owner=self,
-    position={-2.8, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    position={-7.22, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
 
 measure9Btn={
     label='9"', tooltip='Toggle 9" bubble', click_function='toggle9Bubble', function_owner=self,
-    position={-2.0, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    position={-6.92, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
 
 measure12Btn={
-    label='12"', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
-    position={-1.2, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=1700, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
+    label='12" Bubble', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
+    position={-6.39, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=3600, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
+function save(obj, player_color, alt)
+    local selected = Player[player_color].getSelectedObjects()
+    if not selected or #selected == 0 then
+        printToColor("Please first select a model to save its position", player_color)
+        return
+    end
 
-gap2Btn={
-    label='2" gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
-    position={-0.4, Yoffset ,-1.1}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
-    font_size=500, color='White', font_color={0,0,0}
-}
+    -- Reset and capture all selected objects in one go
+    savedPositions = {}
+    for _, o in ipairs(selected) do
+        table.insert(savedPositions, {
+            guid     = o.getGUID(),
+            position = o.getPosition(),
+            rotation = o.getRotation()
+        })
+    end
 
-function savePositionButton(obj, player_color, alt)
-    savePositionClicked(player_color)
+    -- Single message
+    printToColor(#savedPositions .. " objects positions saved!", player_color)
 end
 
-function restorePositionButton(obj, player_color, alt)
-    restorePositionClicked(player_color)
+
+function restore(playerColor)
+  for i,v in ipairs(savedPositions) do
+    local obj = getObjectFromGUID(v.guid)
+    if obj != nil then
+      obj.setRotation(v.rotation)
+      obj.setPositionSmooth(v.position, false, true)
+    end
+  end
 end
+
 
 local auto1D6 = {
     label          = "Instant 1D6",
@@ -1071,10 +1099,10 @@ function sustainedLethalHitsAction(_, color, alt)
 end
 
 function getObjectsPositionToSave(player, hoveredObject)
-  if #player.getSelectedObjects() ~= 0 then
+  if #player.getSelectedObjects() != 0 then
     return player.getSelectedObjects()
-  elseif hoveredObject ~= nil then
-    return {hoveredObject}
+  elseif hoveredObject != nil then
+    return table.insert({}, hoveredObject)
   end
   return nil
 end
@@ -1088,19 +1116,15 @@ function savePosition(obj)
 end
 
 function savePositionClicked(playerColor, hoveredObject)
-  savedPositions = {}
-  local objects = getObjectsPositionToSave(Player[playerColor], hoveredObject)
-
-  if objects != nil then
-    for i,v in ipairs(objects) do
-      savePosition(v)
+    savedPositions = {}
+    local objects = getObjectsPositionToSave(Player[playerColor], hoveredObject)
+    if objects then
+        for _, v in ipairs(objects) do
+            savePosition(v)
+        end
+        -- This will now print just once, with the total count:
+        printToColor(#objects .. " objects positions saved!", playerColor)
     end
-    local now = os.time()
-    if now ~= lastSaveLogTime then
-      printToColor(#objects.." objects positions saved!", playerColor)
-      lastSaveLogTime = now
-    end
-  end
 end
 
 function restorePositionClicked(playerColor)
@@ -1201,8 +1225,8 @@ function onload()
     self.createButton(auto1D6)
     self.createButton(auto2D6)
     self.createButton(revertRollBtn)  -- Add this near the end of the button creations
-    self.createButton(savePositionBtn)
-    self.createButton(restorePositionBtn)
+    self.createButton(saveBtn)
+    self.createButton(restoreBtn)
     self.createButton(measure1Btn)
     self.createButton(measure3Btn)
     self.createButton(measure6Btn)

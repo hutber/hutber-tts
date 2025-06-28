@@ -85,6 +85,7 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.5.13: Feat: Added 1,3,6,9,12\" bubbles that allow for multiple models at once",
     "1.5.12: Fix: UKTC Map 5 Center RUins incorrectly placed, thanks @Cablenator",
     "1.5.11: Feat: Added save/restore button for people who didn't know about the hotkeys",
     "1.5.10: Fix: Make UKTC missions more clear update dice bags on display and moved control board up",
