@@ -1849,8 +1849,17 @@ function swapPipColor()
     self.editButton(pipColorBtn)
 end
 
--- Added from controlBoard.ttslua
-function arrangeModelsWith2Inch(playerColor, value, id)
+function arrangeModelsWith2Inch(a, b, c)
+    -- Support being called from a button or a hotkey. When invoked via a button
+    -- the first argument is the object and the second is the player color.
+    -- When invoked via a hotkey the first argument is the player color.
+    local playerColor
+    if type(a) == "string" then
+        playerColor = a
+    else
+        playerColor = b
+    end
+
     local playerObj = Player[playerColor]
     if not playerObj then
       print("Player object not found for color: " .. playerColor)
