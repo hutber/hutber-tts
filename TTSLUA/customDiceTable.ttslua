@@ -320,7 +320,7 @@ end
 function restore(playerColor)
   for i,v in ipairs(savedPositions) do
     local obj = getObjectFromGUID(v.guid)
-    if obj != nil then
+    if obj ~= nil then
       obj.setRotation(v.rotation)
       obj.setPositionSmooth(v.position, false, true)
     end
@@ -1161,9 +1161,9 @@ function sustainedLethalHitsAction(_, color, alt)
 end
 
 function getObjectsPositionToSave(player, hoveredObject)
-  if #player.getSelectedObjects() != 0 then
+  if #player.getSelectedObjects() ~= 0 then
     return player.getSelectedObjects()
-  elseif hoveredObject != nil then
+  elseif hoveredObject ~= nil then
     return table.insert({}, hoveredObject)
   end
   return nil
@@ -1192,7 +1192,7 @@ end
 function restorePositionClicked(playerColor)
   for i,v in ipairs(savedPositions) do
     local obj = getObjectFromGUID(v.guid)
-    if obj != nil then
+    if obj ~= nil then
       obj.setRotation(v.rotation)
       obj.setPositionSmooth(v.position, false, true)
     end
@@ -1673,7 +1673,7 @@ function moveLethalHits(isSustainedAndLethal)
 end
 
 function onObjectClicked(clicked_object, player_color, alt_click)
-    local nickname = clicked_object.getNickname()
+    local nickname = clicked_object.getName()
     if nickname == "Red Lethal Hits" then
         print(player_color .. " clicked on Red Lethal Hits")
         moveDiceBackToBoard("Red")
@@ -1686,7 +1686,7 @@ function onObjectClicked(clicked_object, player_color, alt_click)
 end
 
 function lethalHitsClicked(obj, player_color, alt_click)
-    local nick = obj.getNickname()
+    local nick = obj.getName()
     if nick:find("Red") then
         moveDiceBackToBoard("Red")
     else
@@ -1891,7 +1891,7 @@ function checkDice ()
     diceSum = 0
 
     for _, obj in pairs(getAllObjects()) do
-        if obj != nil and obj.tag == 'Dice' and obj.resting then
+        if obj ~= nil and obj.tag == 'Dice' and obj.resting then
             local objPos = obj.getPosition()
             if objPos['x'] > leftBound and objPos['x'] < rightBound and objPos['z'] > lowerBound and objPos['z'] < upperBound and objPos['y'] < yupperBound and objPos['y'] > ylowerBound then
                 local value = obj.getValue()
