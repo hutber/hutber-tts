@@ -501,8 +501,11 @@ function importOpposDice(obj, player, alt)
         return
     end
 
-    -- Get our dice mat's position as a reference
-    local myPos = self.getPosition()
+    -- Get our dice mat's bounds center as a reference. Using the bounds
+    -- centre instead of the object's position accounts for any offset the
+    -- mat might have compared to its actual bounding box.
+    local myBounds = self.getBounds()
+    local myPos = myBounds.center
     local importedCount = 0
 
     for _, die in ipairs(diceToImport) do
@@ -524,6 +527,10 @@ function importOpposDice(obj, player, alt)
         die.clone({position = newPos, snap_to_grid = false})
         importedCount = importedCount + 1
     end
+
+    -- After cloning, move the dice into our roller so they appear in the
+    -- correct place for the current player.
+    moveDiceToRoller(player, getDice())
 
     printToAll("Imported " .. importedCount .. " dice from the opposite dice mat, including lethal hits.", {1,1,1})
 end
