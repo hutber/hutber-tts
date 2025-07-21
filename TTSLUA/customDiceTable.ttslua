@@ -240,7 +240,7 @@ local hasObjectSaved = false
 savePositionLabel = "Save"
 saveBtn={
     label=savePositionLabel, tooltip=savePositionTip, click_function="save", function_owner=self,
-    position={-7.70, Yoffset ,-1.69}, rotation={0,0,0},     
+    position={-7.70, Yoffset ,-1.69}, rotation={0,0,0},
     width = 550, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -251,7 +251,7 @@ saveBtn={
 restorePositionLabel = "Restore Position"
 restoreBtn={
     label=restorePositionLabel, click_function="restore", function_owner=self,
-    position={-6.76, Yoffset ,-1.69}, rotation={0,0,0},     
+    position={-6.76, Yoffset ,-1.69}, rotation={0,0,0},
     width = 1250, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -422,111 +422,89 @@ end
 roller = getObjectFromGUID(rollerGUID)
 
 function importOpposDice(obj, player, alt)
-    -- Clear the current player's dice mat first.
-    local currentDice = getDice()
-    for _, die in ipairs(currentDice) do
-        die.destroy()
-    end
+    -- clear existing dice
+    for _, d in ipairs(getDice()) do d.destroy() end
 
-    -- Clear the lethal hit area for the current mat.
-    local currentLethalHitsGUID = (currentMat == "Red") and Global.getVar("redLethalHits_GUID") or Global.getVar("blueLethalHits_GUID")
-    local currentLethalHitsObj = getObjectFromGUID(currentLethalHitsGUID)
-    if currentLethalHitsObj then
-        local lethalBounds = currentLethalHitsObj.getBounds()
-        for _, obj in ipairs(getAllObjects()) do
-            if obj.tag == "Dice" and obj.resting then
-                local pos = obj.getPosition()
-                if pos.x > lethalBounds.center.x - lethalBounds.size.x / 2 and
-                   pos.x < lethalBounds.center.x + lethalBounds.size.x / 2 and
-                   pos.z > lethalBounds.center.z - lethalBounds.size.z / 2 and
-                   pos.z < lethalBounds.center.z + lethalBounds.size.z / 2 then
-                    obj.destroy()
-                end
-            end
-        end
-    end
-
-    -- Determine the GUID of the opposite dice mat.
-    local oppositeMatGUID = (currentMat == "Red") and Global.getVar("blueCustomDiceMat_GUID") or Global.getVar("redCustomDiceMat_GUID")
-    local oppositeMat = getObjectFromGUID(oppositeMatGUID)
-    if not oppositeMat then
+    -- get opposite mat and its bounds
+    local oppMatGUID = (currentMat=="Red")
+        and Global.getVar("blueCustomDiceMat_GUID")
+        or   Global.getVar("redCustomDiceMat_GUID")
+    local oppMat = getObjectFromGUID(oppMatGUID)
+    if not oppMat then
         printToColor("Opposite dice mat not found.", player, "Orange")
         return
     end
+    local mb = oppMat.getBounds()
+    local mL, mR = mb.center.x - mb.size.x/2, mb.center.x + mb.size.x/2
+    local mLo, mUp = mb.center.z - mb.size.z/2, mb.center.z + mb.size.z/2
+    local mYl, mYh = mb.center.y - mb.size.y/2, mb.center.y + mb.size.y/2 + 3
 
-    -- Get the bounds of the opposite dice mat.
-    local bounds = oppositeMat.getBounds()
-    local leftBound  = bounds.center.x - bounds.size.x / 2
-    local rightBound = bounds.center.x + bounds.size.x / 2
-    local lowerBound = bounds.center.z - bounds.size.z / 2
-    local upperBound = bounds.center.z + bounds.size.z / 2
-    local ylowerBound = bounds.center.y - bounds.size.y / 2
-    local yupperBound = bounds.center.y + bounds.size.y / 2 + 3
-
-    -- Find dice in the opposite mat zone
-    local diceToImport = {}
-    for _, obj in ipairs(getAllObjects()) do
-        if obj.tag == "Dice" and obj.resting then
-            local pos = obj.getPosition()
-            if pos.x > leftBound and pos.x < rightBound and
-               pos.z > lowerBound and pos.z < upperBound and
-               pos.y > ylowerBound and pos.y < yupperBound then
-                table.insert(diceToImport, obj)
-            end
-        end
-    end
-
-    -- Also find dice in the lethal hits area of the opposite mat
-    local lethalHitsGUID = (currentMat == "Red") and Global.getVar("blueLethalHits_GUID") or Global.getVar("redLethalHits_GUID")
-    local lethalHitsObj = getObjectFromGUID(lethalHitsGUID)
-    if lethalHitsObj then
-        local lethalBounds = lethalHitsObj.getBounds()
-        for _, obj in ipairs(getAllObjects()) do
-            if obj.tag == "Dice" and obj.resting then
-                local pos = obj.getPosition()
-                if pos.x > lethalBounds.center.x - lethalBounds.size.x / 2 and
-                   pos.x < lethalBounds.center.x + lethalBounds.size.x / 2 and
-                   pos.z > lethalBounds.center.z - lethalBounds.size.z / 2 and
-                   pos.z < lethalBounds.center.z + lethalBounds.size.z / 2 then
-                    table.insert(diceToImport, obj)
-                end
-            end
-        end
+    -- get opposite lethal zone and its bounds
+    local oppLethalGUID = (currentMat=="Red")
+        and Global.getVar("blueLethalHits_GUID")
+        or   Global.getVar("redLethalHits_GUID")
+    local oppLethal = getObjectFromGUID(oppLethalGUID)
+    local lb, lL, lR, lLo, lUp, lYl, lYh
+    if oppLethal then
+        lb = oppLethal.getBounds()
+        lL, lR = lb.center.x - lb.size.x/2, lb.center.x + lb.size.x/2
+        lLo, lUp = lb.center.z - lb.size.z/2, lb.center.z + lb.size.z/2
+        lYl, lYh = lb.center.y - lb.size.y/2, lb.center.y + lb.size.y/2 + 3
     else
-        printToColor("Opposite lethal hits area not found.", player, "Yellow")
+        printToColor("Warning: opposite lethal zone not found.", player)
     end
 
-    if #diceToImport == 0 then
+    local toImport = {}
+    local seen = {}
+
+    -- gather dice: check lethal zone first, then main mat
+    for _, o in ipairs(getAllObjects()) do
+        if o.tag=="Dice" and o.resting then
+            local p = o.getPosition()
+            -- lethal zone?
+            if lb
+            and p.x > lL and p.x < lR
+            and p.z > lLo and p.z < lUp
+            and p.y > lYl and p.y < lYh
+            then
+                seen[o.getGUID()] = true
+                table.insert(toImport, { die=o, origin=lb.center, lethal=true })
+            -- main mat (excluding any already seen in lethal)
+            elseif p.x > mL and p.x < mR
+            and p.z > mLo and p.z < mUp
+            and p.y > mYl and p.y < mYh
+            and not seen[o.getGUID()]
+            then
+                seen[o.getGUID()] = true
+                table.insert(toImport, { die=o, origin=mb.center, lethal=false })
+            end
+        end
+    end
+
+    if #toImport == 0 then
         printToColor("No dice found on the opposite mat.", player, "Yellow")
         return
     end
 
-    -- Get our dice mat's position as a reference
-    local myPos = self.getPosition()
-    local importedCount = 0
-
-    for _, die in ipairs(diceToImport) do
-        local diePos = die.getPosition()
-        -- Compute the relative position with respect to the opposite mat's center
-        -- Flip both the x and z axes to mirror horizontally and vertically
-        local relPos = {
-            x = -(diePos.x - bounds.center.x),
-            y = diePos.y - bounds.center.y,
-            z = -(diePos.z - bounds.center.z)
-        }
-        -- Place the cloned die with the same flipped relative offset on our mat
-        local newPos = {
-            x = myPos.x + relPos.x,
-            y = myPos.y + relPos.y,
-            z = myPos.z + relPos.z
-        }
-        -- Clone the die
-        die.clone({position = newPos, snap_to_grid = false})
-        importedCount = importedCount + 1
+    -- clone into this mat: shift lethal dice by (-3, -3) in X/Z
+    local mc = self.getBounds().center
+    local count = 0
+    for _, entry in ipairs(toImport) do
+        local dp = entry.die.getPosition()
+        local cb = entry.origin
+        local relX, relY, relZ = -(dp.x - cb.x), dp.y - cb.y, -(dp.z - cb.z)
+        local nx, ny, nz = mc.x + relX, mc.y + relY, mc.z + relZ
+        if entry.lethal then
+            nx = nx - 6
+            nz = nz + 4.2
+        end
+        entry.die.clone({ position={nx, ny, nz}, snap_to_grid=false })
+        count = count + 1
     end
 
-    printToAll("Imported " .. importedCount .. " dice from the opposite dice mat, including lethal hits.", {1,1,1})
+    printToAll("Imported "..count.." dice from the opposite mat, including lethal hits.", {1,1,1})
 end
+
 
 
 local lastSpawnPosition = nil -- Keep track of the last spawned dice position
@@ -1137,7 +1115,57 @@ function restorePositionClicked(playerColor)
   end
 end
 
+-- function toggleFloatingIcon(playerColor, hoveredObject)
+--     if not hoveredObject then return end
+--     local existing = hoveredObject.getTable("floating_icon")
+--     if existing and existing.obj then
+--         if existing.updateID then Wait.stop(existing.updateID) end
+--         existing.obj.destroy()
+--         hoveredObject.setTable("floating_icon", nil)
+--         return
+--     end
+
+--     local p = hoveredObject.getPosition()
+--     local b = hoveredObject.getBounds()
+--     local topY = b.center.y + b.size.y/2
+--     local spawnPos = { x = p.x, y = topY + 5, z = p.z }
+
+--     local icon = spawnObject({
+--         type     = "Custom_Token",
+--         position = spawnPos,
+--         rotation = {90, 0, 0},
+--         scale    = {0.6, 0.6, 0.6}
+--     })
+
+--     icon.setCustomObject({
+--         image          = "https://steamusercontent-a.akamaihd.net/ugc/13501243924066232860/7D430689576B83A46A2669F2404B1DA70BC8998E/",
+--         thickness      = 0.2,
+--         merge_distance = 0.2,
+--         stand_up       = false,
+--         stackable      = false
+--     })
+    
+--     icon.setLock(true)
+--     Wait.frames(function()
+--         Wait.frames(function()
+--             local bb = hoveredObject.getBounds()
+--             local newTop = bb.center.y + bb.size.y/2
+--             icon.setPosition({ x = bb.center.x, y = newTop + 5, z = bb.center.z })
+--         end, 2)
+--     end, 1)
+--     local function followObject()
+--         if not hoveredObject or not icon then return end
+--         local bb = hoveredObject.getBounds()
+--         local top = bb.center.y + bb.size.y/2
+--         icon.setPosition({ x = bb.center.x, y = top + 5, z = bb.center.z })
+--     end
+--     local updateID = Wait.time(followObject, 0.2, -1)
+--     hoveredObject.setTable("floating_icon", { obj = icon, updateID = updateID })
+-- end
+
 function onload()
+    -- addHotkey("Toggle Floating Icon", toggleFloatingIcon)
+
     addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
     addHotkey('Save position', savePositionClicked)
     addHotkey('Restore position', restorePositionClicked)
@@ -1240,7 +1268,8 @@ function onload()
 
 end
 
-local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/11677905561710342962/BB1A8DE3C56D9C08A18C3DCB69513D6ED03DAFF1/"
+local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/13993234893887882715/A706E4924203C3560EF1D34C6F3A5517595F57C5/"
+local hutberLethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/11677905561710342962/BB1A8DE3C56D9C08A18C3DCB69513D6ED03DAFF1/"
 
 local spawnedObjects = {
     Red = {
@@ -1264,19 +1293,17 @@ function ensureLethalHitsObjects()
                 position = {21.1, 0.87, 23.5},
                 rotation = {0, 0, 0},
                 scale = {0.7, 0.7, 0.7},
-                nickname = "Red Lethal Hits",
-                description = "This is the area for lethal hits (Red)."
             })
-            print(Global.getVar("redLethalFace"))
             if(Global.getVar("redLethalFace")) then
                 redLethalHitsObject.setCustomObject({
                     image = lethalHitsImageURL,
                     thickness = 0.2,
                     merge_distance_pixels = 15,
                     stand_up = false,
-                    stackable = false
+                    stackable = false,
                 })
                 redLethalHitsObject.setLock(true)
+                redLethalHitsObject.setDescription("RaulDeFama Week!! Special thanks for creating 4k versions of the Letahl Hits Face!") 
                 spawnedObjects.Red.lethalHits = redLethalHitsObject
             end
         end
@@ -1299,6 +1326,7 @@ function ensureLethalHitsObjects()
                     stackable = false
                 })
                 blueLethalHitsObject.setLock(true)
+                blueLethalHitsObject.setDescription("RaulDeFama Week!! Special thanks for creating 4k versions of the Letahl Hits Face!") 
                 spawnedObjects.Blue.lethalHits = blueLethalHitsObject
             end
         end
