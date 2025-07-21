@@ -47,12 +47,9 @@ local RedControlBoard = {
     SelectionHighlighterGUID = "27de4f",
     ReservesBoardGUID = "fe7926",
     ReservesOldBoardGUID = "128a11",
-    CustomCounter = "021302",
+    CustomCounter = "42c161",
     -- lethalFace = "redLethalFace",
     bagIds = {
-        d12  ="b9c441",
-        greyD12 = "fbf744",
-        blueD12 = "420627",
         black = "771c41",
         blue = "048595",
         purple = "a8cbbb",
@@ -104,7 +101,7 @@ local RedControlBoard = {
             name = "Custom Counter",
             state = false,
             title = "Toggle the display of the custom counter",
-            customHiddenPosition = -1.32
+            customHiddenPosition = 1
         },
          --{
          --    name = "Rotation 5 Degrees",
@@ -127,7 +124,7 @@ local BlueControlBoard = {
     SelectionHighlighterGUID = "84c3a4",
     ReservesBoardGUID = "85f0cf",
     ReservesOldBoardGUID = "25d021",
-    CustomCounter = "7f211",
+    CustomCounter = "42c164",
     -- lethalFace = "blueLethalFace",
     bagIds = {
         d12  ="ab15ef",
@@ -184,7 +181,7 @@ local BlueControlBoard = {
             name = "Custom Counter",
             state = false,
             title = "Toggle the display of the custom counter",
-            customHiddenPosition =  -1.3
+            customHiddenPosition =  1
         }
         -- {
         --     name = "Rotation 5 Degrees",
@@ -420,7 +417,6 @@ function toggleOption(player, index)
     elseif option.name == "Custom Counter" then
         toggleObjectState(board.CustomCounter, option.state, option.customHiddenPosition)
     elseif option.name == "Rotation 5 Degrees" then
-    print(expectedColor)
         toggleRotationAngle(board.CustomCounter, option.state)
     end
 end

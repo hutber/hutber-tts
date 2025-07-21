@@ -1,0 +1,38 @@
+-- FTC-GUID: ad19a7
+saveBtn = {
+    label           = "Toggle Action in Progress",
+    tooltip         = "",
+    click_function  = "onToggleIconButtonClick",
+    function_owner  = self,
+    position        = {0, 0, 0},
+    rotation        = {0, 0, 0},
+    width           = 600,
+    height          = 600,
+    font_size       = 250,
+    color           = {0, 0, 0, 0},
+    font_color      = {0, 0, 0, 0},
+    hover_color     = {0.9725, 0.2824, 0.3843, 1},
+    scale           = {3.5, 3.5, 3.5}
+}
+
+
+function toggleFloatingIcon(playerColor, hoveredObject)
+    Global.call("toggleFloatingIconGeneric", {
+        playerColor   = playerColor,
+        hoveredObject = hoveredObject,
+        imageURL      = Global.getVar("ActionInProgress_GUID")
+    })
+end
+
+function onToggleIconButtonClick(obj, player_color, alt_click)
+    local sel = Player[player_color].getSelectedObjects()
+    if #sel == 0 then
+        printToColor("No object selected.", player_color, {1,1,1}); return
+    end
+    toggleFloatingIcon(player_color, sel[#sel>1 and math.random(#sel) or 1])
+end
+
+function onLoad(saved_data)
+    math.randomseed(os.time())
+    self.createButton(saveBtn)
+end

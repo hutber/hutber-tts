@@ -1,3 +1,5 @@
+--"LuaScript":\s*"(?:\\.|[^\\"])*"
+
 --[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
 
 -- Having all these GUIDs centrally managed helps to ensure that any changes to
@@ -101,6 +103,10 @@ CPMissionBook_GUID = "731ec4"
 teamModels = { Red = {}, Blue = {} }
 Global.setTable("teamModels", teamModels)
 
+-- Action Icons
+ActionInProgress_GUID = "https://steamusercontent-a.akamaihd.net/ugc/12413768925086392778/385D1E7F4CF527EE13008502130B0288E17AF648/"
+Battleshock_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13010387546801221302/5C4BD741352EA2EFD9EB642178AAACA4F853518E/"
+ADVANCED_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13599023424133435651/70EAB474609C925585CFED9AF60F4A6D137585BC/"
 
 --[[
 GUID reference for primary / mission / deployment cards
@@ -183,10 +189,11 @@ missionPackData = {
             -- T: Purge the Foe / Dawn of War
             { name = "T", primary = "d9d35a", deployment = "7f45dc" },
             -- UKTC Maps
-            {name = "V", primary = "7fa6d0", deployment = "77cde6"},
-            {name = "W", primary = "d9d35a", deployment = "e96d18"},
-            {name = "X", primary = "85718f", deployment = "09c961"},
-            {name = "Y", primary = "540fd0", deployment = "7f45dc"},
+            {name = "U", primary = "7fa6d0", deployment = "c6edf3"},
+            {name = "V", primary = "d9d35a", deployment = "e96d18"},
+            {name = "W", primary = "85718f", deployment = "09c961"},
+            {name = "X", primary = "540fd0", deployment = "7f45dc"},
+            {name = "Y", primary = "bffd57", deployment = "09c961"},
             {name = "Z", primary = "bffd57", deployment = "09c961"}
         }
     },
@@ -337,9 +344,30 @@ function tagSelectedAsRed(playerColor, target)
     printToColor("Tagged selected objects as Blue", playerColor, "Blue")
   end
 
+function spawnOppositeForGUID(guid)
+    local orig = getObjectFromGUID(guid)
+    if not orig then return end
+    local data = JSON.decode(orig.getJSON())
+    data.Transform.posX = -data.Transform.posX
+    data.Transform.posZ = -data.Transform.posZ
+    data.Transform.rotY = (data.Transform.rotY + 180) % 360
+    spawnObjectJSON({
+        json = JSON.encode(data),
+        callback_function = function(obj) obj.lock() end
+    })
+end
+
+function spawnActionTokens()
+    local guids = {"ca12da", "ad19a7", "ab9a21"}
+    for _, guid in ipairs(guids) do
+        spawnOppositeForGUID(guid)
+    end
+end
+
 function onLoad(saved_data)
     --addHotkey("Tag Selected as Red", tagSelectedAsRed)
     --addHotkey("Tag Selected as Blue", tagSelectedAsBlue)
+    spawnActionTokens()
     Turns.enable=false
     --- load vars from saved
     if saved_data ~= "" then
@@ -641,6 +669,22 @@ function moveAllFromZoneToDeck(params)
     deckObj.shuffle()
 end
 
+function updatePrimaryCardPosition(cardGUID, isPurgeTheFoe)
+    local obj = getObjectFromGUID(cardGUID)
+    if not obj then
+        print("[updatePrimaryCardPosition] Could not find object:", cardGUID)
+        return
+    end
+
+    local pos = obj.getPosition()
+    if isPurgeTheFoe then
+        pos.y = -0.33
+    else
+        pos.y = -4.33
+    end
+    obj.setPosition(pos)
+end
+
 function moveOneFromDeckToZone(params)
     local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
     local deckObj = getObjectFromGUID(Global.getVar(params.deck .. "Deck_GUID"))
@@ -651,6 +695,10 @@ function moveOneFromDeckToZone(params)
     takeParams.callback_function = function(card)
         Wait.frames(function()
             card.locked = true
+            local name = card.getName()
+            local isPurge = name:find("Purge The Foe")
+            updatePrimaryCardPosition("5d3485", isPurge)
+            updatePrimaryCardPosition("c41f82", isPurge)
         end)
     end
     if params["card"] then
@@ -680,4 +728,119 @@ function moveOneFromDeckToZoneBlue(params)
         deckObj.shuffle()
     end
     deckObj.takeObject(takeParams)
+end
+-- global storage for floating icons (keyed by object GUID)
+globalFloatingIcons = globalFloatingIcons or {}
+
+-- returns the list of icon entries (and creates it if missing)
+function getIcons(obj)
+    local guid = obj.getGUID()
+    if not globalFloatingIcons[guid] then
+        globalFloatingIcons[guid] = {}
+    end
+    return globalFloatingIcons[guid]
+end
+
+-- add a new icon entry
+function addIcon(obj, icon, updateID, imageURL)
+    local icons = getIcons(obj)
+    table.insert(icons, { obj = icon, updateID = updateID, imageURL = imageURL })
+end
+
+-- remove all icons
+function clearIcons(obj)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for _, entry in ipairs(icons) do
+        if entry.updateID then Wait.stop(entry.updateID) end
+        entry.obj.destroy()
+    end
+    globalFloatingIcons[guid] = nil
+end
+
+-- remove a specific icon by its imageURL
+function removeIcon(obj, imageURL)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for i = #icons, 1, -1 do
+        if icons[i].imageURL == imageURL then
+            local entry = table.remove(icons, i)
+            if entry.updateID then Wait.stop(entry.updateID) end
+            entry.obj.destroy()
+            break
+        end
+    end
+    if #icons == 0 then
+        globalFloatingIcons[guid] = nil
+    end
+end
+
+-- shared generic toggle function (use imageURL for custom token)
+function toggleFloatingIconGeneric(params)
+    local hoveredObject = params.hoveredObject
+    local imageURL = params.imageURL
+    if not hoveredObject then return end
+
+    local icons = getIcons(hoveredObject)
+    for _, entry in ipairs(icons) do
+        if entry.imageURL == imageURL then
+            removeIcon(hoveredObject, imageURL)
+            return
+        end
+    end
+
+    local b = hoveredObject.getBounds()
+    local spawnPos = {
+        x = b.center.x,
+        y = b.center.y + b.size.y/2 + 5,
+        z = b.center.z
+    }
+    local icon = spawnObject({
+        type         = "Custom_Token",
+        position     = spawnPos,
+        rotation     = {0, 0, 0},
+        scale        = {0.4, 0.4, 0.4},
+        cast_shadows = false
+    })
+    icon.setCustomObject({
+        image          = imageURL,
+        thickness      = 0.2,
+        merge_distance = 0.2,
+        stand_up       = false,
+        stackable      = false
+    })
+    icon.setLock(true)
+    icon.setColorTint({1, 1, 1, 0.75})
+
+    local function followFn()
+        local entries = getIcons(hoveredObject)
+        local bb = hoveredObject.getBounds()
+        local objRot = hoveredObject.getRotation()
+        for i, e in ipairs(entries) do
+            if e.obj == icon then
+                local offset = (#entries > 1) and ((i == 1) and -1 or 1) or 0
+                icon.setRotation({0, objRot.y, 0})
+                local target = {
+                    x = bb.center.x + offset,
+                    y = bb.center.y + bb.size.y/2 + 5,
+                    z = bb.center.z
+                }
+                icon.setPosition(target, false)
+                break
+            end
+        end
+    end
+
+    Wait.frames(followFn, 2)
+    local updateID = Wait.time(followFn, 0.2, -1)
+    addIcon(hoveredObject, icon, updateID, imageURL)
+end
+
+
+
+-- Clean up floating icons if the target object is destroyed
+function onObjectDestroy(obj)
+    clearIcons(obj)
 end
