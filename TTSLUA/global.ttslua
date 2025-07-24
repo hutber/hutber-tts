@@ -106,7 +106,7 @@ Global.setTable("teamModels", teamModels)
 -- Action Icons
 ActionInProgress_GUID = "https://steamusercontent-a.akamaihd.net/ugc/12413768925086392778/385D1E7F4CF527EE13008502130B0288E17AF648/"
 Battleshock_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13010387546801221302/5C4BD741352EA2EFD9EB642178AAACA4F853518E/"
-ADVANCED_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13599023424133435651/70EAB474609C925585CFED9AF60F4A6D137585BC/"
+Advance_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13599023424133435651/70EAB474609C925585CFED9AF60F4A6D137585BC/"
 
 --[[
 GUID reference for primary / mission / deployment cards
@@ -201,7 +201,7 @@ missionPackData = {
 
 turnOrder = {}
 nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
-allowMenu = true
+allowMenu = false
 allowAutoSeat = true
 redPlayerID = ""
 bluePlayerID = ""
@@ -357,17 +357,17 @@ function spawnOppositeForGUID(guid)
     })
 end
 
-function spawnActionTokens()
-    local guids = {"ca12da", "ad19a7", "ab9a21"}
-    for _, guid in ipairs(guids) do
-        spawnOppositeForGUID(guid)
-    end
-end
+-- function spawnActionTokens()
+--     local guids = {"ca12da", "ad19a7", "ab9a21"}
+--     for _, guid in ipairs(guids) do
+--         spawnOppositeForGUID(guid)
+--     end
+-- end
 
 function onLoad(saved_data)
     --addHotkey("Tag Selected as Red", tagSelectedAsRed)
     --addHotkey("Tag Selected as Blue", tagSelectedAsBlue)
-    spawnActionTokens()
+    -- spawnActionTokens()
     Turns.enable=false
     --- load vars from saved
     if saved_data ~= "" then
@@ -729,118 +729,156 @@ function moveOneFromDeckToZoneBlue(params)
     end
     deckObj.takeObject(takeParams)
 end
--- global storage for floating icons (keyed by object GUID)
+
+
+
+
+
 globalFloatingIcons = globalFloatingIcons or {}
 
--- returns the list of icon entries (and creates it if missing)
 function getIcons(obj)
     local guid = obj.getGUID()
-    if not globalFloatingIcons[guid] then
-        globalFloatingIcons[guid] = {}
-    end
+    if not globalFloatingIcons[guid] then globalFloatingIcons[guid] = {} end
     return globalFloatingIcons[guid]
 end
 
--- add a new icon entry
-function addIcon(obj, icon, updateID, imageURL)
-    local icons = getIcons(obj)
-    table.insert(icons, { obj = icon, updateID = updateID, imageURL = imageURL })
+function addIcon(obj, icon, updateID, imageURL, isFloor)
+    table.insert(getIcons(obj), { obj = icon, updateID = updateID, imageURL = imageURL, isFloor = isFloor })
 end
 
--- remove all icons
 function clearIcons(obj)
     local guid = obj.getGUID()
     local icons = globalFloatingIcons[guid]
     if not icons then return end
-    for _, entry in ipairs(icons) do
-        if entry.updateID then Wait.stop(entry.updateID) end
-        entry.obj.destroy()
+    for _, e in ipairs(icons) do
+        if e.updateID then Wait.stop(e.updateID) end
+        e.obj.destroy()
     end
     globalFloatingIcons[guid] = nil
 end
 
--- remove a specific icon by its imageURL
-function removeIcon(obj, imageURL)
+function removeIcon(obj, imageURL, isFloor)
     local guid = obj.getGUID()
     local icons = globalFloatingIcons[guid]
     if not icons then return end
     for i = #icons, 1, -1 do
-        if icons[i].imageURL == imageURL then
-            local entry = table.remove(icons, i)
-            if entry.updateID then Wait.stop(entry.updateID) end
-            entry.obj.destroy()
+        local e = icons[i]
+        if e.imageURL == imageURL and e.isFloor == isFloor then
+            if e.updateID then Wait.stop(e.updateID) end
+            e.obj.destroy()
+            table.remove(icons, i)
             break
         end
     end
-    if #icons == 0 then
-        globalFloatingIcons[guid] = nil
-    end
+    if #icons == 0 then globalFloatingIcons[guid] = nil end
 end
 
--- shared generic toggle function (use imageURL for custom token)
-function toggleFloatingIconGeneric(params)
-    local hoveredObject = params.hoveredObject
-    local imageURL = params.imageURL
-    if not hoveredObject then return end
+local specialNames = {
+    "knight","titan","baneblade","reaver","warlord","warhound",
+    "shadowsword","stormlord","avatar","unclean","mauler",
+    "khaine","stompa","mutalith","magnus"
+}
 
-    local icons = getIcons(hoveredObject)
-    for _, entry in ipairs(icons) do
-        if entry.imageURL == imageURL then
-            removeIcon(hoveredObject, imageURL)
+function toggleFloatingIconGeneric(params)
+    local obj     = params.hoveredObject or params.obj
+    local url     = params.imageURL
+    local isFloor = params.floor == true
+    local name    = (params.name or ""):lower()
+    if not obj then return end
+
+    -- toggle existing icon
+    for _, e in ipairs(getIcons(obj)) do
+        if e.imageURL == url and e.isFloor == isFloor then
+            removeIcon(obj, url, isFloor)
             return
         end
     end
 
-    local b = hoveredObject.getBounds()
-    local spawnPos = {
-        x = b.center.x,
-        y = b.center.y + b.size.y/2 + 5,
-        z = b.center.z
-    }
+    -- check for special units
+    local special = false
+    for _, key in ipairs(specialNames) do
+        if name:find(key, 1, true) then special = true break end
+    end
+
+    -- configurable parameters
+    local normalHeight = 5
+    local normalOffset = -2
+    local spacingFactor = 1.2
+    local specialSpacingFactor = -2
+    local specialHeight = 10
+    local specialOffset = -3
+    local iconMargin = 1.2  -- buffer to avoid touching object
+
+    -- choose base values
+    local baseHeight = special and specialHeight or normalHeight
+    local baseOffset = special and specialOffset or normalOffset
+    local baseSpacingFactor = special and specialSpacingFactor or spacingFactor
+
+    -- get object bounds
+    local b = obj.getBounds()
+    local halfSizeX = b.size.x / 2
+    -- minimal distance to avoid overlap
+    local minDist = halfSizeX + iconMargin
+    -- determine sign for floor offset
+    local sign = baseOffset < 0 and -1 or 1
+
+    -- spawn initial icon at minDist
+    local xOff = sign * minDist
+    local spawnPos
+    if isFloor then
+        spawnPos = { b.center.x + xOff, 1, b.center.z }
+    else
+        spawnPos = { b.center.x, b.center.y + b.size.y/2 + baseHeight, b.center.z }
+    end
+
     local icon = spawnObject({
         type         = "Custom_Token",
         position     = spawnPos,
-        rotation     = {0, 0, 0},
-        scale        = {0.4, 0.4, 0.4},
+        rotation     = {0,0,0},
+        scale        = {0.4,0.4,0.4},
         cast_shadows = false
     })
     icon.setCustomObject({
-        image          = imageURL,
-        thickness      = 0.2,
+        image          = url,
+        thickness      = 0.001,
         merge_distance = 0.2,
         stand_up       = false,
         stackable      = false
     })
     icon.setLock(true)
-    icon.setColorTint({1, 1, 1, 0.75})
+    icon.setColorTint({1,1,1,0.75})
+    icon.use_gravity = false
 
-    local function followFn()
-        local entries = getIcons(hoveredObject)
-        local bb = hoveredObject.getBounds()
-        local objRot = hoveredObject.getRotation()
-        for i, e in ipairs(entries) do
-            if e.obj == icon then
-                local offset = (#entries > 1) and ((i == 1) and -1 or 1) or 0
-                icon.setRotation({0, objRot.y, 0})
-                local target = {
-                    x = bb.center.x + offset,
-                    y = bb.center.y + bb.size.y/2 + 5,
-                    z = bb.center.z
-                }
-                icon.setPosition(target, false)
-                break
-            end
+    -- follow update loop
+    local function follow()
+        local bb, rot = obj.getBounds(), obj.getRotation()
+        -- floor icons layout: increase offset by 1.2x each extra icon
+        local floorIcons = {}
+        for _, e in ipairs(getIcons(obj)) do if e.isFloor then table.insert(floorIcons, e) end end
+        for i, entry in ipairs(floorIcons) do
+            local dist = minDist * (baseSpacingFactor^(i-1))
+            local off = sign * dist
+            entry.obj.setRotation({0, rot.y, 0})
+            entry.obj.setPosition({ bb.center.x + off, 1, bb.center.z }, false)
+        end
+
+        -- floating icons layout (unchanged)
+        local floatIcons = {}
+        for _, e in ipairs(getIcons(obj)) do if not e.isFloor then table.insert(floatIcons, e) end end
+        local fc2 = #floatIcons
+        local floatSpacing = (minDist) * baseSpacingFactor
+        for i, entry in ipairs(floatIcons) do
+            local off = -floatSpacing * (fc2 - 1) / 2 + floatSpacing * (i - 1)
+            entry.obj.setRotation({0, rot.y, 0})
+            entry.obj.setPosition({ bb.center.x + off, bb.center.y + bb.size.y/2 + baseHeight, bb.center.z }, false)
         end
     end
 
-    Wait.frames(followFn, 2)
-    local updateID = Wait.time(followFn, 0.2, -1)
-    addIcon(hoveredObject, icon, updateID, imageURL)
+    Wait.frames(follow, 2)
+    local uid = Wait.time(follow, 0.2, -1)
+    addIcon(obj, icon, uid, url, isFloor)
 end
 
-
-
--- Clean up floating icons if the target object is destroyed
 function onObjectDestroy(obj)
     clearIcons(obj)
 end

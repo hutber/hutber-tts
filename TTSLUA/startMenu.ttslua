@@ -85,6 +85,9 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.6.1: Fix: Added token bags next to toggle floating icons",
+    "1.6.1: Fix: Fixed floating icons allowing items to be clicked",
+    "1.6.1: Feat: Added a button to toggle floating icons on/off",
     "1.6: Feat: Floating Icons Toggle Added",
     "1.6: Update: Moved the tokens next to the new floating icons if users don't like them (Christian)",
     "1.6: Update: Updated Custon Counter to not look like shit",

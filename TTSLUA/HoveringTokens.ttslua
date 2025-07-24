@@ -1,0 +1,68 @@
+-- FTC-GUID: ca12da,ab9a21,ad19a7,ae9056,a09c4e,3b0476
+globalFloatingIcons = globalFloatingIcons or {}
+
+local guidMap = {
+    ["ca12da"] = "Battleshock_GUID",
+    ["ae9056"] = "Battleshock_GUID",
+    ["ab9a21"] = "Advance_GUID",
+    ["3b0476"] = "Advance_GUID",
+    ["ad19a7"] = "ActionInProgress_GUID",
+    ["a09c4e"] = "ActionInProgress_GUID",
+}
+
+function onLoad()
+    math.randomseed(os.time())
+    local myGUID = self.getGUID()
+    self.createButton({
+        label           = "",
+        tooltip         = "Left‑click: floating\nRight‑click: floor",
+        click_function  = "onToggleIconButtonClick",
+        function_owner  = self,
+        position        = {0, 0, 0},
+        rotation        = {0, 0, 0},
+        width           = 540,
+        height          = 520,
+        font_size       = 250,
+        corner_radius   = 0,
+        color           = {0, 0, 0, 0},
+        scale           = {3.5, 3.5, 3.5}
+    })
+end
+
+function clearIconsOfType(obj, floorType)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for i = #icons, 1, -1 do
+        local e = icons[i]
+        if e.isFloor == floorType then
+            if e.updateID then Wait.stop(e.updateID) end
+            e.obj.destroy()
+            table.remove(icons, i)
+        end
+    end
+    if #icons == 0 then
+        globalFloatingIcons[guid] = nil
+    end
+end
+
+function onToggleIconButtonClick(obj, player_color, alt_click)
+    local sel = Player[player_color].getSelectedObjects()
+    if #sel == 0 then
+        printToColor("No object selected.", player_color, {1,1,1})
+        return
+    end
+    local target = sel[#sel > 1 and math.random(#sel) or 1]
+    local params = {
+        hoveredObject = target,
+        imageURL      = Global.getVar(guidMap[obj.getGUID()]),
+        floor         = alt_click,
+        name          = target.getName(),
+    }
+    if alt_click then
+        clearIconsOfType(target, false)
+    else
+        clearIconsOfType(target, true)
+    end
+    Global.call("toggleFloatingIconGeneric", params)
+end
