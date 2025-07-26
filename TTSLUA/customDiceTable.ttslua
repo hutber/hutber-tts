@@ -1166,7 +1166,7 @@ end
 function onload()
     -- addHotkey("Toggle Floating Icon", toggleFloatingIcon)
 
-    addHotkey("Models 2 Inch Gap", arrangeModelsWith2Inch)
+    addHotkey("Auto 2 Inch Gap", arrangeModelsWith2Inch)
     addHotkey('Save position', savePositionClicked)
     addHotkey('Restore position', restorePositionClicked)
     addHotkey("Toggle 1 Inch Measurment Circle", function(playerColor, target)

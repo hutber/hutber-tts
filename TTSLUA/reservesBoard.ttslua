@@ -1,0 +1,54 @@
+-- FTC-GUID: fe7926,85f0cf
+
+-- Store initial position and toggle state per object
+local initialPosition = nil
+local movedForward = false
+
+-- Define the "Move Board" button
+local moveBtn = {
+    index            = 1,
+    label            = "Move Board",
+    click_function   = "moveBoard",
+    function_owner   = self,
+    position         = {-2.565, 0, -1.075},
+    rotation         = {0, 90, 0},
+    width            = 1300,
+    height           = 300,
+    font_size        = 200,
+    scale            = {0.25, 0.25, 0.25},
+    tooltip          = "Click to toggle board position",
+}
+
+function onLoad()
+    -- Capture the board's starting position
+    initialPosition = self.getPosition()
+    -- Create the move button
+    self.createButton(moveBtn)
+end
+
+-- Toggle the board between initial and target positions
+function moveBoard(obj, player_color, alt_click)
+    movedForward = not movedForward
+    if movedForward then
+        -- Move forward based on GUID
+        local id = self.getGUID()
+        if id == "fe7926" then
+            self.setPosition({-0.6814038, 1.03509665, 59.5047569})
+        elseif id == "85f0cf" then
+            local p = self.getPosition()
+            self.setPosition({0.6814038, 1.03509665, -59.5047569})
+        end
+    else
+        -- Move back to original
+        self.setPosition(initialPosition)
+    end
+end
+
+    "posX": -0.6814038,
+    "posY": 1.03509665,
+    "posZ": 59.5047569,
+
+
+    "posX": 0.6814038,
+    "posY": 1.03509665,
+    "posZ": 84.0386047,

@@ -201,7 +201,7 @@ missionPackData = {
 
 turnOrder = {}
 nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
-allowMenu = false
+allowMenu = true
 allowAutoSeat = true
 redPlayerID = ""
 bluePlayerID = ""
@@ -367,6 +367,16 @@ end
 function onLoad(saved_data)
     --addHotkey("Tag Selected as Red", tagSelectedAsRed)
     --addHotkey("Tag Selected as Blue", tagSelectedAsBlue)
+    addHotkey("Marker - Battleshock", function(playerColor, target)
+        onToggleButtonHotKey("ca12da", target)
+    end)
+    addHotkey("Marker - Advanced", function(playerColor, target)
+        onToggleButtonHotKey("ab9a21", target)
+    end)
+    addHotkey("Marker - Action-in-progress", function(playerColor, target)
+        onToggleButtonHotKey("a09c4e", target)
+    end)
+
     -- spawnActionTokens()
     Turns.enable=false
     --- load vars from saved
@@ -730,20 +740,77 @@ function moveOneFromDeckToZoneBlue(params)
     deckObj.takeObject(takeParams)
 end
 
-
-
-
-
 globalFloatingIcons = globalFloatingIcons or {}
+
+local extraLargeNames = {
+    "knight",
+    "titan",
+    "reaver",
+    "warhound",
+    "stompa",
+}
+local largeNames = {
+    "warhound",
+    "shadowsword",
+    "stormlord",
+    "mauler",
+    "mutalith",
+    "bloodthirster",
+    "magnus",
+}
+local mediumNames = {
+    "avatar",
+    "khaine",
+    "mutalith",
+    "unclean",
+    "fulgrim",
+    "baneblade",
+    "warlord",
+    "be'lakor"
+}
+
+guidMap = {
+    ["ca12da"] = Battleshock_GUID,
+    ["ae9056"] = Battleshock_GUID,
+    ["ab9a21"] = Advance_GUID,
+    ["3b0476"] = Advance_GUID,
+    ["ad19a7"] = ActionInProgress_GUID,
+    ["a09c4e"] = ActionInProgress_GUID,
+}
+tokenHeights = {
+    ["ca12da"] = 0.029,
+    ["ae9056"] = 0.029,
+    ["ab9a21"] = 0.01,
+    ["3b0476"] = 0.006,
+    ["ad19a7"] = 0.0,
+    ["a09c4e"] = 0.007,
+}
 
 function getIcons(obj)
     local guid = obj.getGUID()
-    if not globalFloatingIcons[guid] then globalFloatingIcons[guid] = {} end
+    globalFloatingIcons[guid] = globalFloatingIcons[guid] or {}
     return globalFloatingIcons[guid]
 end
 
-function addIcon(obj, icon, updateID, imageURL, isFloor)
-    table.insert(getIcons(obj), { obj = icon, updateID = updateID, imageURL = imageURL, isFloor = isFloor })
+function addIcon(obj, icon, uid, url, isFloor)
+    local guid = obj.getGUID()
+    globalFloatingIcons[guid] = globalFloatingIcons[guid] or {}
+    table.insert(globalFloatingIcons[guid], { obj = icon, updateID = uid, imageURL = url, isFloor = isFloor })
+end
+
+function removeIcon(obj, url, isFloor)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for i = #icons, 1, -1 do
+        local e = icons[i]
+        if e.imageURL == url and e.isFloor == isFloor then
+            if e.updateID then Wait.stop(e.updateID) end
+            e.obj.destroy()
+            table.remove(icons, i)
+        end
+    end
+    if #icons == 0 then globalFloatingIcons[guid] = nil end
 end
 
 function clearIcons(obj)
@@ -757,36 +824,16 @@ function clearIcons(obj)
     globalFloatingIcons[guid] = nil
 end
 
-function removeIcon(obj, imageURL, isFloor)
-    local guid = obj.getGUID()
-    local icons = globalFloatingIcons[guid]
-    if not icons then return end
-    for i = #icons, 1, -1 do
-        local e = icons[i]
-        if e.imageURL == imageURL and e.isFloor == isFloor then
-            if e.updateID then Wait.stop(e.updateID) end
-            e.obj.destroy()
-            table.remove(icons, i)
-            break
-        end
-    end
-    if #icons == 0 then globalFloatingIcons[guid] = nil end
-end
-
-local specialNames = {
-    "knight","titan","baneblade","reaver","warlord","warhound",
-    "shadowsword","stormlord","avatar","unclean","mauler",
-    "khaine","stompa","mutalith","magnus"
-}
-
 function toggleFloatingIconGeneric(params)
-    local obj     = params.hoveredObject or params.obj
-    local url     = params.imageURL
+    local floorObj = getObjectFromGUID(felt_GUID)
+    local FLOOR_Y = floorObj and floorObj.getPosition().y or 1
+
+    local obj = params.hoveredObject or params.obj
+    local url = params.imageURL
     local isFloor = params.floor == true
-    local name    = (params.name or ""):lower()
+    local name = (params.name or ""):lower()
     if not obj then return end
 
-    -- toggle existing icon
     for _, e in ipairs(getIcons(obj)) do
         if e.imageURL == url and e.isFloor == isFloor then
             removeIcon(obj, url, isFloor)
@@ -794,91 +841,141 @@ function toggleFloatingIconGeneric(params)
         end
     end
 
-    -- check for special units
-    local special = false
-    for _, key in ipairs(specialNames) do
-        if name:find(key, 1, true) then special = true break end
+    -- size category
+    local name = (params.name or ""):lower()
+    local isMedium, isExtraLarge, isLarge = false, false, false
+    for _, k in ipairs(mediumNames)     do if name:find(k,1,true) then isMedium     = true break end end
+    for _, k in ipairs(extraLargeNames) do if name:find(k,1,true) then isExtraLarge = true break end end
+    if not isMedium and not isExtraLarge then
+        for _, k in ipairs(largeNames) do if name:find(k,1,true) then isLarge = true break end end
     end
 
-    -- configurable parameters
-    local normalHeight = 5
-    local normalOffset = -2
-    local spacingFactor = 1.2
-    local specialSpacingFactor = -2
-    local specialHeight = 10
-    local specialOffset = -3
-    local iconMargin = 1.2  -- buffer to avoid touching object
+    local normalH, normalO, normalS = 5,  -2,   1.2
+    local largeH,  largeO,  largeS  = 8,  -3,   1.8
+    local medH,    medO,    medS    = 6,  -2.5, 1.5
+    local exH,     exO,     exS     = 10, -4,   2
+    local baseH, baseO, baseS = normalH, normalO, normalS
+    if     isExtraLarge then baseH, baseO, baseS = exH,   exO,   exS
+    elseif isLarge      then baseH, baseO, baseS = largeH, largeO, largeS
+    elseif isMedium     then baseH, baseO, baseS = medH,   medO,   medS end
 
-    -- choose base values
-    local baseHeight = special and specialHeight or normalHeight
-    local baseOffset = special and specialOffset or normalOffset
-    local baseSpacingFactor = special and specialSpacingFactor or spacingFactor
-
-    -- get object bounds
-    local b = obj.getBounds()
-    local halfSizeX = b.size.x / 2
-    -- minimal distance to avoid overlap
-    local minDist = halfSizeX + iconMargin
-    -- determine sign for floor offset
-    local sign = baseOffset < 0 and -1 or 1
-
-    -- spawn initial icon at minDist
-    local xOff = sign * minDist
-    local spawnPos
-    if isFloor then
-        spawnPos = { b.center.x + xOff, 1, b.center.z }
-    else
-        spawnPos = { b.center.x, b.center.y + b.size.y/2 + baseHeight, b.center.z }
-    end
+    local b0 = obj.getBounds()
+    local halfHeight0 = b0.size.y / 2
+    local minDist0 = b0.size.x / 2 + 1.2
+    local sign0 = (baseO < 0) and -1 or 1
+    local bottom0 = b0.center.y - halfHeight0
+    local spawnY = isFloor and math.max(bottom0, FLOOR_Y) or (b0.center.y + halfHeight0 + baseH)
+    if isFloor then spawnY = math.min(spawnY, 1.3) end
+    local spawnX = isFloor and (b0.center.x + sign0 * minDist0) or b0.center.x
+    local spawnZ = b0.center.z
 
     local icon = spawnObject({
         type         = "Custom_Token",
-        position     = spawnPos,
-        rotation     = {0,0,0},
+        position     = {spawnX, spawnY, spawnZ},
+        rotation     = {0, obj.getRotation().y, 0},
         scale        = {0.4,0.4,0.4},
-        cast_shadows = false
+        cast_shadows = false,
     })
     icon.setCustomObject({
         image          = url,
-        thickness      = 0.001,
+        thickness      = 0.05+tokenHeights[params.extraHeightId],
         merge_distance = 0.2,
         stand_up       = false,
-        stackable      = false
+        stackable      = false,
     })
     icon.setLock(true)
-    icon.setColorTint({1,1,1,0.75})
-    icon.use_gravity = false
+    -- icon.setColorTint({1,1,1,0.95})
 
-    -- follow update loop
     local function follow()
-        local bb, rot = obj.getBounds(), obj.getRotation()
-        -- floor icons layout: increase offset by 1.2x each extra icon
-        local floorIcons = {}
-        for _, e in ipairs(getIcons(obj)) do if e.isFloor then table.insert(floorIcons, e) end end
-        for i, entry in ipairs(floorIcons) do
-            local dist = minDist * (baseSpacingFactor^(i-1))
-            local off = sign * dist
-            entry.obj.setRotation({0, rot.y, 0})
-            entry.obj.setPosition({ bb.center.x + off, 1, bb.center.z }, false)
-        end
+        local b = obj.getBounds()
+        local halfH = b.size.y / 2
+        local minDist = b.size.x / 2 + 1.2
+        local bottom = b.center.y - halfH
+        local sign = (baseO < 0) and -1 or 1
+        local maxStep = 1
+        local fh   = math.max(bottom, FLOOR_Y)
+        local floorPos = math.max(b.center.y - halfH, FLOOR_Y)
+        local vel = obj.getVelocity() or {x=0,y=0,z=0}
+        local speed = math.sqrt(vel.x*vel.x + vel.y*vel.y + vel.z*vel.z)
+        local useY = floorPos
+        if isFloor and speed > 0 then useY = math.min(useY, 1.2) end
 
-        -- floating icons layout (unchanged)
-        local floatIcons = {}
-        for _, e in ipairs(getIcons(obj)) do if not e.isFloor then table.insert(floatIcons, e) end end
-        local fc2 = #floatIcons
-        local floatSpacing = (minDist) * baseSpacingFactor
-        for i, entry in ipairs(floatIcons) do
-            local off = -floatSpacing * (fc2 - 1) / 2 + floatSpacing * (i - 1)
-            entry.obj.setRotation({0, rot.y, 0})
-            entry.obj.setPosition({ bb.center.x + off, bb.center.y + bb.size.y/2 + baseHeight, bb.center.z }, false)
+        local icons= getIcons(obj)
+
+        if isFloor then
+            local floors, prev = {}, minDist
+            for _, e in ipairs(getIcons(obj)) do if e.isFloor then table.insert(floors, e) end end
+            for i, e in ipairs(floors) do
+               local dist = (i == 1)
+                   and minDist
+                   or (prev + math.min(minDist * (baseS^(i-1)) - prev, maxStep))
+               prev = dist
+               e.obj.setRotation({0, obj.getRotation().y, 0})
+               e.obj.setPosition({ b.center.x + sign * dist, useY, b.center.z }, false)
+            end
+        else
+            local floats = {}
+            for _, e in ipairs(getIcons(obj)) do if not e.isFloor then table.insert(floats, e) end end
+            local spacing = math.min(minDist * baseS, maxStep)
+            local totalW = (#floats - 1) * spacing
+            for i, e in ipairs(floats) do
+                local off = -totalW/2 + (i-1)*spacing
+                e.obj.setRotation({0, obj.getRotation().y, 0})
+                e.obj.setPosition({ b.center.x + off, b.center.y + halfH + baseH, b.center.z }, false)
+            end
         end
     end
 
     Wait.frames(follow, 2)
-    local uid = Wait.time(follow, 0.2, -1)
+    local uid = Wait.time(follow, 0.01, -1)
     addIcon(obj, icon, uid, url, isFloor)
 end
 
 function onObjectDestroy(obj)
+    local objGUID = obj.getGUID()
+    for originGUID, icons in pairs(globalFloatingIcons) do
+        for i, e in ipairs(icons) do
+            if e.obj and e.obj.getGUID() == objGUID then
+                if e.updateID then Wait.stop(e.updateID) end
+                table.remove(icons, i)
+                if #icons == 0 then globalFloatingIcons[originGUID] = nil end
+                return
+            end
+        end
+    end
     clearIcons(obj)
+end
+
+function clearIconsOfType(obj, floorType)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for i = #icons, 1, -1 do
+        local e = icons[i]
+        if e.isFloor == floorType then
+            if e.updateID then Wait.stop(e.updateID) end
+            e.obj.destroy()
+            table.remove(icons, i)
+        end
+    end
+    if #icons == 0 then
+        globalFloatingIcons[guid] = nil
+    end
+end
+
+function onToggleButtonHotKey(type, target)
+    if not target or not target.getGUID then
+        print("No target selected.")
+        return
+    end
+    local target = target
+    local params = {
+        hoveredObject = target,
+        imageURL      = guidMap[type],
+        floor         = true,
+        name          = target.getName(),
+        extraHeightId   = type,
+    }
+    clearIconsOfType(target, false)
+    toggleFloatingIconGeneric(params)
 end

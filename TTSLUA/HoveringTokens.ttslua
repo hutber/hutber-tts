@@ -53,11 +53,13 @@ function onToggleIconButtonClick(obj, player_color, alt_click)
         return
     end
     local target = sel[#sel > 1 and math.random(#sel) or 1]
+    local objectId = obj.getGUID()
     local params = {
         hoveredObject = target,
-        imageURL      = Global.getVar(guidMap[obj.getGUID()]),
+        imageURL      = Global.getVar(guidMap[objectId]),
         floor         = alt_click,
         name          = target.getName(),
+        extraHeightId = objectId,
     }
     if alt_click then
         clearIconsOfType(target, false)

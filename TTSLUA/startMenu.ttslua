@@ -85,12 +85,17 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.6.1: Fix: Added token bags next to toggle floating icons",
-    "1.6.1: Fix: Fixed floating icons allowing items to be clicked",
-    "1.6.1: Feat: Added a button to toggle floating icons on/off",
-    "1.6: Feat: Floating Icons Toggle Added",
-    "1.6: Update: Moved the tokens next to the new floating icons if users don't like them (Christian)",
-    "1.6: Update: Updated Custon Counter to not look like shit",
+    "1.6.4: Feat: I hate the reserves board being so far away. Button to move it closer",
+    "1.6.3: Chore: I'm going to keep the version number the same so we don't lose our hotkeys each time. You will only see a version change here.",
+    "1.6.3: Fix: WTC had wrong missions in random WTC mission selector",
+    "1.6.2: Feat: Added floor markers for action, advance and battleshocked",
+    -- "1.6.2: Fix: Added hotkeys for auto makers and improved floating icons",
+    -- "1.6.1: Fix: Added token bags next to toggle floating icons",
+    -- "1.6.1: Fix: Fixed floating icons allowing items to be clicked",
+    -- "1.6.1: Feat: Added a button to toggle floating icons on/off",
+    -- "1.6: Feat: Floating Icons Toggle Added",
+    -- "1.6: Update: Moved the tokens next to the new floating icons if users don't like them (Christian)",
+    -- "1.6: Update: Updated Custon Counter to not look like shit",
     -- "1.5.18: Feat: Slowly adding more icons",
     -- "1.5.17: Feat: Add kill counters for purge the foe",
     -- "1.5.16: Feat: WTC 2025 Maps Added & UKTC Maps 1 & 4 Updated. I love balls.",
@@ -375,16 +380,17 @@ function onObjectClick(player_color, object_clicked)
         ["ca7711"] = -4.776464939,
         ["cd649d"] = -4.776464939,
         ["bf09bd"] = -4.776464939,
-        ["bf09bd"] = -4.776464939,
+        ["64c6bb"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
+        ["7a9a50"] = -6.19999981,
         ["3c1373"] = -6.19999981,
         ["8395b2"] = -6.19999981,
-        ["8395b2"] = -6.19999981,
+        ["8a7c7a"] = -6.19999981,
         ["64b6bb"] = -6.19999981,
-        ["64c6bb"] = -6.19999981,
-        ["4bb528"] = -6.19999981,
-        ["7abc5a"] = -6.19999981
+        ["138b06"] = -6.19999981,
+        ["157dbd"] = -6.19999981,
+        ["4bb528"] = -6.19999981
     }
 
     -- Iterate over each GUID and destroy the object if found
@@ -536,6 +542,7 @@ function confirmDoublesGame()
         ["9a7c3c"] = -4.776464939,
         ["bf09bd"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
+        ["138b05"] = -6.19999981,
         ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
         ["3c1373"] = -6.19999981,
@@ -660,7 +667,11 @@ function confirmSizeGame()
         ["8395b2"] = 1.19999981,
         ["64b6bb"] = 1.19999981,
         ["64c6bb"] = 1.19999981,
-        ["4bb528"] = 1.19999981
+        ["4bb528"] = 1.19999981,
+        ["157dbd"] = -2.19999981,
+        ["7a9a50"] = -2.19999981,
+        ["138b06"] = -2.19999981,
+        ["138b05"] = -2.19999981
     }
 
     self.createButton(clearAllDiceBtn)
@@ -672,6 +683,7 @@ function confirmSizeGame()
             local position = obj.getPosition()
             position.y = newPosY
             obj.setPosition(position)
+            obj.setLock(true) -- Lock the object to prevent accidental movement
         else
             print("Object with GUID " .. guid .. " not found.")
         end
@@ -2531,12 +2543,12 @@ end
 function submitFeedback(player, color, alt)
     local email = Global.getVar("feedbackEmail")
     local feedbackMessage = Global.getVar("feedbackMessage")
-    local url = string.format(
-        "https://cv.hutber.com/tts.php?name=%s&email=%s&type=%s&like=%s&message=%s&steam_name=%s",
-        urlEncode(Global.getVar("feedbackName")), urlEncode(email),
-        urlEncode(Global.getVar("feedbackType")), urlEncode(Global.getVar("feedbackLike")),
-        urlEncode(feedbackMessage), player.steam_name
-    )
+    -- local url = string.format(
+    --     "https://cv.hutber.com/tts.php?name=%s&email=%s&type=%s&like=%s&message=%s&steam_name=%s",
+    --     urlEncode(Global.getVar("feedbackName")), urlEncode(email),
+    --     urlEncode(Global.getVar("feedbackType")), urlEncode(Global.getVar("feedbackLike")),
+    --     urlEncode(feedbackMessage), player.steam_name
+    -- )
 
     -- Validate email using a simple pattern match
     if not email or email == "" or not email:match("^[%w%.%-_]+@[%w%.%-_]+%.[%a]+$") then
