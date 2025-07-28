@@ -43,12 +43,3 @@ function moveBoard(obj, player_color, alt_click)
         self.setPosition(initialPosition)
     end
 end
-
-    "posX": -0.6814038,
-    "posY": 1.03509665,
-    "posZ": 59.5047569,
-
-
-    "posX": 0.6814038,
-    "posY": 1.03509665,
-    "posZ": 84.0386047,

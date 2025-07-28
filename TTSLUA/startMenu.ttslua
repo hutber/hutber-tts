@@ -2023,7 +2023,7 @@ end
 function randomWTCMission()
     if canChangeMission then
         math.randomseed(os.time())
-        local chars = {"H","F","O","N","C","D","R"}
+        local chars = {"B","F","E","O","P","J"}
         local randomChar = chars[math.random(#chars)]
         local foundIndex
         for i, mission in ipairs(missionPackData.tournamentMissions) do
