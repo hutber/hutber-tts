@@ -85,10 +85,13 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.6.6: Fix: Dice table now shows the correct number of dice on top of it",
+    "1.6.5: Fix: Added back in the extract terrain button",
+    "1.6.5: Fix: Fixed blue secondaries not recycling",
     "1.6.4: Feat: I hate the reserves board being so far away. Button to move it closer",
-    "1.6.3: Chore: I'm going to keep the version number the same so we don't lose our hotkeys each time. You will only see a version change here.",
-    "1.6.3: Fix: WTC had wrong missions in random WTC mission selector",
-    "1.6.2: Feat: Added floor markers for action, advance and battleshocked",
+    -- "1.6.3: Chore: I'm going to keep the version number the same so we don't lose our hotkeys each time. You will only see a version change here.",
+    -- "1.6.3: Fix: WTC had wrong missions in random WTC mission selector",
+    -- "1.6.2: Feat: Added floor markers for action, advance and battleshocked",
     -- "1.6.2: Fix: Added hotkeys for auto makers and improved floating icons",
     -- "1.6.1: Fix: Added token bags next to toggle floating icons",
     -- "1.6.1: Fix: Fixed floating icons allowing items to be clicked",
@@ -2086,7 +2089,6 @@ function updateMission()
     canChangeMission = false
     Global.call("moveAllFromZoneToDeck", {zone = "deployment", deck = "deployment"})
     Global.call("moveAllFromZoneToDeck", {zone = "primary", deck = "primary"})
-print(selectedMission)
     if selectedMission == 0 then
         missionSelectionDispBtn.label = "?"
         Global.call("moveOneFromDeckToZone", {deck = "deployment", zone = "deployment"})
@@ -2181,8 +2183,8 @@ IncrementBlueCpBtn = {
     font_size = 600, color = {0, 0, 1}, font_color = {1, 1, 1}
 }
 
-notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/Drpzcwwmm6"
 position = {menuX, 5, menuZ}
+notePadTxt = "This is the Hutber version of the brilliant FTC Competitive 40k Map Base 10th. Only Grand Tournament play is supported. Everything is taken from him and I just wanted to see some new features. \n\nPlease raise issues at https://github.com/hutber/hutber-tts/issues.\nOr file issues with the original base map project: https://github.com/ThePants999/tts-comp-ftc-base-lua-scripts\n\nInstructions can be found in the Notebook.\n\nIf any of the maps need updating please let me know via the github issues.\n\n\nJoin the TTS 40K Discord server: https://discord.gg/Drpzcwwmm6"
 
 
 function writeMenus()

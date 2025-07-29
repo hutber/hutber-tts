@@ -495,8 +495,10 @@ function importOpposDice(obj, player, alt)
         local relX, relY, relZ = -(dp.x - cb.x), dp.y - cb.y, -(dp.z - cb.z)
         local nx, ny, nz = mc.x + relX, mc.y + relY, mc.z + relZ
         if entry.lethal then
-            nx = nx - 6
-            nz = nz + 4.2
+            local dx = (currentMat == "Red") and -6 or 6
+            local dz = (currentMat == "Red") and 4.2 or -4.2
+            nx = nx + dx
+            nz = nz + dz
         end
         entry.die.clone({ position={nx, ny, nz}, snap_to_grid=false })
         count = count + 1
@@ -679,16 +681,14 @@ function getDice()
     local BoundsNormalized = self.getBounds()
 
     -- How much smaller you want the detection box to be
-    local MARGIN = 0.4
 
-    local leftBound  = BoundsNormalized.center.x - (BoundsNormalized.size.x / 2) + MARGIN
-    local rightBound = BoundsNormalized.center.x + (BoundsNormalized.size.x / 2) - MARGIN
-    local upperBound = BoundsNormalized.center.z + (BoundsNormalized.size.z / 2) - MARGIN
-    local lowerBound = BoundsNormalized.center.z - (BoundsNormalized.size.z / 2) + MARGIN
+    local leftBound  = BoundsNormalized.center.x - (BoundsNormalized.size.x / 2)
+    local rightBound = BoundsNormalized.center.x + (BoundsNormalized.size.x / 2) - 5
+    local upperBound = BoundsNormalized.center.z + (BoundsNormalized.size.z / 2) - 0.5
+    local lowerBound = BoundsNormalized.center.z - (BoundsNormalized.size.z / 2)
 
-    -- Notice we keep the existing +3 on yupperBound, just subtract MARGIN
-    local yupperBound = BoundsNormalized.center.y + (BoundsNormalized.size.y / 2) + 3 - MARGIN
-    local ylowerBound = BoundsNormalized.center.y - (BoundsNormalized.size.y / 2) + MARGIN
+    local yupperBound = BoundsNormalized.center.y + (BoundsNormalized.size.y / 2) + 3
+    local ylowerBound = BoundsNormalized.center.y - (BoundsNormalized.size.y / 2)
 
     for _, obj in pairs(getAllObjects()) do
         if obj ~= nil and obj.tag == "Dice" and obj.resting then
@@ -1768,122 +1768,112 @@ function setDefaultState()
 	}))
 end
 
-function checkDice ()
-	data = JSON.decode(self.getDescription())
-	if data==nil then
-		setDefaultState()
-		data = JSON.decode(self.getDescription())
-		printToAll('Warning - invalid description. Restored default configuration.', {0.8,0.5,0})
-	end
-
-    if not self.resting then
-        return
+function checkDice()
+    -- parse description
+    local data = JSON.decode(self.getDescription())
+    if not data then
+        setDefaultState()
+        data = JSON.decode(self.getDescription())
+        printToAll('Warning - invalid description. Restored default configuration.', {0.8,0.5,0})
     end
 
-    local ownPos = self.getPosition()
-    local ownRotation = self.getRotation()['x']
-    local ownScale = self.getScale()['x']
-    local BoundsNormalized = self.getBounds()
-    local Rotation = self.getRotation()
-    local leftBound = BoundsNormalized.center.x-(BoundsNormalized.size.x/2)
-    local rightBound = BoundsNormalized.center.x+(BoundsNormalized.size.x/2)
-    local upperBound = BoundsNormalized.center.z+(BoundsNormalized.size.z/2)
-    local lowerBound = BoundsNormalized.center.z-(BoundsNormalized.size.z/2)
-    local yupperBound = BoundsNormalized.center.y+(BoundsNormalized.size.y/2)+3
-    local ylowerBound =  BoundsNormalized.center.y-(BoundsNormalized.size.y/2)
+    -- only run when mat is resting
+    if not self.resting then return end
 
+    local BoundsNormalized = self.getBounds()
+
+    -- horizontal bounds
+    local leftBound  = BoundsNormalized.center.x - (BoundsNormalized.size.x / 2) 
+    local rightBound = BoundsNormalized.center.x + (BoundsNormalized.size.x / 2) - 5
+    local upperBound = BoundsNormalized.center.z + (BoundsNormalized.size.z / 2) - 0.5
+    local lowerBound = BoundsNormalized.center.z - (BoundsNormalized.size.z / 2) + 2.9
+
+    -- vertical bounds: replace +3 with half‑die height
+    local Y_MARGIN    = 1    -- half your die’s height
+    local yupperBound = BoundsNormalized.center.y
+                      + (BoundsNormalized.size.y / 2)
+                      + Y_MARGIN
+    local ylowerBound = BoundsNormalized.center.y
+                      - (BoundsNormalized.size.y / 2)
+
+    -- tallying
     local valueToCounter = {}
-    local valuesToSort = {}
-	totaldice=0
-    diceSum = 0
+    local valuesToSort   = {}
+    local totaldice      = 0
+    local diceSum        = 0
 
     for _, obj in pairs(getAllObjects()) do
-        if obj != nil and obj.tag == 'Dice' and obj.resting then
-            local objPos = obj.getPosition()
-            if objPos['x'] > leftBound and objPos['x'] < rightBound and objPos['z'] > lowerBound and objPos['z'] < upperBound and objPos['y'] < yupperBound and objPos['y'] > ylowerBound then
-                local value = obj.getValue()
-                if value ~= nil then
-                    local counter = valueToCounter[value]
-                    if counter == nil then
-                        counter = 0
-                        valuesToSort[#valuesToSort + 1] = value
+        if obj and obj.tag == 'Dice' and obj.resting then
+            local p = obj.getPosition()
+            if p.x > leftBound and p.x < rightBound
+            and p.z > lowerBound and p.z < upperBound
+            and p.y > ylowerBound and p.y < yupperBound then
+                local v = obj.getValue()
+                if v then
+                    if not valueToCounter[v] then
+                        valueToCounter[v] = 0
+                        table.insert(valuesToSort, v)
                     end
-                    diceSum = diceSum + value
-                    counter = counter + 1
-                    totaldice=totaldice+1
-                    valueToCounter[value] = counter
+                    valueToCounter[v] = valueToCounter[v] + 1
+                    diceSum    = diceSum + v
+                    totaldice  = totaldice + 1
                 end
             end
         end
     end
 
+    -- build display lines
     local textLines = {}
-    lineCount=0
-	if data.Cumulative == 'yes' then
-		table.sort(valuesToSort)
-		for i=1,12 do
-			if valueToCounter[i]==nil then
-				valueToCounter[i]=0
-			end
-		end
-		valueToCounter[11]=valueToCounter[12]+valueToCounter[11]
-		valueToCounter[10]=valueToCounter[11]+valueToCounter[10]
-		valueToCounter[9]=valueToCounter[10]+valueToCounter[9]
-		valueToCounter[8]=valueToCounter[9]+valueToCounter[8]
-		valueToCounter[7]=valueToCounter[8]+valueToCounter[7]
-		valueToCounter[6]=valueToCounter[7]+valueToCounter[6]
-		valueToCounter[5]=valueToCounter[6]+valueToCounter[5]
-		valueToCounter[4]=valueToCounter[5]+valueToCounter[4]
-		valueToCounter[3]=valueToCounter[4]+valueToCounter[3]
-		valueToCounter[2]=valueToCounter[3]+valueToCounter[2]
-		for index, value in ipairs(valuesToSort) do
-			local counter = valueToCounter[value]
-			local xxx = ''
-			if value == 1 then
-				xxx = "'s: "
-			else
-				xxx = "+: "
-			end
-			local line = value .. xxx .. counter
-			textLines[#textLines + 1] = line
-            lineCount=lineCount+1
-		end
-	else
-		table.sort(valuesToSort)
-		for index, value in ipairs(valuesToSort) do
-			local counter = valueToCounter[value]
-			local line = '#' .. value .. ': ' .. counter
-			textLines[#textLines + 1] = line
-            lineCount=lineCount+1
-		end
-	end
-    if lineCount < 6 then
-        for i = lineCount+1, 6 do
-            textLines[#textLines + 1] = " "
+    local lineCount = 0
+
+    if data.Cumulative == 'yes' then
+        table.sort(valuesToSort)
+        -- ensure keys 1–12 exist
+        for i=1,12 do valueToCounter[i] = valueToCounter[i] or 0 end
+        -- cumulative roll‑up
+        for i=11,1,-1 do
+            valueToCounter[i] = valueToCounter[i] + valueToCounter[i+1]
+        end
+        for _, v in ipairs(valuesToSort) do
+            local suffix = (v == 1) and "'s: " or "+: "
+            table.insert(textLines, tostring(v) .. suffix .. valueToCounter[v])
+            lineCount = lineCount + 1
+        end
+    else
+        table.sort(valuesToSort)
+        for _, v in ipairs(valuesToSort) do
+            table.insert(textLines, "#" .. v .. ": " .. valueToCounter[v])
+            lineCount = lineCount + 1
         end
     end
-    local text = table.concat(textLines, '\n')
-    if text == '' then
-        text = emptyText
-    end
-    if totaldice==0
-    then
-        totaltext = ' '
-    else
-        totaltext='\n' .. totaldice .. " \u{2211} " .. diceSum
 
+    -- pad to 6 lines
+    for i = lineCount+1, 6 do
+        table.insert(textLines, " ")
     end
-    if lineCount>6 then
-        fontSize=defaultFontSize-((lineCount-6)*37)
-        divisionLabel=defaultDivisionLabel
 
+    local text = table.concat(textLines, "\n")
+    if text == "" then text = emptyText end
+
+    -- add total/diceSum
+    local totaltext = (totaldice == 0)
+        and " "
+        or ("\n" .. totaldice .. " \u{2211} " .. diceSum)
+
+    -- adjust font if extra lines
+    if lineCount > 6 then
+        fontSize      = defaultFontSize - ((lineCount-6)*37)
+        divisionLabel = defaultDivisionLabel
     else
-        fontSize=defaultFontSize
-        divisionLabel=""
+        fontSize      = defaultFontSize
+        divisionLabel = ""
     end
-    self.editButton({index=0, label=text..totaltext, font_size=fontSize})
-    self.editButton({index=1, label=divisionLabel})
+
+    -- update UI
+    self.editButton({ index = 0, label = text .. totaltext, font_size = fontSize })
+    self.editButton({ index = 1, label = divisionLabel })
 end
+
 
 function swapPipColor()
     customDiceImage = nil

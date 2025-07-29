@@ -898,7 +898,7 @@ function recycleSecondary21()
         fixedSecondaryCard1_Blue = nil
     end
     Global.call("moveAllFromZoneToDeck", {zone = "secondary21", deck = "blueSecondary"})
-    Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary21"})
+    Global.call("moveOneFromDeckToZoneBlue", {deck = "blueSecondary", zone = "secondary21"})
     Wait.time(function()
         local objs = secondary21ZoneObj.getObjects()
         if #objs > 0 then
@@ -913,7 +913,7 @@ function recycleSecondary22()
         fixedSecondaryCard2_Blue = nil
     end
     Global.call("moveAllFromZoneToDeck", {zone = "secondary22", deck = "blueSecondary"})
-    Global.call("moveOneFromDeckToZone", {deck = "blueSecondary", zone = "secondary22"})
+    Global.call("moveOneFromDeckToZoneBlue", {deck = "blueSecondary", zone = "secondary22"})
     Wait.time(function()
         local objs = secondary22ZoneObj.getObjects()
         if #objs > 0 then
