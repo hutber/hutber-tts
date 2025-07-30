@@ -676,33 +676,60 @@ end
 
 function getDice()
     local dice = {}
-    local ownPos = self.getPosition()
-    local ownRotation = self.getRotation()['x']
-    local BoundsNormalized = self.getBounds()
+    local b = self.getBounds()
+    local left  = b.center.x - b.size.x/2
+    local right = b.center.x + b.size.x/2
+    local back  = b.center.z - b.size.z/2
+    local front = b.center.z + b.size.z/2
+    local ybot  = b.center.y - b.size.y/2
+    local ytop  = b.center.y + b.size.y/2 + 3
 
-    -- How much smaller you want the detection box to be
+    if currentMat == "Red" then
+        right = right - 5
+        back  = back  + 2.9
+        front = front - 0.5
+    else
+        left  = left  + 5
+        back  = back  + 0.5
+        front = front - 2.9
+    end
 
-    local leftBound  = BoundsNormalized.center.x - (BoundsNormalized.size.x / 2)
-    local rightBound = BoundsNormalized.center.x + (BoundsNormalized.size.x / 2) - 5
-    local upperBound = BoundsNormalized.center.z + (BoundsNormalized.size.z / 2) - 0.5
-    local lowerBound = BoundsNormalized.center.z - (BoundsNormalized.size.z / 2)
+    local lethalGUID = (currentMat == "Red")
+        and Global.getVar("redLethalHits_GUID")
+        or   Global.getVar("blueLethalHits_GUID")
+    local lzone = getObjectFromGUID(lethalGUID)
+    local lbound
+    if lzone then
+        local lb = lzone.getBounds()
+        lbound = {
+            minx = lb.center.x - lb.size.x/2,
+            maxx = lb.center.x + lb.size.x/2,
+            minz = lb.center.z - lb.size.z/2,
+            maxz = lb.center.z + lb.size.z/2,
+            miny = lb.center.y - lb.size.y/2,
+            maxy = lb.center.y + lb.size.y/2
+        }
+    end
 
-    local yupperBound = BoundsNormalized.center.y + (BoundsNormalized.size.y / 2) + 3
-    local ylowerBound = BoundsNormalized.center.y - (BoundsNormalized.size.y / 2)
-
-    for _, obj in pairs(getAllObjects()) do
-        if obj ~= nil and obj.tag == "Dice" and obj.resting then
-            local objPos = obj.getPosition()
-            if objPos.x > leftBound and objPos.x < rightBound
-               and objPos.z > lowerBound and objPos.z < upperBound
-               and objPos.y < yupperBound and objPos.y > ylowerBound then
-                table.insert(dice, #dice+1, obj)
+    for _, o in ipairs(getAllObjects()) do
+        if o.tag == "Dice" and o.resting then
+            local p = o.getPosition()
+            if p.x > left and p.x < right
+            and p.z > back and p.z < front
+            and p.y > ybot and p.y < ytop
+            and not (lbound
+                and p.x > lbound.minx and p.x < lbound.maxx
+                and p.z > lbound.minz and p.z < lbound.maxz
+                and p.y > lbound.miny and p.y < lbound.maxy)
+            then
+                table.insert(dice, o)
             end
         end
     end
 
     return dice
 end
+
 
 
 function customDice(obj, player, alt)
@@ -1769,45 +1796,37 @@ function setDefaultState()
 end
 
 function checkDice()
-    -- parse description
     local data = JSON.decode(self.getDescription())
     if not data then
         setDefaultState()
         data = JSON.decode(self.getDescription())
         printToAll('Warning - invalid description. Restored default configuration.', {0.8,0.5,0})
     end
-
-    -- only run when mat is resting
     if not self.resting then return end
 
-    local BoundsNormalized = self.getBounds()
+    local b = self.getBounds()
+    local leftBound  = b.center.x - b.size.x/2
+    local rightBound = b.center.x + b.size.x/2
+    local lowerBound = b.center.z - b.size.z/2
+    local upperBound = b.center.z + b.size.z/2
+    if currentMat == "Red" then
+        rightBound = rightBound - 5
+        lowerBound = lowerBound + 2.9
+        upperBound = upperBound - 0.5
+    else
+        leftBound  = leftBound  + 5
+        lowerBound = lowerBound + 0.5
+        upperBound = upperBound - 2.9
+    end
+    local ylowerBound = b.center.y - b.size.y/2
 
-    -- horizontal bounds
-    local leftBound  = BoundsNormalized.center.x - (BoundsNormalized.size.x / 2) 
-    local rightBound = BoundsNormalized.center.x + (BoundsNormalized.size.x / 2) - 5
-    local upperBound = BoundsNormalized.center.z + (BoundsNormalized.size.z / 2) - 0.5
-    local lowerBound = BoundsNormalized.center.z - (BoundsNormalized.size.z / 2) + 2.9
-
-    -- vertical bounds: replace +3 with half‑die height
-    local Y_MARGIN    = 1    -- half your die’s height
-    local yupperBound = BoundsNormalized.center.y
-                      + (BoundsNormalized.size.y / 2)
-                      + Y_MARGIN
-    local ylowerBound = BoundsNormalized.center.y
-                      - (BoundsNormalized.size.y / 2)
-
-    -- tallying
-    local valueToCounter = {}
-    local valuesToSort   = {}
-    local totaldice      = 0
-    local diceSum        = 0
-
+    local valueToCounter, valuesToSort, totaldice, diceSum = {}, {}, 0, 0
     for _, obj in pairs(getAllObjects()) do
-        if obj and obj.tag == 'Dice' and obj.resting then
+        if obj.tag == 'Dice' and obj.resting then
             local p = obj.getPosition()
             if p.x > leftBound and p.x < rightBound
             and p.z > lowerBound and p.z < upperBound
-            and p.y > ylowerBound and p.y < yupperBound then
+            and p.y > ylowerBound then
                 local v = obj.getValue()
                 if v then
                     if not valueToCounter[v] then
@@ -1822,16 +1841,11 @@ function checkDice()
         end
     end
 
-    -- build display lines
-    local textLines = {}
-    local lineCount = 0
-
+    local textLines, lineCount = {}, 0
     if data.Cumulative == 'yes' then
         table.sort(valuesToSort)
-        -- ensure keys 1–12 exist
-        for i=1,12 do valueToCounter[i] = valueToCounter[i] or 0 end
-        -- cumulative roll‑up
-        for i=11,1,-1 do
+        for i = 1, 12 do valueToCounter[i] = valueToCounter[i] or 0 end
+        for i = 11, 1, -1 do
             valueToCounter[i] = valueToCounter[i] + valueToCounter[i+1]
         end
         for _, v in ipairs(valuesToSort) do
@@ -1846,21 +1860,14 @@ function checkDice()
             lineCount = lineCount + 1
         end
     end
-
-    -- pad to 6 lines
     for i = lineCount+1, 6 do
         table.insert(textLines, " ")
     end
 
     local text = table.concat(textLines, "\n")
     if text == "" then text = emptyText end
+    local totaltext = (totaldice == 0) and " " or ("\n" .. totaldice .. " ∑ " .. diceSum)
 
-    -- add total/diceSum
-    local totaltext = (totaldice == 0)
-        and " "
-        or ("\n" .. totaldice .. " \u{2211} " .. diceSum)
-
-    -- adjust font if extra lines
     if lineCount > 6 then
         fontSize      = defaultFontSize - ((lineCount-6)*37)
         divisionLabel = defaultDivisionLabel
@@ -1869,11 +1876,9 @@ function checkDice()
         divisionLabel = ""
     end
 
-    -- update UI
     self.editButton({ index = 0, label = text .. totaltext, font_size = fontSize })
     self.editButton({ index = 1, label = divisionLabel })
 end
-
 
 function swapPipColor()
     customDiceImage = nil

@@ -85,6 +85,7 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.6.7: Fix: Buggy lethal hit dice being pulled in",
     "1.6.6: Fix: Dice table now shows the correct number of dice on top of it",
     "1.6.5: Fix: Added back in the extract terrain button",
     "1.6.5: Fix: Fixed blue secondaries not recycling",
