@@ -85,11 +85,23 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.6.7: Fix: Buggy lethal hit dice being pulled in",
-    "1.6.6: Fix: Dice table now shows the correct number of dice on top of it",
-    "1.6.5: Fix: Added back in the extract terrain button",
-    "1.6.5: Fix: Fixed blue secondaries not recycling",
-    "1.6.4: Feat: I hate the reserves board being so far away. Button to move it closer",
+    "1.6.16: Feat: Updated UKTC maps",
+    "1.6.16: I've completely got back into compeitive painting!",
+    -- "1.6.15: Fix: Updated UKTC map 4 to correct map",
+    -- "1.6.14: Feat: Marcus Miniatures Maps updated after £4000 payment finally completed",
+    -- "1.6.13: Feat: Lethal and sustained hits completely reworked, now you can click multiple times to add more hits and right/left click to add 5/6 hits",
+    -- "1.6.12: Feat: Added a huge banner to make it the most obvious thing in the world that I have a pateron",
+    -- "1.6.11: Feat: Breaking changes to lethal/sustained hits, now they you left click for 6, right click for 5 & 6. You can multiple click the buttons for sustained 2,3 etc",
+    -- "1.6.10: Fix: Blue action tocken toggle fixed",
+    -- "1.6.10: Feat: Added CLear All Bulles button to the dice mate",
+    -- "1.6.9: Fix: Updated floor battleshock tokens abit to be a little better?",
+    -- "1.6.8: Update: UKTC Map Updates and starting to hide shelves by default",
+    -- "1.6.8: Fix: GW Map 8 now has the correct terrain placements",
+    -- "1.6.7: Fix: Buggy lethal hit dice being pulled in",
+    -- "1.6.6: Fix: Dice table now shows the correct number of dice on top of it",
+    -- "1.6.5: Fix: Added back in the extract terrain button",
+    -- "1.6.5: Fix: Fixed blue secondaries not recycling",
+    -- "1.6.4: Feat: I hate the reserves board being so far away. Button to move it closer",
     -- "1.6.3: Chore: I'm going to keep the version number the same so we don't lose our hotkeys each time. You will only see a version change here.",
     -- "1.6.3: Fix: WTC had wrong missions in random WTC mission selector",
     -- "1.6.2: Feat: Added floor markers for action, advance and battleshocked",
@@ -198,7 +210,7 @@ sizeData={
 
 menuSizeX = 0
 menuSizeY = 5
-menuSizeZ = 21
+menuSizeZ = 16
 arrowOffset=9.5
 
 mapSizeSelected=2
@@ -386,14 +398,12 @@ function onObjectClick(player_color, object_clicked)
         ["bf09bd"] = -4.776464939,
         ["64c6bb"] = -4.776464939,
         ["9a7c3c"] = -4.776464939,
+        ["d8d6da"] = -6.776464939,
         ["3c8a1b"] = -6.19999981,
-        ["7a9a50"] = -6.19999981,
         ["3c1373"] = -6.19999981,
         ["8395b2"] = -6.19999981,
         ["8a7c7a"] = -6.19999981,
         ["64b6bb"] = -6.19999981,
-        ["138b06"] = -6.19999981,
-        ["157dbd"] = -6.19999981,
         ["4bb528"] = -6.19999981
     }
 
@@ -546,14 +556,15 @@ function confirmDoublesGame()
         ["9a7c3c"] = -4.776464939,
         ["bf09bd"] = -4.776464939,
         ["3c8a1b"] = -6.19999981,
-        ["138b05"] = -6.19999981,
         ["8a7c7a"] = -6.19999981,
         ["8395b2"] = -6.19999981,
         ["3c1373"] = -6.19999981,
         ["64c6bb"] = -6.19999981,
         ["64b6bb"] = -6.19999981,
         ["4bb528"] = -6.19999981,
-        ["7abc5a"] = -6.19999981
+        ["7abc5a"] = -6.19999981,
+        ["138b06"] = -6.19999981,
+        ["d8d6da"] = -6.19999981
     }
 
     -- Iterate over each GUID and destroy the object if found
@@ -671,13 +682,24 @@ function confirmSizeGame()
         ["8395b2"] = 1.19999981,
         ["64b6bb"] = 1.19999981,
         ["64c6bb"] = 1.19999981,
-        ["4bb528"] = 1.19999981,
-        ["157dbd"] = -2.19999981,
-        ["7a9a50"] = -2.19999981,
-        ["138b06"] = -2.19999981,
-        ["138b05"] = -2.19999981
+        ["4bb528"] = 1.19999981
     }
 
+
+    local destoryObjects = {
+        ["138b06"] = -6.19999981,
+        ["d8d6da"] = -6.19999981
+    }
+
+    -- Iterate over each GUID and destroy the object if found
+    for guid, _ in pairs(destoryObjects) do
+        local obj = getObjectFromGUID(guid)
+        if obj then
+            destroyObject(obj) -- Destroy the object
+        else
+            print("Object with GUID " .. guid .. " not found.")
+        end
+    end
     self.createButton(clearAllDiceBtn)
 
     -- Iterate over each GUID and set the new height
@@ -1426,7 +1448,7 @@ end
 
 function destroyDeployZones()
     for i, obj in ipairs(getAllObjects()) do
-        if obj.getGMNotes() == "deployZone" then
+        if obj.getGMNotes() == "deployZone" or obj.getGMNotes() == "deployZone9" then
             obj.destroy()
         end
     end
@@ -1707,6 +1729,23 @@ objectivesOffsetDownBtn = {
     index = 1, label = "-", click_function = "objectivesOffsetDown", function_owner = self,
     position = {-menuX + 1.4*arrowOffset, 5, menuZ + secondRowOffset}, rotation = {0, 0, 0}, height = 450, width = 800,
     font_size = 300, color = {0, 0, 0}, font_color = {1, 1, 1}
+}
+
+-- 9" secondary deployment lines toggle button (teal 59decf)
+local nineInchColor = {0x59/255, 0xDE/255, 0xCF/255}
+nineFromDeployBtn = {
+    index = 1,
+    label = '9" from DZ',
+    tooltip = 'Toggle 9" lines offset from current deployment lines',
+    click_function = "toggleNineFromDeployment",
+    function_owner = self,
+    position = { -menuX, 5, menuZ + (secondRowOffset * 3) },
+    rotation = {0, 0, 0},
+    height = 450,
+    width = 1600,
+    font_size = 200,
+    color = nineInchColor,
+    font_color = {0, 0, 0}
 }
 
 defaultObjectivesHeight=1.0
@@ -2221,6 +2260,7 @@ function writeDeployMenu()
     self.createButton(objectivesOffsetDownBtn)
     self.createButton(objectivesOffsetUpBtn)
     self.createButton(objectivesOffsetMenuBtn)
+    self.createButton(nineFromDeployBtn)
 
     if gameMode == "game" then
         if not packSelected then
@@ -2248,6 +2288,7 @@ function writeIngameMenu()
     self.createButton(objectivesOffsetDownBtn)
     self.createButton(objectivesOffsetUpBtn)
     self.createButton(objectivesOffsetMenuBtn)
+    self.createButton(nineFromDeployBtn)
 
     nextPhaseBtn.color = currentTurn
     local visibleTo=nextPhaseBtn.color
@@ -2482,6 +2523,63 @@ function showHideIngameDeployment()
         Global.setVar("interactiveButtonDeploymentZones", 1)
         if deploySelected < #DeployZonesData then
             destroyDeployZones()
+        end
+    end
+end
+
+
+-- 9" secondary deployment lines (toggle + helpers)
+function destroyNineInchDeployLines()
+    for i, obj in ipairs(getAllObjects()) do
+        if obj.getGMNotes() == "deployZone9" then
+            obj.destroy()
+        end
+    end
+end
+
+function toggleNineFromDeployment()
+    -- Remove if present, else add at 9"
+    local present = false
+    for i, obj in ipairs(getAllObjects()) do
+        if obj.getGMNotes() == "deployZone9" then
+            present = true
+            break
+        end
+    end
+    if present then
+        destroyNineInchDeployLines()
+        return
+    end
+    addNineInchDeployLines(9)
+end
+
+function addNineInchDeployLines(distance)
+    for i, obj in ipairs(getAllObjects()) do
+        if obj.getGMNotes() == "deployZone" then
+            local sc = obj.getScale()
+            -- Only process thin straight lines, skip circles and other shapes
+            if sc.z and sc.z <= 0.05 then
+                local rot = obj.getRotation()
+                local pos = obj.getPosition()
+
+                local yawRad = math.rad(rot.y)
+                -- normal vector in XZ plane (perpendicular to line axis)
+                local nx = math.cos(yawRad + math.rad(90))
+                local nz = math.sin(yawRad + math.rad(90))
+                -- point towards table center
+                local cx = -pos.x
+                local cz = -pos.z
+                local dot = (nx * cx) + (nz * cz)
+                if dot < 0 then
+                    nx = -nx
+                    nz = -nz
+                end
+
+                local newPos = { x = pos.x + nx * distance, y = pos.y, z = pos.z + nz * distance }
+                local newRot = { x = rot.x, y = rot.y, z = rot.z }
+                local newScale = { x = sc.x, y = sc.y, z = sc.z }
+                spawnLine(newPos, newRot, newScale, nineInchColor, "deployZone9")
+            end
         end
     end
 end

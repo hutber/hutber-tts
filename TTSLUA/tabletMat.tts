@@ -1,0 +1,449 @@
+-- FTC-GUID: aca121
+-- Tablet style dice mat with dice-spawn UI
+-- Designed to work with customKustom40kDiceRollerMk3 by registering
+-- itself in Global as the custom dice mat GUID (so the roller can
+-- place dice on top of this mat when rolling).
+
+-- Small, focused UI: spawn buttons, custom-count input, and clear area
+-- "iPad" like layout to make spawning easier from a UX perspective.
+
+-- 2-space indentation throughout
+
+currentMat = "Red"
+-- Yoffset is the local Y position used for buttons; compute a sensible
+-- default but override it on load based on object bounds so buttons sit
+-- above the object's surface regardless of the object's world pos/scale.
+Yoffset = 0.2
+
+-- Default custom count
+customDiceCount = 1
+
+-- Button definitions (positions are relative to the object)
+spawn1Btn = {
+  label = "+1d6", click_function = "spawn1D6", function_owner = self,
+  position = {-2.5, Yoffset, -0.6}, rotation = {0, 0, 0}, height = 200, width = 450, font_size = 60,
+  color = {0.15,0.15,0.15}, font_color = {1,1,1}
+}
+spawn2Btn = {
+  label = "+2d6", click_function = "spawn2D6", function_owner = self,
+  position = {-1.3, Yoffset, -0.6}, rotation = {0, 0, 0}, height = 200, width = 450, font_size = 60,
+  color = {0.15,0.15,0.15}, font_color = {1,1,1}
+}
+spawn3Btn = {
+  label = "+3d6", click_function = "spawn3D6", function_owner = self,
+  position = {-0.1, Yoffset, -0.6}, rotation = {0, 0, 0}, height = 200, width = 450, font_size = 60,
+  color = {0.15,0.15,0.15}, font_color = {1,1,1}
+}
+spawn10Btn = {
+  label = "+10d6", click_function = "spawn10D6", function_owner = self,
+  position = {1.1, Yoffset, -0.6}, rotation = {0, 0, 0}, height = 200, width = 600, font_size = 60,
+  color = {0.13,0.13,0.13}, font_color = {1,1,1}
+}
+
+customDiceInput = {
+  label = "# dice", input_function = "setCustomDiceCount", function_owner = self,
+  position = {-2.5, Yoffset, 0.15}, rotation = {0,0,0}, width = 500, height = 180, font_size = 60,
+  alignment = 3, color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+-- Numberpad: a display input and digit buttons to build a number
+numberpadValue = ""
+numberpadInput = {
+  label = "", input_function = "setNumberpadFromInput", function_owner = self,
+  position = {-2.5, Yoffset, 0.45}, rotation = {0,0,0}, width = 500, height = 140, font_size = 60,
+  alignment = 3, color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+
+numPadBtns = {
+  btn1 = { label = "1", click_function = "numpadPress1", function_owner = self, position = {-3.0, Yoffset, 0.9}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn2 = { label = "2", click_function = "numpadPress2", function_owner = self, position = {-2.4, Yoffset, 0.9}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn3 = { label = "3", click_function = "numpadPress3", function_owner = self, position = {-1.8, Yoffset, 0.9}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn4 = { label = "4", click_function = "numpadPress4", function_owner = self, position = {-3.0, Yoffset, 1.2}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn5 = { label = "5", click_function = "numpadPress5", function_owner = self, position = {-2.4, Yoffset, 1.2}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn6 = { label = "6", click_function = "numpadPress6", function_owner = self, position = {-1.8, Yoffset, 1.2}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn7 = { label = "7", click_function = "numpadPress7", function_owner = self, position = {-3.0, Yoffset, 1.5}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn8 = { label = "8", click_function = "numpadPress8", function_owner = self, position = {-2.4, Yoffset, 1.5}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn9 = { label = "9", click_function = "numpadPress9", function_owner = self, position = {-1.8, Yoffset, 1.5}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  btn0 = { label = "0", click_function = "numpadPress0", function_owner = self, position = {-2.4, Yoffset, 1.8}, height = 180, width = 180, font_size = 60, color = {0.2,0.2,0.2}, font_color = {1,1,1} },
+  back = { label = "<-", click_function = "numpadBackspace", function_owner = self, position = {-1.0, Yoffset, 1.8}, height = 180, width = 300, font_size = 60, color = {0.7,0.2,0.2}, font_color = {1,1,1} },
+  clear = { label = "Clear", click_function = "numpadClear", function_owner = self, position = {-3.6, Yoffset, 1.8}, height = 180, width = 300, font_size = 60, color = {0.7,0.2,0.2}, font_color = {1,1,1} },
+  enter = { label = "Spawn", click_function = "numpadEnter", function_owner = self, position = {-0.4, Yoffset, 0.9}, height = 600, width = 400, font_size = 60, color = {0.2,0.6,0.2}, font_color = {1,1,1} }
+}
+customSpawnBtn = {
+  label = "Spawn", click_function = "spawnCustomDice", function_owner = self,
+  position = {-1.3, Yoffset, 0.15}, rotation = {0,0,0}, height = 200, width = 450, font_size = 60,
+  color = {0.2,0.6,1}, font_color = {0,0,0}
+}
+
+clearBtn = {
+  label = "Clear Dice", click_function = "clearDiceArea", function_owner = self,
+  position = {1.6, Yoffset, 0.15}, rotation = {0,0,0}, height = 200, width = 700, font_size = 60,
+  color = {0.9,0.15,0.15}, font_color = {1,1,1}
+}
+
+-- Small refresh button so you can rescale the object in-game and re-create
+-- the buttons to compensate for the new scale.
+refreshBtn = {
+  label = "Refresh UI", click_function = "refreshUI", function_owner = self,
+  position = {1.6, Yoffset, -0.6}, rotation = {0,0,0}, height = 140, width = 300, font_size = 50,
+  color = {0.2,0.2,0.2}, font_color = {1,1,1}
+}
+
+-- Dynamic button position editor state
+editableTargetLabel = ""
+editablePosX = 0
+editablePosY = 0
+editablePosZ = 0
+editableIndex = 0
+
+-- Inputs for dynamic editing (positions chosen near bottom-right of menu)
+editTargetInput = {
+  label = "Button label", input_function = "setEditableTargetLabel", function_owner = self,
+  position = {3.5, Yoffset, 0.6}, rotation = {0,0,0}, width = 1400, height = 200, font_size = 60,
+  color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+editIndexInput = {
+  label = "Index", input_function = "setEditableIndex", function_owner = self,
+  position = {3.0, Yoffset, 0.25}, rotation = {0,0,0}, width = 300, height = 140, font_size = 60,
+  color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+editPosXInput = {
+  label = "X", input_function = "setEditablePosX", function_owner = self,
+  position = {3.5, Yoffset, 0.25}, rotation = {0,0,0}, width = 350, height = 140, font_size = 60,
+  color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+editPosYInput = {
+  label = "Y", input_function = "setEditablePosY", function_owner = self,
+  position = {4.0, Yoffset, 0.25}, rotation = {0,0,0}, width = 350, height = 140, font_size = 60,
+  color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+editPosZInput = {
+  label = "Z", input_function = "setEditablePosZ", function_owner = self,
+  position = {4.5, Yoffset, 0.25}, rotation = {0,0,0}, width = 350, height = 140, font_size = 60,
+  color = {1,1,1}, font_color = {0.15,0.15,0.15}
+}
+applyEditBtn = {
+  label = "Apply Pos", click_function = "applyButtonPosition", function_owner = self,
+  position = {4.0, Yoffset, -0.1}, rotation = {0,0,0}, height = 180, width = 700, font_size = 60,
+  color = {0.2,0.6,0.2}, font_color = {1,1,1}
+}
+printBtnList = {
+  label = "List Buttons", click_function = "printButtonsList", function_owner = self,
+  position = {3.0, Yoffset, -0.6}, rotation = {0,0,0}, height = 140, width = 700, font_size = 50,
+  color = {0.2,0.2,0.6}, font_color = {1,1,1}
+}
+
+-- Utility: determine if object is on the Blue side (z < 0 used in this project)
+function determineSide()
+  if self.getPosition().z < 0 then
+    currentMat = "Blue"
+  else
+    currentMat = "Red"
+  end
+end
+
+-- Register this mat in Global so the roller can find it
+function registerWithGlobal()
+  if currentMat == "Red" then
+    Global.setVar("redCustomDiceMat_GUID", self.getGUID())
+    printToAll("Registered red custom dice mat: " .. self.getGUID(), {1,1,1})
+  else
+    Global.setVar("blueCustomDiceMat_GUID", self.getGUID())
+    printToAll("Registered blue custom dice mat: " .. self.getGUID(), {1,1,1})
+  end
+end
+
+-- Create the UI buttons on the object
+function createMenu()
+  self.clearButtons()
+  -- Create buttons and inputs using their defined width/height/font_size
+  self.createButton(spawn1Btn)
+  self.createButton(spawn2Btn)
+  self.createButton(spawn3Btn)
+  self.createButton(spawn10Btn)
+  self.createInput(customDiceInput)
+  self.createInput(numberpadInput)
+  self.createButton(customSpawnBtn)
+  self.createButton(clearBtn)
+  -- refreshBtn still available to recreate the menu if needed
+  if refreshBtn then self.createButton(refreshBtn) end
+  -- create numberpad buttons (after refresh so input indices remain stable)
+  for _, b in pairs(numPadBtns) do self.createButton(b) end
+  -- dynamic edit inputs and apply
+  self.createInput(editTargetInput)
+  self.createInput(editIndexInput)
+  self.createInput(editPosXInput)
+  self.createInput(editPosYInput)
+  self.createInput(editPosZInput)
+  self.createButton(applyEditBtn)
+  self.createButton(printBtnList)
+end
+
+-- Compute a spawn starting position on top of the mat
+function getSpawnStartPosition()
+  local b = self.getBounds()
+  local center = b.center
+  local start = { x = center.x - (b.size.x/2) + 2.5, y = center.y + 1.2, z = center.z }
+  -- Move spawn start slightly depending on side to make placement natural
+  if currentMat == "Blue" then
+    start.x = center.x + (b.size.x/2) - 2.5
+  end
+  return start
+end
+
+-- Spawn N D6 dice in a neat row; set random face and tint based on player
+function spawnDice(n, player)
+  n = n or 1
+  local start = getSpawnStartPosition()
+  local spacing = 1.4
+  local dir = (currentMat == "Blue") and -1 or 1
+  local diceColors = {
+    Red = {1,0.3,0.3}, Blue = {0.3,0.6,1}, White = {1,1,1}, Black = {0.1,0.1,0.1}
+  }
+  local tint = diceColors[player] or stringColorToRGB(player) or {1,1,1}
+
+  for i=1,n do
+    local pos = { x = start.x + dir * (i-1) * spacing, y = start.y, z = start.z }
+    local die = spawnObject({ type = "Die_6_Rounded", position = pos, rotation = {0,180,0} })
+    if die then
+      local result = math.random(1,6)
+      die.setValue(result)
+      die.setColorTint(tint)
+      die.setLock(false)
+    end
+  end
+end
+
+-- Button callbacks
+function spawn1D6(obj, player, alt)
+  spawnDice(1, player)
+end
+function spawn2D6(obj, player, alt)
+  spawnDice(2, player)
+end
+function spawn3D6(obj, player, alt)
+  spawnDice(3, player)
+end
+function spawn10D6(obj, player, alt)
+  spawnDice(10, player)
+end
+
+-- Custom input handlers
+function setCustomDiceCount(_, player, value, _)
+  local num = tonumber(value)
+  if num and num > 0 and num <= 128 then
+    customDiceCount = math.floor(num)
+  else
+    printToColor("Enter a number between 1 and 128", player, "Red")
+    customDiceCount = 1
+  end
+end
+
+function setEditableTargetLabel(_, player, value, _)
+  editableTargetLabel = tostring(value)
+  printToColor("Target button label set to: " .. editableTargetLabel, player, "Yellow")
+end
+
+function setEditablePosX(_, player, value, _)
+  local n = tonumber(value)
+  if n then editablePosX = n end
+  printToColor("Editable X set to: " .. tostring(editablePosX), player, "Yellow")
+end
+
+function setEditablePosY(_, player, value, _)
+  local n = tonumber(value)
+  if n then editablePosY = n end
+  printToColor("Editable Y set to: " .. tostring(editablePosY), player, "Yellow")
+end
+
+function setEditablePosZ(_, player, value, _)
+  local n = tonumber(value)
+  if n then editablePosZ = n end
+  printToColor("Editable Z set to: " .. tostring(editablePosZ), player, "Yellow")
+end
+
+function setNumberpadFromInput(_, player, value, _)
+  numberpadValue = tostring(value or "")
+  printToColor("Numberpad value: " .. numberpadValue, player, "Yellow")
+end
+
+local function updateNumberpadDisplay()
+  -- numberpad input is created second among inputs so index = 1
+  pcall(function() self.editInput({ index = 1, value = numberpadValue }) end)
+end
+
+local function appendDigit(d)
+  if #numberpadValue >= 6 then return end
+  numberpadValue = numberpadValue .. tostring(d)
+  updateNumberpadDisplay()
+end
+
+function numpadPress0(obj, player, alt) appendDigit(0) end
+function numpadPress1(obj, player, alt) appendDigit(1) end
+function numpadPress2(obj, player, alt) appendDigit(2) end
+function numpadPress3(obj, player, alt) appendDigit(3) end
+function numpadPress4(obj, player, alt) appendDigit(4) end
+function numpadPress5(obj, player, alt) appendDigit(5) end
+function numpadPress6(obj, player, alt) appendDigit(6) end
+function numpadPress7(obj, player, alt) appendDigit(7) end
+function numpadPress8(obj, player, alt) appendDigit(8) end
+function numpadPress9(obj, player, alt) appendDigit(9) end
+
+function numpadBackspace(obj, player, alt)
+  if #numberpadValue == 0 then return end
+  numberpadValue = numberpadValue:sub(1, -2)
+  updateNumberpadDisplay()
+end
+
+function numpadClear(obj, player, alt)
+  numberpadValue = ""
+  updateNumberpadDisplay()
+end
+
+function numpadEnter(obj, player, alt)
+  local n = tonumber(numberpadValue)
+  if not n or n <= 0 then
+    printToColor("Enter a positive number to spawn.", player, "Red")
+    return
+  end
+  if n > 128 then
+    printToColor("Max 128 dice at once.", player, "Red")
+    return
+  end
+  spawnDice(n, player)
+  numberpadValue = ""
+  updateNumberpadDisplay()
+end
+
+function setEditableIndex(_, player, value, _)
+  local n = tonumber(value)
+  if n then editableIndex = math.floor(n) else editableIndex = 0 end
+  printToColor("Editable Index set to: " .. tostring(editableIndex), player, "Yellow")
+end
+
+-- Apply the stored coords to the button with matching label. Also updates
+-- the button template tables (so recreating the menu preserves the change).
+function applyButtonPosition(obj, player, alt)
+  if editableTargetLabel == "" then
+    -- allow index-only edits
+    if editableIndex == 0 then
+      printToColor("No target label set and no index provided.", player, "Red")
+      return
+    end
+  end
+  local buttons = self.getButtons() or {}
+  local found = false
+  -- If an explicit index was provided (non-zero), prefer index-based edit
+  if editableIndex and editableIndex > 0 then
+    -- verify index exists
+    for _, b in ipairs(buttons) do
+      if b.index == editableIndex then
+        found = true
+        self.editButton({ index = editableIndex, position = { editablePosX, editablePosY, editablePosZ } })
+        printToAll("Moved button index=" .. editableIndex .. " label='" .. (b.label or "") .. "' to: (" .. editablePosX .. ", " .. editablePosY .. ", " .. editablePosZ .. ")", {1,1,1})
+        break
+      end
+    end
+  else
+    for _, b in ipairs(buttons) do
+      if b.label == editableTargetLabel then
+        found = true
+        self.editButton({ index = b.index, position = { editablePosX, editablePosY, editablePosZ } })
+        printToAll("Moved button '" .. b.label .. "' to: (" .. editablePosX .. ", " .. editablePosY .. ", " .. editablePosZ .. ")", {1,1,1})
+        break
+      end
+    end
+  end
+  if not found then
+    printToColor("Button with that label/index not found on this object.", player, "Red")
+    return
+  end
+
+  -- Update template tables if label matches any known template
+  local function updateIfMatches(template)
+    if template and template.label == editableTargetLabel then
+      template.position = { editablePosX, editablePosY, editablePosZ }
+    end
+  end
+  updateIfMatches(spawn1Btn)
+  updateIfMatches(spawn2Btn)
+  updateIfMatches(spawn3Btn)
+  updateIfMatches(spawn10Btn)
+  updateIfMatches(customSpawnBtn)
+  updateIfMatches(clearBtn)
+  updateIfMatches(refreshBtn)
+  updateIfMatches(printBtnList)
+  updateIfMatches(applyEditBtn)
+  updateIfMatches(editTargetInput)
+  updateIfMatches(editPosXInput)
+  updateIfMatches(editPosYInput)
+  updateIfMatches(editPosZInput)
+end
+
+function printButtonsList(obj, player, alt)
+  local buttons = self.getButtons() or {}
+  printToColor("Buttons on this object:", player, "White")
+  for _, b in ipairs(buttons) do
+    local pos = b.position or {0,0,0}
+    printToColor(string.format("index=%d label='%s' pos=(%.2f,%.2f,%.2f)", b.index, b.label or "", pos.x or 0, pos.y or 0, pos.z or 0), player, "Yellow")
+  end
+end
+
+function spawnCustomDice(obj, player, alt)
+  if customDiceCount and customDiceCount > 0 then
+    spawnDice(customDiceCount, player)
+    -- clear input after spawn
+    self.editInput({index = 0, value = ""})
+    customDiceCount = 1
+  else
+    printToColor("No valid custom dice count set.", player, "Red")
+  end
+end
+
+-- Clear dice that are resting on this mat (simple bounds test)
+function clearDiceArea(obj, player, alt)
+  local b = self.getBounds()
+  local left  = b.center.x - b.size.x/2
+  local right = b.center.x + b.size.x/2
+  local back  = b.center.z - b.size.z/2
+  local front = b.center.z + b.size.z/2
+  local ybot  = b.center.y - b.size.y/2 - 1
+  local ytop  = b.center.y + b.size.y/2 + 5
+
+  local removed = 0
+  for _, o in ipairs(getAllObjects()) do
+    if o.tag == "Dice" and o.resting then
+      local p = o.getPosition()
+      if p.x > left and p.x < right and p.z > back and p.z < front and p.y > ybot and p.y < ytop then
+        o.destroy()
+        removed = removed + 1
+      end
+    end
+  end
+  printToAll("Cleared " .. removed .. " dice on this mat.", {1,1,1})
+end
+
+-- Lifecyle
+function onLoad(save_state)
+  determineSide()
+  registerWithGlobal()
+  -- compute dynamic Yoffset from object bounds: place buttons slightly
+  -- above the top surface so they are interactable and visible.
+  local b = self.getBounds()
+  if b and b.size and b.size.y then
+    -- local Y: half object thickness + small margin
+    Yoffset = (b.size.y / 2) + 0.2
+  end
+  createMenu()
+  math.randomseed(os.time())
+  self.setName("Tablet Dice Mat")
+  -- Inform where the roller should be placed relative to this mat
+  local b = self.getBounds()
+  local rpos = { x = b.center.x, y = b.center.y + 1, z = b.center.z + (currentMat == "Blue" and -4 or 4) }
+  printToAll("Place the Kustom dice roller near this mat. Suggested position: (" ..
+    string.format("%.1f, %.1f, %.1f", rpos.x, rpos.y, rpos.z) .. ")", {0.8,0.8,0.8})
+end
+
+function refreshUI(obj, player, alt)
+  createMenu()
+  printToColor("UI refreshed to match current object scale.", player, {0.8,0.8,0.8})
+end

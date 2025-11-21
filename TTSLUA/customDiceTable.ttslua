@@ -189,36 +189,30 @@ warningBtn={
 
 lowerUpper=true
 oneTimeUpper=true
+lethalButtonsOffset = -4
 
-
-lethal6Label = "Lethal Hits 6+"
-lethal6Tip   = "Left-click to move dice >= 6. Right-click to switch to 5+."
-lethal5Label = "Lethal Hits 5+"
-lethal5Tip   = "Left-click to move dice >= 5. Right-click to switch back to 6+."
+lethalLabel = "Lethal Hits"
+lethalTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5."
 lethalHitsBtn={
-    label=lethal6Label, tooltip=lethal6Tip, click_function="lethalHitsAction", function_owner=self,
-    position={-4.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3300, scale={0.1,0.1,0.1},
+    label=lethalLabel, tooltip=lethalTip, click_function="lethalHitsAction", function_owner=self,
+    position={lethalButtonsOffset, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
-sus6Label = "Sustained Hits 6+"
-sus5Label = "Sustained Hits 5+"
-sus6tip = "Left-click to roll do Sustained Hits at 6+. Right-click to switch to 5+."
-sus5Tooltip = "Left-click to roll do Sustained at 5+. Right-click to switch to 6+."
+susLabel = "Sustained Hits"
+susTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5."
 sustainedHitsBtn={
-    label=sus6Label, tooltip=sus6tip, click_function="sustainedHitsAction", function_owner=self,
-    position={-3.7, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=4200, scale={0.1,0.1,0.1},
+    label=susLabel, tooltip=susTip, click_function="sustainedHitsAction", function_owner=self,
+    position={lethalButtonsOffset + 0.7, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
-sustainedLethal6Label = "Sustained & Lethals 6+"
-sustainedLethal5Label = "Sustained & Lethals 5+"
-sustainedLethal6Tip   = "Left-click: For Sustained and Letahls on 5+."
-sustainedLethal5Tip   = "Left-click: For Sustained and Letahls on 6+."
+susLethalLabel = "Sustained & Lethal"
+susLethalTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5. Applies to sustained and lethal combined."
 
 sustainedLethalHitsBtn = {
-    label=sustainedLethal6Label, tooltip=sustainedLethal6Tip, click_function="sustainedLethalHitsAction", function_owner=self,
-    position={-2.6, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
+    label=susLethalLabel, tooltip=susLethalTip, click_function="sustainedLethalHitsAction", function_owner=self,
+    position={lethalButtonsOffset + 1.61, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=4800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 copyOthersDiceBtn = {
@@ -261,9 +255,21 @@ restoreBtn={
 }
 
 gap2Btn={
-    label='2" Gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
-    position={-7.70, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    label='1" Gap', tooltip='Arrange models with 1" spacing', click_function='arrangeModelsWith1Inch', function_owner=self,
+    position={-7.7, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
     font_size=750, color='White', font_color={0,0,0}
+}
+
+gap1Btn={
+    label='2" Gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
+    position={-7.15, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    font_size=750, color='White', font_color={0,0,0}
+}
+
+clearMeasureAllBtn={
+    label='Clear Bubbles', tooltip='Clear all measuring bubbles on the table', click_function='clearMeasuringCircles', function_owner=self,
+    position={-6.325, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
 }
 
 measure1Btn={
@@ -316,17 +322,20 @@ function save(obj, player_color, alt)
     printToColor(#savedPositions .. " objects positions saved!", player_color)
 end
 
-
 function restore(playerColor)
-  for i,v in ipairs(savedPositions) do
+  if not savedPositions or #savedPositions == 0 then
+    broadcastToColor("No saved positions to restore.", playerColor, {1, 0.5, 0})
+    return
+  end
+
+  for i, v in ipairs(savedPositions) do
     local obj = getObjectFromGUID(v.guid)
-    if obj != nil then
+    if obj ~= nil then
       obj.setRotation(v.rotation)
       obj.setPositionSmooth(v.position, false, true)
     end
   end
 end
-
 
 local auto1D6 = {
     label          = "Instant 1D6",
@@ -374,6 +383,21 @@ local revertRollBtn = {
     scale = {0.5, 0.5, 0.5}
 }
 
+local redoRollBtn = {
+    label          = "Redo Roll",
+    tooltip        = "Redo previously reverted roll",
+    click_function = "redoRoll",
+    function_owner = self,
+    position       = {-6.0, Yoffset, -0.16},
+    rotation       = { 0, 0, 0 },
+    width = 800, height = 300, font_size = 120,
+    color = {0.13, 0.13, 0.13, 1},
+    font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1},
+    press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+
 -- Background Box (Soft Off-White for a Professional Look)
 local customDiceInputBG = {
     label = "", click_function = "none", function_owner = self,
@@ -415,6 +439,9 @@ diceType = "Die_6_Rounded"
 customDiceImage = nil
 scaleBtn = 0.1
 previousRollData = {}
+previousRollStack = {}
+previousRollIndex = 0
+maxPreviousRolls = 10
 rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
 if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
     rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
@@ -512,7 +539,8 @@ end
 local lastSpawnPosition = nil -- Keep track of the last spawned dice position
 local diceCount = 0 -- Track the number of dice spawned in the current sequence
 function storeCurrentDiceAsPreviousRoll()
-    previousRollData = {}
+    -- Build a snapshot of the current dice on the mat (positions, values, tints)
+    local snapshot = {}
     for _, die in ipairs(getDice()) do
         local c = die.getCustomObject()
         local d = {
@@ -522,41 +550,91 @@ function storeCurrentDiceAsPreviousRoll()
             tint = die.getColorTint(),
             customImage = nil
         }
-        if c then
-            d.customImage = c.image
-        end
-        table.insert(previousRollData, d)
+        if c then d.customImage = c.image end
+        table.insert(snapshot, d)
     end
+
+    -- If we've undone some rolls and then store a new roll, drop any future redo history
+    if previousRollIndex < #previousRollStack then
+        for i = #previousRollStack, previousRollIndex + 1, -1 do
+            table.remove(previousRollStack, i)
+        end
+    end
+
+    table.insert(previousRollStack, snapshot)
+    -- Trim stack to maximum size
+    while #previousRollStack > maxPreviousRolls do
+        table.remove(previousRollStack, 1)
+    end
+    previousRollIndex = #previousRollStack
+    previousRollData = previousRollStack[previousRollIndex] or {}
 end
 
 function revertRoll(obj, player, alt)
-    for _, die in ipairs(getDice()) do
-        die.destroy()
-    end
-    if not previousRollData or #previousRollData == 0 then
+    -- Undo one step in the previousRollStack. Use previousRollIndex to track position.
+    if previousRollIndex == 0 or not previousRollStack or #previousRollStack == 0 then
         printToColor("No previous roll found.", player, "Red")
         return
     end
-    for _, data in ipairs(previousRollData) do
+
+    local snapshot = previousRollStack[previousRollIndex]
+    if not snapshot or #snapshot == 0 then
+        printToColor("No previous roll data available.", player, "Red")
+        return
+    end
+
+    -- Destroy current dice and spawn snapshot dice
+    for _, die in ipairs(getDice()) do die.destroy() end
+    for _, data in ipairs(snapshot) do
         local diceTypeToSpawn = "Die_6_Rounded"
         if data.customImage then
             diceTypeToSpawn = "Custom_Dice"
         elseif pipColorBtn.color == "Black" then
             diceTypeToSpawn = "Die_6"
         end
-
-        local spawned = spawnObject({
-            type     = diceTypeToSpawn,
-            position = data.pos,
-            rotation = data.rot
-        })
-        if data.customImage then
-            spawned.setCustomObject({ image = data.customImage, type = 1 })
-        end
+        local spawned = spawnObject({ type = diceTypeToSpawn, position = data.pos, rotation = data.rot })
+        if data.customImage then spawned.setCustomObject({ image = data.customImage, type = 1 }) end
         spawned.setColorTint(data.tint)
         spawned.setValue(data.val)
     end
-    printToColor("Reverted roll!", player, "Green")
+
+    printToColor("Reverted to roll #" .. tostring(previousRollIndex) .. " of " .. tostring(#previousRollStack), player, "Green")
+    -- Move pointer back so another click reverts another step
+    previousRollIndex = math.max(0, previousRollIndex - 1)
+    previousRollData = previousRollStack[previousRollIndex] or {}
+end
+
+function redoRoll(obj, player, alt)
+    -- Move forward in the previousRollStack if possible
+    if not previousRollStack or #previousRollStack == 0 then
+        printToColor("No roll history available.", player, "Red")
+        return
+    end
+    if previousRollIndex >= #previousRollStack then
+        printToColor("No newer roll to redo.", player, "Red")
+        return
+    end
+    previousRollIndex = previousRollIndex + 1
+    local snapshot = previousRollStack[previousRollIndex]
+    if not snapshot or #snapshot == 0 then
+        printToColor("No roll data at this index.", player, "Red")
+        return
+    end
+    for _, die in ipairs(getDice()) do die.destroy() end
+    for _, data in ipairs(snapshot) do
+        local diceTypeToSpawn = "Die_6_Rounded"
+        if data.customImage then
+            diceTypeToSpawn = "Custom_Dice"
+        elseif pipColorBtn.color == "Black" then
+            diceTypeToSpawn = "Die_6"
+        end
+        local spawned = spawnObject({ type = diceTypeToSpawn, position = data.pos, rotation = data.rot })
+        if data.customImage then spawned.setCustomObject({ image = data.customImage, type = 1 }) end
+        spawned.setColorTint(data.tint)
+        spawned.setValue(data.val)
+    end
+    printToColor("Redone to roll #" .. tostring(previousRollIndex) .. " of " .. tostring(#previousRollStack), player, "Green")
+    previousRollData = previousRollStack[previousRollIndex] or {}
 end
 function moveDiceToRoller(color, dice)
     roller.call("setPlayerColor", { color = color })
@@ -571,13 +649,117 @@ function moveDiceToRoller(color, dice)
     inferRollPhase(dice)
 end
 
-function setCustomDiceCount(_, player, value, _)
-    local num = tonumber(value)
-    if num and num > 0 and num <= 128 then -- Validate input
-        customDiceCount = math.floor(num)
+-- Evaluate a simple arithmetic expression safely (digits, + - * / and parentheses)
+-- Returns number on success, or nil + error message on failure
+local function evalSimpleExpr(expr)
+  if type(expr) ~= "string" then return nil, "invalid input" end
+  local s = expr:gsub("[xX]", "*")
+  s = s:gsub("%s+", "")
+  if s == "" then return nil, "empty" end
+  -- allow only digits, operators and parentheses
+  if s:find("[^%d%+%-%*/%(%)]") then return nil, "invalid characters" end
+
+  -- tokenize
+  local tokens = {}
+  local i, n = 1, #s
+  while i <= n do
+    local c = s:sub(i, i)
+    if c:match("%d") then
+      local j = i
+      while j <= n and s:sub(j, j):match("%d") do j = j + 1 end
+      table.insert(tokens, tonumber(s:sub(i, j - 1)))
+      i = j
+    elseif c == '-' then
+      -- handle unary minus by inserting 0 before '-'
+      local prev = tokens[#tokens]
+      local prevIsOp = (prev == nil) or (prev == '+') or (prev == '-') or (prev == '*') or (prev == '/') or (prev == '(')
+      if prevIsOp then table.insert(tokens, 0) end
+      table.insert(tokens, '-')
+      i = i + 1
+    elseif c == '+' or c == '*' or c == '/' or c == '(' or c == ')' then
+      table.insert(tokens, c)
+      i = i + 1
     else
-        printToColor("Invalid Number! Enter a number between 1 and 128.", player, "Red")
+      return nil, "invalid token"
     end
+  end
+
+  -- shunting-yard to RPN
+  local output, ops = {}, {}
+  local prec = { ['+'] = 1, ['-'] = 1, ['*'] = 2, ['/'] = 2 }
+  local function isop(x) return prec[x] ~= nil end
+  for _, t in ipairs(tokens) do
+    if type(t) == 'number' then
+      table.insert(output, t)
+    elseif t == '(' then
+      table.insert(ops, t)
+    elseif t == ')' then
+      local found = false
+      while #ops > 0 do
+        local top = ops[#ops]
+        table.remove(ops)
+        if top == '(' then found = true break end
+        table.insert(output, top)
+      end
+      if not found then return nil, "mismatched parentheses" end
+    elseif isop(t) then
+      while #ops > 0 and isop(ops[#ops]) and prec[ops[#ops]] >= prec[t] do
+        table.insert(output, ops[#ops])
+        table.remove(ops)
+      end
+      table.insert(ops, t)
+    else
+      return nil, "invalid token"
+    end
+  end
+  while #ops > 0 do
+    local top = ops[#ops]
+    table.remove(ops)
+    if top == '(' then return nil, "mismatched parentheses" end
+    table.insert(output, top)
+  end
+
+  -- evaluate RPN
+  local stack = {}
+  local function pop2()
+    local b = stack[#stack]; stack[#stack] = nil
+    local a = stack[#stack]; stack[#stack] = nil
+    if a == nil or b == nil then return nil end
+    return a, b
+  end
+  for _, t in ipairs(output) do
+    if type(t) == 'number' then
+      table.insert(stack, t)
+    else
+      local a, b = pop2()
+      if a == nil then return nil, "invalid expression" end
+      if t == '+' then table.insert(stack, a + b)
+      elseif t == '-' then table.insert(stack, a - b)
+      elseif t == '*' then table.insert(stack, a * b)
+      elseif t == '/' then
+        if b == 0 then return nil, "division by zero" end
+        table.insert(stack, a / b)
+      else
+        return nil, "invalid operator"
+      end
+    end
+  end
+  if #stack ~= 1 then return nil, "invalid expression" end
+  return stack[1]
+end
+
+function setCustomDiceCount(_, player, value, _)
+  -- Accept either a plain number or a simple math expression
+  local num = tonumber(value)
+  if not num then
+    local result, err = evalSimpleExpr(tostring(value or ""))
+    if result then num = result end
+  end
+  if num and num > 0 and num <= 128 then
+    customDiceCount = math.floor(num)
+  else
+    printToColor("Invalid Number! Enter a number or expression between 1 and 128.", player, "Red")
+  end
 end
 
 function spawnCustomDice(_, player, _)
@@ -1035,72 +1217,148 @@ end
 
 
 function sustainedHitsAction(_, color, alt)
-    if not alt then
-        local diceToClone = {}
-        for _, die in ipairs(getDice()) do
-            if die.getValue() >= sustainedHitsThreshold then
-                table.insert(diceToClone, die)
+    -- Left-click: apply 6+. Right-click (alt): apply 5+. No toggle.
+    local threshold = alt and 5 or 6
+    local diceToClone = {}
+
+    -- Helper: compare positions (x,z) with small epsilon
+    local function near_pos(a, b, eps)
+        eps = eps or 0.5
+        if not a or not b then return false end
+        local dx = a.x - b.x
+        local dz = a.z - b.z
+        return (dx*dx + dz*dz) <= (eps*eps)
+    end
+
+    -- Helper: compare color tint approximately
+    local function near_tint(a, b, eps)
+        eps = eps or 0.05
+        if not a or not b then return false end
+        return math.abs(a[1]-b[1]) <= eps and math.abs(a[2]-b[2]) <= eps and math.abs(a[3]-b[3]) <= eps
+    end
+
+    -- Match previous roll entries to current dice by value + tint + approximate position
+    if previousRollData and #previousRollData > 0 then
+        local prevCandidates = {}
+        for _, d in ipairs(previousRollData) do
+            if d.val >= threshold then
+                table.insert(prevCandidates, d)
             end
         end
 
-        local directionMultiplier = (currentMat == "Blue") and 1 or -1
-        for index, die in ipairs(diceToClone) do
-            local p = die.getPosition()
-            p.x = p.x + (8.5 * directionMultiplier)
-            die.clone({position = p, snap_to_grid = false})
-        end
-    else
-        if sustainedHitsThreshold == 6 then
-            sustainedHitsThreshold = 5
-            self.editButton({
-                index   = 35,
-                label   = sus5Label,
-                tooltip = sus5Tooltip
-            })
-        else
-            sustainedHitsThreshold = 6
-            self.editButton({index=35, label=sus6Label, tooltip=sus6tip})
+        if #prevCandidates > 0 then
+            local currentDice = getDice()
+            local used = {}
+            for _, prev in ipairs(prevCandidates) do
+                for i, die in ipairs(currentDice) do
+                    if not used[i] and die.getValue() == prev.val then
+                        local tint_ok = near_tint(die.getColorTint(), prev.tint)
+                        local pos_ok = near_pos(die.getPosition(), prev.pos)
+                        if tint_ok and pos_ok then
+                            table.insert(diceToClone, die)
+                            used[i] = true
+                            break
+                        end
+                    end
+                end
+            end
         end
     end
+
+    -- Fallback: if we didn't collect any by roll-matching, fall back to global behavior
+    if #diceToClone == 0 then
+        for _, die in ipairs(getDice()) do
+            if die.getValue() >= threshold then
+                table.insert(diceToClone, die)
+            end
+        end
+        printToAll("Warning: No previous roll match found — duplicated all current dice >= " .. threshold .. "+", {1,0.5,0.2})
+    end
+
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    local count = 0
+    for index, die in ipairs(diceToClone) do
+        local p = die.getPosition()
+        p.x = p.x + (8.5 * directionMultiplier)
+        die.clone({position = p, snap_to_grid = false})
+        count = count + 1
+    end
+
+    -- Log for all players
+    printToAll("Sustained Hits duplicated: " .. tostring(count) .. " (threshold " .. tostring(threshold) .. "+)")
 end
 
 
 -- New function for combined action
 function sustainedLethalHitsAction(_, color, alt)
-    if alt then
-        -- Toggle threshold from 6 <-> 5
-        if sustainedLethalHitsThreshold == 6 then
-            sustainedLethalHitsThreshold = 5
-            self.editButton({
-                index   = 36,
-                label   = sustainedLethal5Label,
-                tooltip = sustainedLethal5Tip
-            })
-        else
-            sustainedLethalHitsThreshold = 6
-            self.editButton({
-                index   = 36,
-                label   = sustainedLethal6Label,
-                tooltip = sustainedLethal6Tip
-            })
-        end
-        return
+    -- Left-click: apply 6+. Right-click: apply 5+. No toggle.
+    local threshold = alt and 5 or 6
+    local sixPositions = {}
+    local sixDice = {}
+
+    local function near_pos(a, b, eps)
+        eps = eps or 0.5
+        if not a or not b then return false end
+        local dx = a.x - b.x
+        local dz = a.z - b.z
+        return (dx*dx + dz*dz) <= (eps*eps)
     end
-    local sixPositions={}
-    local sixDice={}
-    for _,die in ipairs(getDice()) do
-        if die.getValue() >= sustainedLethalHitsThreshold then
-            table.insert(sixDice,die)
-            table.insert(sixPositions,die.getPosition())
+    local function near_tint(a, b, eps)
+        eps = eps or 0.05
+        if not a or not b then return false end
+        return math.abs(a[1]-b[1]) <= eps and math.abs(a[2]-b[2]) <= eps and math.abs(a[3]-b[3]) <= eps
+    end
+
+    if previousRollData and #previousRollData > 0 then
+        local prevCandidates = {}
+        for _, d in ipairs(previousRollData) do
+            if d.val >= threshold then
+                table.insert(prevCandidates, d)
+            end
+        end
+        if #prevCandidates > 0 then
+            local currentDice = getDice()
+            local used = {}
+            for _, prev in ipairs(prevCandidates) do
+                for i, die in ipairs(currentDice) do
+                    if not used[i] and die.getValue() == prev.val then
+                        local tint_ok = near_tint(die.getColorTint(), prev.tint)
+                        local pos_ok = near_pos(die.getPosition(), prev.pos)
+                        if tint_ok and pos_ok then
+                            table.insert(sixDice, die)
+                            table.insert(sixPositions, die.getPosition())
+                            used[i] = true
+                            break
+                        end
+                    end
+                end
+            end
         end
     end
+
+    -- Fallback to global selection if none matched
+    if #sixDice == 0 then
+        for _, die in ipairs(getDice()) do
+            if die.getValue() >= threshold then
+                table.insert(sixDice, die)
+                table.insert(sixPositions, die.getPosition())
+            end
+        end
+        printToAll("Warning: No previous roll match found — duplicated all current dice >= " .. threshold .. "+", {1,0.5,0.2})
+    end
+
+    -- Move lethal hits using same left/right semantics
     lethalHitsAction('sustainedAndLethal', color, alt)
+
     local directionMultiplier = (currentMat == "Blue") and 1 or -1
-    for i,die in ipairs(sixDice) do
-        local p=sixPositions[i]
+    local count = 0
+    for i, die in ipairs(sixDice) do
+        local p = sixPositions[i]
         p.x = p.x + (8.5 * directionMultiplier)
-        die.clone({position=p,snap_to_grid=false})
+        die.clone({position = p, snap_to_grid = false})
+        count = count + 1
     end
+    printToAll("Sustained & Lethal duplicated: " .. tostring(count) .. " (threshold " .. tostring(threshold) .. "+)")
 end
 
 function getObjectsPositionToSave(player, hoveredObject)
@@ -1197,19 +1455,19 @@ function onload()
     addHotkey('Save position', savePositionClicked)
     addHotkey('Restore position', restorePositionClicked)
     addHotkey("Toggle 1 Inch Measurment Circle", function(playerColor, target)
-        changeMeasurementCircle(1, target)
+        changeMeasurementCircle(1, target, nil, playerColor)
     end)
     addHotkey("Toggle 3 Inch Measurment Circle", function(playerColor, target)
-        changeMeasurementCircle(3, target)
+        changeMeasurementCircle(3, target, nil, playerColor)
     end)
     addHotkey("Toggle 6 Inch Measurment Circle", function(playerColor, target)
-        changeMeasurementCircle(6, target)
+        changeMeasurementCircle(6, target, nil, playerColor)
     end)
     addHotkey("Toggle 9 Inch Measurment Circle", function(playerColor, target)
-        changeMeasurementCircle(9, target)
+        changeMeasurementCircle(9, target, nil, playerColor)
     end)
     addHotkey("Toggle 12 Inch Measurment Circle", function(playerColor, target)
-        changeMeasurementCircle(12.01, target)
+        changeMeasurementCircle(12.01, target, nil, playerColor)
     end)
     lastClick=os.time()
     defaultFontSize=500
@@ -1287,7 +1545,9 @@ function onload()
     self.createButton(measure6Btn)
     self.createButton(measure9Btn)
     self.createButton(measure12Btn)
+    self.createButton(clearMeasureAllBtn)
     self.createButton(gap2Btn)
+    self.createButton(gap1Btn)
     self.createInput(customDiceInput)
     self.createButton(customDiceSpawnButton)
     self.createButton(customDiceInputBG)
@@ -1295,8 +1555,7 @@ function onload()
 
 end
 
-local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/13993234893887882715/A706E4924203C3560EF1D34C6F3A5517595F57C5/"
-local hutberLethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/11677905561710342962/BB1A8DE3C56D9C08A18C3DCB69513D6ED03DAFF1/"
+local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/10593277004116480902/D0CC2FC9091B2A05F33B6C76BD78E9C2EEAA62C8/"
 
 local spawnedObjects = {
     Red = {
@@ -1621,6 +1880,7 @@ function moveLethalHits(isSustainedAndLethal)
     local currentCol = diceInZone % rowLimit
     local dice = getDice()
     local threshold = isSustainedAndLethal and sustainedLethalHitsThreshold or lethalHitsThreshold
+    local movedCount = 0
     for _, die in ipairs(dice) do
         if die.getValue() >= threshold then
             if not originalPositions[die.getGUID()] then
@@ -1632,6 +1892,7 @@ function moveLethalHits(isSustainedAndLethal)
                 z = startZ + (currentRow * spacing),
             }
             die.setPosition(newPos)
+            movedCount = movedCount + 1
             currentCol = currentCol + 1
             if currentCol >= rowLimit then
                 currentCol = 0
@@ -1641,6 +1902,7 @@ function moveLethalHits(isSustainedAndLethal)
     end
 
     isMoving = false
+    return movedCount
 end
 
 function onObjectClicked(clicked_object, player_color, alt_click)
@@ -1717,38 +1979,32 @@ function lethalHitsAction(lethalHits, color, alt)
     if lethalHits == 'sustainedAndLethal' then
         lethalNumbers = true
     end
-    if not alt then
-        moveLethalHits(lethalNumbers)
-        if not spawnedObjects[currentMat].lethalHits then
-            createLethalText(false)
-        elseif not spawnedObjects[currentMat].text then
-            createLethalText(false)
-        end
-
-        if not textDisplays[currentMat] then
-            initializeLethalHits()
-        end
+    -- Set threshold based on click: left-click = 6+, right-click = 5+
+    local oldLethal = lethalHitsThreshold
+    local oldSustainedLethal = sustainedLethalHitsThreshold
+    if lethalNumbers then
+        sustainedLethalHitsThreshold = alt and 5 or 6
     else
-        -- Toggle threshold
-        if lethalHitsThreshold == 6 then
-            lethalHitsThreshold = 5
-            self.editButton({
-                -- The index below must match the index you used when creating lethalHitsBtn
-                -- If lethalHitsBtn was created last, and is the 34th or 35th, adjust accordingly.
-                index    = 34,
-                label    = lethal5Label,
-                tooltip  = lethal5Tip
-            })
-        else
-            lethalHitsThreshold = 6
-            self.editButton({
-                index   = 34,
-                label   = lethal6Label,
-                tooltip = lethal6Tip
-            })
-        end
-        return
+        lethalHitsThreshold = alt and 5 or 6
     end
+
+    local moved = moveLethalHits(lethalNumbers)
+    if not spawnedObjects[currentMat].lethalHits then
+        createLethalText(false)
+    elseif not spawnedObjects[currentMat].text then
+        createLethalText(false)
+    end
+
+    if not textDisplays[currentMat] then
+        initializeLethalHits()
+    end
+
+    -- restore old thresholds
+    lethalHitsThreshold = oldLethal
+    sustainedLethalHitsThreshold = oldSustainedLethal
+
+    -- Log for players how many lethal/sustained were moved
+    printToAll("Lethal hits moved: " .. tostring(moved) .. " (threshold " .. tostring(alt and 5 or 6) .. "+)")
 end
 
 function modifyMenu1()
@@ -1976,15 +2232,65 @@ function arrangeModelsWith2Inch(a, b, c)
     if offsetCount == 2 then
       local p = { x = -d.z, z = d.x }
 
-      -- start offsets
-      local baseStart = items[startIndex].newPos
-      items[1].newPos = { x = baseStart.x + p.x * 2, y = items[1].pos.y, z = baseStart.z + p.z * 2 }
-      items[2].newPos = { x = baseStart.x - p.x * 2, y = items[2].pos.y, z = baseStart.z - p.z * 2 }
+      -- start offsets: arrange three items as a triangle so pairwise edge gap ~= 2"
+      local baseStart = items[startIndex].newPos -- apex on main line
+      local a = items[startIndex]
+      local b = items[1]
+      local c = items[2]
+      local desiredGap = 2
+      local baseSep = b.half + c.half + desiredGap
+      local baseHalf = baseSep / 2
+      local s1 = a.half + b.half + desiredGap
+      local s2 = a.half + c.half + desiredGap
+      -- compute apex->baseCenter distance from triangle right-triangle: t = sqrt(s1^2 - baseHalf^2)
+      local t1 = math.sqrt(math.max(0, s1 * s1 - baseHalf * baseHalf))
+      local t2 = math.sqrt(math.max(0, s2 * s2 - baseHalf * baseHalf))
+      local t = (t1 + t2) / 2
+      local baseCenter = { x = baseStart.x - d.x * t, z = baseStart.z - d.z * t }
+      items[1].newPos = { x = baseCenter.x + p.x * baseHalf, y = b.pos.y, z = baseCenter.z + p.z * baseHalf }
+      items[2].newPos = { x = baseCenter.x - p.x * baseHalf, y = c.pos.y, z = baseCenter.z - p.z * baseHalf }
+
+      -- debug: print the starting three indices and pairwise distances
+      if true then
+        local function dist(a,b)
+          local dx = a.x - b.x; local dz = a.z - b.z; return math.sqrt(dx*dx + dz*dz)
+        end
+        local Apos = a.pos; local Bpos = b.pos; local Cpos = c.pos
+        local Anew = a.newPos; local Bnew = b.newPos; local Cnew = c.newPos
+        print(string.format("Start triangle items indexes: apex=%s base1=%s base2=%s", a.obj.getGUID(), b.obj.getGUID(), c.obj.getGUID()))
+        print(string.format("Before: AB=%.2f AC=%.2f BC=%.2f", dist(Apos,Bpos), dist(Apos,Cpos), dist(Bpos,Cpos)))
+        print(string.format("After:  AB=%.2f AC=%.2f BC=%.2f", dist(Anew,Bnew), dist(Anew,Cnew), dist(Bnew,Cnew)))
+      end
 
       -- end offsets
       local baseEnd = items[#items - offsetCount].newPos
-      items[#items - 1].newPos = { x = baseEnd.x + p.x * 2, y = items[#items - 1].pos.y, z = baseEnd.z + p.z * 2 }
-      items[#items].newPos = { x = baseEnd.x - p.x * 2, y = items[#items].pos.y, z = baseEnd.z - p.z * 2 }
+      -- end offsets: triangle at the end (apex on main line, base beyond)
+      local a_e = items[#items - offsetCount] -- apex at end of line
+      local b_e = items[#items - 1]
+      local c_e = items[#items]
+      local desiredGap = 2
+      local baseSep_e = b_e.half + c_e.half + desiredGap
+      local baseHalf_e = baseSep_e / 2
+      local s1_e = a_e.half + b_e.half + desiredGap
+      local s2_e = a_e.half + c_e.half + desiredGap
+      local t1_e = math.sqrt(math.max(0, s1_e * s1_e - baseHalf_e * baseHalf_e))
+      local t2_e = math.sqrt(math.max(0, s2_e * s2_e - baseHalf_e * baseHalf_e))
+      local t_e = (t1_e + t2_e) / 2
+      local baseCenter_e = { x = baseEnd.x + d.x * t_e, z = baseEnd.z + d.z * t_e }
+      items[#items - 1].newPos = { x = baseCenter_e.x + p.x * baseHalf_e, y = b_e.pos.y, z = baseCenter_e.z + p.z * baseHalf_e }
+      items[#items].newPos     = { x = baseCenter_e.x - p.x * baseHalf_e, y = c_e.pos.y, z = baseCenter_e.z - p.z * baseHalf_e }
+
+      -- debug: print the final three indices and pairwise distances
+      if true then
+        local function dist(a,b)
+          local dx = a.x - b.x; local dz = a.z - b.z; return math.sqrt(dx*dx + dz*dz)
+        end
+        local Apos = a_e.pos; local Bpos = b_e.pos; local Cpos = c_e.pos
+        local Anew = a_e.newPos; local Bnew = b_e.newPos; local Cnew = c_e.newPos
+        print(string.format("End triangle items indexes: apex=%s base1=%s base2=%s", a_e.obj.getGUID(), b_e.obj.getGUID(), c_e.obj.getGUID()))
+        print(string.format("Before: AB=%.2f AC=%.2f BC=%.2f", dist(Apos,Bpos), dist(Apos,Cpos), dist(Bpos,Cpos)))
+        print(string.format("After:  AB=%.2f AC=%.2f BC=%.2f", dist(Anew,Bnew), dist(Anew,Cnew), dist(Bnew,Cnew)))
+      end
     end
 
     for _, item in ipairs(items) do
@@ -1992,6 +2298,124 @@ function arrangeModelsWith2Inch(a, b, c)
     end
 
     print("Arranged " .. #items .. " models with a 2-inch gap along the detected orientation.")
+end
+
+function arrangeModelsWith1Inch(a, b, c)
+    local playerColor
+    if type(a) == "string" then
+        playerColor = a
+    else
+        playerColor = b
+    end
+
+    local playerObj = Player[playerColor]
+    if not playerObj then
+      print("Player object not found for color: " .. playerColor)
+      return
+    end
+
+    local objs = playerObj.getSelectedObjects()
+    if #objs < 2 then
+      print("Less than 2 objects selected; nothing to arrange.")
+      return
+    end
+
+    local minPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    local maxPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    for i = 2, #objs do
+      local p = objs[i].getPosition()
+      if p.x < minPos.x then minPos.x = p.x end
+      if p.z < minPos.z then minPos.z = p.z end
+      if p.x > maxPos.x then maxPos.x = p.x end
+      if p.z > maxPos.z then maxPos.z = p.z end
+    end
+
+    local dx = maxPos.x - minPos.x
+    local dz = maxPos.z - minPos.z
+    local mag = math.sqrt(dx * dx + dz * dz)
+    local d = {}
+    if mag < 0.0001 then
+      d.x, d.z = 1, 0
+    else
+      d.x, d.z = dx / mag, dz / mag
+    end
+
+    local items = {}
+    for _, obj in ipairs(objs) do
+      local pos = obj.getPosition()
+      local half = obj.getBoundsNormalized().size.x / 2
+      local proj = pos.x * d.x + pos.z * d.z
+      table.insert(items, { obj = obj, pos = pos, half = half, proj = proj })
+    end
+
+    table.sort(items, function(a, b) return a.proj < b.proj end)
+
+    local offsetCount = 0
+    if #items > 7 then
+      offsetCount = 2
+    end
+
+    local startIndex = 1
+    if offsetCount == 2 then
+      startIndex = 3
+    end
+
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+
+    for i = startIndex + 1, #items - offsetCount do
+      local prev = items[i - 1]
+      local gapDist = prev.half + 1 + items[i].half
+      items[i].newPos = {
+        x = prev.newPos.x + d.x * gapDist,
+        y = items[i].pos.y,
+        z = prev.newPos.z + d.z * gapDist
+      }
+    end
+
+    if offsetCount == 2 then
+      local p = { x = -d.z, z = d.x }
+
+      -- start offsets: arrange three items as a triangle so pairwise edge gap ~= 1"
+      local baseStart = items[startIndex].newPos -- apex on main line
+      local a = items[startIndex]
+      local b = items[1]
+      local c = items[2]
+      local desiredGap = 1
+      local baseSep = b.half + c.half + desiredGap
+      local baseHalf = baseSep / 2
+      local s1 = a.half + b.half + desiredGap
+      local s2 = a.half + c.half + desiredGap
+      local t1 = math.sqrt(math.max(0, s1 * s1 - baseHalf * baseHalf))
+      local t2 = math.sqrt(math.max(0, s2 * s2 - baseHalf * baseHalf))
+      local t = (t1 + t2) / 2
+      local baseCenter = { x = baseStart.x - d.x * t, z = baseStart.z - d.z * t }
+      items[1].newPos = { x = baseCenter.x + p.x * baseHalf, y = b.pos.y, z = baseCenter.z + p.z * baseHalf }
+      items[2].newPos = { x = baseCenter.x - p.x * baseHalf, y = c.pos.y, z = baseCenter.z - p.z * baseHalf }
+
+      -- end offsets: triangle at the end (apex on main line, base beyond)
+      local baseEnd = items[#items - offsetCount].newPos
+      local a_e = items[#items - offsetCount] -- apex at end of line
+      local b_e = items[#items - 1]
+      local c_e = items[#items]
+      local desiredGap_e = 1
+      local baseSep_e = b_e.half + c_e.half + desiredGap_e
+      local baseHalf_e = baseSep_e / 2
+      local s1_e = a_e.half + b_e.half + desiredGap_e
+      local s2_e = a_e.half + c_e.half + desiredGap_e
+      local t1_e = math.sqrt(math.max(0, s1_e * s1_e - baseHalf_e * baseHalf_e))
+      local t2_e = math.sqrt(math.max(0, s2_e * s2_e - baseHalf_e * baseHalf_e))
+      local t_e = (t1_e + t2_e) / 2
+      local baseCenter_e = { x = baseEnd.x + d.x * t_e, z = baseEnd.z + d.z * t_e }
+      items[#items - 1].newPos = { x = baseCenter_e.x + p.x * baseHalf_e, y = b_e.pos.y, z = baseCenter_e.z + p.z * baseHalf_e }
+      items[#items].newPos     = { x = baseCenter_e.x - p.x * baseHalf_e, y = c_e.pos.y, z = baseCenter_e.z - p.z * baseHalf_e }
+    end
+
+    for _, item in ipairs(items) do
+      item.obj.setPositionSmooth(item.newPos)
+    end
+
+    print("Arranged " .. #items .. " models with a 1-inch gap along the detected orientation.")
 end
 
 function determineBaseInInches(model)
@@ -2109,7 +2533,7 @@ function toggleMeasurementCircleForSelection(radius, playerColor)
     if not playerObj then return end
     local objs = playerObj.getSelectedObjects()
     for _, obj in ipairs(objs) do
-        changeMeasurementCircle(radius, obj)
+        changeMeasurementCircle(radius, obj, nil, playerColor)
     end
 end
 
@@ -2133,7 +2557,7 @@ function toggle12Bubble(obj, playerColor, alt)
     toggleMeasurementCircleForSelection(12.01, playerColor)
 end
 
-function changeMeasurementCircle(newRequestedRadius, target, presetBase)
+function changeMeasurementCircle(newRequestedRadius, target, presetBase, ownerColor)
     if target == nil then return end
 
     local measuringRings = target.getTable("ym-measuring-circles")
@@ -2171,13 +2595,15 @@ function changeMeasurementCircle(newRequestedRadius, target, presetBase)
             color = Color.fromString(currentColor),
             radius = newRadius,
             thickness = 0.5,
-            rotation = {270, 0, 0}
+            rotation = {270, 0, 0},
+            owner = ownerColor -- track who created this measuring circle
         }
         local base = {
             name = "base",
             color = Color.fromString(currentColor),
             thickness = 0.2,
-            rotation = {270, 0, 0}
+            rotation = {270, 0, 0},
+            owner = ownerColor
         }
 
         local measuringPoints, basePoints
@@ -2200,4 +2626,26 @@ function changeMeasurementCircle(newRequestedRadius, target, presetBase)
 
     target.setVectorLines(measuringRings)
     target.setTable("ym-measuring-circles", measuringRings)
+end
+
+-- Clear measuring circles helper
+function clearMeasuringCircles(obj, playerColor, alt)
+    -- Always perform an aggressive clear (clear all vector lines/tables on Global, this mat and all objects)
+    local clearedAll = 0
+    if Global and Global.setVectorLines then
+        Global.setVectorLines({})
+        if Global.setTable then Global.setTable("ym-measuring-circles", nil) end
+    end
+    if self and self.setVectorLines then
+        self.setVectorLines({})
+        if self.setTable then self.setTable("ym-measuring-circles", nil) end
+    end
+    for _, o in ipairs(getAllObjects()) do
+        if o and o.setVectorLines then
+            o.setVectorLines({})
+            if o.setTable then o.setTable("ym-measuring-circles", nil) end
+            clearedAll = clearedAll + 1
+        end
+    end
+    printToAll("Cleared vector lines on "..clearedAll.." objects.", {1,1,1})
 end

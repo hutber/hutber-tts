@@ -904,15 +904,31 @@ function toggleFloatingIconGeneric(params)
         local icons= getIcons(obj)
 
         if isFloor then
+            -- Arrange floor icons on an orbit that follows the object's yaw.
             local floors, prev = {}, minDist
             for _, e in ipairs(getIcons(obj)) do if e.isFloor then table.insert(floors, e) end end
-            for i, e in ipairs(floors) do
-               local dist = (i == 1)
-                   and minDist
-                   or (prev + math.min(minDist * (baseS^(i-1)) - prev, maxStep))
-               prev = dist
-               e.obj.setRotation({0, obj.getRotation().y, 0})
-               e.obj.setPosition({ b.center.x + sign * dist, useY, b.center.z }, false)
+            local count = #floors
+            if count > 0 then
+                -- compute radii preserving incremental spacing behavior
+                local radii = {}
+                for i = 1, count do
+                    local dist = (i == 1) and minDist or (prev + math.min(minDist * (baseS^(i-1)) - prev, maxStep))
+                    prev = dist
+                    radii[i] = dist
+                end
+
+                -- base angle follows object's yaw
+                local baseAngle = math.rad(obj.getRotation().y or 0)
+                for i, e in ipairs(floors) do
+                    local offset = ((i-1) - (count-1)/2) * (2 * math.pi / math.max(count,1))
+                    local angle = baseAngle + offset
+                    local r = radii[i]
+                    local x = b.center.x + math.cos(angle) * r * sign
+                    local z = b.center.z + math.sin(angle) * r
+                    local rotY = (math.deg(angle) + 90) % 360
+                    e.obj.setRotation({0, rotY, 0})
+                    e.obj.setPosition({ x, useY, z }, false)
+                end
             end
         else
             local floats = {}
