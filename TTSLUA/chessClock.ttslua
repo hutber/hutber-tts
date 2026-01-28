@@ -846,20 +846,17 @@ end
 
 -- Liyarin's color functions
 
--- Changes the color of the UI buttons based on the set colors
-function changeButtonColors()
-	-- Stopwatch Buttons
-	self.UI.setAttribute("pColor1", "color", pColors.pColor1)
-	self.UI.setAttribute("pColor2", "color", pColors.pColor2)
+function ensureChessStopwatchUI()
+	local uiId = Global.UI.getAttribute("Chess Stopwatch", "id")
+	if uiId ~= nil and uiId ~= "" then
+		return false
+	end
 
-	--UI Buttons
-	local waitTime = 0
-	if Global.UI.getAttribute("Chess Stopwatch", "id") == nil then
-		local oldUI = Global.UI.getXml()
-		if oldUI == nil then
-			oldUI = ""
-		end
-		Global.UI.setXml(oldUI .. [[
+	local oldUI = Global.UI.getXml()
+	if oldUI == nil then
+		oldUI = ""
+	end
+	Global.UI.setXml(oldUI .. [[
 			<Panel
 				id = "Chess Stopwatch"
 				scale = "1 1 1"
@@ -891,6 +888,18 @@ function changeButtonColors()
 				</VerticalLayout>
 			</Panel>
 		]])
+	return true
+end
+
+-- Changes the color of the UI buttons based on the set colors
+function changeButtonColors()
+	-- Stopwatch Buttons
+	self.UI.setAttribute("pColor1", "color", pColors.pColor1)
+	self.UI.setAttribute("pColor2", "color", pColors.pColor2)
+
+	--UI Buttons
+	local waitTime = 0
+	if ensureChessStopwatchUI() then
 		waitTime = 10
 	end
 
@@ -911,6 +920,7 @@ end
 
 -- Calculates numbers for UI clock
 function DisplayUIClock(which) -- which 1,2
+	ensureChessStopwatchUI()
 	local clockString = math.floor(hours%10) ..":".. math.floor(minutes/10) .. math.floor(minutes%10) ..":".. math.floor(secs/10) .. math.floor(secs%10)
 
 	Global.UI.setAttribute("ChsStpWatch"..which, "text", clockString)

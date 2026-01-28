@@ -118,6 +118,332 @@
 
 objectJSONs = {
   [[{
+  "GUID": "12f429",
+  "Name": "Custom_Assetbundle",
+  "Transform": {
+    "posX": 12.8985252,
+    "posY": 1.08049417,
+    "posZ": 2.54910851,
+    "rotX": 0.000190652223,
+    "rotY": 359.976379,
+    "rotZ": -2.97212682E-05,
+    "scaleX": 0.9999961,
+    "scaleY": 3.50000477,
+    "scaleZ": 0.93913275
+  },
+  "Nickname": "",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomAssetbundle": {
+    "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1814409791276862663/C2C86C4F97C6EB4F9A2209ACAE21CE4CC1FD3B30/",
+    "AssetbundleSecondaryURL": "",
+    "MaterialIndex": 2,
+    "TypeIndex": 1,
+    "LoopingEffectIndex": 0
+  },
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ChildObjects": [
+    {
+      "GUID": "bd4f47",
+      "Name": "Custom_Assetbundle",
+      "Transform": {
+        "posX": -1.56313694,
+        "posY": 0.008891447,
+        "posZ": 0.0170597527,
+        "rotX": 0.0007243755,
+        "rotY": 179.9797,
+        "rotZ": -0.00114142289,
+        "scaleX": 0.7513363,
+        "scaleY": 0.999998152,
+        "scaleZ": 0.8518104
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomAssetbundle": {
+        "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1833549455346803391/EE73153AEE143847EBBFFDABEC00294AE66CBCAD/",
+        "AssetbundleSecondaryURL": "",
+        "MaterialIndex": 2,
+        "TypeIndex": 1,
+        "LoopingEffectIndex": 0
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "ChildObjects": [
+        {
+          "GUID": "5cc9a0",
+          "Name": "Custom_Assetbundle",
+          "Transform": {
+            "posX": 0.0444651768,
+            "posY": 1.561915E-05,
+            "posZ": 8.15553951,
+            "rotX": 0.00150016113,
+            "rotY": 269.927673,
+            "rotZ": -0.0006530432,
+            "scaleX": 1.00003386,
+            "scaleY": 1.0,
+            "scaleZ": 0.9999646
+          },
+          "Nickname": "",
+          "Description": "",
+          "GMNotes": "",
+          "AltLookAngle": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "ColorDiffuse": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0
+          },
+          "LayoutGroupSortIndex": 0,
+          "Value": 0,
+          "Locked": true,
+          "Grid": true,
+          "Snap": true,
+          "IgnoreFoW": false,
+          "MeasureMovement": false,
+          "DragSelectable": true,
+          "Autoraise": true,
+          "Sticky": true,
+          "Tooltip": true,
+          "GridProjection": false,
+          "HideWhenFaceDown": false,
+          "Hands": false,
+          "CustomAssetbundle": {
+            "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1833549455346803391/EE73153AEE143847EBBFFDABEC00294AE66CBCAD/",
+            "AssetbundleSecondaryURL": "",
+            "MaterialIndex": 2,
+            "TypeIndex": 1,
+            "LoopingEffectIndex": 0
+          },
+          "LuaScript": "",
+          "LuaScriptState": "",
+          "XmlUI": "",
+          "ChildObjects": [
+            {
+              "GUID": "f0f588",
+              "Name": "Custom_Assetbundle",
+              "Transform": {
+                "posX": -8.186625,
+                "posY": -2.84014277E-05,
+                "posZ": 4.36520529,
+                "rotX": -0.000674018753,
+                "rotY": 90.07219,
+                "rotZ": -0.0014666667,
+                "scaleX": 1.00003493,
+                "scaleY": 0.9999998,
+                "scaleZ": 0.999966145
+              },
+              "Nickname": "",
+              "Description": "",
+              "GMNotes": "",
+              "AltLookAngle": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "ColorDiffuse": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+              },
+              "LayoutGroupSortIndex": 0,
+              "Value": 0,
+              "Locked": true,
+              "Grid": true,
+              "Snap": true,
+              "IgnoreFoW": false,
+              "MeasureMovement": false,
+              "DragSelectable": true,
+              "Autoraise": true,
+              "Sticky": true,
+              "Tooltip": true,
+              "GridProjection": false,
+              "HideWhenFaceDown": false,
+              "Hands": false,
+              "CustomAssetbundle": {
+                "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1833549455346803391/EE73153AEE143847EBBFFDABEC00294AE66CBCAD/",
+                "AssetbundleSecondaryURL": "",
+                "MaterialIndex": 2,
+                "TypeIndex": 1,
+                "LoopingEffectIndex": 0
+              },
+              "LuaScript": "",
+              "LuaScriptState": "",
+              "XmlUI": "",
+              "ChildObjects": [
+                {
+                  "GUID": "ced9ff",
+                  "Name": "BlockSquare",
+                  "Transform": {
+                    "posX": 0.877248347,
+                    "posY": -0.0231600236,
+                    "posZ": 7.01134968,
+                    "rotX": 0.00108863518,
+                    "rotY": 270.020416,
+                    "rotZ": 0.000450732769,
+                    "scaleX": 15.0006924,
+                    "scaleY": 0.0285714269,
+                    "scaleZ": 7.984984
+                  },
+                  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+                  "Description": "",
+                  "GMNotes": "",
+                  "AltLookAngle": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ColorDiffuse": {
+                    "r": 0.232399791,
+                    "g": 0.223999768,
+                    "b": 0.349999815
+                  },
+                  "LayoutGroupSortIndex": 0,
+                  "Value": 0,
+                  "Locked": true,
+                  "Grid": true,
+                  "Snap": true,
+                  "IgnoreFoW": false,
+                  "MeasureMovement": false,
+                  "DragSelectable": true,
+                  "Autoraise": true,
+                  "Sticky": true,
+                  "Tooltip": true,
+                  "GridProjection": false,
+                  "HideWhenFaceDown": false,
+                  "Hands": false,
+                  "LuaScript": "\nBCBtype = \"terrain\"\n",
+                  "LuaScriptState": "",
+                  "XmlUI": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GUID": "a811d0",
+      "Name": "Custom_Model",
+      "Transform": {
+        "posX": 0.2285752,
+        "posY": -0.00106597529,
+        "posZ": -9.635716,
+        "rotX": 0.07130945,
+        "rotY": 225.043655,
+        "rotZ": 0.00125817314,
+        "scaleX": 2.013196,
+        "scaleY": 0.557664633,
+        "scaleZ": 0.9759968
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.4441417,
+        "g": 0.4441417,
+        "b": 0.4441417
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomMesh": {
+        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399684009293027/95A2286D63E1AF7BB7CE9B8E33B5F27F9E975DDA/",
+        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399684009292144/9153E2B34BFF806C0F4E7EEFCD0594B21623FDC3/",
+        "NormalURL": "",
+        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399684009293027/95A2286D63E1AF7BB7CE9B8E33B5F27F9E975DDA/",
+        "Convex": false,
+        "MaterialIndex": 3,
+        "TypeIndex": 0,
+        "CustomShader": {
+          "SpecularColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0
+          },
+          "SpecularIntensity": 0.0,
+          "SpecularSharpness": 2.0,
+          "FresnelStrength": 0.0
+        },
+        "CastShadows": true
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": ""
+    }
+  ]
+}]],
+  [[{
   "GUID": "48a696",
   "Name": "BlockSquare",
   "Transform": {
@@ -140,9 +466,9 @@ objectJSONs = {
     "z": 0.0
   },
   "ColorDiffuse": {
-    "r": 0.232399464,
-    "g": 0.223999441,
-    "b": 0.349999458
+    "r": 0.232399434,
+    "g": 0.223999411,
+    "b": 0.349999428
   },
   "LayoutGroupSortIndex": 0,
   "Value": 0,
@@ -805,58 +1131,6 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "b80a62",
-  "Name": "Custom_Assetbundle",
-  "Transform": {
-    "posX": 11.2960482,
-    "posY": 1.080334,
-    "posZ": -0.73422873,
-    "rotX": -0.004170511,
-    "rotY": 89.97689,
-    "rotZ": 0.0001795057,
-    "scaleX": 2.0,
-    "scaleY": 3.50000548,
-    "scaleZ": 1.0000093
-  },
-  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-  "Description": "",
-  "GMNotes": "",
-  "AltLookAngle": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0
-  },
-  "ColorDiffuse": {
-    "r": 1.0,
-    "g": 1.0,
-    "b": 1.0
-  },
-  "LayoutGroupSortIndex": 0,
-  "Value": 0,
-  "Locked": false,
-  "Grid": true,
-  "Snap": true,
-  "IgnoreFoW": false,
-  "MeasureMovement": false,
-  "DragSelectable": true,
-  "Autoraise": true,
-  "Sticky": true,
-  "Tooltip": true,
-  "GridProjection": false,
-  "HideWhenFaceDown": false,
-  "Hands": false,
-  "CustomAssetbundle": {
-    "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1814409791276862663/C2C86C4F97C6EB4F9A2209ACAE21CE4CC1FD3B30/",
-    "AssetbundleSecondaryURL": "",
-    "MaterialIndex": 2,
-    "TypeIndex": 1,
-    "LoopingEffectIndex": 0
-  },
-  "LuaScript": "\nBCBtype = \"terrain\"\n",
-  "LuaScriptState": "",
-  "XmlUI": ""
-}]],
-  [[{
   "GUID": "7f414f",
   "Name": "Custom_Model",
   "Transform": {
@@ -922,7 +1196,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "bc200f",
+  "GUID": "4b7b0a",
   "Name": "BlockSquare",
   "Transform": {
     "posX": -20.42862,
@@ -944,9 +1218,9 @@ objectJSONs = {
     "z": 0.0
   },
   "ColorDiffuse": {
-    "r": 0.232399434,
-    "g": 0.223999411,
-    "b": 0.349999428
+    "r": 0.232399374,
+    "g": 0.223999351,
+    "b": 0.3499994
   },
   "LayoutGroupSortIndex": 0,
   "Value": 0,
@@ -1294,7 +1568,7 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "eb9d47",
+  "GUID": "52e053",
   "Name": "Custom_Assetbundle",
   "Transform": {
     "posX": -14.1924763,
@@ -1609,7 +1883,7 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "ae7c6f",
+  "GUID": "9fef5d",
   "Name": "Custom_Assetbundle",
   "Transform": {
     "posX": -12.8985252,
@@ -1617,7 +1891,7 @@ objectJSONs = {
     "posZ": -2.54910851,
     "rotX": 0.000190652238,
     "rotY": 179.9764,
-    "rotZ": -2.97212628E-05,
+    "rotZ": -2.97212682E-05,
     "scaleX": 0.9999961,
     "scaleY": 3.50000477,
     "scaleZ": 0.93913275
@@ -1935,7 +2209,59 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "c1d72c",
+  "GUID": "ac812f",
+  "Name": "Custom_Assetbundle",
+  "Transform": {
+    "posX": -11.2960472,
+    "posY": 1.2211597,
+    "posZ": 0.734228551,
+    "rotX": 0.00022057684,
+    "rotY": 269.976868,
+    "rotZ": -6.8002E-05,
+    "scaleX": 2.0,
+    "scaleY": 3.50000548,
+    "scaleZ": 1.0000093
+  },
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
+  "Description": "",
+  "GMNotes": "",
+  "AltLookAngle": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "ColorDiffuse": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0
+  },
+  "LayoutGroupSortIndex": 0,
+  "Value": 0,
+  "Locked": true,
+  "Grid": true,
+  "Snap": true,
+  "IgnoreFoW": false,
+  "MeasureMovement": false,
+  "DragSelectable": true,
+  "Autoraise": true,
+  "Sticky": true,
+  "Tooltip": true,
+  "GridProjection": false,
+  "HideWhenFaceDown": false,
+  "Hands": false,
+  "CustomAssetbundle": {
+    "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1814409791276862663/C2C86C4F97C6EB4F9A2209ACAE21CE4CC1FD3B30/",
+    "AssetbundleSecondaryURL": "",
+    "MaterialIndex": 2,
+    "TypeIndex": 1,
+    "LoopingEffectIndex": 0
+  },
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
+  "LuaScriptState": "",
+  "XmlUI": ""
+}]],
+  [[{
+  "GUID": "da7c93",
   "Name": "Custom_Assetbundle",
   "Transform": {
     "posX": -2.49999881,
@@ -2354,13 +2680,13 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "99f689",
+  "GUID": "98baa8",
   "Name": "BlockSquare",
   "Transform": {
     "posX": -4.926212,
     "posY": 1.07116437,
     "posZ": -3.07231665,
-    "rotX": -3.191781E-06,
+    "rotX": -3.19178184E-06,
     "rotY": 179.968918,
     "rotZ": 3.640631E-05,
     "scaleX": 4.0,
@@ -2376,9 +2702,9 @@ objectJSONs = {
     "z": 0.0
   },
   "ColorDiffuse": {
-    "r": 0.232288,
-    "g": 0.226622581,
-    "b": 0.3512624
+    "r": 0.232287973,
+    "g": 0.226622552,
+    "b": 0.351262361
   },
   "LayoutGroupSortIndex": 0,
   "Value": 0,
@@ -3133,7 +3459,7 @@ objectJSONs = {
     "posX": 4.926212,
     "posY": 1.05077624,
     "posZ": 3.07231665,
-    "rotX": -3.19178071E-06,
+    "rotX": -3.19178162E-06,
     "rotY": 359.968933,
     "rotZ": 3.640631E-05,
     "scaleX": 4.0,
@@ -3149,9 +3475,9 @@ objectJSONs = {
     "z": 0.0
   },
   "ColorDiffuse": {
-    "r": 0.232288033,
-    "g": 0.226622611,
-    "b": 0.35126242
+    "r": 0.232288,
+    "g": 0.226622581,
+    "b": 0.3512624
   },
   "LayoutGroupSortIndex": 0,
   "Value": 0,
@@ -3481,20 +3807,20 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "12f429",
+  "GUID": "b80a62",
   "Name": "Custom_Assetbundle",
   "Transform": {
-    "posX": 12.8985252,
-    "posY": 1.08049417,
-    "posZ": 2.54910851,
-    "rotX": 0.000190652223,
-    "rotY": 359.976379,
-    "rotZ": -2.97212628E-05,
-    "scaleX": 0.9999961,
-    "scaleY": 3.50000477,
-    "scaleZ": 0.93913275
+    "posX": 11.2960472,
+    "posY": 1.08038592,
+    "posZ": -0.734228551,
+    "rotX": 0.00022057684,
+    "rotY": 89.97689,
+    "rotZ": -6.80019948E-05,
+    "scaleX": 2.0,
+    "scaleY": 3.50000548,
+    "scaleZ": 1.0000093
   },
-  "Nickname": "",
+  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
   "Description": "",
   "GMNotes": "",
   "AltLookAngle": {
@@ -3528,283 +3854,9 @@ objectJSONs = {
     "TypeIndex": 1,
     "LoopingEffectIndex": 0
   },
-  "LuaScript": "",
+  "LuaScript": "\nBCBtype = \"terrain\"\n",
   "LuaScriptState": "",
-  "XmlUI": "",
-  "ChildObjects": [
-    {
-      "GUID": "bd4f47",
-      "Name": "Custom_Assetbundle",
-      "Transform": {
-        "posX": -1.56313694,
-        "posY": 0.008891447,
-        "posZ": 0.0170597527,
-        "rotX": 0.0007243755,
-        "rotY": 179.9797,
-        "rotZ": -0.00114142289,
-        "scaleX": 0.7513363,
-        "scaleY": 0.999998152,
-        "scaleZ": 0.8518104
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomAssetbundle": {
-        "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1833549455346803391/EE73153AEE143847EBBFFDABEC00294AE66CBCAD/",
-        "AssetbundleSecondaryURL": "",
-        "MaterialIndex": 2,
-        "TypeIndex": 1,
-        "LoopingEffectIndex": 0
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "ChildObjects": [
-        {
-          "GUID": "5cc9a0",
-          "Name": "Custom_Assetbundle",
-          "Transform": {
-            "posX": 0.0444651768,
-            "posY": 1.561915E-05,
-            "posZ": 8.15553951,
-            "rotX": 0.00150016113,
-            "rotY": 269.927673,
-            "rotZ": -0.0006530432,
-            "scaleX": 1.00003386,
-            "scaleY": 1.0,
-            "scaleZ": 0.9999646
-          },
-          "Nickname": "",
-          "Description": "",
-          "GMNotes": "",
-          "AltLookAngle": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "ColorDiffuse": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
-          },
-          "LayoutGroupSortIndex": 0,
-          "Value": 0,
-          "Locked": true,
-          "Grid": true,
-          "Snap": true,
-          "IgnoreFoW": false,
-          "MeasureMovement": false,
-          "DragSelectable": true,
-          "Autoraise": true,
-          "Sticky": true,
-          "Tooltip": true,
-          "GridProjection": false,
-          "HideWhenFaceDown": false,
-          "Hands": false,
-          "CustomAssetbundle": {
-            "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1833549455346803391/EE73153AEE143847EBBFFDABEC00294AE66CBCAD/",
-            "AssetbundleSecondaryURL": "",
-            "MaterialIndex": 2,
-            "TypeIndex": 1,
-            "LoopingEffectIndex": 0
-          },
-          "LuaScript": "",
-          "LuaScriptState": "",
-          "XmlUI": "",
-          "ChildObjects": [
-            {
-              "GUID": "f0f588",
-              "Name": "Custom_Assetbundle",
-              "Transform": {
-                "posX": -8.186625,
-                "posY": -2.84014277E-05,
-                "posZ": 4.36520529,
-                "rotX": -0.000674018753,
-                "rotY": 90.07219,
-                "rotZ": -0.0014666667,
-                "scaleX": 1.00003493,
-                "scaleY": 0.9999998,
-                "scaleZ": 0.999966145
-              },
-              "Nickname": "",
-              "Description": "",
-              "GMNotes": "",
-              "AltLookAngle": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "ColorDiffuse": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-              },
-              "LayoutGroupSortIndex": 0,
-              "Value": 0,
-              "Locked": true,
-              "Grid": true,
-              "Snap": true,
-              "IgnoreFoW": false,
-              "MeasureMovement": false,
-              "DragSelectable": true,
-              "Autoraise": true,
-              "Sticky": true,
-              "Tooltip": true,
-              "GridProjection": false,
-              "HideWhenFaceDown": false,
-              "Hands": false,
-              "CustomAssetbundle": {
-                "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1833549455346803391/EE73153AEE143847EBBFFDABEC00294AE66CBCAD/",
-                "AssetbundleSecondaryURL": "",
-                "MaterialIndex": 2,
-                "TypeIndex": 1,
-                "LoopingEffectIndex": 0
-              },
-              "LuaScript": "",
-              "LuaScriptState": "",
-              "XmlUI": "",
-              "ChildObjects": [
-                {
-                  "GUID": "ced9ff",
-                  "Name": "BlockSquare",
-                  "Transform": {
-                    "posX": 0.877248347,
-                    "posY": -0.0231600236,
-                    "posZ": 7.01134968,
-                    "rotX": 0.00108863518,
-                    "rotY": 270.020416,
-                    "rotZ": 0.000450732769,
-                    "scaleX": 15.0006924,
-                    "scaleY": 0.0285714269,
-                    "scaleZ": 7.984984
-                  },
-                  "Nickname": "Ruin (9\")  [sup]Models may only be placed on the bottom level of this terrain feature[/sup]",
-                  "Description": "",
-                  "GMNotes": "",
-                  "AltLookAngle": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                  },
-                  "ColorDiffuse": {
-                    "r": 0.232399791,
-                    "g": 0.223999768,
-                    "b": 0.349999815
-                  },
-                  "LayoutGroupSortIndex": 0,
-                  "Value": 0,
-                  "Locked": true,
-                  "Grid": true,
-                  "Snap": true,
-                  "IgnoreFoW": false,
-                  "MeasureMovement": false,
-                  "DragSelectable": true,
-                  "Autoraise": true,
-                  "Sticky": true,
-                  "Tooltip": true,
-                  "GridProjection": false,
-                  "HideWhenFaceDown": false,
-                  "Hands": false,
-                  "LuaScript": "\nBCBtype = \"terrain\"\n",
-                  "LuaScriptState": "",
-                  "XmlUI": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "GUID": "a811d0",
-      "Name": "Custom_Model",
-      "Transform": {
-        "posX": 0.2285752,
-        "posY": -0.00106597529,
-        "posZ": -9.635716,
-        "rotX": 0.07130945,
-        "rotY": 225.043655,
-        "rotZ": 0.00125817314,
-        "scaleX": 2.013196,
-        "scaleY": 0.557664633,
-        "scaleZ": 0.9759968
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.4441417,
-        "g": 0.4441417,
-        "b": 0.4441417
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomMesh": {
-        "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399684009293027/95A2286D63E1AF7BB7CE9B8E33B5F27F9E975DDA/",
-        "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399684009292144/9153E2B34BFF806C0F4E7EEFCD0594B21623FDC3/",
-        "NormalURL": "",
-        "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/1689399684009293027/95A2286D63E1AF7BB7CE9B8E33B5F27F9E975DDA/",
-        "Convex": false,
-        "MaterialIndex": 3,
-        "TypeIndex": 0,
-        "CustomShader": {
-          "SpecularColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0
-          },
-          "SpecularIntensity": 0.0,
-          "SpecularSharpness": 2.0,
-          "FresnelStrength": 0.0
-        },
-        "CastShadows": true
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": ""
-    }
-  ]
+  "XmlUI": ""
 }]],
 
 }

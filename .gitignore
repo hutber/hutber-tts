@@ -7,8 +7,8 @@ AGENTS.md
 
 # Exclude large legacy / non-code folders
 Legacy/
-WTC/
+**/WTC/
 UKTC/
 MM/
 GW/
-Alpine/
+*Alpine/

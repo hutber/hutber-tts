@@ -18,8 +18,8 @@
             height = 160,
             click_function = "loadMap",
             function_owner = self,
-        })
-
+        })	
+    
         self.createButton({
             label = "Clear Map",
             font_size = 100,
@@ -33,7 +33,7 @@
             function_owner = self,
         })
     end
-
+    
     -------------------
     -- Prepares the terrain saved into the card from Map Saver tool
     string.split = function(s, delimiter)
@@ -48,11 +48,11 @@
         table.insert( result, string.sub( s, from  ) )
         return result
     end
-
+	
 	function scriptzoneCallback(zone) --This deletes everything except the things listed, when the scripting zone is briefly spawned.
-
+	
         local objects = zone.getObjects()
-
+        
         for i, obj in ipairs(objects) do
             ----------------------------------------------
              --IMPORTANT! Keep the map card from deleting speficic stuff here
@@ -60,17 +60,17 @@
             if obj.getGMNotes() ~= "MapExclude" -- As black player, right click and add "MapExclude" to anything you dont want deleted. You may have to temporarily make your table interactable to do this, with its scripting.
                 and
                 obj.getGUID() ~= "e7ca6e" --Exclude Map Buidler Table
-                and
+                and 
                 obj.getGUID() ~= "6012bf" --...and ForceOrg Table...
-                and
+                and 
                 obj.getGUID() ~= "4ee1f2" --...and FTC board matObjSurface
                 and
                 obj.getGUID() ~= "948ce5" --...and FTC Table
                 and
                 obj.getGUID() ~= "28865a" --...and FTC Felt Surface
-                then
+                then 
                 obj.destruct()
-            end
+            end  
         end
         zone.destruct()
     end
@@ -87,10 +87,10 @@
 
 		spawnObject(scriptzoneParams)
 		-- Then Sspawn the objects stored in the card
-
+		
         Wait.time(
         function()
-            for _, objectJSON in ipairs(objectJSONs) do
+            for _, objectJSON in ipairs(objectJSONs) do 
                 -- Spawn the map from the JSON data
                 spawnObjectJSON({
                     json = objectJSON
@@ -98,7 +98,7 @@
             end
         end, .5)
     end
-
+    
     -----------------------------
     -- This function runs when the Clear Map button is clicked on the Map Card
     function clearMap(objectClicked, clickerColor, altClickUsed)
@@ -112,9 +112,9 @@
             }
 
     spawnObject(scriptzoneParams)
-
+    
     end
-
+        
 
 objectJSONs = {
   [[{
@@ -160,7 +160,7 @@ objectJSONs = {
   "Hands": false,
   "CustomMesh": {
     "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/879750610978796176/4A5A65543B98BCFBF57E910D06EC984208223D38/",
-    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/2031721158054099239/CA52105B60D971262255CFC6808797FBE077231B/",
+    "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/10791071673487131/60D8B9888E1A730A59BF648CC5DCA4BBBB686E88/",
     "NormalURL": "",
     "ColliderURL": "",
     "Convex": true,
@@ -186,12 +186,12 @@ objectJSONs = {
   "GUID": "a6761a",
   "Name": "BlockSquare",
   "Transform": {
-    "posX": -21.0002041,
-    "posY": 1.03038549,
-    "posZ": -11.9997034,
-    "rotX": -6.488694E-05,
-    "rotY": 179.998917,
-    "rotZ": -1.5500711E-05,
+    "posX": -21.00022,
+    "posY": 1.03039086,
+    "posZ": -11.9996758,
+    "rotX": -5.835069E-05,
+    "rotY": 179.998825,
+    "rotZ": -5.843143E-05,
     "scaleX": 6.00000334,
     "scaleY": 0.100000016,
     "scaleZ": 12.0000029
@@ -346,12 +346,12 @@ objectJSONs = {
   "GUID": "332aea",
   "Name": "BlockSquare",
   "Transform": {
-    "posX": -20.9973946,
-    "posY": 1.030388,
-    "posZ": -19.99971,
-    "rotX": 4.39185669E-06,
-    "rotY": 89.9993744,
-    "rotZ": -9.352516E-06,
+    "posX": -20.99544,
+    "posY": 1.03038812,
+    "posZ": -19.9997044,
+    "rotX": 5.02095645E-07,
+    "rotY": 89.9994,
+    "rotZ": -1.44632111E-06,
     "scaleX": 4.0,
     "scaleY": 0.100000009,
     "scaleZ": 5.99999857
@@ -1521,7 +1521,7 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "34cd41",
+  "GUID": "3eea13",
   "Name": "BlockSquare",
   "Transform": {
     "posX": 3.945993,
@@ -1738,7 +1738,7 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "524fdd",
+  "GUID": "8d3817",
   "Name": "BlockSquare",
   "Transform": {
     "posX": 9.477584,
@@ -1832,7 +1832,7 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "eb47ea",
+  "GUID": "6ff61f",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 8.977171,
@@ -1887,7 +1887,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "5eed88",
+  "GUID": "040913",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 7.160595,
@@ -1942,7 +1942,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "8bf374",
+  "GUID": "75f577",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 7.166773,
@@ -1997,7 +1997,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "dcb6d1",
+  "GUID": "15f116",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 9.443257,
@@ -2052,7 +2052,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "d2e631",
+  "GUID": "62d019",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 8.366482,
@@ -2107,7 +2107,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "9681b9",
+  "GUID": "556c05",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 17.8612919,
@@ -2172,7 +2172,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "2fb068",
+  "GUID": "db75fe",
   "Name": "BlockSquare",
   "Transform": {
     "posX": 18.979147,
@@ -2218,7 +2218,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "d9f0bd",
+  "GUID": "258bca",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 18.5289154,
@@ -2273,7 +2273,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "4f7807",
+  "GUID": "348b60",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 16.196579,
@@ -2328,7 +2328,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "ac94e6",
+  "GUID": "99b7e5",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 16.6760845,
@@ -2393,7 +2393,7 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "47813b",
+  "GUID": "278c3a",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 17.14346,
@@ -2458,11 +2458,11 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "5050c7",
+  "GUID": "83f138",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 19.0809746,
-    "posY": 1.22118974,
+    "posY": 1.22119665,
     "posZ": 8.516174,
     "rotX": 0.00303090387,
     "rotY": 255.004822,
@@ -2523,15 +2523,15 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "10e09c",
+  "GUID": "c2c378",
   "Name": "BlockSquare",
   "Transform": {
-    "posX": 20.9973946,
-    "posY": 1.050776,
-    "posZ": 19.99971,
-    "rotX": 4.39185669E-06,
+    "posX": 20.99544,
+    "posY": 1.05077624,
+    "posZ": 19.9997044,
+    "rotX": 5.020957E-07,
     "rotY": 269.9994,
-    "rotZ": -9.352517E-06,
+    "rotZ": -1.44632111E-06,
     "scaleX": 4.0,
     "scaleY": 0.100000009,
     "scaleZ": 5.99999857
@@ -2569,15 +2569,15 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "0b1489",
+  "GUID": "224320",
   "Name": "BlockSquare",
   "Transform": {
-    "posX": 21.0002041,
-    "posY": 1.05077362,
-    "posZ": 11.9997034,
-    "rotX": -6.488694E-05,
-    "rotY": -0.00111013313,
-    "rotZ": -1.5500711E-05,
+    "posX": 21.00022,
+    "posY": 1.05077887,
+    "posZ": 11.9996758,
+    "rotX": -5.835069E-05,
+    "rotY": -0.00116477464,
+    "rotZ": -5.843143E-05,
     "scaleX": 6.00000334,
     "scaleY": 0.100000016,
     "scaleZ": 12.0000029
@@ -2729,7 +2729,7 @@ objectJSONs = {
   ]
 }]],
   [[{
-  "GUID": "c46a43",
+  "GUID": "d6303a",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 18.9582024,
@@ -2794,11 +2794,11 @@ objectJSONs = {
   "XmlUI": ""
 }]],
   [[{
-  "GUID": "4fb67c",
+  "GUID": "e94c80",
   "Name": "Custom_Model",
   "Transform": {
     "posX": 20.6509247,
-    "posY": 1.22116971,
+    "posY": 1.22117591,
     "posZ": 7.101107,
     "rotX": 0.000619222759,
     "rotY": 194.993835,

@@ -85,6 +85,10 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.6.18: Maps: Updated maps 2 & 6 with small tweaks to ruins thanks @Engwar01",
+    "1.6.18: Rules: Updated rule PDFs to latest",
+    "1.6.18: Fix: Added clock back, cus why was it even gone like?",
+    "1.6.17: Fix: Fix GW Map 8. Updated GW Map selection images",
     "1.6.16: Feat: Updated UKTC maps",
     "1.6.16: I've completely got back into compeitive painting!",
     -- "1.6.15: Fix: Updated UKTC map 4 to correct map",
@@ -2260,7 +2264,7 @@ function writeDeployMenu()
     self.createButton(objectivesOffsetDownBtn)
     self.createButton(objectivesOffsetUpBtn)
     self.createButton(objectivesOffsetMenuBtn)
-    self.createButton(nineFromDeployBtn)
+    -- self.createButton(nineFromDeployBtn)
 
     if gameMode == "game" then
         if not packSelected then
