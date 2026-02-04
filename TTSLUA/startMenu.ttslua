@@ -44,6 +44,10 @@ function onLoad(saved_data)
         packSelected = loaded_data.svPackSelected
     end
 
+    if not sizeConfirmed then
+        deploySelected = #DeployZonesData
+    end
+
     mat = getObjectFromGUID(mat_GUID)
     if simulation then print("THIS IS "..currentTurn.." TURN") end
 
