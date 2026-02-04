@@ -793,6 +793,9 @@ DeployZonesData = {
     {name = "[PN] Hammer and Anvil (HS)", objectivesID = 107, draw = {
         --[[1]]{type = "line", color = "Red", position = "x", fromSide = 18},
         --[[2]]{type = "line", color = "Teal", position = "-x", fromSide = 18}}},
+    {name = "[PN] Hammer and Anvil (HS WTC)", objectivesID = 1072, draw = {
+        --[[1]]{type = "line", color = "Red", position = "x", fromSide = 18},
+        --[[2]]{type = "line", color = "Teal", position = "-x", fromSide = 18}}},
     {name = "[PN] Dawn of War (HS)", objectivesID = 108, draw = {
         --[[1]]{type = "line", color = "Teal", position = "-z", fromSide = 12},
         --[[2]]{type = "line", color = "Red", position = "z", fromSide = 12}}},
@@ -1578,6 +1581,13 @@ objectivesData = {
         {id = 107, name = "[PN] Hammer and Anvil (HS)", objectives = {
             {type = "diagonal", orientation="-xz", pos={6, objectivesOffset, 0}},
             {type = "diagonal", orientation="-xz", pos={-6, objectivesOffset, 0}},
+            {type = "fromSide", pos={10, objectivesOffset, 0}},
+            {type = "fromSide", pos={-10, objectivesOffset, 0}},
+            {type = "fromSide", pos={0, objectivesOffset, 6}},
+            {type = "fromSide", pos={0, objectivesOffset, -6}}}},
+        {id = 1072, name = "[PN] Hammer and Anvil (HS WTC)", objectives = {
+            {type = "diagonal", orientation="xz", pos={6, objectivesOffset, 0}},
+            {type = "diagonal", orientation="xz", pos={-6, objectivesOffset, 0}},
             {type = "fromSide", pos={10, objectivesOffset, 0}},
             {type = "fromSide", pos={-10, objectivesOffset, 0}},
             {type = "fromSide", pos={0, objectivesOffset, 6}},
