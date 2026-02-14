@@ -2598,51 +2598,20 @@ function none()
 end
 
 
-previousUI = nil
+-- The feedback popup panel is now defined in the base XML (hidden by default). We only show/hide
+-- it and wire up onClick handlers via setAttribute().
+-- IMPORTANT: We never call Global.UI.setXml() at runtime because it rebuilds the entire Global UI
+-- and causes host/guest desync over high-latency links.
 
 function openFeedbackPopup()
-    local current = Global.UI.getXml() or ""
-    previousUI = current
     local guid = self.getGUID()
-    local xml = string.format([[
-        <Panel id="feedbackPopup" width="400" height="420" rectAlignment="MiddleCenter" allowDragging="false" color="#000000EE">
-            <VerticalLayout spacing="5" padding="10">
-                <VerticalLayout spacing="5" padding="10" childControlHeight="false" childForceExpandHeight="false">
-                    <InputField id="feedbackName" placeholder="Name" onValueChanged="onNameChanged" />
-                    <InputField id="feedbackEmail" value="jamie@hutber.com" placeholder="Email" onValueChanged="onEmailChanged" />
-                    <Dropdown id="feedbackType" onValueChanged="onTypeChanged">
-                        <Option value="">Type</Option>
-                        <Option value="bug">Bug</Option>
-                        <Option value="feature">Feature Request</Option>
-                        <Option value="other">Other</Option>
-                        <Option value="single">Are you single?</Option>
-                    </Dropdown>
-                    <InputField id="feedbackMessage" placeholder="Your feedback" lineType="MultiLineNewline" height="150" onValueChanged="onMessageChanged" />
-                    <Dropdown id="feedbackLike" onValueChanged="onLikeChanged">
-                        <Option value="">Do you hate the Lethal Face?</Option>
-                        <Option value="loveit">Actually its not that bad (I love it)</Option>
-                        <Option value="Yes">Yes</Option>
-                        <Option value="No">No</Option>
-                        <Option value="I fucking HATE IT">I fucking HATE IT</Option>
-                        <Option value="You bastard">I don't like you</Option>
-                    </Dropdown>
-                </VerticalLayout>
-
-                <HorizontalLayout spacing="2" height="40">
-                    <Button text="Submit" onClick="%s/submitFeedback" width="120" height="40"/>
-                    <Button text="Close"  onClick="%s/closeFeedbackPopup" width="120" height="40"/>
-                </HorizontalLayout>
-            </VerticalLayout>
-        </Panel>
-    ]], guid, guid)
-    Global.UI.setXml(current .. xml)
+    Global.UI.setAttribute("feedbackSubmitBtn", "onClick", guid .. "/submitFeedback")
+    Global.UI.setAttribute("feedbackCloseBtn", "onClick", guid .. "/closeFeedbackPopup")
+    Global.UI.setAttribute("feedbackPopup", "active", "true")
 end
 
 function closeFeedbackPopup()
-    if previousUI then
-        Global.UI.setXml(previousUI)
-        previousUI = nil
-    end
+    Global.UI.setAttribute("feedbackPopup", "active", "false")
 end
 
 function submitFeedback(player, color, alt)
