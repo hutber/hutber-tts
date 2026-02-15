@@ -2555,7 +2555,7 @@
         "scaleZ": 6
       },
       "Nickname": "",
-      "Description": "Pariah Nexus reference",
+      "Description": "Chapter Approved Tournament Companion",
       "GMNotes": "",
       "AltLookAngle": {
         "x": 0,
@@ -2582,10 +2582,10 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomPDF": {
-        "PDFUrl": "https://assets.warhammer-community.com/eng_warhammer40000_pariah_nexus_tournament_companion-eixdmbxjrp-dddcylhhbo.pdf",
+        "PDFUrl": "https://assets.warhammer-community.com/eng_11-02_wh40k_core&key_chapter_approved_tournament_companion-fzhlwjzwf4-agxpall6br.pdf",
         "PDFPassword": "",
         "PDFPage": 0,
-        "PDFPageOffset": 1
+        "PDFPageOffset": 0
       },
       "LuaScript": "",
       "LuaScriptState": "",
@@ -31286,10 +31286,10 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomPDF": {
-        "PDFUrl": "https://assets.warhammer-community.com/eng_wh40k_core&key_core_rules_updates_commentary_dec2024-q3wavde393-kabutntfbt.pdf",
+        "PDFUrl": "https://assets.warhammer-community.com/eng_22-10_warhammer40000_core_rules_updates-kikyythcsl-5iydvuj9w6.pdf",
         "PDFPassword": "",
         "PDFPage": 0,
-        "PDFPageOffset": 1
+        "PDFPageOffset": 0
       },
       "LuaScript": "",
       "LuaScriptState": "",
@@ -45274,10 +45274,10 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "CustomPDF": {
-        "PDFUrl": "https://assets.warhammer-community.com/eng_22-10_warhammer40000_core_rules_updates-kikyythcsl-5iydvuj9w6.pdf",
+        "PDFUrl": "https://assets.warhammer-community.com/warhammer40000_core&key_corerules_eng_24.09-5xfayxjekm.pdf",
         "PDFPassword": "",
         "PDFPage": 40,
-        "PDFPageOffset": 3
+        "PDFPageOffset": 0
       },
       "LuaScript": "",
       "LuaScriptState": "",
