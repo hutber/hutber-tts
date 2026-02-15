@@ -227,6 +227,7 @@ sizeData={
     {id=1, name='C o m b a t     P a t r o l - 44" x 30"', scale={1.22,1,0.83}, defaultObjectives=0},
     {id=2, name='Incursion / Strike Force - 44" x 60"', scale={0.83*2,1,1.22}, defaultObjectives=0},
     {id=3, name='O n s l a u g h t - 44" x 90"', scale={0.83*3,1,1.22}, defaultObjectives=0},
+    {id=4, name='King of the Colosseum - 36" x 36"', scale={1,1,1}, defaultObjectives=0},
 }
 
 menuSizeX = 0
@@ -866,6 +867,10 @@ DeployZonesData = {
         --[[1]]{type = "circleDeployment", color = "Blue", position = "z", fromCenter = 13, radius = 9},
         --[[2]]{type = "circleDeployment", color = "Black", position = "-x", fromCenter = 16, fromCenterZ = 13, radius = 9},
         --[[3]]{type = "circleDeployment", color = "Yellow", position = "x", fromCenter = 16, fromCenterZ = 13, radius = 9}}},
+    --King of the Colosseum
+    {name = "King of the Colosseum", objectivesID = 301, draw = {
+        --[[1]]{type = "line", color = "Teal", position = "-z", fromSide = 9},
+        --[[2]]{type = "line", color = "Red", position = "z", fromSide = 9}}},
     {name = "None", draw = {type = "none"}},
 }
 
@@ -1778,6 +1783,13 @@ objectivesData = {
             {type = "fixed", pos={0, objectivesOffset, -8}}}},
         {id = 202, name = "(CP) Four Corners", objectives = {}},
         {id = 203, name = "(CP) Three Circles", objectives = {}},
+    --King of the Colosseum
+        {id = 301, name = "King of the Colosseum", objectives = {
+            {type = "fixed", pos={0, objectivesOffset, 0}},
+            {type = "fromSide", pos={18, objectivesOffset, 5.5}},
+            {type = "fromSide", pos={-18, objectivesOffset, -5.5}},
+            {type = "fromSide", pos={5.5, objectivesOffset, -18}},
+            {type = "fromSide", pos={-5.5, objectivesOffset, 18}}}},
         {id = 0, name = "None", objectives = {}},
     }
 
