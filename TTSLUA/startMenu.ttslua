@@ -89,6 +89,8 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.6.19: BUbble: New Custom Buddle size button",
+    "1.6.19: Maps: Added alternative Hammer and Anvil objective markers",
     "1.6.18: Maps: Updated maps 2 & 6 with small tweaks to ruins thanks @Engwar01",
     "1.6.18: Rules: Updated rule PDFs to latest",
     "1.6.18: Fix: Added clock back, cus why was it even gone like?",
