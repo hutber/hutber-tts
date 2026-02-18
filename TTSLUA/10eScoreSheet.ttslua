@@ -568,6 +568,89 @@ function playerSum(pId)
 	return score
 end
 
+function safeScoreNumber(value)
+	local n = tonumber(value)
+	if n == nil then return 0 end
+	return n
+end
+
+function sumScoreComponent(pId, kIndex, cap)
+	local total = 0
+	for j=1,5 do
+		total = total + safeScoreNumber(scores[pId][j][kIndex])
+	end
+	if cap and total > cap then
+		total = cap
+	end
+	return total
+end
+
+function getRoundSummaryForPlayer(pId)
+	local roundSummary = {}
+	for j=1,5 do
+		local primary = safeScoreNumber(scores[pId][j][BTN_K_IX_PRIMARY])
+		local secondary1 = safeScoreNumber(scores[pId][j][BTN_K_IX_SECONDARY_1])
+		local secondary2 = safeScoreNumber(scores[pId][j][BTN_K_IX_SECONDARY_2])
+		local challenger = safeScoreNumber(scores[pId][j][BTN_K_IX_CHALLENGER])
+		table.insert(roundSummary, {
+			round = j,
+			primary = primary,
+			secondary = secondary1 + secondary2,
+			challenger = challenger,
+			total = primary + secondary1 + secondary2 + challenger
+		})
+	end
+	return roundSummary
+end
+
+function getMatchSummary()
+	local params = getParams()
+	local redName = (params and params.P1) or (Player.Red and Player.Red.steam_name) or "Red"
+	local blueName = (params and params.P2) or (Player.Blue and Player.Blue.steam_name) or "Blue"
+
+	local redPrimary = sumScoreComponent(1, BTN_K_IX_PRIMARY, 50)
+	local redSecondary = sumScoreComponent(1, BTN_K_IX_SECONDARY_1, nil) + sumScoreComponent(1, BTN_K_IX_SECONDARY_2, nil)
+	if redSecondary > 40 then redSecondary = 40 end
+	local redChallenger = sumScoreComponent(1, BTN_K_IX_CHALLENGER, 12)
+
+	local bluePrimary = sumScoreComponent(2, BTN_K_IX_PRIMARY, 50)
+	local blueSecondary = sumScoreComponent(2, BTN_K_IX_SECONDARY_1, nil) + sumScoreComponent(2, BTN_K_IX_SECONDARY_2, nil)
+	if blueSecondary > 40 then blueSecondary = 40 end
+	local blueChallenger = sumScoreComponent(2, BTN_K_IX_CHALLENGER, 12)
+
+	local redRounds = getRoundSummaryForPlayer(1)
+	local blueRounds = getRoundSummaryForPlayer(2)
+
+	local roundsPlayed = 0
+	for j=1,5 do
+		if (redRounds[j].total ~= 0) or (blueRounds[j].total ~= 0) then
+			roundsPlayed = j
+		end
+	end
+
+	return {
+		red = {
+			name = redName,
+			primary = redPrimary,
+			secondary = redSecondary,
+			challenger = redChallenger,
+			painted = 10,
+			total = playerSum(1),
+			rounds = redRounds
+		},
+		blue = {
+			name = blueName,
+			primary = bluePrimary,
+			secondary = blueSecondary,
+			challenger = blueChallenger,
+			painted = 10,
+			total = playerSum(2),
+			rounds = blueRounds
+		},
+		roundsPlayed = roundsPlayed
+	}
+end
+
 function getParams()
 	local params = JSON.decode( self.getDescription() )
 

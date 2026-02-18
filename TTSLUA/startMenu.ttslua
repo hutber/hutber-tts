@@ -14,16 +14,18 @@ MISSION_PACK_PARIAH_NEXUS = Global.getVar("MISSION_PACK_PARIAH_NEXUS")
 keepForTerrainEditor = true
 
 mat_GUID = Global.getVar("mat_GUID")
-function getData()
-    WebRequest.get("https://webhook.site/8682e017-6a5f-41ce-a89f-3ce4af80cea8?message=Hello",
-        function(response)
-            if response.is_error then
-                print("Error: " .. response.error)
-            else
-                print("Response: " .. response.text)
-            end
-        end
-    )
+ttsGameApiBaseUrl = "https://stats.hutber.com/api/ttsGame"
+ttsSnapshotIntervalSeconds = 300
+ttsDebugEnabled = false
+
+function ttsDebugLog(message)
+    if ttsDebugEnabled then
+        print(message)
+    end
+end
+
+function ttsGameLog(message, color)
+    printToAll(message, color or "White")
 end
 
 function onLoad(saved_data)
@@ -45,6 +47,8 @@ function onLoad(saved_data)
         deploySelected = loaded_data.svdeploySelected
         deployMode = loaded_data.svdeployMode
         packSelected = loaded_data.svPackSelected
+        trackedGameId = loaded_data.svTrackedGameId
+        endGameSubmitted = loaded_data.svEndGameSubmitted or false
     end
 
     if sizeConfirmed then
@@ -61,7 +65,7 @@ function onLoad(saved_data)
     end
 
     mat = getObjectFromGUID(mat_GUID)
-    if simulation then print("THIS IS "..currentTurn.." TURN") end
+    if simulation then ttsDebugLog("THIS IS "..currentTurn.." TURN") end
 
     redTurnCounter = getObjectFromGUID(Global.getVar("redTurnCounter_GUID"))
     blueTurnCounter = getObjectFromGUID(Global.getVar("blueTurnCounter_GUID"))
@@ -80,15 +84,18 @@ function onLoad(saved_data)
         else
             packSelected = nil
             missionPackData = nil
-            print("missionPackData not available during onLoad; clearing packSelected")
+            ttsDebugLog("missionPackData not available during onLoad; clearing packSelected")
         end
     end
     if gameTurnCounter then
         gameTurnCounter.call("checkGameEnd")
     else
-        print("gameTurnCounter not found during onLoad")
+        ttsDebugLog("gameTurnCounter not found during onLoad")
     end
     writeMenus()
+    if inGame and trackedGameId then
+        startTrackedSnapshotTimer()
+    end
     if not inGame then
         makeAnnouncement()
     end
@@ -106,6 +113,8 @@ function onSave()
         svdeploySelected = deploySelected,
         svdeployMode = deployMode,
         svPackSelected = packSelected,
+        svTrackedGameId = trackedGameId,
+        svEndGameSubmitted = endGameSubmitted,
     })
 
     return saved_data
@@ -113,8 +122,12 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.6.20: BUbble: New Custom Buddle size button",
-    "1.6.20: fix: save and load deployMode @gareth3001 thanks for the fix",
+    "1.7.1: fix: save and load deployMode @gareth3001 thanks for the fix",
+    -- "1.7.0: All thanks should go to @gareth3001 for 90% of the fixes below!",
+    -- "1.7.0: Another thanks to GabrielL for the Hidden Supplies Fix!",
+    -- "1.7.0: Version: bumped due to big changes to desync issues if 2 players were far away",
+    -- "1.7.0: Maps: Updated GW Map 4",
+    -- "1.7.0: deployments: Support added for killteam... I think",
     -- "1.6.19: Maps: Added alternative Hammer and Anvil objective markers",
     -- "1.6.18: Maps: Updated maps 2 & 6 with small tweaks to ruins thanks @Engwar01",
     -- "1.6.18: Rules: Updated rule PDFs to latest",
@@ -122,6 +135,13 @@ function makeAnnouncement()
     -- "1.6.17: Fix: Fix GW Map 8. Updated GW Map selection images",
     -- "1.6.16: Feat: Updated UKTC maps",
     -- "1.6.16: I've completely got back into compeitive painting!",
+    --"1.6.19: Maps: Added alternative Hammer and Anvil objective markers",
+    --"1.6.18: Maps: Updated maps 2 & 6 with small tweaks to ruins thanks @Engwar01",
+    --"1.6.18: Rules: Updated rule PDFs to latest",
+    --"1.6.18: Fix: Added clock back, cus why was it even gone like?",
+    --"1.6.17: Fix: Fix GW Map 8. Updated GW Map selection images",
+    --"1.6.16: Feat: Updated UKTC maps",
+    --"1.6.16: I've completely got back into compeitive painting!",
     -- "1.6.15: Fix: Updated UKTC map 4 to correct map",
     -- "1.6.14: Feat: Marcus Miniatures Maps updated after £4000 payment finally completed",
     -- "1.6.13: Feat: Lethal and sustained hits completely reworked, now you can click multiple times to add more hits and right/left click to add 5/6 hits",
@@ -652,9 +672,9 @@ function placeGameTokens()
     broadcastToAll("Team cards have been shuffled! Safe to Draw.", {0, 1, 0})
     if cardsTeams then
         cardsTeams.setPosition({42, 0.9, 37})
-        print("cardsTeams new position:", cardsTeams.getPosition())
+        ttsDebugLog("cardsTeams new position: " .. tostring(cardsTeams.getPosition()))
     else
-        print("cardsTeams not found!")
+        ttsDebugLog("cardsTeams not found!")
     end
 
     local tokenBag = getObjectFromGUID("f8ddf5")
@@ -2529,6 +2549,9 @@ cpEveryTurn = true
 -- true if a CP has been gained, else false
 redCpIncrementTracker = false
 blueCpIncrementTracker = false
+trackedGameId = nil
+trackedSnapshotTimerId = nil
+endGameSubmitted = false
 
 phases = {"Command", "Movement", "Shooting", "Charge", "Fight"}
 currentPhase = 1
@@ -2562,6 +2585,11 @@ IncrementBlueCpBtn = {
     index = 1, label = "Gain a CP", tooltip = "Increment Blue CP counter\nWill only increment once per Round", click_function = "incrementBlueCp", function_owner = self,
     position = {46.2, 5, -3.75}, rotation = {0, 0, 0}, height = 1650, width = 3000,
     font_size = 600, color = {0, 0, 1}, font_color = {1, 1, 1}
+}
+endTrackedGameBtn = {
+    index = 1, label = "END GAME", tooltip = "Send final game result to API", click_function = "endTrackedGame", function_owner = self,
+    position = {0, 5, 3.8}, rotation = {0, 0, 0}, height = 700, width = 3600,
+    font_size = 350, color = {0.1, 0.1, 0.1}, font_color = {1, 1, 1}
 }
 
 position = {menuX, 5, menuZ}
@@ -2632,7 +2660,10 @@ function writeIngameMenu()
     self.createButton(objectivesOffsetDownBtn)
     self.createButton(objectivesOffsetUpBtn)
     self.createButton(objectivesOffsetMenuBtn)
-    self.createButton(nineFromDeployBtn)
+    destroyNineInchDeployLines()
+    if shouldShowEndGameButton() then
+        self.createButton(endTrackedGameBtn)
+    end
 
     nextPhaseBtn.color = currentTurn
     local visibleTo=nextPhaseBtn.color
@@ -2665,9 +2696,501 @@ function getContainedItems(container)
     return contained
 end
 
+function boolToString(value)
+    if value then
+        return "true"
+    end
+    return "false"
+end
+
+function appendQueryParam(parts, key, value)
+    if value == nil then
+        return
+    end
+    local text = tostring(value)
+    if text == "" then
+        return
+    end
+    table.insert(parts, key .. "=" .. urlEncode(text))
+end
+
+function makeTtsGameUrl(path, params)
+    local parts = {}
+    for _, pair in ipairs(params) do
+        appendQueryParam(parts, pair[1], pair[2])
+    end
+    return ttsGameApiBaseUrl .. path .. "?" .. table.concat(parts, "&")
+end
+
+function getZoneCardNameByGuidVar(guidVarName)
+    local zoneGuid = Global.getVar(guidVarName)
+    if not zoneGuid then
+        return nil
+    end
+
+    local zoneObj = getObjectFromGUID(zoneGuid)
+    if not zoneObj then
+        return nil
+    end
+
+    local objects = zoneObj.getObjects()
+    if not objects or #objects == 0 then
+        return nil
+    end
+
+    local card = objects[1]
+    if not card then
+        return nil
+    end
+
+    local ok, name = pcall(function()
+        return card.getName()
+    end)
+    if not ok or not name or name == "" then
+        return nil
+    end
+
+    return name
+end
+
+function joinNonEmpty(values, separator)
+    local parts = {}
+    for _, value in ipairs(values) do
+        if value and value ~= "" then
+            table.insert(parts, value)
+        end
+    end
+    if #parts == 0 then
+        return nil
+    end
+    return table.concat(parts, separator)
+end
+
+function getCounterValueByGuidVar(guidVarName)
+    local counterGuid = Global.getVar(guidVarName)
+    if not counterGuid then
+        return nil
+    end
+
+    local counterObj = getObjectFromGUID(counterGuid)
+    if not counterObj or not counterObj.Counter or not counterObj.Counter.getValue then
+        return nil
+    end
+
+    local ok, value = pcall(function()
+        return counterObj.Counter.getValue()
+    end)
+    if not ok then
+        return nil
+    end
+    return value
+end
+
+function getRoundNumber()
+    local round = getCounterValueByGuidVar("gameTurnCounter_GUID")
+    if round == nil then
+        return nil
+    end
+    return tonumber(round)
+end
+
+function shouldShowEndGameButton()
+    local round = getRoundNumber()
+    return trackedGameId ~= nil and (not endGameSubmitted) and round ~= nil and round >= 5
+end
+
+function getTrackedPlayerIdentifier(playerColor)
+    local playerRef = Player[playerColor]
+    if playerRef and playerRef.steam_id and tostring(playerRef.steam_id) ~= "" then
+        return tostring(playerRef.steam_id)
+    end
+    if playerRef and playerRef.steam_name and playerRef.steam_name ~= "" then
+        return playerRef.steam_name
+    end
+    return string.lower(playerColor) .. "_unknown"
+end
+
+function getTrackedPlayerSteamId(playerColor)
+    local playerRef = Player[playerColor]
+    if playerRef and playerRef.steam_id and tostring(playerRef.steam_id) ~= "" then
+        return tostring(playerRef.steam_id)
+    end
+    return nil
+end
+
+function getTrackedPlayerDisplayName(playerColor)
+    local playerRef = Player[playerColor]
+    if playerRef and playerRef.steam_name and playerRef.steam_name ~= "" then
+        return playerRef.steam_name
+    end
+    return nil
+end
+
+function getTrackedGameType()
+    if singlesMode and singlesMode ~= "" then
+        return singlesMode
+    end
+    return gameMode
+end
+
+function getTrackedMapSize()
+    if sizeData and mapSizeSelected and sizeData[mapSizeSelected] and sizeData[mapSizeSelected].name then
+        return sizeData[mapSizeSelected].name
+    end
+    return nil
+end
+
+function getTrackedScoreSheetSummary()
+    local scoreSheetGuid = Global.getVar("scoresheet_GUID")
+    if not scoreSheetGuid then
+        return nil
+    end
+    local scoreSheetObj = getObjectFromGUID(scoreSheetGuid)
+    if not scoreSheetObj then
+        return nil
+    end
+    local ok, summary = pcall(function()
+        return scoreSheetObj.call("getMatchSummary")
+    end)
+    if ok and type(summary) == "table" then
+        return summary
+    end
+    return nil
+end
+
+function getTrackingContext()
+    local missionPackName = missionPackData and missionPackData.name or nil
+    local deploymentCard = getZoneCardNameByGuidVar("deploymentCardZone_GUID")
+    local primaryMissionCard = getZoneCardNameByGuidVar("primaryCardZone_GUID")
+    local scoreSummary = getTrackedScoreSheetSummary()
+    local redSecondaryCards = joinNonEmpty({
+        getZoneCardNameByGuidVar("secondary11CardZone_GUID"),
+        getZoneCardNameByGuidVar("secondary12CardZone_GUID")
+    }, "|")
+    local blueSecondaryCards = joinNonEmpty({
+        getZoneCardNameByGuidVar("secondary21CardZone_GUID"),
+        getZoneCardNameByGuidVar("secondary22CardZone_GUID")
+    }, "|")
+
+    return {
+        missionType = missionPackName,
+        missionPack = missionPackName,
+        gameType = getTrackedGameType(),
+        mapSize = getTrackedMapSize(),
+        deploymentCard = deploymentCard,
+        primaryMissionCard = primaryMissionCard,
+        redSecondaryCards = redSecondaryCards,
+        blueSecondaryCards = blueSecondaryCards,
+        round = getCounterValueByGuidVar("gameTurnCounter_GUID"),
+        redTotal = getCounterValueByGuidVar("redVPCounter_GUID"),
+        blueTotal = getCounterValueByGuidVar("blueVPCounter_GUID"),
+        redPrimary = scoreSummary and scoreSummary.red and scoreSummary.red.primary or nil,
+        redSecondary = scoreSummary and scoreSummary.red and scoreSummary.red.secondary or nil,
+        redChallenger = scoreSummary and scoreSummary.red and scoreSummary.red.challenger or nil,
+        bluePrimary = scoreSummary and scoreSummary.blue and scoreSummary.blue.primary or nil,
+        blueSecondary = scoreSummary and scoreSummary.blue and scoreSummary.blue.secondary or nil,
+        blueChallenger = scoreSummary and scoreSummary.blue and scoreSummary.blue.challenger or nil
+    }
+end
+
+function stopTrackedSnapshotTimer()
+    if trackedSnapshotTimerId then
+        Wait.stop(trackedSnapshotTimerId)
+        trackedSnapshotTimerId = nil
+    end
+end
+
+function startTrackedSnapshotTimer()
+    stopTrackedSnapshotTimer()
+    if not trackedGameId then
+        return
+    end
+    trackedSnapshotTimerId = Wait.time(function()
+        sendTrackedSnapshot("auto5m")
+    end, ttsSnapshotIntervalSeconds, -1)
+    ttsDebugLog("[ttsGame] snapshot timer started (" .. ttsSnapshotIntervalSeconds .. "s)")
+end
+
+function sendTrackedSnapshot(captureSource)
+    if not trackedGameId then
+        return
+    end
+
+    local context = getTrackingContext()
+    local url = makeTtsGameUrl("/snapshot", {
+        {"game_id", trackedGameId},
+        {"capture_source", captureSource},
+        {"round", context.round},
+        {"red_primary", context.redPrimary},
+        {"red_secondary", context.redSecondary},
+        {"red_challenger", context.redChallenger},
+        {"red_total", context.redTotal},
+        {"blue_primary", context.bluePrimary},
+        {"blue_secondary", context.blueSecondary},
+        {"blue_challenger", context.blueChallenger},
+        {"blue_total", context.blueTotal},
+        {"mission_type", context.missionType},
+        {"game_type", context.gameType},
+        {"map_size", context.mapSize},
+        {"deployment_card", context.deploymentCard},
+        {"red_secondary_cards", context.redSecondaryCards},
+        {"blue_secondary_cards", context.blueSecondaryCards}
+    })
+
+    ttsDebugLog("[ttsGame] snapshot -> " .. url)
+    WebRequest.get(url, function(response)
+        if response.is_error then
+            ttsDebugLog("[ttsGame] snapshot failed: " .. response.error)
+            return
+        end
+        ttsDebugLog("[ttsGame] snapshot complete")
+    end)
+end
+
+function startTrackedGameSync()
+    local redSteamId = getTrackedPlayerSteamId("Red")
+    local blueSteamId = getTrackedPlayerSteamId("Blue")
+    local redSteamName = redSteamId or getTrackedPlayerIdentifier("Red")
+    local blueSteamName = blueSteamId or getTrackedPlayerIdentifier("Blue")
+    local redDisplayName = getTrackedPlayerDisplayName("Red") or redSteamName
+    local blueDisplayName = getTrackedPlayerDisplayName("Blue") or blueSteamName
+    if not redSteamId or not blueSteamId then
+        ttsDebugLog("[ttsGame] warning: missing steam identifiers, using fallback values")
+    end
+
+    local gameVersion = tonumber(Global.getVar("game_version_ID")) or 16
+    local context = getTrackingContext()
+
+    local url = makeTtsGameUrl("/start", {
+        {"game_version", gameVersion},
+        {"red_steam_id", redSteamId},
+        {"blue_steam_id", blueSteamId},
+        {"red_steam_name", redSteamName},
+        {"blue_steam_name", blueSteamName},
+        {"red_display_name", redDisplayName},
+        {"blue_display_name", blueDisplayName},
+        {"mission_type", context.missionType},
+        {"mission_pack", context.missionPack},
+        {"game_type", context.gameType},
+        {"map_size", context.mapSize},
+        {"deployment_card", context.deploymentCard},
+        {"primary_mission_card", context.primaryMissionCard},
+        {"red_secondary_cards", context.redSecondaryCards},
+        {"blue_secondary_cards", context.blueSecondaryCards},
+        {"red_player_first", boolToString(first == "Red")}
+    })
+
+    ttsDebugLog("[ttsGame] start -> " .. url)
+    WebRequest.get(url, function(response)
+        if response.is_error then
+            ttsDebugLog("[ttsGame] start failed: " .. response.error)
+            return
+        end
+
+        local ok, data = pcall(JSON.decode, response.text)
+        if not ok or type(data) ~= "table" then
+            ttsDebugLog("[ttsGame] start response parse failed: " .. tostring(response.text))
+            return
+        end
+
+        if data.error then
+            ttsDebugLog("[ttsGame] start error: " .. tostring(data.error))
+            return
+        end
+
+        local game = data.game
+        local gameId = game and game.gameId or nil
+        if not gameId then
+            ttsDebugLog("[ttsGame] start response missing gameId: " .. tostring(response.text))
+            return
+        end
+
+        trackedGameId = gameId
+        endGameSubmitted = false
+        ttsDebugLog("[ttsGame] start complete, game_id=" .. tostring(trackedGameId))
+        writeMenus()
+        startTrackedSnapshotTimer()
+        sendTrackedSnapshot("start")
+    end)
+end
+
+function toTrackedNumber(value, fallback)
+    local n = tonumber(value)
+    if n == nil then
+        return fallback or 0
+    end
+    return n
+end
+
+function getTrackedDisplayName(side, scoreSummary)
+    if scoreSummary and scoreSummary[string.lower(side)] and scoreSummary[string.lower(side)].name then
+        return tostring(scoreSummary[string.lower(side)].name)
+    end
+    if Player[side] and Player[side].steam_name and Player[side].steam_name ~= "" then
+        return Player[side].steam_name
+    end
+    return side
+end
+
+function printTrackedMatchSummary(context, scoreSummary)
+    local redName = getTrackedDisplayName("Red", scoreSummary)
+    local blueName = getTrackedDisplayName("Blue", scoreSummary)
+    local redTotal = tonumber(context and context.redTotal)
+    local blueTotal = tonumber(context and context.blueTotal)
+
+    if redTotal == nil and scoreSummary and scoreSummary.red then
+        redTotal = tonumber(scoreSummary.red.total)
+    end
+    if blueTotal == nil and scoreSummary and scoreSummary.blue then
+        blueTotal = tonumber(scoreSummary.blue.total)
+    end
+    redTotal = redTotal or 0
+    blueTotal = blueTotal or 0
+
+    ttsGameLog("Match complete: " .. redName .. " " .. tostring(redTotal) .. " - " .. tostring(blueTotal) .. " " .. blueName)
+
+    if redTotal > blueTotal then
+        ttsGameLog("Winner: " .. redName .. " (+" .. tostring(redTotal - blueTotal) .. " VP)", "Green")
+    elseif blueTotal > redTotal then
+        ttsGameLog("Winner: " .. blueName .. " (+" .. tostring(blueTotal - redTotal) .. " VP)", "Blue")
+    else
+        ttsGameLog("Result: draw", "Yellow")
+    end
+
+    local missionInfo = (context and context.missionType) or "Unknown mission"
+    local deploymentInfo = (context and context.deploymentCard) or "Unknown deployment"
+    local roundInfo = toTrackedNumber(context and context.round, scoreSummary and scoreSummary.roundsPlayed)
+    ttsGameLog("Mission: " .. tostring(missionInfo) .. " | Deployment: " .. tostring(deploymentInfo) .. " | Rounds: " .. tostring(roundInfo))
+
+    if not scoreSummary or not scoreSummary.red or not scoreSummary.blue then
+        return
+    end
+
+    local redPrimary = toTrackedNumber(scoreSummary.red.primary)
+    local redSecondary = toTrackedNumber(scoreSummary.red.secondary)
+    local redChallenger = toTrackedNumber(scoreSummary.red.challenger)
+    local bluePrimary = toTrackedNumber(scoreSummary.blue.primary)
+    local blueSecondary = toTrackedNumber(scoreSummary.blue.secondary)
+    local blueChallenger = toTrackedNumber(scoreSummary.blue.challenger)
+
+    ttsGameLog("Scoring lanes | " ..
+        redName .. " P/S/C: " .. redPrimary .. "/" .. redSecondary .. "/" .. redChallenger ..
+        " vs " ..
+        blueName .. " P/S/C: " .. bluePrimary .. "/" .. blueSecondary .. "/" .. blueChallenger)
+
+    local laneDiffs = {
+        { label = "Primary", diff = redPrimary - bluePrimary },
+        { label = "Secondary", diff = redSecondary - blueSecondary },
+        { label = "Challenger", diff = redChallenger - blueChallenger },
+    }
+    local decidingLane = laneDiffs[1]
+    for i = 2, #laneDiffs do
+        if math.abs(laneDiffs[i].diff) > math.abs(decidingLane.diff) then
+            decidingLane = laneDiffs[i]
+        end
+    end
+    if decidingLane.diff ~= 0 then
+        local sideName = decidingLane.diff > 0 and redName or blueName
+        ttsGameLog("Where it was won: " .. decidingLane.label .. " (" .. sideName .. " +" .. math.abs(decidingLane.diff) .. ")")
+    else
+        ttsGameLog("Where it was won: even split across primary/secondary/challenger")
+    end
+
+    local redRounds = scoreSummary.red.rounds or {}
+    local blueRounds = scoreSummary.blue.rounds or {}
+    local maxRounds = math.max(#redRounds, #blueRounds)
+    local biggestSwing = 0
+    local biggestSwingRound = nil
+    local leadChanges = 0
+    local prevLeader = nil
+    local redRoundsWon = 0
+    local blueRoundsWon = 0
+    local redRunning = 10
+    local blueRunning = 10
+
+    for r = 1, maxRounds do
+        local redRoundTotal = toTrackedNumber(redRounds[r] and redRounds[r].total)
+        local blueRoundTotal = toTrackedNumber(blueRounds[r] and blueRounds[r].total)
+        local diff = redRoundTotal - blueRoundTotal
+        if math.abs(diff) > math.abs(biggestSwing) then
+            biggestSwing = diff
+            biggestSwingRound = r
+        end
+        if diff > 0 then redRoundsWon = redRoundsWon + 1 end
+        if diff < 0 then blueRoundsWon = blueRoundsWon + 1 end
+
+        redRunning = redRunning + redRoundTotal
+        blueRunning = blueRunning + blueRoundTotal
+        local leader = nil
+        if redRunning > blueRunning then leader = "Red" end
+        if blueRunning > redRunning then leader = "Blue" end
+        if prevLeader and leader and prevLeader ~= leader then
+            leadChanges = leadChanges + 1
+        end
+        if leader then
+            prevLeader = leader
+        end
+    end
+
+    if biggestSwingRound ~= nil and biggestSwing ~= 0 then
+        local swingSide = biggestSwing > 0 and redName or blueName
+        ttsGameLog("Biggest round swing: round " .. tostring(biggestSwingRound) .. " (" .. swingSide .. " +" .. tostring(math.abs(biggestSwing)) .. ")")
+    end
+    ttsGameLog("Rounds won: " .. redName .. " " .. tostring(redRoundsWon) .. ", " .. blueName .. " " .. tostring(blueRoundsWon))
+    ttsGameLog("Lead changes: " .. tostring(leadChanges))
+end
+
+function endTrackedGame()
+    if not trackedGameId then
+        ttsDebugLog("[ttsGame] end skipped: no game_id")
+        return
+    end
+    local round = getRoundNumber()
+    if round == nil or round < 5 then
+        ttsDebugLog("[ttsGame] end skipped: round 5 required (current=" .. tostring(round) .. ")")
+        return
+    end
+    if endGameSubmitted then
+        ttsDebugLog("[ttsGame] end already submitted")
+        return
+    end
+
+    local context = getTrackingContext()
+    local scoreSummary = getTrackedScoreSheetSummary()
+    local url = makeTtsGameUrl("/end", {
+        {"game_id", trackedGameId},
+        {"final_red_total", context.redTotal},
+        {"final_blue_total", context.blueTotal}
+    })
+
+    endGameSubmitted = true
+    writeMenus()
+    ttsDebugLog("[ttsGame] end -> " .. url)
+    WebRequest.get(url, function(response)
+        if response.is_error then
+            ttsDebugLog("[ttsGame] end failed: " .. response.error)
+            return
+        end
+
+        local ok, data = pcall(JSON.decode, response.text)
+        if ok and type(data) == "table" and data.error then
+            ttsDebugLog("[ttsGame] end error: " .. tostring(data.error))
+            return
+        end
+
+        ttsDebugLog("[ttsGame] end complete for game_id=" .. tostring(trackedGameId))
+        printTrackedMatchSummary(context, scoreSummary)
+        stopTrackedSnapshotTimer()
+        trackedGameId = nil
+        writeMenus()
+    end)
+end
+
 function startGame(obj, player, alt)
+    local shouldStartTrackedSync = true
     if alt then
         simulation = true
+        shouldStartTrackedSync = false
     end
     if singlesMode ~= "singles" then
         local count = Global.getVar("LOCKED_IN_SECONDARIES")
@@ -2704,6 +3227,10 @@ function startGame(obj, player, alt)
         end
     end
 
+    stopTrackedSnapshotTimer()
+    trackedGameId = nil
+    endGameSubmitted = false
+
     Global.call("recordPlayers")
     inGame = true
 
@@ -2716,6 +3243,11 @@ function startGame(obj, player, alt)
     resetActivationTokens()
     Notes.setNotes("")
     writeMenus()
+    if shouldStartTrackedSync then
+        startTrackedGameSync()
+    else
+        ttsDebugLog("[ttsGame] start sync skipped (simulation mode)")
+    end
     simulation = false
 end
 
@@ -2818,6 +3350,7 @@ function passTurn(obj, player_color_click, alt_click)
             broadcastToAll("It's " .. currentTurn .. " turn", currentTurn)
         end
     end
+    sendTrackedSnapshot("turnChange")
     writeMenus()
 end
 
