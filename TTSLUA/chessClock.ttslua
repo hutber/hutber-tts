@@ -847,47 +847,21 @@ end
 -- Liyarin's color functions
 
 function ensureChessStopwatchUI()
-	local uiId = Global.UI.getAttribute("Chess Stopwatch", "id")
-	if uiId ~= nil and uiId ~= "" then
+	-- The Chess Stopwatch panel is now defined in the base XML (hidden by default). We only need 
+	-- to activate it and wire up the dynamic attributes.
+	-- IMPORTANT: We never call Global.UI.setXml() at runtime because it rebuilds the entire Global
+	-- UI and causes host/guest desync over high-latency links.
+	local isActive = Global.UI.getAttribute("Chess Stopwatch", "active")
+	if isActive == "true" or isActive == "True" then
 		return false
 	end
 
-	local oldUI = Global.UI.getXml()
-	if oldUI == nil then
-		oldUI = ""
-	end
-	Global.UI.setXml(oldUI .. [[
-			<Panel
-				id = "Chess Stopwatch"
-				scale = "1 1 1"
-				width = "180"
-				height = "120"
-				rectAlignment = "UpperRight"
-				offsetXY = "-270 0"
-				allowDragging = "true"
-				restrictDraggingToParentBounds = "false"
-				returnToOriginalPositionWhenReleased = "false"
-				>
-				<VerticalLayout spacing = "5" padding = "5">
-					<Panel id="ChsStpPanel1" color = "]]..pColors.pColor1..[[">
-						<Button
-						scale = "1 1 1"
-						width = "180"
-						height = "60"
-						onClick="]]..self.getGUID()..[[/Click_1" color = "rgba(0,0,0,0)"/>
-						<Text id="ChsStpWatch1" text="0:00:00" fontSize="40" color="White"/>
-					</Panel>
-					<Panel id="ChsStpPanel2" color = "]]..pColors.pColor2..[[">
-						<Button
-						scale = "1 1 1"
-						width = "180"
-						height = "60"
-						onClick="]]..self.getGUID()..[[/Click_2" color = "rgba(0,0,0,0)"/>
-						<Text id="ChsStpWatch2" text="0:00:00" fontSize="40" color="White"/>
-					</Panel>
-				</VerticalLayout>
-			</Panel>
-		]])
+	local guid = self.getGUID()
+	Global.UI.setAttribute("ChsStpBtn1", "onClick", guid .. "/Click_1")
+	Global.UI.setAttribute("ChsStpBtn2", "onClick", guid .. "/Click_2")
+	Global.UI.setAttribute("ChsStpPanel1", "color", pColors.pColor1)
+	Global.UI.setAttribute("ChsStpPanel2", "color", pColors.pColor2)
+	Global.UI.setAttribute("Chess Stopwatch", "active", "true")
 	return true
 end
 
