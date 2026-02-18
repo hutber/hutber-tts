@@ -301,6 +301,34 @@ measure12Btn={
     position={-6.39, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=3600, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
+
+-- Custom Bubble Input BG
+customBubbleInputBG = {
+    label = "", click_function = "none", function_owner = self,
+    position = {-5.35, Yoffset, -1.40}, rotation = {0, 0, 0},
+    width = 1100, height = 1000, font_size = 100,
+    color = {0.95, 0.95, 0.95, 1},
+    scale = {0.1, 0.1, 0.1}
+}
+
+-- Custom Bubble Input Field
+customBubbleInput = {
+    label = "#", input_function = "setCustomBubbleSize", function_owner = self,
+    position = {-5.35, Yoffset, -1.40}, rotation = {0, 0, 0},
+    width = 900, height = 800, font_size = 600, alignment = 3, scale = {0.1, 0.1, 0.1},
+    color = {1, 1, 1, 1}, font_color = {0.2, 0.2, 0.2}
+}
+
+-- Custom Bubble Button
+customBubbleBtn = {
+    label = "Go", tooltip = "Apply custom bubble size", click_function = "applyCustomBubble", function_owner = self,
+    position = {-4.80, Yoffset, -1.40}, rotation = {0, 0, 0},
+    width = 800, height = 1000, font_size = 500,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1},
+    scale = {0.1, 0.1, 0.1}
+}
+
 function save(obj, player_color, alt)
     local selected = Player[player_color].getSelectedObjects()
     if not selected or #selected == 0 then
@@ -1545,6 +1573,9 @@ function onload()
     self.createButton(measure6Btn)
     self.createButton(measure9Btn)
     self.createButton(measure12Btn)
+    self.createButton(customBubbleInputBG)
+    self.createInput(customBubbleInput)
+    self.createButton(customBubbleBtn)
     self.createButton(clearMeasureAllBtn)
     self.createButton(gap2Btn)
     self.createButton(gap1Btn)
@@ -2555,6 +2586,19 @@ end
 
 function toggle12Bubble(obj, playerColor, alt)
     toggleMeasurementCircleForSelection(12.01, playerColor)
+end
+
+local customBubbleSize = 0
+function setCustomBubbleSize(_, _, value, _)
+    customBubbleSize = tonumber(value) or 0
+end
+
+function applyCustomBubble(_, player, _)
+    if customBubbleSize > 0 then
+        toggleMeasurementCircleForSelection(customBubbleSize, player)
+    else
+        printToColor("Please enter a valid bubble size", player, "Red")
+    end
 end
 
 function changeMeasurementCircle(newRequestedRadius, target, presetBase, ownerColor)
