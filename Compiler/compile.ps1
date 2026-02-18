@@ -12,10 +12,27 @@ function WriteLuaScriptToJsonContent([int]$jsonLineNumber, [int]$luaScriptFileId
 }
 
 # Update this if TTS is installed elsewhere.
-if ($isWindows) {
-    $ttsSaves = "$([Environment]::GetFolderPath('MyDocuments'))\My Games\Tabletop Simulator\Saves\"
-} else {
-    $ttsSaves = "$HOME/.local/share/Tabletop Simulator/Saves/"
+$osIsWindows = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::Windows)
+$osIsLinux = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::Linux)
+$osIsMac = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::OSX)
+
+if ($osIsWindows)
+{
+    $documents = [Environment]::GetFolderPath('MyDocuments')
+    $ttsSaves = Join-Path $documents 'My Games\Tabletop Simulator\Saves'
+}
+elseif ($osIsMac)
+{
+    $ttsSaves = Join-Path $HOME 'Library/Tabletop Simulator/Saves'
+}
+elseif ($osIsLinux)
+{
+    $ttsSaves = Join-Path $HOME '.local/share/Tabletop Simulator/Saves'
+}
+else
+{
+    # Default to Linux path if OS is not detected, but this can be changed as needed.
+    $ttsSaves = Join-Path $HOME '.local/share/Tabletop Simulator/Saves'
 }
 
 $pathLua = '..\TTSLUA\'
