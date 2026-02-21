@@ -1,0 +1,42 @@
+[
+  {
+    "GUID": "bd69bd",
+    "Name": "Chinese_Checkers_Piece",
+    "Transform": {
+      "posX": 81.0,
+      "posY": -1.2,
+      "posZ": -94.0,
+      "rotX": 0.00190076465,
+      "rotY": 180.0,
+      "rotZ": 0.000379891542,
+      "scaleX": 6.0,
+      "scaleY": 3.0,
+      "scaleZ": 3.0
+    },
+    "Nickname": "Flex Table Control",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": false,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": 1,
+    "LuaScript": "",
+    "LuaScriptState": "{\"cd\":{\"move\":true,\"scale\":false},\"tid\":[{\"name\":\"Urban 1\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/849339809539335607/A315686492591FD0DE01FE60C418CC54AD0F8719/\"},{\"name\":\"Urban 2\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/849339809539324370/51C21480B786A9216BA5EDB44E2A10E35DDF3601/\"},{\"name\":\"Desert 1\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/849339809539332522/5289A4E95F8A2C03C1CD552D9A0A4CC98BEEBE44/\"},{\"name\":\"Desert 2\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/849339809539334528/422A466AB6D8B919E18852C90CFFF582E0A47F35/\"},{\"name\":\"Desert River\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477311500/010B988AA13234C915CF7ADB95B9993BF08FDD1A/\"},{\"name\":\"Grass 1\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477318654/C73F9B4F486C47CB2808138069F1DBBBE6B71B14/\"},{\"name\":\"Grass 2\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477323114/3B56A233BA2F93E954BBBF0064208B973EC68727/\"},{\"name\":\"Rubble Grass\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477337108/BED38DF4AAD4F57AC10A6327DD5822F0057B5C4B/\"},{\"name\":\"Snow\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477340711/9634494CC699D1D188D3F0E7FD4737167552F7DE/\"},{\"name\":\"Ice\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477345048/37A2E39D5099828A4057DECC53804AC36276A669/\"},{\"name\":\"Lava\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477355670/DC4B8F6E22A832A6E3BAA3F8D6C95F433D4D475B/\"},{\"name\":\"Lunar\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477358932/73C74608E61F99D1306818739324FFB6DB3FF8C1/\"},{\"name\":\"Chaos\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477362115/1B6EA548941B8648DD382A3FA4FAA922FB1B218B/\"},{\"name\":\"Nurgle\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477364563/66F3F747C31150EC7C96B7F5065A797A7B5856A5/\"},{\"name\":\"Necro\",\"url\":\"https://steamuserimages-a.akamaihd.net/ugc/961990768477367523/F93D77442BCED2AED5326D982B80F742DDBF1ADE/\"},{\"name\":\"KT Map 1\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/789758618465975861/49CDBABA8927DC51FB24CA775FD92F056D1CD8AB/\"},{\"name\":\"KT Map 2\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/789758618465974897/9D9E656F07CA35F112D3020F18B2F0461EB6E9EE/\"},{\"name\":\"KT Map 3\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/789758618465975252/49C41C4F69AB3530EBDCA30870F78BBEB80EF1A9/\"},{\"name\":\"KT Map 4\",\"url\":\"http://cloud-3.steamusercontent.com/ugc/789758618465975570/025A6B3CEF1692272FAE550919E00507B40F207D/\"},{\"name\":\"KT Map 5\",\"url\":\"https://steamusercontent-a.akamaihd.net/ugc/34445928215195743/FB55BBB52F84D202ACB9F20E7DC451ED0568BA3F/\"},{\"name\":\"Green felt\",\"url\":\"https://steamusercontent-a.akamaihd.net/ugc/34445928215195743/FB55BBB52F84D202ACB9F20E7DC451ED0568BA3F/\"},{\"name\":\"Red felt\",\"url\":\"https://i.imgur.com/DbPelDi.jpg\"},{\"name\":\"Grey felt\",\"url\":\"https://i.imgur.com/N0O6aqj.jpg\"}]}",
+    "XmlUI": ""
+  }
+]

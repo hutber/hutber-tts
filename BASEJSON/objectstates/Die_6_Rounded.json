@@ -1,0 +1,191 @@
+[
+  {
+    "GUID": "c1aaa4",
+    "Name": "Die_6_Rounded",
+    "Transform": {
+      "posX": -19.3799324,
+      "posY": 1.32000017,
+      "posZ": -31.84741,
+      "rotX": -8.0365254e-07,
+      "rotY": 0.00279718754,
+      "rotZ": 180.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.117996462,
+      "g": 0.53,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": 0,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "RotationValues": [
+      {
+        "Value": 1,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "Value": 2,
+        "Rotation": {
+          "x": 90.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "Value": 3,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 90.0
+        }
+      },
+      {
+        "Value": 4,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -90.0
+        }
+      },
+      {
+        "Value": 5,
+        "Rotation": {
+          "x": -90.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "Value": 6,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -180.0
+        }
+      }
+    ]
+  },
+  {
+    "GUID": "ae1f5b",
+    "Name": "Die_6_Rounded",
+    "Transform": {
+      "posX": 19.3763924,
+      "posY": 1.32000029,
+      "posZ": 31.84682,
+      "rotX": -1.22379117e-06,
+      "rotY": 179.969955,
+      "rotZ": 180.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.856,
+      "g": 0.09999756,
+      "b": 0.09399753
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomImage": {
+      "ImageURL": "https://steamusercontent-a.akamaihd.net/ugc/34445199169910448/487B0A1A646E98BBC829F4B24A133B6A91500E10/",
+      "ImageSecondaryURL": "",
+      "ImageScalar": 1,
+      "WidthScale": 0,
+      "CustomDice": {
+        "Type": 1
+      }
+    },
+    "MaterialIndex": 0,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "RotationValues": [
+      {
+        "Value": 1,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "Value": 2,
+        "Rotation": {
+          "x": 90.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "Value": 3,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 90.0
+        }
+      },
+      {
+        "Value": 4,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -90.0
+        }
+      },
+      {
+        "Value": 5,
+        "Rotation": {
+          "x": -90.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "Value": 6,
+        "Rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -180.0
+        }
+      }
+    ]
+  }
+]

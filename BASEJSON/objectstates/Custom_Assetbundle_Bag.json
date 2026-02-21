@@ -1,0 +1,118 @@
+[
+  {
+    "GUID": "be2cdb",
+    "Name": "Custom_Assetbundle_Bag",
+    "Transform": {
+      "posX": 23.1715679,
+      "posY": 0.6,
+      "posZ": 36.7632561,
+      "rotX": 0,
+      "rotY": 224.999756,
+      "rotZ": 0,
+      "scaleX": 0.7000003,
+      "scaleY": 0.7000003,
+      "scaleZ": 0.7000003
+    },
+    "Nickname": "Red Trash bin",
+    "Description": "Click to open or close.",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.838235259,
+      "g": 0.838235259,
+      "b": 0.838235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": false,
+    "Snap": false,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "Number": 0,
+    "CustomAssetbundle": {
+      "AssetbundleURL": "https://chry.me/tts/misc/new_blackhole_test.unity3d",
+      "AssetbundleSecondaryURL": "",
+      "MaterialIndex": 2,
+      "TypeIndex": 6,
+      "LoopingEffectIndex": 1
+    },
+    "Bag": {
+      "Order": 0
+    },
+    "LuaScript": "function onLoad()\r\n    self.createButton({\r\n        click_function=\"click_clopen\", function_owner=self,\r\n        position={0,0.5,0}, height=2000, width=2000, color={0,0,0,0}\r\n    })\r\n    params = {assetbundle=\"https://chry.me/tts/misc/new_blackhole_test.unity3d\",material=2}\r\nend\r\n\r\nfunction click_clopen()\r\n    if self.AssetBundle.getLoopingEffectIndex() == 0 then\r\n        params.type = 6\r\n        self.AssetBundle.playLoopingEffect(1)\r\n    else\r\n        params.type = 0\r\n        self.AssetBundle.playLoopingEffect(0)\r\n    end\r\n    self.setCustomObject(params)\r\n    self.reload()\r\nend\r\n\r\nfunction onCollisionEnter()\r\n    if self.AssetBundle.getLoopingEffectIndex() == 1 then\r\n        self.reset()\r\n    end\r\nend",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "4b1a7b",
+    "Name": "Custom_Assetbundle_Bag",
+    "Transform": {
+      "posX": -23.0578651,
+      "posY": 0.6,
+      "posZ": -37.0370865,
+      "rotX": 0,
+      "rotY": 224.594482,
+      "rotZ": 0,
+      "scaleX": 0.7000003,
+      "scaleY": 0.7000003,
+      "scaleZ": 0.7000003
+    },
+    "Nickname": "Blue Trash bin",
+    "Description": "Click to open or close.",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.838235259,
+      "g": 0.838235259,
+      "b": 0.838235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": false,
+    "Snap": false,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "Number": 0,
+    "CustomAssetbundle": {
+      "AssetbundleURL": "https://chry.me/tts/misc/new_blackhole_test.unity3d",
+      "AssetbundleSecondaryURL": "",
+      "MaterialIndex": 2,
+      "TypeIndex": 6,
+      "LoopingEffectIndex": 1
+    },
+    "Bag": {
+      "Order": 0
+    },
+    "LuaScript": "function onLoad()\r\n    self.createButton({\r\n        click_function=\"click_clopen\", function_owner=self,\r\n        position={0,0.5,0}, height=2000, width=2000, color={0,0,0,0}\r\n    })\r\n    params = {assetbundle=\"https://chry.me/tts/misc/new_blackhole_test.unity3d\",material=2}\r\nend\r\n\r\nfunction click_clopen()\r\n    if self.AssetBundle.getLoopingEffectIndex() == 0 then\r\n        params.type = 6\r\n        self.AssetBundle.playLoopingEffect(1)\r\n    else\r\n        params.type = 0\r\n        self.AssetBundle.playLoopingEffect(0)\r\n    end\r\n    self.setCustomObject(params)\r\n    self.reload()\r\nend\r\n\r\nfunction onCollisionEnter()\r\n    if self.AssetBundle.getLoopingEffectIndex() == 1 then\r\n        self.reset()\r\n    end\r\nend",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

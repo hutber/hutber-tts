@@ -1,0 +1,156 @@
+-- FTC-GUID: 42c164,42c161
+--[[
+    Clean Counters v1.0.0
+
+    
+    Description:
+    Clean Counters is exactly that! A nice looking counter.
+
+    Clean Counters has a few features:
+    - Left/Right click the name to increment or decrement the value.
+    - Set the value directly by clicking on the value.
+    - Name the counter by changing the object name. (You will need to update the value for the new name to show.)
+    - Change the token color by changing the tint.
+    - Toggle between black/white font using the context menu (Right-click object).
+    - Toggle between using a value prefix like in RPG games for stats using the context menu.
+
+    This mod was heavily inspired by the "Stats Counter" mod created by Steam user
+    "Baobots". The same token was used, but the script is written from scratch.
+    https://steamcommunity.com/sharedfiles/filedetails/?id=2352739177
+
+
+
+    Changelog:
+    None
+
+    
+
+    License (MIT):
+
+    Copyright 2021 GBee
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of
+    this software and associated documentation files (the "Software"), to deal in 
+    the Software without restriction, including without limitation the rights to
+    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+    of the Software, and to permit persons to whom the Software is furnished to do 
+    so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all 
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+    THE SOFTWARE.
+--]]
+
+-- FTC-GUID: 42c164,42c161
+FONT_COLOR_LIGHT = {1, 1, 1, 100}
+FONT_COLOR_DARK  = {0, 0, 0, 100}
+FONT_SIZE       = 750
+FONT_SIZE_SMALL = 500
+VALUE_POS       = {0, 0.1, -0.45}
+VALUE_POS_SMALL = {0, 0.1, -0.2}
+TRANSPARENT     = {0, 0, 0, 0}
+
+function onLoad(save_state)
+    if save_state == nil or save_state == "" then
+        script_state = {
+            value = 0,
+            label = "Token",
+            use_prefix = false,
+            light_font = false,
+        }
+    else
+        script_state = JSON.decode(save_state)
+    end
+    createUserInterface()
+end
+
+function onSave()
+    return JSON.encode(script_state)
+end
+
+function createUserInterface()
+    self.createButton({
+        click_function = "onIncrementDecrementClick",
+        tooltip        = "+/-",
+        function_owner = self,
+        position       = {0, 0.1, 1},
+        height         = 600,
+        width          = 1500,
+        font_size      = 250,
+        color          = TRANSPARENT
+    })
+    self.createButton({
+        click_function = "onIncrementDecrementClick",
+        function_owner = self,
+        label          = script_state.value,
+        position       = VALUE_POS,
+        height         = 800,
+        width          = 1500,
+        font_size      = FONT_SIZE,
+        color          = TRANSPARENT,
+        font_color     = FONT_COLOR_DARK
+    })
+    self.addContextMenuItem("Toggle Prefix", togglePrefix, false)
+    self.addContextMenuItem("Toggle Font Color", toggleFont, false)
+    refreshTokenUI()
+end
+
+function togglePrefix()
+    script_state.use_prefix = not script_state.use_prefix
+    refreshTokenUI()
+end
+
+function toggleFont()
+    script_state.light_font = not script_state.light_font
+    refreshTokenUI()
+end
+
+function onIncrementDecrementClick(obj, color, alt)
+    if alt then
+        script_state.value = script_state.value - 1
+    else
+        script_state.value = script_state.value + 1
+    end
+    refreshTokenUI()
+end
+
+function refreshTokenUI()
+    script_state.label = self.getName()
+    local display_font_size = FONT_SIZE
+    local display_value_pos  = VALUE_POS
+    if script_state.use_prefix then
+        if math.abs(script_state.value) > 99 then
+            display_font_size = FONT_SIZE_SMALL
+            display_value_pos  = VALUE_POS_SMALL
+        end
+    else
+        if script_state.value > 999 or script_state.value < -99 then
+            display_font_size = FONT_SIZE_SMALL
+            display_value_pos  = VALUE_POS_SMALL
+        end
+    end
+    local display_font_color = script_state.light_font and FONT_COLOR_LIGHT or FONT_COLOR_DARK
+    local display_value = tostring(script_state.value)
+    if script_state.use_prefix then
+        display_value = (script_state.value >= 0 and "+" or "") .. tostring(script_state.value)
+    end
+    self.editButton({
+        index      = 0,
+        label      = script_state.label,
+        font_color = display_font_color,
+    })
+    self.editButton({
+        index      = 1,
+        label      = display_value,
+        font_size  = display_font_size,
+        position   = display_value_pos,
+        font_color = display_font_color,
+    })
+end

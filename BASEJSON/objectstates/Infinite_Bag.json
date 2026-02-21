@@ -1,0 +1,3271 @@
+[
+  {
+    "GUID": "0ddfb6",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -38,
+      "posY": 0.99934715,
+      "posZ": -27,
+      "rotX": 359.983124,
+      "rotY": -3.06866641e-05,
+      "rotZ": 359.92,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.2499806,
+      "g": 0.2499806,
+      "b": 0.2499806
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "2aa13f",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -32.9640923,
+          "posY": 3.43630242,
+          "posZ": -27.1130848,
+          "rotX": 276.4201,
+          "rotY": 172.521011,
+          "rotZ": 187.7469,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.249999881,
+          "g": 0.249999881,
+          "b": 0.249999881
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "0e6250",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -36,
+      "posY": 0.913001657,
+      "posZ": -27,
+      "rotX": -3.75665422e-06,
+      "rotY": 179.980057,
+      "rotZ": 3.76756816e-07,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "b2c6d9",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -30.88594,
+          "posY": 3.367253,
+          "posZ": -26.8725643,
+          "rotX": 86.92203,
+          "rotY": 149.517166,
+          "rotZ": 329.222229,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.5,
+          "g": 0.5,
+          "b": 0.5
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "99582c",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -36.0,
+      "posY": 1,
+      "posZ": -29.0,
+      "rotX": -1.57000659e-06,
+      "rotY": 179.980057,
+      "rotZ": -6.2295976e-07,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.0548876673,
+      "g": 0.7764706,
+      "b": 0.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "4a8817",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -30.8924828,
+          "posY": 3.355491,
+          "posZ": -28.8725719,
+          "rotX": 86.9560547,
+          "rotY": 39.97549,
+          "rotZ": 219.49379,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.191999942,
+          "g": 0.701,
+          "b": 0.167999923
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "8ad6b4",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -38.0,
+      "posY": 0.9130021,
+      "posZ": -29,
+      "rotX": -2.446599e-06,
+      "rotY": 180.273682,
+      "rotZ": 3.149327e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.3058885,
+      "g": 0.372555166,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "7338ad",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -32.86468,
+          "posY": 3.35622954,
+          "posZ": -28.9150181,
+          "rotX": 87.07531,
+          "rotY": 57.0402031,
+          "rotZ": 237.014191,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.117999949,
+          "g": 0.53,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "176bc4",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -34,
+      "posY": 0.913001239,
+      "posZ": -27,
+      "rotX": -1.2927336e-07,
+      "rotY": 179.980057,
+      "rotZ": 3.21366883e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "eaee5c",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -28.6795883,
+          "posY": 3.33315635,
+          "posZ": -27.1268845,
+          "rotX": 85.3196,
+          "rotY": 113.570709,
+          "rotZ": 293.821655,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "7a3612",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -34.0,
+      "posY": 0.9130012,
+      "posZ": -29.0,
+      "rotX": 8.39406141e-07,
+      "rotY": 179.980057,
+      "rotZ": -1.49833e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 0.9893046,
+      "b": 0.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "62635e",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -28.8874168,
+          "posY": 3.360194,
+          "posZ": -29.0054188,
+          "rotX": 87.86128,
+          "rotY": 92.80033,
+          "rotZ": 272.983063,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.905,
+          "g": 0.898,
+          "b": 0.171999782
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "fc7feb",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -38.0,
+      "posY": 0.913001359,
+      "posZ": -31.0,
+      "rotX": -3.10165063e-07,
+      "rotY": 180.246689,
+      "rotZ": -2.71941781e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.627,
+      "g": 0.124980651,
+      "b": 0.941
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "76ca80",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -32.7894821,
+          "posY": 3.33793235,
+          "posZ": -30.8072815,
+          "rotX": 85.28703,
+          "rotY": 46.4368248,
+          "rotZ": 227.081833,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.627,
+          "g": 0.124999948,
+          "b": 0.941
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "31b11f",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -36.0,
+      "posY": 1,
+      "posZ": -31,
+      "rotX": -2.36672531e-06,
+      "rotY": 179.980057,
+      "rotZ": 3.58376428e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.856,
+      "g": 0.0999814048,
+      "b": 0.09398138
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "b7e1ea",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -31.0987282,
+          "posY": 3.36100745,
+          "posZ": -31.0177078,
+          "rotX": 88.07991,
+          "rotY": 259.8808,
+          "rotZ": 79.63516,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.856,
+          "g": 0.09999994,
+          "b": 0.09399993
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "a65625",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -34.0,
+      "posY": 0.91300106,
+      "posZ": -31,
+      "rotX": 4.062319e-06,
+      "rotY": 179.980057,
+      "rotZ": -2.36758046e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.9529411,
+      "g": 0.5882353,
+      "b": 0.109786473
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "f0619a",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -29.09013,
+          "posY": 3.36130953,
+          "posZ": -31.0309086,
+          "rotX": 88.1706161,
+          "rotY": 251.099,
+          "rotZ": 71.29628,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.9529411,
+          "g": 0.5882353,
+          "b": 0.109803729
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "2d9705",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -32.0,
+      "posY": 0.909999967,
+      "posZ": -27.0,
+      "rotX": -1.2927336e-07,
+      "rotY": 179.980057,
+      "rotZ": 3.21366883e-06,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d3",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "022eaa",
+        "Name": "Custom_Dice",
+        "Transform": {
+          "posX": -26.8049335,
+          "posY": 3.32526255,
+          "posZ": -26.9928856,
+          "rotX": 84.32974,
+          "rotY": 148.655426,
+          "rotZ": 328.322357,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "scaleZ": 1.0
+        },
+        "Nickname": "BCB-D3",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": false,
+        "Snap": false,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": false,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "CustomImage": {
+          "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935714518/5D8654504536CD97FEA40F29B6446E43556B2432/",
+          "ImageSecondaryURL": "",
+          "ImageScalar": 1.0,
+          "WidthScale": 0.0,
+          "CustomDice": {
+            "Type": 1
+          }
+        },
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "PhysicsMaterial": {
+          "StaticFriction": 0.6,
+          "DynamicFriction": 0.6,
+          "Bounciness": 0.0,
+          "FrictionCombine": 0,
+          "BounceCombine": 0
+        },
+        "Rigidbody": {
+          "Mass": 1.0,
+          "Drag": 0.1,
+          "AngularDrag": 0.1,
+          "UseGravity": true
+        },
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "a8cbbb",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 38,
+      "posY": 0.9037044,
+      "posZ": 31,
+      "rotX": 359.9671,
+      "rotY": 0.365954757,
+      "rotZ": 359.8398,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.627,
+      "g": 0.124980621,
+      "b": 0.941
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "76ca80",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -32.73676,
+          "posY": 3.34226632,
+          "posZ": -31.0856133,
+          "rotX": 274.331879,
+          "rotY": 288.705078,
+          "rotZ": 251.308014,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.627,
+          "g": 0.124999978,
+          "b": 0.941
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "14d612",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 36.0,
+      "posY": 0.909288943,
+      "posZ": 31,
+      "rotX": 359.96637,
+      "rotY": 0.09930793,
+      "rotZ": 359.84,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.856,
+      "g": 0.09998139,
+      "b": 0.09398135
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "b7e1ea",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -30.9930515,
+          "posY": 3.36147642,
+          "posZ": -31.09223,
+          "rotX": 271.7785,
+          "rotY": 355.70636,
+          "rotZ": 184.5283,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.856,
+          "g": 0.09999997,
+          "b": 0.09399996
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "2ff2db",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 34.0,
+      "posY": 0.9148744,
+      "posZ": 31,
+      "rotX": 359.96637,
+      "rotY": 0.0993079543,
+      "rotZ": 359.84,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.9529411,
+      "g": 0.5882353,
+      "b": 0.109786443
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "f0619a",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -28.7778225,
+          "posY": 3.33120418,
+          "posZ": -30.7269287,
+          "rotX": 274.830444,
+          "rotY": 218.370651,
+          "rotZ": 321.607178,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.9529411,
+          "g": 0.5882353,
+          "b": 0.109803759
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "34366b",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 34,
+      "posY": 0.9137021,
+      "posZ": 29,
+      "rotX": 359.96637,
+      "rotY": 0.09930796,
+      "rotZ": 359.84,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 0.9893046,
+      "b": 0.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "62635e",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -28.7497482,
+          "posY": 3.34589863,
+          "posZ": -28.9829369,
+          "rotX": 274.080627,
+          "rotY": 265.925171,
+          "rotZ": 274.086853,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.905,
+          "g": 0.898,
+          "b": 0.171999812
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "4c054e",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 32.0,
+      "posY": 0.918749034,
+      "posZ": 27,
+      "rotX": 359.96637,
+      "rotY": 0.0,
+      "rotZ": 359.84,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d3",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "022eaa",
+        "Name": "Custom_Dice",
+        "Transform": {
+          "posX": 27.0230675,
+          "posY": 3.33475518,
+          "posZ": 26.9663067,
+          "rotX": 271.0124,
+          "rotY": 161.154724,
+          "rotZ": 18.7448444,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "scaleZ": 1.0
+        },
+        "Nickname": "BCB-D3",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": false,
+        "Snap": false,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": false,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "CustomImage": {
+          "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935714518/5D8654504536CD97FEA40F29B6446E43556B2432/",
+          "ImageSecondaryURL": "",
+          "ImageScalar": 1.0,
+          "WidthScale": 0.0,
+          "CustomDice": {
+            "Type": 1
+          }
+        },
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "PhysicsMaterial": {
+          "StaticFriction": 0.6,
+          "DynamicFriction": 0.6,
+          "Bounciness": 0.0,
+          "FrictionCombine": 0,
+          "BounceCombine": 0
+        },
+        "Rigidbody": {
+          "Mass": 1.0,
+          "Drag": 0.1,
+          "AngularDrag": 0.1,
+          "UseGravity": true
+        },
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "791e47",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 34.0,
+      "posY": 0.9125298,
+      "posZ": 27,
+      "rotX": 0.0,
+      "rotY": -9.9392,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "eaee5c",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -28.6412468,
+          "posY": 3.32665229,
+          "posZ": -27.1558266,
+          "rotX": 274.9115,
+          "rotY": 295.949951,
+          "rotZ": 243.944885,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "21569d",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 36,
+      "posY": 0.9081171,
+      "posZ": 29,
+      "rotX": 359.96637,
+      "rotY": 0.09930796,
+      "rotZ": 359.84,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.0548876449,
+      "g": 0.7764706,
+      "b": 0.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "4a8817",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -30.8936119,
+          "posY": 3.335301,
+          "posZ": -29.3101215,
+          "rotX": 274.6684,
+          "rotY": 340.9712,
+          "rotZ": 199.25647,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.191999972,
+          "g": 0.701,
+          "b": 0.167999953
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "4433bb",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 36.0,
+      "posY": 0.906944931,
+      "posZ": 27,
+      "rotX": 359.96637,
+      "rotY": 0.09930797,
+      "rotZ": 359.84,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "b2c6d9",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -30.9029541,
+          "posY": 3.33001375,
+          "posZ": -27.3560562,
+          "rotX": 274.814331,
+          "rotY": 344.5862,
+          "rotZ": 195.634918,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.5,
+          "g": 0.5,
+          "b": 0.5
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "771c41",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 38.0,
+      "posY": 0.901359,
+      "posZ": 27,
+      "rotX": 0.0167078748,
+      "rotY": 180.1192,
+      "rotZ": 0.0800200552,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.249980569,
+      "g": 0.249980569,
+      "b": 0.249980569
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "2aa13f",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -32.7456665,
+          "posY": 3.42035532,
+          "posZ": -27.1872044,
+          "rotX": 85.18102,
+          "rotY": 308.1675,
+          "rotZ": 308.091675,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.24999994,
+          "g": 0.24999994,
+          "b": 0.24999994
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "048595",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": 38,
+      "posY": 0.902531,
+      "posZ": 29,
+      "rotX": 359.9672,
+      "rotY": 0.392934561,
+      "rotZ": 359.8398,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d6",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.3058885,
+      "g": 0.372555166,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "7338ad",
+        "Name": "Die_6",
+        "Transform": {
+          "posX": -32.68154,
+          "posY": 3.31344724,
+          "posZ": -29.3981628,
+          "rotX": 274.972748,
+          "rotY": 321.331726,
+          "rotZ": 218.752167,
+          "scaleX": 1.0999999,
+          "scaleY": 1.0999999,
+          "scaleZ": 1.0999999
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 0.117999978,
+          "g": 0.53,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": false,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "MaterialIndex": 0,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": -90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -90.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 90.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -180.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "ab15ef",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -40,
+      "posY": 1,
+      "posZ": -27,
+      "rotX": 359.983124,
+      "rotY": -3.06866641e-05,
+      "rotZ": 359.92,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d12",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.249980539,
+      "g": 0.249980539,
+      "b": 0.249980539
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "f3f9f2",
+        "Name": "Custom_Dice",
+        "Transform": {
+          "posX": -34.6872063,
+          "posY": 3.50908422,
+          "posZ": -27.3071651,
+          "rotX": 25.4803028,
+          "rotY": 359.940979,
+          "rotZ": 71.022644,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "scaleZ": 1.0
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": false,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": true,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "CustomImage": {
+          "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935721111/784AE2A7CE7CA3AD59440D119E9819D5CCA0ABAF/",
+          "ImageSecondaryURL": "",
+          "ImageScalar": 1.0,
+          "WidthScale": 0.0,
+          "CustomDice": {
+            "Type": 4
+          }
+        },
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 72.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 144.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": -72.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 180.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 90.0,
+              "y": 180.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": -144.0
+            }
+          },
+          {
+            "Value": 7,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 36.0
+            }
+          },
+          {
+            "Value": 8,
+            "Rotation": {
+              "x": -90.0,
+              "y": 180.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 9,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 10,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 108.0
+            }
+          },
+          {
+            "Value": 11,
+            "Rotation": {
+              "x": -27.0,
+              "y": 108.0,
+              "z": -36.0
+            }
+          },
+          {
+            "Value": 12,
+            "Rotation": {
+              "x": -27.0,
+              "y": 36.0,
+              "z": -108.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "c3c404",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -40,
+      "posY": 1,
+      "posZ": -29,
+      "rotX": 359.983124,
+      "rotY": -3.06866641e-05,
+      "rotZ": 359.92,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d12",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "f3f9f2",
+        "Name": "Custom_Dice",
+        "Transform": {
+          "posX": -34.6872063,
+          "posY": 3.50908422,
+          "posZ": -27.3071651,
+          "rotX": 25.4803028,
+          "rotY": 359.940979,
+          "rotZ": 71.022644,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "scaleZ": 1.0
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": false,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": true,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "CustomImage": {
+          "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935721256/4B3C697819A61B72057C753B253E4DBA66580CDC/",
+          "ImageSecondaryURL": "",
+          "ImageScalar": 1.0,
+          "WidthScale": 0.0,
+          "CustomDice": {
+            "Type": 4
+          }
+        },
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 72.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 144.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": -72.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 180.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 90.0,
+              "y": 180.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": -144.0
+            }
+          },
+          {
+            "Value": 7,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 36.0
+            }
+          },
+          {
+            "Value": 8,
+            "Rotation": {
+              "x": -90.0,
+              "y": 180.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 9,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 10,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 108.0
+            }
+          },
+          {
+            "Value": 11,
+            "Rotation": {
+              "x": -27.0,
+              "y": 108.0,
+              "z": -36.0
+            }
+          },
+          {
+            "Value": 12,
+            "Rotation": {
+              "x": -27.0,
+              "y": 36.0,
+              "z": -108.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "GUID": "1911c6",
+    "Name": "Infinite_Bag",
+    "Transform": {
+      "posX": -40,
+      "posY": 1.0,
+      "posZ": -31,
+      "rotX": 359.983124,
+      "rotY": -3.06866641e-05,
+      "rotZ": 359.92,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "d12",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.117992125,
+      "g": 0.53,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "ContainedObjects": [
+      {
+        "GUID": "f3f9f2",
+        "Name": "Custom_Dice",
+        "Transform": {
+          "posX": -34.6872063,
+          "posY": 3.50908422,
+          "posZ": -27.3071651,
+          "rotX": 25.4803028,
+          "rotY": 359.940979,
+          "rotZ": 71.022644,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "scaleZ": 1.0
+        },
+        "Nickname": "",
+        "Description": "",
+        "GMNotes": "",
+        "ColorDiffuse": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Locked": false,
+        "Grid": false,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": true,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "CustomImage": {
+          "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935720890/097F2E262A385A736B2DB3A2FE40BCFC8907D76F/",
+          "ImageSecondaryURL": "",
+          "ImageScalar": 1.0,
+          "WidthScale": 0.0,
+          "CustomDice": {
+            "Type": 4
+          }
+        },
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "RotationValues": [
+          {
+            "Value": 1,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 72.0
+            }
+          },
+          {
+            "Value": 2,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 144.0
+            }
+          },
+          {
+            "Value": 3,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": -72.0
+            }
+          },
+          {
+            "Value": 4,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 180.0
+            }
+          },
+          {
+            "Value": 5,
+            "Rotation": {
+              "x": 90.0,
+              "y": 180.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 6,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": -144.0
+            }
+          },
+          {
+            "Value": 7,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 36.0
+            }
+          },
+          {
+            "Value": 8,
+            "Rotation": {
+              "x": -90.0,
+              "y": 180.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 9,
+            "Rotation": {
+              "x": 27.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          {
+            "Value": 10,
+            "Rotation": {
+              "x": -27.0,
+              "y": 180.0,
+              "z": 108.0
+            }
+          },
+          {
+            "Value": 11,
+            "Rotation": {
+              "x": -27.0,
+              "y": 108.0,
+              "z": -36.0
+            }
+          },
+          {
+            "Value": 12,
+            "Rotation": {
+              "x": -27.0,
+              "y": 36.0,
+              "z": -108.0
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

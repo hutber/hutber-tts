@@ -1,0 +1,92 @@
+[
+  {
+    "GUID": "7c7c20",
+    "Name": "Chip_100",
+    "Transform": {
+      "posX": -35.4904861,
+      "posY": -3.9824985,
+      "posZ": 97.14335,
+      "rotX": -7.755247e-06,
+      "rotY": 180.01973,
+      "rotZ": 5.32619765e-07,
+      "scaleX": 1,
+      "scaleY": 1,
+      "scaleZ": 1
+    },
+    "Nickname": "Red WH Stats Helper",
+    "Description": "This is a helper for Warhammer stats made by Ricu.\n\nIt will show you the stats of the weapon you select.\n\nYou can also draw a range to see how far it is.",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0.5 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
+  },
+  {
+    "GUID": "b7ac7a",
+    "Name": "Chip_100",
+    "Transform": {
+      "posX": 35.4904861,
+      "posY": -3.9824985,
+      "posZ": -97.14335,
+      "rotX": -7.755247e-06,
+      "rotY": 0.01973,
+      "rotZ": 5.32619765e-07,
+      "scaleX": 1,
+      "scaleY": 1,
+      "scaleZ": 1
+    },
+    "Nickname": "Blue WH Stats Helper",
+    "Description": "This is a helper for Warhammer stats made by Ricu.\n\nIt will show you the stats of the weapon you select.\n\nYou can also draw a range to see how far it is.",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "<Defaults>\r\n  <Text fontSize = \"70\" resizeTextForBestFit = \"true\"></Text>\r\n  <Text class = \"Header\" color = \"#c4be45\" fontSize = \"70\" resizeTextForBestFit = \"false\"></Text>\r\n  <Button fontSize = \"70\" preferredWidth = \"200\" preferredHeight = \"200\"></Button>\r\n</Defaults>\r\n<VerticalLayout position = \"-10.125 0 -10\" width = \"2250\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\" childAlignment = \"MiddleCenter\">\r\n  <HorizontalLayout preferredHeight = \"100\" childForceExpandHeight = \"false\" childForceExpandWidth = \"false\">\r\n    <Button fontSize = \"60\" preferredWidth = \"1425\" preferredHeight = \"100\" onClick = \"onCountClicked\">Show weapon stats</Button>\r\n    <InputField fontSize = \"60\" preferredWidth = \"725\" preferredHeight = \"100\" characterValidation = \"Integer\" textAlignment = \"MiddleCenter\" placeholder = \"Enter range to draw it\" onEndEdit = \"onShowRangeEditEnd\"></InputField>\r\n    <Button fontSize = \"60\" preferredWidth = \"300\" preferredHeight = \"100\" onClick = \"onCleanClicked\">Clean</Button>\r\n  </HorizontalLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#888888\" >\r\n    <Row preferredHeight = \"130\">\r\n      <Cell><Text class = \"Header\">Name</Text></Cell>\r\n      <Cell><Text class = \"Header\">Stats</Text></Cell>\r\n      <Cell><Text class = \"Header\">Count</Text></Cell>\r\n      <Cell><Text class = \"Header\">Attacks</Text></Cell>\r\n      <Cell><Text class = \"Header\">Range</Text></Cell>\r\n    </Row>\r\n  </TableLayout>\r\n  <TableLayout preferredHeight = \"150\" preferredWidth = \"2250\" columnWidths = \"600 800 200 350 350\" rowBackgroundColor = \"#CCCCCC\">\r\n  </TableLayout>\r\n</VerticalLayout>"
+  }
+]

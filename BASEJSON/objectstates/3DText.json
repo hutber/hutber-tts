@@ -1,0 +1,1040 @@
+[
+  {
+    "GUID": "7f971a",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.50006,
+      "posY": 1.23999178,
+      "posZ": -16.495903,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Player B Turn",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "69c4b5",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.5000839,
+      "posY": 1.23999178,
+      "posZ": 16.5023479,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Player A Turn",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "a82365",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.5000839,
+      "posY": 1.23999572,
+      "posZ": 27.0028267,
+      "rotX": 90.0,
+      "rotY": 89.96369,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Player A Victory Points",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "bc85f9",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.50006,
+      "posY": 1.23999178,
+      "posZ": 37.5052643,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Player A Command Points",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 60
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "7ab8ca",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 52.50006,
+      "posY": -3.23999178,
+      "posZ": 37.5052643,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Team 1 Player B CP",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 60
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "cf826c",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.50006,
+      "posY": 1.23998809,
+      "posZ": -26.9973278,
+      "rotX": 90.0,
+      "rotY": 90.4634552,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Player B Victory Points ",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 68
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "9a85e3",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.50006,
+      "posY": 1.23998809,
+      "posZ": -37.49884,
+      "rotX": 90.0,
+      "rotY": 89.9636841,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Player B Command Points",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 60
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "838abc",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.50006,
+      "posY": -2.23998809,
+      "posZ": -37.49884,
+      "rotX": 90.0,
+      "rotY": 89.9636841,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Team 2 Player A CP",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 60
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "028baa",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 52.50006,
+      "posY": -3.23998809,
+      "posZ": -37.49884,
+      "rotX": 90.0,
+      "rotY": 89.9636841,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Team 2 Player B CP",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 60
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "af2ec6",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 75.5,
+      "posY": 0.961133659,
+      "posZ": 38.0,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Objective\ntokens",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 40
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "14e82d",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 62.5000458,
+      "posY": 1.23999381,
+      "posZ": 0.000814437866,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "BATTLE ROUND",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 76
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "a90146",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 90.0006256,
+      "posY": -1.0000062,
+      "posZ": -83.87224,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "----------  40K ITC  -----------",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "dbfb5c",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 90.00426,
+      "posY": -0.999999464,
+      "posZ": 63.66418,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "----------------------  4x4 Dep ----------------------",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "6c101e",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 90.00319,
+      "posY": -1.00000322,
+      "posZ": 12.65977,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "----------------------  8x4 Dep ----------------------",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "3e4433",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 90.0049744,
+      "posY": -1.0000062,
+      "posZ": 37.6629944,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "----------------------  6x4 Dep ----------------------",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "769e81",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 90.00319,
+      "posY": -1.00001931,
+      "posZ": -14.3429518,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "----------------------------  KT Dep ---------------------------",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "835251",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 90.0006256,
+      "posY": -1.00000846,
+      "posZ": -68.3446655,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "KT items - Area Deny - 40K items--Quarters",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 64
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "d17b70",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 81.7,
+      "posY": 0.961133063,
+      "posZ": 8.05,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Discards",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 32
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "a245ad",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 77.2,
+      "posY": 0.96113354,
+      "posZ": 8.05,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Deck",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 32
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "d17b71",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 81.7,
+      "posY": 0.961133063,
+      "posZ": -8.05,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Discards",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 32
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "a245ae",
+    "Name": "3DText",
+    "Transform": {
+      "posX": 77.2,
+      "posY": 0.96113354,
+      "posZ": -8.05,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Text": {
+      "Text": "Deck",
+      "colorstate": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "fontSize": 32
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

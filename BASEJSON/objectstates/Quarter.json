@@ -1,0 +1,128 @@
+[
+  {
+    "GUID": "27de4f",
+    "Name": "Quarter",
+    "Transform": {
+      "posX": 74.00018,
+      "posY": -3.00000083,
+      "posZ": -1.00002837,
+      "rotX": 0,
+      "rotY": 0,
+      "rotZ": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "scaleZ": 1
+    },
+    "Nickname": "Red Selection Highlighter",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "RotationValues": [
+      {
+        "Value": "Heads",
+        "Rotation": {
+          "x": 0,
+          "y": 90,
+          "z": 180
+        }
+      },
+      {
+        "Value": "Tails",
+        "Rotation": {
+          "x": 0,
+          "y": -90,
+          "z": 0
+        }
+      }
+    ]
+  },
+  {
+    "GUID": "84c3a4",
+    "Name": "Quarter",
+    "Transform": {
+      "posX": 74.00018,
+      "posY": -31.00000083,
+      "posZ": -1.00002837,
+      "rotX": 0,
+      "rotY": 0,
+      "rotZ": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "scaleZ": 1
+    },
+    "Nickname": "Blue Selection Highligher",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "RotationValues": [
+      {
+        "Value": "Heads",
+        "Rotation": {
+          "x": 0,
+          "y": 90,
+          "z": 180
+        }
+      },
+      {
+        "Value": "Tails",
+        "Rotation": {
+          "x": 0,
+          "y": -90,
+          "z": 0
+        }
+      }
+    ]
+  }
+]

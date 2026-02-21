@@ -1,0 +1,345 @@
+[
+  {
+    "GUID": "dcf95b",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 79.0,
+      "posY": 1.0,
+      "posZ": 4.757527,
+      "rotX": 0.0,
+      "rotY": 89.79741,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Deployment card zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "deploymentCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "740abc",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 79.0,
+      "posY": 1.0,
+      "posZ": -4.76,
+      "rotX": 0.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Primary card zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "primaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "0ec215",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 74.7,
+      "posY": 1.0,
+      "posZ": 3.82045436,
+      "rotX": 0.0,
+      "rotY": 90.13061,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Secondary card 1-1 zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "d865d4",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 74.7,
+      "posY": 1.0,
+      "posZ": 1.85399938,
+      "rotX": 0.0,
+      "rotY": 90.13061,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Secondary card 1-2 zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "3c8d71",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 74.7,
+      "posY": 1.0,
+      "posZ": -1.72649407,
+      "rotX": 0.0,
+      "rotY": 90.13061,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Secondary card 2-1 zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "88cac4",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 74.7,
+      "posY": 1.0,
+      "posZ": -3.75490713,
+      "rotX": 0.0,
+      "rotY": 90.13061,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Secondary card 2-2 zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "cdecf2",
+    "Name": "ScriptingTrigger",
+    "Transform": {
+      "posX": 79.0,
+      "posY": 1.0,
+      "posZ": 0.0,
+      "rotX": 0.0,
+      "rotY": 90.13061,
+      "rotZ": 0.0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "",
+    "Description": "Active challenger card zone",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.509803951
+    },
+    "Tags": [
+      "challengerCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

@@ -1,0 +1,472 @@
+{
+  "SaveName": "Hutber 40k Gaming CA 2025\n",
+  "GameMode": "Hutber 40k Gaming CA 2025\n",
+  "Date": "21/06/2024 11:00:00 AM",
+  "VersionNumber": "v2.61",
+  "GameType": "Game",
+  "GameComplexity": "High Complexity",
+  "PlayingTime": [
+    120,
+    240
+  ],
+  "PlayerCounts": [
+    2,
+    2
+  ],
+  "Tags": [
+    "Strategy Games",
+    "Wargames",
+    "Miniature Games",
+    "40k",
+    "Warhammer",
+    "40,000",
+    "Warhammer 40k",
+    "FTC",
+    "Map",
+    "Base",
+    "Map Base",
+    "Competitive"
+  ],
+  "Gravity": 0.5000001,
+  "PlayArea": 1.0,
+  "Table": "Table_None",
+  "Sky": "Sky_Museum",
+  "Note": "This is the GT fork of version 2.63+ of https://github.com/hutber/tts-map-base.\n\nFull cre\n\nInstructions and credits can both be found in the Notepad.\n\nSearch for FTC or BCB Map Additive Load on the workshop for maps to load!\n\n\nJoin the TTS 40K Discord server:\ndiscord.gg/XkBbs5M\n\nReport any bugs or issues at: https://github.com/hutber/tts-map-base/issues",
+  "Rules": "",
+  "MusicPlayer": {},
+  "Grid": {
+    "Type": 0,
+    "Lines": false,
+    "Color": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0
+    },
+    "Opacity": 0.75,
+    "ThickLines": true,
+    "Snapping": false,
+    "Offset": false,
+    "BothSnapping": false,
+    "xSize": 1.0,
+    "ySize": 1.0,
+    "PosOffset": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    }
+  },
+  "Lighting": {
+    "LightIntensity": 0.54,
+    "LightColor": {
+      "r": 1.0,
+      "g": 0.9804,
+      "b": 0.8902
+    },
+    "AmbientIntensity": 1.3,
+    "AmbientType": 0,
+    "AmbientSkyColor": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "AmbientEquatorColor": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "AmbientGroundColor": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "ReflectionIntensity": 1.0,
+    "LutIndex": 0,
+    "LutContribution": 1.0
+  },
+  "Hands": {
+    "Enable": true,
+    "DisableUnused": true,
+    "Hiding": 0
+  },
+  "ComponentTags": {
+    "labels": [
+      {
+        "displayed": "primaryCard",
+        "normalized": "primaryCard"
+      },
+      {
+        "displayed": "secondaryCard",
+        "normalized": "secondaryCard"
+      },
+      {
+        "displayed": "secondaryCard",
+        "normalized": "secondaryCard"
+      },
+      {
+        "displayed": "deploymentCard",
+        "normalized": "deploymentCard"
+      },
+      {
+        "displayed": "gambitCard",
+        "normalized": "gambitCard"
+      }
+    ]
+  },
+  "Turns": {
+    "Enable": false,
+    "Type": 1,
+    "TurnOrder": [
+      "Red",
+      "Blue"
+    ],
+    "Reverse": false,
+    "SkipEmpty": false,
+    "DisableInteractions": false,
+    "PassTurns": true,
+    "TurnColor": ""
+  },
+  "TabStates": {
+    "0": {
+      "title": "New Features",
+      "body": "New Features Exaplined:\r\n\r\n\nInjection Detection Tool:\n• The code checks every 15 seconds to see if any objects currently on the board have been 'infected'\n• If you have an infected object you will see a large red error wanring you and\na 'Virus' will appear in the center of the battle field\nInteraction Changes\n• Some changes have been made with how you will use the map base:\n• You will need to click `Confirm for gaming` to you see secondaries and other game related features.\n\n\rSelection Tool:\n• It will now highlight for everybody in the game which models have been selcted.\n• I use this when I want to show guys 'ok these will shot'\n• The Selection tool is debatable if you need it. Most use tab to do this, but not me. It just felt more natural to highlight the unit.\n\n\rLethal Hits Buttons\n• The 'Lethal hits' button is a new feature and its still a little ropey\n• It will need more work to be a little smarted\n• I will add sustained and susatined+letahsl etoo.\n\n\rVortex:\n• Vortex is there, but as explained in my reddit post, I do not believe we need\nfrom a performance perspective. It was the injected code is what was causing the game to be laggy. But its a beautiful tool (user hutber)",
+      "color": "Grey",
+      "visibleColor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      },
+      "id": 0
+    },
+    "1": {
+      "title": "Gaming instructions",
+      "body": "SETTING UP THE GAME\r\n\r\nWhen loading or connecting choose your seat in the shown menu.\r\n\r\nAdditive load a terrain save file for FTC Gaming Template v2.0 or above, the map and the mat background will be placed. Confirm it or remove if you want to change with another map. In the table control menu (on one of the table legs) there is a button to erase all but the table in the gaming area, in case you wrongly confirmed. This button erases already placed armies and other things too.\r\n\r\nYou can then import your army. If you import one made with the FTC Army Builder v2.0 or above (you can find it in the workshop) just additive load the save file and use the buttons to place the army on your side or remove it if you want to change it. Make sure that nobody loads a new army until the previous one is placed or deleted to prevent physics spaz.\r\n\r\nUse the menu on the top of the gaming mat to place the chosen deployment areas and objectives for the chosen mission. If terrain is interfering with the deployment zones or objectives, you can use the + and - buttons to raise or lower them.\r\n\r\n\r\nSTARTING THE GAME\r\n\r\nDeploy the armies as per the rules for the mission you are playing. Select the starting player with the toggle button, and when you are ready, start the game with the clearly marked button. Turns will be automatically taken in the chosen order, and the battle-forged CP will be automatically added each turn.\r\n\r\nDuring the game you can re-show and re-hide the selected deployment zones by clicking on the corresponding buttons placed near the top of battle mat. There are also buttons to show table quarters, Engage zones, Strategic Reserves zones, and to show 3\" and 6\" distances from the center. You also can use buttons on the upper left to go easily to dice roller and back (select a model first to go back to it)\r\n\r\nYou can save and load your game at any point of the game or setup. When loading a save file of a started game, the players will be automatically placed in the seats they had when they started to play.\r\n\r\n\r\nPLAYING THE GAME\r\n\r\nObjective markers have multiple states. The default state (1) provides a mat showing both the marker and the control radius. State 2 shows you the marker itself. State 3 provides a 3\" cylinder so you can easily check range. States 4 and 5 are the same as state 1 but in red and blue, useful for highlighting control or sticky control.\r\n\r\nTo roll dice simply drop them into the small cardboard box, it will roll them and place them in order on the rolling mat. The rolling mat will display the results along with the total dice rolled. Also present are buttons to spawn dice of 4 colors, to select them and to delete them. Near each row of dice are present buttons to delete or re-roll dice rows, left click affects only that row, right click affects that row plus all the lower (-). If you click the \" - / + \" button, the next right click will delete/re-roll that row plus all the higher dice instead. Use the description of the small box to change your preferences and the behavior of the tool. You can also switch between re-rolling and selecting. There's also buttons to roll dice showing you what order they were rolled in, useful for Feel No Pain rolls, and a button to mark whatever die is currently on the mat as the die to spawn copies of, useful if you've got a custom (e.g. faction) die you'd like to use.\r\n\r\nYou can find a set of useful generic tokens at the head of the table, copy them and use them as you see fit.\r\n\r\nActivation tokens: an interactive token can be placed near each unit to keep track of which ones have acted in each phase. Green means that the unit has to act; red that it has already acted. To change the state, just click on the coloured button. All the tokens are reset automatically at each phase/turn change. You can manually reset them by clicking on any \"Reset Activation tokens\" button. With the token selected, you can use the Numpad1 and Numpad2 to lower/raise the position of the button.\r\n\r\nWound trackers: an interactive token can be placed near each model to keep track of its remaining wounds. To reduce the number left click on the button, to increase it right click. With the token selected you can use the Numpad1 and Numpad2 to lower/raise the position of the button.\r\n\r\nThe counters are self explanatory; the player's turn and the battle round ones are automatic, you don't need to update them manually. The victory ones will reflect the value of the score sheet if you use it.\r\n\r\nIf you want to use the chess clock, you can pass the time to your opponent by clicking on the time shown on the top-right of the UI. Alternatively, you can press keypad 7 if you're red, or 9 if you're blue.\r\n\r\n\r\nMISCELLANEOUS\r\n\r\nThe battle mat is a modified \"Flex Table\" (by MrStump) with fixed dimensions. You can change the background of the mat by clicking on the white button on one of the legs and paste the URL of the image.\r\n\r\nYou can store URLs in memory by adding them individually so you can recall them easily if you want to make a local version with stored images. An improvement in version 2 is that you now only need to provide the image of the battle mat itself, you don’t need to edit a massive image containing the felt part. For best results, use an image with the correct ratio!\r\n\r\nReport any bugs at https://github.com/hutber/tts-map-base/issues\r\n",
+      "color": "Grey",
+      "visibleColor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      },
+      "id": 0
+    },
+    "2": {
+      "title": "10th edition missions",
+      "body": "The 10th edition mission packs, Leviathan and Pariah Nexus, are fully supported.\r\n\r\nAbove the scoreboard, you'll find a pack selector and decks for deployment, mission rules and primary missions. If you already know which ones you want, you can just search the decks for the right cards, or you can use the Mission Selection options on the right to either randomise or choose from one of GW's recommended presets.\r\n\r\nWhen you've picked a colour, you'll find a set of cards in your hand - the Fixed Secondary Missions, and two Tactical Missions cards. When you get to the Select Secondary Missions mission step, choose the two cards you want and flip those cards in your hand face down with the F key, then press Lock In Secondaries. Once both players have done that, the selected cards will be revealed.\r\n\r\nOnce you start the game, fixed missions will be locked in, while tactical missions will be cleared ready to draw some real ones. Whenever you need to draw a card, press the arrow button next to the deck. You can use the arrow button next to a drawn card to recycle it (e.g. because the card tells you to), or the X button to discard it (e.g. because you've completed it, or used the New Orders stratagem).\r\n\r\nAt the end of the third battle round, press Prepare Secrets, and the Secret Mission cards (if playing Pariah Nexus) or a random selection of Gambit cards (if playing Leviathan) will be placed into your hand. Choose one and flip it to select it, then press Lock In Secret. Once both players have done so, you can reveal the choices by flipping them.",
+      "color": "Grey",
+      "visibleColor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      },
+      "id": 0
+    },
+    "3": {
+      "title": "Terrain instructions",
+      "body": "TERRAIN BUILDER INSTRUCTIONS\r\n\r\n\r\nThis tool is made to prepare terrain for the Forty Thousand Collection Template v2.0 or later versions but works with other templates too if the gaming mat position is 0,0,0 .\r\n\r\n\r\nPREPARING THE TERRAIN:\r\n\r\nPrepare your terrain as you like, be sure that all elements are tolally inside the gaming mat, no parts have to be outside.\r\n\r\nThe battlemat is a modified \"Flex Table\" (by MrStump) with fixed dimensions. You can change the mat background by clicking on the white button on one of the legs and paste the URL of the image.\r\nYou can store some URL in memory by adding them individually so you can recall them easily.\r\nYou dont need anymore to edit the mat image to fit the bigger dimension of the table, only the gaming area will change, not the entire table.\r\nThere are some preset mats, so you already have something to work with, but feel free to use any URL that you like.\r\n\r\nWhen the terrain and the mat are ready, press the \"EXTRACT TERRAIN\" button present in the table control menu and confirm.\r\nYou will then have a map only with the terrain features and a blue brick that is a service token used to store the URL of the mat image. This brick is invisible and not interactable but it has its own menu that will display when loading the terrain.\r\n\r\nAll outside the gaming mat will be deleted.\r\n\r\nSave then the map in another local savefile or upload it to the workshop.\r\n\r\nThe \"DELETE TERRAIN\" button deletes all but the table inside the gaming area, useful for starting from scratch.\r\n\r\nLOADING THE TERRAIN:\r\n\r\nOpen the gaming template then make an ADDITIVE LOAD of the terrain map saved or present in the workshop.\r\n\r\nThe terrain will be put on the gaming mat and the mat image will change automatically.\r\nIn case it doesnt works you can copy the URL and apply it manually using the \"Flex Table\" menu.\r\n\r\nWhen done you can erease the menu showing the saved URL by clicking the proper button. It's NOT reversible.\r\n\r\nHave fun!",
+      "color": "Grey",
+      "visibleColor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      },
+      "id": 0
+    },
+    "4": {
+      "title": "Credits",
+      "body": "*******************Credits*******************\nNew Items Added in Hutbers Pack:\n\nBlackhole Trash Bin by MrStump (Fixed)\nPariah Nexus Map Loader (Maps were overwritten) by KKLORELL\nMalicious Script Check by Ziggy Stardust\n\nFlex Table (id: 1169112551)\n\nKustom 40k Dice Roller\r by BaconCatBug (id: 959360907)\n\nCamera pack by ThatRobHuman\n\nChess clock by Gizmo, MoonkeyMod and Liyarin\n\nToken graphics by Trashpanda\n\nAdditional code contributions by FChippendale\n\nLeviathan card graphics by Tyrone\n\nAdditional assets by MariusEvander\n\n",
+      "color": "Grey",
+      "visibleColor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      },
+      "id": 1
+    }
+  },
+  "CameraStates": [
+    {
+      "Position": {
+        "x": 0.0,
+        "y": -2.5,
+        "z": 0.0
+      },
+      "Rotation": {
+        "x": 68.66522,
+        "y": 89.79739,
+        "z": 0.0
+      },
+      "Distance": 84.375,
+      "Zoomed": false,
+      "AbsolutePosition": {
+        "x": -30.6968479,
+        "y": 76.09283,
+        "z": -0.108546481
+      }
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "DecalPallet": [],
+  "LuaScript": "",
+  "LuaScriptState": "{\"svredPlayerID\":\"\"}",
+  "XmlUI": "<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->\r\n<Defaults>\r\n<Button width=\"550\" height=\"300\" fontSize=\"40\" onClick=\"\" fontStyle=\"Bold\"/>\r\n<Text fontSize=\"100\" color=\"#000000\" fontStyle=\"Bold\"/>\r\n</Defaults>\r\n\r\n<Panel id=\"redirect\" active=\"false\" position=\"0 0 0\" scale=\"0.6 0.6 0.6\" offsetXY=\"0 0\" color=\"#dbeaf9\" width=\"1200\" height=\"800\" rectAlignment=\"MiddleCenter\">\r\n<Text offsetXY=\"0 350\" fontSize=\"80\" color=\"#E74C3C\" fontStyle=\"Bold\">WARNING</Text>\r\n\r\n<Text id=\"coreRedirect\" offsetXY=\"0 0\" fontSize=\"40\" color=\"#ECF0F1\">\r\nPLEASE WAIT FOR LOADING\r\n</Text>\r\n\r\n<Button id=\"closeRedirectBtn\" active=\"true\" offsetXY=\"0 -400\" color=\"#1A1A1A\" textColor=\"#FFFFFF\" width=\"500\" height=\"100\" fontSize=\"40\" fontStyle=\"Bold\" onClick=\"closeRedir\" outline=\"#E74C3C\" outlineSize=\"5\" roundEdges=\"true\">CLOSE</Button>\r\n</Panel>\r\n\r\n<Panel id=\"main\" active=\"false\" position=\"0 0 0\" scale=\"0.5 0.5 0.5\" offsetXY=\"0 0\" color=\"#dbeaf9\" outline=\"#34495E\" outlineSize=\"8\" width=\"1600\" height=\"1000\" rectAlignment=\"MiddleCenter\" visibility=\"Diamonds\">\r\n<Text offsetXY=\"0 400\" fontSize=\"70\" color=\"#2C3E50\" fontStyle=\"Bold\">CHOOSE YOUR SEAT</Text>\r\n\r\n<Button id=\"redBtn\" offsetXY=\"-400 150\" color=\"#DA1917\" textColor=\"#FFFFFF\" width=\"500\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToRed\">Red Player</Button>\r\n<Button id=\"blueBtn\" offsetXY=\"400 150\" color=\"#1E87FF\" textColor=\"#FFFFFF\" width=\"500\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToBlue\">Blue Player</Button>\r\n\r\n<Text fontSize=\"50\" color=\"#E74C3C\" offsetXY=\"0 -50\" fontStyle=\"Bold\">USE OTHER PLAYER COLORS AT YOUR OWN RISK!</Text>\r\n\r\n<Button id=\"greyBtn\" offsetXY=\"0 -200\" color=\"#BDC3C7\" textColor=\"#2C3E50\" width=\"1000\" height=\"150\" fontSize=\"45\" roundEdges=\"true\" onClick=\"placeToGray\">Spectator</Button>\r\n\r\n<Button id=\"closeBtn\" offsetXY=\"0 -500\" color=\"#2C3E50\" textColor=\"#FFFFFF\" width=\"500\" height=\"100\" fontSize=\"40\" fontStyle=\"Bold\" onClick=\"closeMenu\" outline=\"#34495E\" outlineSize=\"5\" roundEdges=\"true\">CLOSE MENU</Button>\r\n</Panel>\r\n\r\n<Panel id=\"passTurn\" active=\"true\" position=\"525 495 0\" scale=\"0.5 0.5 0.5\" offsetXY=\"40 0\" color=\"#00000000\" visibility=\"Black\">\r\n<Button id=\"passTurnBtn\" offsetXY=\"0 0\" color=\"#C0392B\" textColor=\"#FFFFFF\" width=\"200\" height=\"180\" fontSize=\"40\" fontStyle=\"Bold\" roundEdges=\"true\" onClick=\"nextPhase\"></Button>\r\n<Text id=\"passTurnTxt\" offsetXY=\"0 0\" color=\"#FFFFFF\" width=\"180\" height=\"180\" fontSize=\"35\" fontStyle=\"Bold\" onClick=\"nextPhase\">NEXT PHASE</Text>\r\n</Panel>\r\n\r\n<Panel id=\"Chess Stopwatch\" active=\"false\" scale=\"1 1 1\" width=\"180\" height=\"120\" rectAlignment=\"UpperRight\" offsetXY=\"-270 0\" allowDragging=\"true\" restrictDraggingToParentBounds=\"false\" returnToOriginalPositionWhenReleased=\"false\">\r\n<VerticalLayout spacing=\"5\" padding=\"5\">\r\n<Panel id=\"ChsStpPanel1\" color=\"Blue\">\r\n<Button id=\"ChsStpBtn1\" scale=\"1 1 1\" width=\"180\" height=\"60\" onClick=\"\" color=\"rgba(0,0,0,0)\"/>\r\n<Text id=\"ChsStpWatch1\" text=\"0:00:00\" fontSize=\"40\" color=\"White\"/>\r\n</Panel>\r\n<Panel id=\"ChsStpPanel2\" color=\"Red\">\r\n<Button id=\"ChsStpBtn2\" scale=\"1 1 1\" width=\"180\" height=\"60\" onClick=\"\" color=\"rgba(0,0,0,0)\"/>\r\n<Text id=\"ChsStpWatch2\" text=\"0:00:00\" fontSize=\"40\" color=\"White\"/>\r\n</Panel>\r\n</VerticalLayout>\r\n</Panel>\r\n\r\n<Panel id=\"feedbackPopup\" active=\"false\" width=\"400\" height=\"420\" rectAlignment=\"MiddleCenter\" allowDragging=\"false\" color=\"#000000EE\">\r\n<VerticalLayout spacing=\"5\" padding=\"10\">\r\n<VerticalLayout spacing=\"5\" padding=\"10\" childControlHeight=\"false\" childForceExpandHeight=\"false\">\r\n<InputField id=\"feedbackName\" placeholder=\"Name\" onValueChanged=\"onNameChanged\" />\r\n<InputField id=\"feedbackEmail\" value=\"jamie@hutber.com\" placeholder=\"Email\" onValueChanged=\"onEmailChanged\" />\r\n<Dropdown id=\"feedbackType\" onValueChanged=\"onTypeChanged\">\r\n<Option value=\"\">Type</Option>\r\n<Option value=\"bug\">Bug</Option>\r\n<Option value=\"feature\">Feature Request</Option>\r\n<Option value=\"other\">Other</Option>\r\n<Option value=\"single\">Are you single?</Option>\r\n</Dropdown>\r\n<InputField id=\"feedbackMessage\" placeholder=\"Your feedback\" lineType=\"MultiLineNewline\" height=\"150\" onValueChanged=\"onMessageChanged\" />\r\n<Dropdown id=\"feedbackLike\" onValueChanged=\"onLikeChanged\">\r\n<Option value=\"\">Do you hate the Lethal Face?</Option>\r\n<Option value=\"loveit\">Actually its not that bad (I love it)</Option>\r\n<Option value=\"Yes\">Yes</Option>\r\n<Option value=\"No\">No</Option>\r\n<Option value=\"I fucking HATE IT\">I fucking HATE IT</Option>\r\n<Option value=\"You bastard\">I don't like you</Option>\r\n</Dropdown>\r\n</VerticalLayout>\r\n<HorizontalLayout spacing=\"2\" height=\"40\">\r\n<Button id=\"feedbackSubmitBtn\" text=\"Submit\" onClick=\"\" width=\"120\" height=\"40\"/>\r\n<Button id=\"feedbackCloseBtn\" text=\"Close\" onClick=\"\" width=\"120\" height=\"40\"/>\r\n</HorizontalLayout>\r\n</VerticalLayout>\r\n</Panel>\r\n",
+  "VectorLines": [
+    {
+      "points3": [
+        {
+          "x": 68.5,
+          "y": 0.9711361,
+          "z": 9.2
+        },
+        {
+          "x": 68.5,
+          "y": 0.9711361,
+          "z": 6.9
+        },
+        {
+          "x": 72.0,
+          "y": 0.9711361,
+          "z": 6.9
+        },
+        {
+          "x": 72.0,
+          "y": 0.9711361,
+          "z": 9.2
+        }
+      ],
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "thickness": 0.1,
+      "loop": true
+    },
+    {
+      "points3": [
+        {
+          "x": 76.5,
+          "y": 0.9711361,
+          "z": 9.2
+        },
+        {
+          "x": 76.5,
+          "y": 0.9711361,
+          "z": 6.9
+        },
+        {
+          "x": 73.0,
+          "y": 0.9711361,
+          "z": 6.9
+        },
+        {
+          "x": 73.0,
+          "y": 0.9711361,
+          "z": 9.2
+        }
+      ],
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "thickness": 0.1,
+      "loop": true
+    },
+    {
+      "points3": [
+        {
+          "x": 77.5,
+          "y": 0.9711361,
+          "z": 9.2
+        },
+        {
+          "x": 77.5,
+          "y": 0.9711361,
+          "z": 6.9
+        },
+        {
+          "x": 81.0,
+          "y": 0.9711361,
+          "z": 6.9
+        },
+        {
+          "x": 81.0,
+          "y": 0.9711361,
+          "z": 9.2
+        }
+      ],
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "thickness": 0.1,
+      "loop": true
+    },
+    {
+      "points3": [
+        {
+          "x": 68.5,
+          "y": 0.9711361,
+          "z": -9.2
+        },
+        {
+          "x": 68.5,
+          "y": 0.9711361,
+          "z": -6.9
+        },
+        {
+          "x": 72.0,
+          "y": 0.9711361,
+          "z": -6.9
+        },
+        {
+          "x": 72.0,
+          "y": 0.9711361,
+          "z": -9.2
+        }
+      ],
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "thickness": 0.1,
+      "loop": true
+    },
+    {
+      "points3": [
+        {
+          "x": 76.5,
+          "y": 0.9711361,
+          "z": -9.2
+        },
+        {
+          "x": 76.5,
+          "y": 0.9711361,
+          "z": -6.9
+        },
+        {
+          "x": 73.0,
+          "y": 0.9711361,
+          "z": -6.9
+        },
+        {
+          "x": 73.0,
+          "y": 0.9711361,
+          "z": -9.2
+        }
+      ],
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "thickness": 0.1,
+      "loop": true
+    },
+    {
+      "points3": [
+        {
+          "x": 77.5,
+          "y": 0.9711361,
+          "z": -9.2
+        },
+        {
+          "x": 77.5,
+          "y": 0.9711361,
+          "z": -6.9
+        },
+        {
+          "x": 81.0,
+          "y": 0.9711361,
+          "z": -6.9
+        },
+        {
+          "x": 81.0,
+          "y": 0.9711361,
+          "z": -9.2
+        }
+      ],
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "thickness": 0.1,
+      "loop": true
+    }
+  ],
+  "SnapPoints": [
+    {
+      "Position": {
+        "x": 79.25,
+        "y": 0.9611349,
+        "z": 8.05
+      },
+      "Rotation": {
+        "x": 0.0,
+        "y": 270.0,
+        "z": 180.0
+      },
+      "Tags": [
+        "secondaryCard",
+        "gambitCard"
+      ]
+    },
+    {
+      "Position": {
+        "x": 79.25,
+        "y": 0.9611349,
+        "z": -8.05
+      },
+      "Rotation": {
+        "x": 0.0,
+        "y": 270.0,
+        "z": 180.0
+      },
+      "Tags": [
+        "secondaryCard",
+        "gambitCard"
+      ]
+    },
+    {
+      "Position": {
+        "x": 70.25,
+        "y": 0.9611349,
+        "z": 8.05
+      },
+      "Rotation": {
+        "x": 0.0,
+        "y": 270.0,
+        "z": 180.0
+      },
+      "Tags": [
+        "gambitCard"
+      ]
+    },
+    {
+      "Position": {
+        "x": 70.25,
+        "y": 0.9611349,
+        "z": -8.05
+      },
+      "Rotation": {
+        "x": 0.0,
+        "y": 270.0,
+        "z": 180.0
+      },
+      "Tags": [
+        "gambitCard"
+      ]
+    }
+  ],
+  "ObjectStates": []
+}

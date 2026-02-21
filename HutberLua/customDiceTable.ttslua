@@ -1,0 +1,2695 @@
+-- FTC-GUID: acae21,839fcc
+function none()
+end
+Yoffset=0.1
+
+local currentMat
+if self.getPosition().z < 0 then
+    currentMat="Blue"
+else
+    currentMat="Red"
+end
+
+local MM_TO_INCH = 0.0393701
+local MEASURING_RING_Y_OFFSET = 0.17
+local VALID_BASE_SIZES_IN_MM = {
+    {x = 25, z = 25},
+    {x = 28, z = 28},
+    {x = 30, z = 30},
+    {x = 32, z = 32},
+    {x = 40, z = 40},
+    {x = 50, z = 50},
+    {x = 55, z = 55},
+    {x = 60, z = 60},
+    {x = 65, z = 65},
+    {x = 80, z = 80},
+    {x = 90, z = 90},
+    {x = 100, z = 100},
+    {x = 130, z = 130},
+    {x = 160, z = 160},
+    {x = 25, z = 75},
+    {x = 75, z = 25},
+    {x = 35.5, z = 60},
+    {x = 60, z = 35.5},
+    {x = 40, z = 95},
+    {x = 95, z = 40},
+    {x = 52, z = 90},
+    {x = 90, z = 52},
+    {x = 70, z = 105},
+    {x = 105, z = 70},
+    {x = 92, z = 120},
+    {x = 120, z = 92},
+    {x = 95, z = 150},
+    {x = 150, z = 95},
+    {x = 109, z = 170},
+    {x = 170, z = 109}
+}
+
+clearAllDiceBtn={
+    label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
+    position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
+    font_size=60, color={0,0,0}, font_color={1,1,1}
+}
+
+rollAllLabel = "Roll all dice"
+rollAllTooltip = "Left-click to roll all dice. Right-click to switch to selecting dice."
+selectAllLabel = "Select all dice"
+selectAllTooltip = "Left-click to select all dice. Right-click to switch to rolling dice."
+rollOrSelectAllBtn={
+    label=rollAllLabel, tooltip=rollAllTooltip, click_function="RollOrSelectDice", function_owner=self,
+    position={-3.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+
+orderedRollLabel = "Ordered roll"
+orderedRollTooltip = "Roll all dice, and display them in the order they're rolled in rather than by results."
+orderedRollBtn={
+    label=orderedRollLabel, tooltip=orderedRollTooltip, click_function="RollDiceOrdered", function_owner=self,
+    position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+orderedRollGroup2Label = "In 2s"
+orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
+orderedRollGroup2Btn={
+    label=orderedRollGroup2Label, tooltip=orderedRollGroup2Tooltip, click_function="RollDiceOrderedGroup2", function_owner=self,
+    position={-1.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+orderedRollGroup3Label = "In 3s"
+orderedRollGroup3Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 3s."
+orderedRollGroup3Btn={
+    label=orderedRollGroup3Label, tooltip=orderedRollGroup3Tooltip, click_function="RollDiceOrderedGroup3", function_owner=self,
+    position={-1.1, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+
+add1d6Btn={
+    label="+ 1d6", click_function="spawnDice1", function_owner=self,
+    position={-0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+add2d6Btn={
+    label="+ 2d6", click_function="spawnDice2", function_owner=self,
+    position={0.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+add3d6Btn={
+    label="+ 3d6", click_function="spawnDice3", function_owner=self,
+    position={0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+add4d6Btn={
+    label="+ 4d6", click_function="spawnDice4", function_owner=self,
+    position={1.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+add5d6Btn={
+    label="+ 5d6", click_function="spawnDice5", function_owner=self,
+    position={1.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+add10d6Btn={
+    label="+ 10d6", click_function="spawnDice10", function_owner=self,
+    position={2.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+add25d6Btn={
+    label="+ 25d6", click_function="spawnDice25", function_owner=self,
+    position={2.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+
+colorBtnDimension=150
+colorBtnOffset=3.0
+color1Btn={
+    label="", click_function="modifyMenu1", function_owner=self,
+    position={colorBtnOffset, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    font_size=60, color="Red", font_color={0,0,0}
+}
+color2Btn={
+    label="", click_function="modifyMenu2", function_owner=self,
+    position={colorBtnOffset+0.35, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    font_size=60, color="Blue", font_color={0,0,0}
+}
+color3Btn={
+    label="", click_function="modifyMenu3", function_owner=self,
+    position={colorBtnOffset+0.35*2, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    font_size=60, color="Black", font_color={0,0,0}
+}
+color4Btn={
+    label="", click_function="modifyMenu4", function_owner=self,
+    position={colorBtnOffset+0.35*3, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    font_size=60, color="Green", font_color={0,0,0}
+}
+pipColorBtn=
+{
+  index=17, label="White", click_function="swapPipColor", function_owner=self,
+  position={colorBtnOffset + 0.35 * 4 + 0.1, Yoffset, -0.87}, rotation={0, 0, 0}, height=50, width=250,
+  font_size=60, color="White", font_color="Black"
+}
+
+customDiceBtn={
+    label="Custom Dice", click_function="customDice", function_owner=self,
+    position={colorBtnOffset+0.35*9, Yoffset ,-0.85}, rotation={0,0,0}, height=50, width=420,
+    font_size=60, color={1,1,1}, font_color={0,0,0}
+}
+
+clearDiceBtnIncrement=0.28
+clearDiceBtnLabel="Del\n"
+clearDiceBtntooltip="LMB Delete this row\nRMB Delete this row and lowers/uppers"
+clearDiceBtn={
+    label=clearDiceBtnLabel, tooltip=clearDiceBtntooltip, click_function="filledInLater", function_owner=self,
+    position={-5.8, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    font_size=350, color="Black", font_color="Red"
+}
+
+rollOrSelectDiceBtn={
+    label="filled in later", tooltip="filled in later", click_function="filledInLater", function_owner=self,
+    position={-5.45, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    font_size=350, color="White", font_color={0,0,0}
+}
+
+lowerUpper=true
+oneTimeUpper=true
+lowerSign=" (-)"
+upperSign=" (+)"
+lowerUpperBtn={
+    label="RMB\n- / +", tooltip="Changes to upper for the next click", click_function="toggleLowerUpper", function_owner=self,
+    position={-5.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+
+warningLbl="NO FAST REPETITIONS"
+warningLbl=""
+warningBtn={
+    label=warningLbl, click_function="modifyMenu4", function_owner=self,
+    position={-1.75, Yoffset ,-0.67}, rotation={0,0,0}, height=0, width=0,
+    font_size=50, color="White", font_color="Red"
+}
+
+lowerUpper=true
+oneTimeUpper=true
+lethalButtonsOffset = -4
+
+lethalLabel = "Lethal Hits"
+lethalTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5."
+lethalHitsBtn={
+    label=lethalLabel, tooltip=lethalTip, click_function="lethalHitsAction", function_owner=self,
+    position={lethalButtonsOffset, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+
+susLabel = "Sustained Hits"
+susTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5."
+sustainedHitsBtn={
+    label=susLabel, tooltip=susTip, click_function="sustainedHitsAction", function_owner=self,
+    position={lethalButtonsOffset + 0.7, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3800, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+
+susLethalLabel = "Sustained & Lethal"
+susLethalTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5. Applies to sustained and lethal combined."
+
+sustainedLethalHitsBtn = {
+    label=susLethalLabel, tooltip=susLethalTip, click_function="sustainedLethalHitsAction", function_owner=self,
+    position={lethalButtonsOffset + 1.61, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=4800, scale={0.1,0.1,0.1},
+    font_size=500, color="White", font_color={0,0,0}
+}
+copyOthersDiceBtn = {
+    tooltip="Copy opposite player's dice",
+    click_function = "importOpposDice",
+    function_owner = self,
+    position       = {-7.5, Yoffset, 0.86},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = (currentMat == "Red" and "Blue" or "Red"), -- Button changes color based on current player
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = (currentMat == "Red") and {0, 0, 1, 1} or {1, 0, 0, 1},
+    label = (currentMat == "Red") and "Copy Blue's Dice" or "Copy Red's Dice",
+    press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+
+local hasObjectSaved = false
+savePositionLabel = "Save"
+saveBtn={
+    label=savePositionLabel, tooltip=savePositionTip, click_function="save", function_owner=self,
+    position={-7.70, Yoffset ,-1.69}, rotation={0,0,0},
+    width = 550, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+restorePositionLabel = "Restore Position"
+restoreBtn={
+    label=restorePositionLabel, click_function="restore", function_owner=self,
+    position={-6.76, Yoffset ,-1.69}, rotation={0,0,0},
+    width = 1250, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+
+gap2Btn={
+    label='1" Gap', tooltip='Arrange models with 1" spacing', click_function='arrangeModelsWith1Inch', function_owner=self,
+    position={-7.7, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    font_size=750, color='White', font_color={0,0,0}
+}
+
+gap1Btn={
+    label='2" Gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
+    position={-7.15, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    font_size=750, color='White', font_color={0,0,0}
+}
+
+clearMeasureAllBtn={
+    label='Clear Bubbles', tooltip='Clear all measuring bubbles on the table', click_function='clearMeasuringCircles', function_owner=self,
+    position={-6.325, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure1Btn={
+    label='1"', tooltip='Toggle 1" bubble', click_function='toggle1Bubble', function_owner=self,
+    position={-7.82, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure3Btn={
+    label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
+    position={-7.52, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure6Btn={
+    label='6"', tooltip='Toggle 6" bubble', click_function='toggle6Bubble', function_owner=self,
+    position={-7.22, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure9Btn={
+    label='9"', tooltip='Toggle 9" bubble', click_function='toggle9Bubble', function_owner=self,
+    position={-6.92, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+measure12Btn={
+    label='12"', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
+    position={-6.59, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1600, scale={0.1,0.1,0.1},
+    font_size=700, color='White', font_color={0,0,0}
+}
+
+-- Custom Bubble Input BG
+customBubbleInputBG = {
+    label = "", click_function = "none", function_owner = self,
+    position = {-6.27, Yoffset, -1.40}, rotation = {0, 0, 0},
+    width = 1100, height = 1000, font_size = 100,
+    color = {0.95, 0.95, 0.95, 1},
+    scale = {0.1, 0.1, 0.1}
+}
+
+-- Custom Bubble Input Field
+customBubbleInput = {
+    label = "Size", input_function = "setCustomBubbleSize", function_owner = self,
+    position = {-6.27, Yoffset, -1.40}, rotation = {0, 0, 0},
+    width = 900, height = 800, font_size = 500, alignment = 3, scale = {0.1, 0.1, 0.1},
+    color = {1, 1, 1, 1}, font_color = {0.2, 0.2, 0.2}
+}
+
+-- Custom Bubble Button
+customBubbleBtn = {
+    label = "Go", tooltip = "Apply custom bubble size", click_function = "applyCustomBubble", function_owner = self,
+    position = {-6.07, Yoffset, -1.40}, rotation = {0, 0, 0},
+    width = 800, height = 1000, font_size = 500,
+    color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1},
+    scale = {0.1, 0.1, 0.1}
+}
+
+function save(obj, player_color, alt)
+    local selected = Player[player_color].getSelectedObjects()
+    if not selected or #selected == 0 then
+        printToColor("Please first select a model to save its position", player_color)
+        return
+    end
+
+    -- Reset and capture all selected objects in one go
+    savedPositions = {}
+    for _, o in ipairs(selected) do
+        table.insert(savedPositions, {
+            guid     = o.getGUID(),
+            position = o.getPosition(),
+            rotation = o.getRotation()
+        })
+    end
+
+    -- Single message
+    printToColor(#savedPositions .. " objects positions saved!", player_color)
+end
+
+function restore(playerColor)
+  if not savedPositions or #savedPositions == 0 then
+    broadcastToColor("No saved positions to restore.", playerColor, {1, 0.5, 0})
+    return
+  end
+
+  for i, v in ipairs(savedPositions) do
+    local obj = getObjectFromGUID(v.guid)
+    if obj ~= nil then
+      obj.setRotation(v.rotation)
+      obj.setPositionSmooth(v.position, false, true)
+    end
+  end
+end
+
+local auto1D6 = {
+    label          = "Instant 1D6",
+    tooltip="Roll 1D6 Instantly",
+    click_function = "autoRoll1D6",
+    function_owner = self,
+    position       = {-7.5, Yoffset, 0.52},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+
+local auto2D6 = {
+    label          = "Instant 2D6",
+    tooltip="Roll 2D6 Instantly",
+    click_function = "autoRoll2D6",
+    function_owner = self,
+    position       = {-7.5, Yoffset, 0.18},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+
+
+local revertRollBtn = {
+    label          = "Revert Roll",
+    tooltip="It takes 1 second after rolling to 'lock in'",
+    click_function = "revertRoll",
+    function_owner = self,
+    position       = {-7.5, Yoffset, -0.16},
+    rotation       = { 0, 0, 0 },
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+
+local redoRollBtn = {
+    label          = "Redo Roll",
+    tooltip        = "Redo previously reverted roll",
+    click_function = "redoRoll",
+    function_owner = self,
+    position       = {-6.0, Yoffset, -0.16},
+    rotation       = { 0, 0, 0 },
+    width = 800, height = 300, font_size = 120,
+    color = {0.13, 0.13, 0.13, 1},
+    font_color = {1, 1, 1},
+    hover_color = {0.2, 0.2, 0.2, 1},
+    press_color = {0.27, 0.27, 0.27, 1},
+    scale = {0.5, 0.5, 0.5}
+}
+
+-- Background Box (Soft Off-White for a Professional Look)
+local customDiceInputBG = {
+    label = "", click_function = "none", function_owner = self,
+    position = {-7.5, Yoffset, -0.82}, rotation = {0, 0, 0},
+    width = 1300, height = 375, font_size = 100,
+    color = {0.95, 0.95, 0.95, 1}, -- Soft off-white
+    scale = {0.5, 0.5, 0.5}
+}
+
+-- Input Field (Bright White)
+local customDiceInput = {
+    label = "Enter Dice #", input_function = "setCustomDiceCount", function_owner = self,
+    position = {-7.5, Yoffset, -0.82}, rotation = {0, 0, 0},
+    width = 1100, height = 225, font_size = 180, alignment = 2, scale = {0.5, 0.5, 0.5},
+    color = {1, 1, 1, 1}, -- Pure white
+    font_color = {0.2, 0.2, 0.2} -- Dark gray text
+}
+
+-- Modern Black "Spawn Dice" Button
+local customDiceSpawnButton = {
+    label = "Spawn Dice", click_function = "spawnCustomDice", function_owner = self,
+    position = {-7.5, Yoffset, -0.50}, rotation = {0, 0, 0},
+    width = 1300, height = 300, font_size = 150,
+    color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
+    font_color = {1, 1, 1}, -- White text for high contrast
+    hover_color = {0.2, 0.2, 0.2, 1}, -- Dark gray when hovered
+    press_color = {0.27, 0.27, 0.27, 1}, -- Slightly lighter gray when pressed
+    scale = {0.5, 0.5, 0.5}
+}
+local customDiceCount = 1 -- Default number of dice
+
+lethalHitsThreshold = 6
+sustainedHitsThreshold = 6
+sustainedLethalHitsThreshold = 6
+
+rollMode = true
+selectedColor = "White"
+diceType = "Die_6_Rounded"
+customDiceImage = nil
+scaleBtn = 0.1
+previousRollData = {}
+previousRollStack = {}
+previousRollIndex = 0
+maxPreviousRolls = 10
+rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
+if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
+    rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
+end
+roller = getObjectFromGUID(rollerGUID)
+
+function importOpposDice(obj, player, alt)
+    -- clear existing dice
+    for _, d in ipairs(getDice()) do d.destroy() end
+
+    -- get opposite mat and its bounds
+    local oppMatGUID = (currentMat=="Red")
+        and Global.getVar("blueCustomDiceMat_GUID")
+        or   Global.getVar("redCustomDiceMat_GUID")
+    local oppMat = getObjectFromGUID(oppMatGUID)
+    if not oppMat then
+        printToColor("Opposite dice mat not found.", player, "Orange")
+        return
+    end
+    local mb = oppMat.getBounds()
+    local mL, mR = mb.center.x - mb.size.x/2, mb.center.x + mb.size.x/2
+    local mLo, mUp = mb.center.z - mb.size.z/2, mb.center.z + mb.size.z/2
+    local mYl, mYh = mb.center.y - mb.size.y/2, mb.center.y + mb.size.y/2 + 3
+
+    -- get opposite lethal zone and its bounds
+    local oppLethalGUID = (currentMat=="Red")
+        and Global.getVar("blueLethalHits_GUID")
+        or   Global.getVar("redLethalHits_GUID")
+    local oppLethal = getObjectFromGUID(oppLethalGUID)
+    local lb, lL, lR, lLo, lUp, lYl, lYh
+    if oppLethal then
+        lb = oppLethal.getBounds()
+        lL, lR = lb.center.x - lb.size.x/2, lb.center.x + lb.size.x/2
+        lLo, lUp = lb.center.z - lb.size.z/2, lb.center.z + lb.size.z/2
+        lYl, lYh = lb.center.y - lb.size.y/2, lb.center.y + lb.size.y/2 + 3
+    else
+        printToColor("Warning: opposite lethal zone not found.", player)
+    end
+
+    local toImport = {}
+    local seen = {}
+
+    -- gather dice: check lethal zone first, then main mat
+    for _, o in ipairs(getAllObjects()) do
+        if o.tag=="Dice" and o.resting then
+            local p = o.getPosition()
+            -- lethal zone?
+            if lb
+            and p.x > lL and p.x < lR
+            and p.z > lLo and p.z < lUp
+            and p.y > lYl and p.y < lYh
+            then
+                seen[o.getGUID()] = true
+                table.insert(toImport, { die=o, origin=lb.center, lethal=true })
+            -- main mat (excluding any already seen in lethal)
+            elseif p.x > mL and p.x < mR
+            and p.z > mLo and p.z < mUp
+            and p.y > mYl and p.y < mYh
+            and not seen[o.getGUID()]
+            then
+                seen[o.getGUID()] = true
+                table.insert(toImport, { die=o, origin=mb.center, lethal=false })
+            end
+        end
+    end
+
+    if #toImport == 0 then
+        printToColor("No dice found on the opposite mat.", player, "Yellow")
+        return
+    end
+
+    -- clone into this mat: shift lethal dice by (-3, -3) in X/Z
+    local mc = self.getBounds().center
+    local count = 0
+    for _, entry in ipairs(toImport) do
+        local dp = entry.die.getPosition()
+        local cb = entry.origin
+        local relX, relY, relZ = -(dp.x - cb.x), dp.y - cb.y, -(dp.z - cb.z)
+        local nx, ny, nz = mc.x + relX, mc.y + relY, mc.z + relZ
+        if entry.lethal then
+            local dx = (currentMat == "Red") and -6 or 6
+            local dz = (currentMat == "Red") and 4.2 or -4.2
+            nx = nx + dx
+            nz = nz + dz
+        end
+        entry.die.clone({ position={nx, ny, nz}, snap_to_grid=false })
+        count = count + 1
+    end
+
+    printToAll("Imported "..count.." dice from the opposite mat, including lethal hits.", {1,1,1})
+end
+
+
+
+local lastSpawnPosition = nil -- Keep track of the last spawned dice position
+local diceCount = 0 -- Track the number of dice spawned in the current sequence
+function storeCurrentDiceAsPreviousRoll()
+    -- Build a snapshot of the current dice on the mat (positions, values, tints)
+    local snapshot = {}
+    for _, die in ipairs(getDice()) do
+        local c = die.getCustomObject()
+        local d = {
+            pos  = die.getPosition(),
+            rot  = die.getRotation(),
+            val  = die.getValue(),
+            tint = die.getColorTint(),
+            customImage = nil
+        }
+        if c then d.customImage = c.image end
+        table.insert(snapshot, d)
+    end
+
+    -- If we've undone some rolls and then store a new roll, drop any future redo history
+    if previousRollIndex < #previousRollStack then
+        for i = #previousRollStack, previousRollIndex + 1, -1 do
+            table.remove(previousRollStack, i)
+        end
+    end
+
+    table.insert(previousRollStack, snapshot)
+    -- Trim stack to maximum size
+    while #previousRollStack > maxPreviousRolls do
+        table.remove(previousRollStack, 1)
+    end
+    previousRollIndex = #previousRollStack
+    previousRollData = previousRollStack[previousRollIndex] or {}
+end
+
+function revertRoll(obj, player, alt)
+    -- Undo one step in the previousRollStack. Use previousRollIndex to track position.
+    if previousRollIndex == 0 or not previousRollStack or #previousRollStack == 0 then
+        printToColor("No previous roll found.", player, "Red")
+        return
+    end
+
+    local snapshot = previousRollStack[previousRollIndex]
+    if not snapshot or #snapshot == 0 then
+        printToColor("No previous roll data available.", player, "Red")
+        return
+    end
+
+    -- Destroy current dice and spawn snapshot dice
+    for _, die in ipairs(getDice()) do die.destroy() end
+    for _, data in ipairs(snapshot) do
+        local diceTypeToSpawn = "Die_6_Rounded"
+        if data.customImage then
+            diceTypeToSpawn = "Custom_Dice"
+        elseif pipColorBtn.color == "Black" then
+            diceTypeToSpawn = "Die_6"
+        end
+        local spawned = spawnObject({ type = diceTypeToSpawn, position = data.pos, rotation = data.rot })
+        if data.customImage then spawned.setCustomObject({ image = data.customImage, type = 1 }) end
+        spawned.setColorTint(data.tint)
+        spawned.setValue(data.val)
+    end
+
+    printToColor("Reverted to roll #" .. tostring(previousRollIndex) .. " of " .. tostring(#previousRollStack), player, "Green")
+    -- Move pointer back so another click reverts another step
+    previousRollIndex = math.max(0, previousRollIndex - 1)
+    previousRollData = previousRollStack[previousRollIndex] or {}
+end
+
+function redoRoll(obj, player, alt)
+    -- Move forward in the previousRollStack if possible
+    if not previousRollStack or #previousRollStack == 0 then
+        printToColor("No roll history available.", player, "Red")
+        return
+    end
+    if previousRollIndex >= #previousRollStack then
+        printToColor("No newer roll to redo.", player, "Red")
+        return
+    end
+    previousRollIndex = previousRollIndex + 1
+    local snapshot = previousRollStack[previousRollIndex]
+    if not snapshot or #snapshot == 0 then
+        printToColor("No roll data at this index.", player, "Red")
+        return
+    end
+    for _, die in ipairs(getDice()) do die.destroy() end
+    for _, data in ipairs(snapshot) do
+        local diceTypeToSpawn = "Die_6_Rounded"
+        if data.customImage then
+            diceTypeToSpawn = "Custom_Dice"
+        elseif pipColorBtn.color == "Black" then
+            diceTypeToSpawn = "Die_6"
+        end
+        local spawned = spawnObject({ type = diceTypeToSpawn, position = data.pos, rotation = data.rot })
+        if data.customImage then spawned.setCustomObject({ image = data.customImage, type = 1 }) end
+        spawned.setColorTint(data.tint)
+        spawned.setValue(data.val)
+    end
+    printToColor("Redone to roll #" .. tostring(previousRollIndex) .. " of " .. tostring(#previousRollStack), player, "Green")
+    previousRollData = previousRollStack[previousRollIndex] or {}
+end
+function moveDiceToRoller(color, dice)
+    roller.call("setPlayerColor", { color = color })
+    for _, die in ipairs(dice) do
+        roller.call("setLastHolder", { obj = die, color = color })
+        roller.putObject(die)
+    end
+
+    -- Add this line at the end:
+    storeCurrentDiceAsPreviousRoll()
+    -- Infer roll phase and calculate stats
+    inferRollPhase(dice)
+end
+
+-- Evaluate a simple arithmetic expression safely (digits, + - * / and parentheses)
+-- Returns number on success, or nil + error message on failure
+local function evalSimpleExpr(expr)
+  if type(expr) ~= "string" then return nil, "invalid input" end
+  local s = expr:gsub("[xX]", "*")
+  s = s:gsub("%s+", "")
+  if s == "" then return nil, "empty" end
+  -- allow only digits, operators and parentheses
+  if s:find("[^%d%+%-%*/%(%)]") then return nil, "invalid characters" end
+
+  -- tokenize
+  local tokens = {}
+  local i, n = 1, #s
+  while i <= n do
+    local c = s:sub(i, i)
+    if c:match("%d") then
+      local j = i
+      while j <= n and s:sub(j, j):match("%d") do j = j + 1 end
+      table.insert(tokens, tonumber(s:sub(i, j - 1)))
+      i = j
+    elseif c == '-' then
+      -- handle unary minus by inserting 0 before '-'
+      local prev = tokens[#tokens]
+      local prevIsOp = (prev == nil) or (prev == '+') or (prev == '-') or (prev == '*') or (prev == '/') or (prev == '(')
+      if prevIsOp then table.insert(tokens, 0) end
+      table.insert(tokens, '-')
+      i = i + 1
+    elseif c == '+' or c == '*' or c == '/' or c == '(' or c == ')' then
+      table.insert(tokens, c)
+      i = i + 1
+    else
+      return nil, "invalid token"
+    end
+  end
+
+  -- shunting-yard to RPN
+  local output, ops = {}, {}
+  local prec = { ['+'] = 1, ['-'] = 1, ['*'] = 2, ['/'] = 2 }
+  local function isop(x) return prec[x] ~= nil end
+  for _, t in ipairs(tokens) do
+    if type(t) == 'number' then
+      table.insert(output, t)
+    elseif t == '(' then
+      table.insert(ops, t)
+    elseif t == ')' then
+      local found = false
+      while #ops > 0 do
+        local top = ops[#ops]
+        table.remove(ops)
+        if top == '(' then found = true break end
+        table.insert(output, top)
+      end
+      if not found then return nil, "mismatched parentheses" end
+    elseif isop(t) then
+      while #ops > 0 and isop(ops[#ops]) and prec[ops[#ops]] >= prec[t] do
+        table.insert(output, ops[#ops])
+        table.remove(ops)
+      end
+      table.insert(ops, t)
+    else
+      return nil, "invalid token"
+    end
+  end
+  while #ops > 0 do
+    local top = ops[#ops]
+    table.remove(ops)
+    if top == '(' then return nil, "mismatched parentheses" end
+    table.insert(output, top)
+  end
+
+  -- evaluate RPN
+  local stack = {}
+  local function pop2()
+    local b = stack[#stack]; stack[#stack] = nil
+    local a = stack[#stack]; stack[#stack] = nil
+    if a == nil or b == nil then return nil end
+    return a, b
+  end
+  for _, t in ipairs(output) do
+    if type(t) == 'number' then
+      table.insert(stack, t)
+    else
+      local a, b = pop2()
+      if a == nil then return nil, "invalid expression" end
+      if t == '+' then table.insert(stack, a + b)
+      elseif t == '-' then table.insert(stack, a - b)
+      elseif t == '*' then table.insert(stack, a * b)
+      elseif t == '/' then
+        if b == 0 then return nil, "division by zero" end
+        table.insert(stack, a / b)
+      else
+        return nil, "invalid operator"
+      end
+    end
+  end
+  if #stack ~= 1 then return nil, "invalid expression" end
+  return stack[1]
+end
+
+function setCustomDiceCount(_, player, value, _)
+  -- Accept either a plain number or a simple math expression
+  local num = tonumber(value)
+  if not num then
+    local result, err = evalSimpleExpr(tostring(value or ""))
+    if result then num = result end
+  end
+  if num and num > 0 and num <= 128 then
+    customDiceCount = math.floor(num)
+  else
+    printToColor("Invalid Number! Enter a number or expression between 1 and 128.", player, "Red")
+  end
+end
+
+function spawnCustomDice(_, player, _)
+    if customDiceCount and customDiceCount > 0 then
+        spawnDice(customDiceCount, player)
+        customDiceCount = nil -- Reset custom dice count
+        self.editInput({index = 0, value = ""}) -- Clear the input field (replace index if needed)
+        printToColor("Custom Dice Count reset after spawning.", player, "Yellow")
+    else
+        printToColor("No valid custom dice count set.", player, "Red")
+    end
+end
+
+function autoRoll(obj, player, alt, numDice)
+    numDice = numDice or 1
+    local total = 0
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    local startX = self.getPosition().x + (currentMat == "Blue" and -16 or 16)
+    local startY = self.getPosition().y + 1
+    local startZ = self.getPosition().z
+    if lastSpawnPosition then
+        startX = lastSpawnPosition.x
+        startY = lastSpawnPosition.y
+        startZ = lastSpawnPosition.z
+    end
+    local diceColors = {
+        {0.627, 0.124, 0.941}, -- purple
+        {1, 0.341, 0.2},       -- orange
+        {0.203, 0.674, 0.325}, -- green
+        {0.160, 0.596, 0.965}, -- blue
+        {0.898, 0.223, 0.509}, -- pink
+        {0.254, 0.211, 0.098}, -- brown
+        {1, 0.298, 0.298},     -- red
+        {0.345, 0.184, 0.506}, -- indigo
+        {0.988, 0.761, 0.498}, -- light orange
+        {0.847, 0.647, 0.125}, -- gold
+    }
+
+    local colorIndex = math.random(#diceColors)
+    local rollColor = diceColors[colorIndex]
+    for i = 1, numDice do
+        local result = math.random(6)
+        total = total + result
+        printToAll(player .. " rolled a D6: " .. result, stringColorToRGB(player))
+        local position = {
+            x = startX + directionMultiplier * (i - 1) * 1.5,
+            y = startY,
+            z = startZ
+        }
+        local die = spawnObject({
+            type = "Die_6_Rounded",
+            position = position,
+            rotation = {0, 180, 0}
+        })
+        if die then
+            die.setValue(result)
+            die.setColorTint(rollColor)
+            die.setCustomObject({
+                type = 1,
+                image = customDiceImage,
+                face = 1,
+                font_color = {0, 0, 0}
+            })
+            diceCount = diceCount + 1
+            lastSpawnPosition = {
+                x = position.x + directionMultiplier * 1.5,
+                y = position.y,
+                z = position.z
+            }
+            if diceCount >= 5 then
+                lastSpawnPosition = nil
+                diceCount = 0
+            end
+        else
+            printToColor("Failed to spawn a die for roll " .. i, player, "Red")
+        end
+    end
+    printToAll(player .. " rolled a total of " .. total .. " (" .. numDice .. "D6)", stringColorToRGB(player))
+end
+
+
+
+-- Reset the last spawn position and dice count when the dice area is cleared
+function resetSpawnPosition()
+    lastSpawnPosition = nil
+    diceCount = 0
+end
+
+function autoRoll1D6(obj, player, alt)
+    autoRoll(obj, player, alt, 1)
+end
+
+function autoRoll2D6(obj, player, alt)
+    autoRoll(obj, player, alt, 2)
+end
+
+function getDice()
+    local dice = {}
+    local b = self.getBounds()
+    local left  = b.center.x - b.size.x/2
+    local right = b.center.x + b.size.x/2
+    local back  = b.center.z - b.size.z/2
+    local front = b.center.z + b.size.z/2
+    local ybot  = b.center.y - b.size.y/2
+    local ytop  = b.center.y + b.size.y/2 + 3
+
+    if currentMat == "Red" then
+        right = right - 5
+        back  = back  + 2.9
+        front = front - 0.5
+    else
+        left  = left  + 5
+        back  = back  + 0.5
+        front = front - 2.9
+    end
+
+    local lethalGUID = (currentMat == "Red")
+        and Global.getVar("redLethalHits_GUID")
+        or   Global.getVar("blueLethalHits_GUID")
+    local lzone = getObjectFromGUID(lethalGUID)
+    local lbound
+    if lzone then
+        local lb = lzone.getBounds()
+        lbound = {
+            minx = lb.center.x - lb.size.x/2,
+            maxx = lb.center.x + lb.size.x/2,
+            minz = lb.center.z - lb.size.z/2,
+            maxz = lb.center.z + lb.size.z/2,
+            miny = lb.center.y - lb.size.y/2,
+            maxy = lb.center.y + lb.size.y/2
+        }
+    end
+
+    for _, o in ipairs(getAllObjects()) do
+        if o.tag == "Dice" and o.resting then
+            local p = o.getPosition()
+            if p.x > left and p.x < right
+            and p.z > back and p.z < front
+            and p.y > ybot and p.y < ytop
+            and not (lbound
+                and p.x > lbound.minx and p.x < lbound.maxx
+                and p.z > lbound.minz and p.z < lbound.maxz
+                and p.y > lbound.miny and p.y < lbound.maxy)
+            then
+                table.insert(dice, o)
+            end
+        end
+    end
+
+    return dice
+end
+
+
+
+function customDice(obj, player, alt)
+    found = false
+    newImage = nil
+    newTint = nil
+
+    dice = getDice()
+    for _, die in ipairs(dice) do
+        local image = die.getCustomObject()["image"]
+        if image ~= nil then
+            found = true
+            newTint = die.getColorTint()
+            newImage = image
+            printToColor("You have set a custom die!", player, "Yellow")
+            break
+        else
+            found = true
+            newTint = die.getColorTint()
+            printToColor("You have set a custom colour!", player, "Yellow")
+        end
+    end
+
+    if found then
+        customDiceImage = newImage
+        selectedColor = newTint
+        setDiceType()
+    end
+end
+
+function toggleLowerUpper()
+    setLowerUpper(not lowerUpper)
+end
+
+function setLowerUpper( value )
+    lowerUpper= value
+    modifyBtns()
+end
+
+function modifyBtns()
+    local sign=""
+    for i=1, 6 do
+        if lowerUpper then sign = lowerSign else sign = upperSign end
+        self.editButton({ index = (16+i*2), label = clearDiceBtnLabel .. i .. sign })
+
+        local selOrRollLabel = "Roll\n"
+        if not rollMode then
+            selOrRollLabel = "Sel\n"
+        end
+        self.editButton({ index = (17+i*2), label = selOrRollLabel .. i .. sign })
+    end
+end
+
+function RollOrSelectDice(obj, player, alt)
+    if not alt then
+        Player[player].clearSelectedObjects()
+        if rollMode then
+            moveDiceToRoller( player, getDice() )
+        else
+            for i, die in ipairs(getDice()) do
+                die.addToPlayerSelection(player)
+            end
+        end
+    else
+        rollMode = not rollMode
+
+        if rollMode then
+            self.editButton({index=3, label=rollAllLabel, tooltip=rollAllTooltip})
+        else
+            self.editButton({index=3, label=selectAllLabel, tooltip=selectAllTooltip})
+        end
+        modifyBtns()
+    end
+end
+
+function RollDiceOrdered(_, player, _)
+    Player[player].clearSelectedObjects()
+    roller.setVar("orderedOnNextRoll", true)
+    moveDiceToRoller(player, getDice())
+end
+
+function RollDiceOrderedGroup2(obj, player, alt)
+    roller.setVar("groupSizeOnNextRoll", 2)
+    RollDiceOrdered(obj, player, alt)
+end
+
+function RollDiceOrderedGroup3(obj, player, alt)
+    roller.setVar("groupSizeOnNextRoll", 3)
+    RollDiceOrdered(obj, player, alt)
+end
+
+function RollOrSelectDeleteDice1(obj, color, alt)
+    SelectDeleteDiceX("Sel", 1, alt, lowerUpper, color)
+end
+function RollOrSelectDeleteDice2(obj, color, alt)
+    SelectDeleteDiceX("Sel", 2, alt, lowerUpper, color)
+end
+function RollOrSelectDeleteDice3(obj, color, alt)
+    SelectDeleteDiceX("Sel", 3, alt, lowerUpper, color)
+end
+function RollOrSelectDeleteDice4(obj, color, alt)
+    SelectDeleteDiceX("Sel", 4, alt, lowerUpper, color)
+end
+function RollOrSelectDeleteDice5(obj, color, alt)
+    SelectDeleteDiceX("Sel", 5, alt, lowerUpper, color)
+end
+function RollOrSelectDeleteDice6(obj, color, alt)
+    SelectDeleteDiceX("Sel", 6, alt, lowerUpper, color)
+end
+
+function SelectDeleteDiceX(action, n, selectOthers, lowUp, color)
+    Player[color].clearSelectedObjects()
+    selDel = true
+    if action == "Del" then selDel = false end
+    local counter = {0,0,0,0,0,0}
+    local numberName = {"ones", "twos", "threes", "fours", "fives", "sixes"}
+    local text = Player[color].steam_name .. " deleted "
+    local somethingToPrint = false
+
+    for i, die in ipairs(getDice()) do
+        if die.getValue() == n or (selectOthers and lowUp and die.getValue()< n)  or (selectOthers and not lowUp and die.getValue()> n) then
+            if selDel then
+                die.addToPlayerSelection(color)
+            else
+                die.destroy()
+                counter[die.getValue()]=counter[die.getValue()]+1
+            end
+
+        end
+    end
+
+    for i, val in ipairs(counter) do
+        if val > 0 then
+            text = text.." \u{00B7} " .. counter[i] .. " " .. numberName[i]
+            somethingToPrint = true
+        end
+    end
+    if somethingToPrint then printToAll(text , "Yellow") end
+    if oneTimeUpper then setLowerUpper( true ) end
+
+    if selDel and rollMode then
+        moveDiceToRoller(color, Player[color].getSelectedObjects())
+    end
+end
+
+function moveDiceToRoller(color, dice)
+    roller.call("setPlayerColor", {color=color})
+
+    for _, die in ipairs(dice) do
+        roller.call("setLastHolder", {obj=die, color=color})
+        roller.putObject(die)
+    end
+end
+
+function clearDiceAll(obj, color, alt)
+    if not alt then
+        printToColor("Use right click!", color, "Orange")
+        return
+    end
+    createLethalText(true)
+    cleanupLethalHits()
+    clearDiceX(6, true, color)
+    moveDiceBackToBoard(color)
+end
+
+function clearDice1(obj, color, alt)
+    SelectDeleteDiceX("Del", 1, alt, lowerUpper, color)
+end
+function clearDice2(obj, color, alt)
+    SelectDeleteDiceX("Del", 2, alt, lowerUpper, color)
+end
+function clearDice3(obj, color, alt)
+    SelectDeleteDiceX("Del", 3, alt, lowerUpper, color)
+end
+function clearDice4(obj, color, alt)
+    SelectDeleteDiceX("Del", 4, alt, lowerUpper, color)
+end
+function clearDice5(obj, color, alt)
+    SelectDeleteDiceX("Del", 5, alt, lowerUpper, color)
+end
+function clearDice6(obj, color, alt)
+    SelectDeleteDiceX("Del", 6, alt, lowerUpper, color)
+end
+
+function clearDiceX(n, deleteLower, color)
+    local counter={0,0,0,0,0,0}
+    local numberName={"ones", "twos", "threes", "fours", "fives", "sixes"}
+    local text = Player[color].steam_name .. " deleted "
+    local somethingToPrint=false
+        for i, die in ipairs(getDice()) do
+        if die.getValue() == n or (deleteLower and die.getValue()< n) then
+            die.destroy()
+            counter[die.getValue()]=counter[die.getValue()]+1
+        end
+    end
+    for i, val in ipairs(counter) do
+        if val > 0 then
+            text=text.." \u{00B7} "..counter[i].." "..numberName[i]
+            somethingToPrint=true
+        end
+    end
+    if somethingToPrint then printToAll(text , "Yellow") end
+end
+
+function spawnDice1(obj, player, alt)
+    spawnDice(1,player)
+end
+function spawnDice2(obj, player, alt)
+    spawnDice(2,player)
+end
+function spawnDice3(obj, player, alt)
+    spawnDice(3,player)
+end
+function spawnDice4(obj, player, alt)
+    spawnDice(4,player)
+end
+function spawnDice5(obj, player, alt)
+    spawnDice(5,player)
+end
+function spawnDice10(obj, player, alt)
+    spawnDice(10,player)
+end
+function spawnDice25(obj, player, alt)
+    spawnDice(25,player)
+end
+
+function spawnDice(n,player)
+    local playerDiceSpeed = player == "Red" and Global.getVar("redDiceSpawnTime") or Global.getVar("blueDiceSpawnTime")
+    local currentTime = os.time()
+    local disableTime = (playerDiceSpeed == "slow") and 0.6 or 0.2
+    if currentTime-lastClick<disableTime then
+        printToColor("Wait a bit!", player, "Yellow")
+        return
+    end
+    lastClick=currentTime
+    local offset=#getDice()
+    if offset+n>128 then printToColor("Dice limit reached!", player, "Orange")  end
+    local grid=0
+    local row=0
+    local col=0
+    for i=1, offset do
+        col=col+1
+        if col>4 then
+            col=0
+            row= row+1
+            if row > 4 then
+                row=0
+                grid=grid+1
+            end
+        end
+    end
+
+    if offset+n>128 then n=128-offset end
+    for i=1, n do
+    local die=spawnObject({
+        type              = diceType,
+        position          = self.positionToWorld({4-grid*1.5-col*0.25,0.5,-0.3+row*0.25}),
+        rotation          = self.getRotation() + Vector(0.0, 180.0, 0.0),
+        })
+        col=col+1
+        if col>4 then
+            col=0
+            row= row+1
+            if row > 4 then
+                row=0
+                grid=grid+1
+            end
+        end
+
+        if customDiceImage ~= nil then
+            die.setCustomObject({
+                image = customDiceImage,
+                type = 1
+            })
+        end
+
+        if selectedColor ~= nil then
+            die.setColorTint(selectedColor)
+        end
+    end
+end
+
+-- function toggleSustainedHitsThreshold()
+--     if sustainedHitsThreshold == 6 then
+--         sustainedHitsThreshold = 5
+--         self.editButton({
+--             index = 35,
+--             label = selectAllLabel,  -- "Sustained Hits 5+"
+--             tooltip = selectAllTooltip  -- "Left-click to copy dice >= 5+. Right-click to switch to 6+."
+--         })
+--         print("DEBUG: Sustained Hits threshold set to 5+")
+--     else
+--         sustainedHitsThreshold = 6
+--         -- Update button label and tooltip for 6+ threshold
+--         self.editButton({
+--             index = 35,
+--             label = rollAllLabel,  -- "Sustained Hits 6+"
+--             tooltip = rollAllTooltip  -- "Left-click to copy dice >= 6+. Right-click to switch to 5+."
+--         })
+--         print("DEBUG: Sustained Hits threshold set to 6+")
+--     end
+-- end
+
+
+function sustainedHitsAction(_, color, alt)
+    -- Left-click: apply 6+. Right-click (alt): apply 5+. No toggle.
+    local threshold = alt and 5 or 6
+    local diceToClone = {}
+
+    -- Helper: compare positions (x,z) with small epsilon
+    local function near_pos(a, b, eps)
+        eps = eps or 0.5
+        if not a or not b then return false end
+        local dx = a.x - b.x
+        local dz = a.z - b.z
+        return (dx*dx + dz*dz) <= (eps*eps)
+    end
+
+    -- Helper: compare color tint approximately
+    local function near_tint(a, b, eps)
+        eps = eps or 0.05
+        if not a or not b then return false end
+        return math.abs(a[1]-b[1]) <= eps and math.abs(a[2]-b[2]) <= eps and math.abs(a[3]-b[3]) <= eps
+    end
+
+    -- Match previous roll entries to current dice by value + tint + approximate position
+    if previousRollData and #previousRollData > 0 then
+        local prevCandidates = {}
+        for _, d in ipairs(previousRollData) do
+            if d.val >= threshold then
+                table.insert(prevCandidates, d)
+            end
+        end
+
+        if #prevCandidates > 0 then
+            local currentDice = getDice()
+            local used = {}
+            for _, prev in ipairs(prevCandidates) do
+                for i, die in ipairs(currentDice) do
+                    if not used[i] and die.getValue() == prev.val then
+                        local tint_ok = near_tint(die.getColorTint(), prev.tint)
+                        local pos_ok = near_pos(die.getPosition(), prev.pos)
+                        if tint_ok and pos_ok then
+                            table.insert(diceToClone, die)
+                            used[i] = true
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    -- Fallback: if we didn't collect any by roll-matching, fall back to global behavior
+    if #diceToClone == 0 then
+        for _, die in ipairs(getDice()) do
+            if die.getValue() >= threshold then
+                table.insert(diceToClone, die)
+            end
+        end
+        printToAll("Warning: No previous roll match found — duplicated all current dice >= " .. threshold .. "+", {1,0.5,0.2})
+    end
+
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    local count = 0
+    for index, die in ipairs(diceToClone) do
+        local p = die.getPosition()
+        p.x = p.x + (8.5 * directionMultiplier)
+        die.clone({position = p, snap_to_grid = false})
+        count = count + 1
+    end
+
+    -- Log for all players
+    printToAll("Sustained Hits duplicated: " .. tostring(count) .. " (threshold " .. tostring(threshold) .. "+)")
+end
+
+
+-- New function for combined action
+function sustainedLethalHitsAction(_, color, alt)
+    -- Left-click: apply 6+. Right-click: apply 5+. No toggle.
+    local threshold = alt and 5 or 6
+    local sixPositions = {}
+    local sixDice = {}
+
+    local function near_pos(a, b, eps)
+        eps = eps or 0.5
+        if not a or not b then return false end
+        local dx = a.x - b.x
+        local dz = a.z - b.z
+        return (dx*dx + dz*dz) <= (eps*eps)
+    end
+    local function near_tint(a, b, eps)
+        eps = eps or 0.05
+        if not a or not b then return false end
+        return math.abs(a[1]-b[1]) <= eps and math.abs(a[2]-b[2]) <= eps and math.abs(a[3]-b[3]) <= eps
+    end
+
+    if previousRollData and #previousRollData > 0 then
+        local prevCandidates = {}
+        for _, d in ipairs(previousRollData) do
+            if d.val >= threshold then
+                table.insert(prevCandidates, d)
+            end
+        end
+        if #prevCandidates > 0 then
+            local currentDice = getDice()
+            local used = {}
+            for _, prev in ipairs(prevCandidates) do
+                for i, die in ipairs(currentDice) do
+                    if not used[i] and die.getValue() == prev.val then
+                        local tint_ok = near_tint(die.getColorTint(), prev.tint)
+                        local pos_ok = near_pos(die.getPosition(), prev.pos)
+                        if tint_ok and pos_ok then
+                            table.insert(sixDice, die)
+                            table.insert(sixPositions, die.getPosition())
+                            used[i] = true
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    -- Fallback to global selection if none matched
+    if #sixDice == 0 then
+        for _, die in ipairs(getDice()) do
+            if die.getValue() >= threshold then
+                table.insert(sixDice, die)
+                table.insert(sixPositions, die.getPosition())
+            end
+        end
+        printToAll("Warning: No previous roll match found — duplicated all current dice >= " .. threshold .. "+", {1,0.5,0.2})
+    end
+
+    -- Move lethal hits using same left/right semantics
+    lethalHitsAction('sustainedAndLethal', color, alt)
+
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    local count = 0
+    for i, die in ipairs(sixDice) do
+        local p = sixPositions[i]
+        p.x = p.x + (8.5 * directionMultiplier)
+        die.clone({position = p, snap_to_grid = false})
+        count = count + 1
+    end
+    printToAll("Sustained & Lethal duplicated: " .. tostring(count) .. " (threshold " .. tostring(threshold) .. "+)")
+end
+
+function getObjectsPositionToSave(player, hoveredObject)
+  if #player.getSelectedObjects() != 0 then
+    return player.getSelectedObjects()
+  elseif hoveredObject != nil then
+    return table.insert({}, hoveredObject)
+  end
+  return nil
+end
+
+function savePosition(obj)
+  table.insert(savedPositions, {
+    guid = obj.getGUID(),
+    position = obj.getPosition(),
+    rotation = obj.getRotation()
+  })
+end
+
+function savePositionClicked(playerColor, hoveredObject)
+    savedPositions = {}
+    local objects = getObjectsPositionToSave(Player[playerColor], hoveredObject)
+    if objects then
+        for _, v in ipairs(objects) do
+            savePosition(v)
+        end
+        -- This will now print just once, with the total count:
+        printToColor(#objects .. " objects positions saved!", playerColor)
+    end
+end
+
+function restorePositionClicked(playerColor)
+  for i,v in ipairs(savedPositions) do
+    local obj = getObjectFromGUID(v.guid)
+    if obj != nil then
+      obj.setRotation(v.rotation)
+      obj.setPositionSmooth(v.position, false, true)
+    end
+  end
+end
+
+-- function toggleFloatingIcon(playerColor, hoveredObject)
+--     if not hoveredObject then return end
+--     local existing = hoveredObject.getTable("floating_icon")
+--     if existing and existing.obj then
+--         if existing.updateID then Wait.stop(existing.updateID) end
+--         existing.obj.destroy()
+--         hoveredObject.setTable("floating_icon", nil)
+--         return
+--     end
+
+--     local p = hoveredObject.getPosition()
+--     local b = hoveredObject.getBounds()
+--     local topY = b.center.y + b.size.y/2
+--     local spawnPos = { x = p.x, y = topY + 5, z = p.z }
+
+--     local icon = spawnObject({
+--         type     = "Custom_Token",
+--         position = spawnPos,
+--         rotation = {90, 0, 0},
+--         scale    = {0.6, 0.6, 0.6}
+--     })
+
+--     icon.setCustomObject({
+--         image          = "https://steamusercontent-a.akamaihd.net/ugc/13501243924066232860/7D430689576B83A46A2669F2404B1DA70BC8998E/",
+--         thickness      = 0.2,
+--         merge_distance = 0.2,
+--         stand_up       = false,
+--         stackable      = false
+--     })
+
+--     icon.setLock(true)
+--     Wait.frames(function()
+--         Wait.frames(function()
+--             local bb = hoveredObject.getBounds()
+--             local newTop = bb.center.y + bb.size.y/2
+--             icon.setPosition({ x = bb.center.x, y = newTop + 5, z = bb.center.z })
+--         end, 2)
+--     end, 1)
+--     local function followObject()
+--         if not hoveredObject or not icon then return end
+--         local bb = hoveredObject.getBounds()
+--         local top = bb.center.y + bb.size.y/2
+--         icon.setPosition({ x = bb.center.x, y = top + 5, z = bb.center.z })
+--     end
+--     local updateID = Wait.time(followObject, 0.2, -1)
+--     hoveredObject.setTable("floating_icon", { obj = icon, updateID = updateID })
+-- end
+
+function onload()
+    -- addHotkey("Toggle Floating Icon", toggleFloatingIcon)
+
+    addHotkey("Auto 2 Inch Gap", arrangeModelsWith2Inch)
+    addHotkey('Save position', savePositionClicked)
+    addHotkey('Restore position', restorePositionClicked)
+    addHotkey("Toggle 1 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(1, target, nil, playerColor)
+    end)
+    addHotkey("Toggle 3 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(3, target, nil, playerColor)
+    end)
+    addHotkey("Toggle 6 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(6, target, nil, playerColor)
+    end)
+    addHotkey("Toggle 9 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(9, target, nil, playerColor)
+    end)
+    addHotkey("Toggle 12 Inch Measurment Circle", function(playerColor, target)
+        changeMeasurementCircle(12.01, target, nil, playerColor)
+    end)
+    lastClick=os.time()
+    defaultFontSize=500
+    fontSize=defaultFontSize
+    lineCount=0
+    defaultDivisionLabel="|\n|"
+    self.createButton({
+        label="---", click_function="none", function_owner=Global,
+        position={-6.4,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=fontSize,
+        font_color={1, 1, 1},
+        scale={0.25, 0.25, 0.25},
+		alignment=2
+    })
+    self.createButton({
+        label="", click_function="none", function_owner=Global,
+        position={0.75,0.11,0.01}, rotation={0,0,0}, height=0, width=0, font_size=500,
+        font_color={1, 1, 1},
+        scale={0.25,2,1},
+		alignment=2
+    })
+
+	if self.getDescription() == '' then
+		setDefaultState()
+	end
+
+    emptyText = ' '
+	data2 = JSON.decode(self.getDescription())
+	Wait.time(checkDice, data2.Update_Frequency*1,-1)
+
+    self.createButton(clearAllDiceBtn)
+    self.createButton(rollOrSelectAllBtn)
+    self.createButton(orderedRollBtn)
+    self.createButton(orderedRollGroup2Btn)
+    self.createButton(orderedRollGroup3Btn)
+    self.createButton(add1d6Btn)
+    self.createButton(add2d6Btn)
+    self.createButton(add5d6Btn)
+    self.createButton(add10d6Btn)
+    self.createButton(add25d6Btn)
+    self.createButton(color1Btn)
+    self.createButton(color2Btn)
+    self.createButton(color3Btn)
+    self.createButton(color4Btn)
+    self.createButton(warningBtn)
+    self.createButton(pipColorBtn)
+    local sign=""
+    for i=1, 6 do
+        if lowerUpper then sign= lowerSign else sign=upperSign end
+        clearDiceBtn.position[3]=clearDiceBtn.position[3]+clearDiceBtnIncrement
+        clearDiceBtn.click_function="clearDice"..i
+        clearDiceBtn.label=clearDiceBtnLabel..i..sign
+        self.createButton(clearDiceBtn)
+
+        rollOrSelectDiceBtn.position[3] = rollOrSelectDiceBtn.position[3] + clearDiceBtnIncrement
+        rollOrSelectDiceBtn.label = "Roll\n" .. i .. sign
+        rollOrSelectDiceBtn.tooltip = "LMB Re-rolls this row\nRMB Re-rolls this row and lowers/uppers"
+        rollOrSelectDiceBtn.click_function = "RollOrSelectDeleteDice" .. i
+        self.createButton(rollOrSelectDiceBtn)
+    end
+    self.createButton(lowerUpperBtn)
+    self.createButton(customDiceBtn)
+    self.createButton(add3d6Btn)
+    self.createButton(add4d6Btn)
+    self.createButton(lethalHitsBtn)
+    self.createButton(sustainedHitsBtn)
+    self.createButton(sustainedLethalHitsBtn)
+    self.createButton(copyOthersDiceBtn)
+    self.createButton(auto1D6)
+    self.createButton(auto2D6)
+    self.createButton(revertRollBtn)  -- Add this near the end of the button creations
+    self.createButton(saveBtn)
+    self.createButton(restoreBtn)
+    self.createButton(measure1Btn)
+    self.createButton(measure3Btn)
+    self.createButton(measure6Btn)
+    self.createButton(measure9Btn)
+    self.createButton(measure12Btn)
+    self.createButton(customBubbleInputBG)
+    self.createInput(customBubbleInput)
+    self.createButton(customBubbleBtn)
+    self.createButton(clearMeasureAllBtn)
+    self.createButton(gap2Btn)
+    self.createButton(gap1Btn)
+    self.createInput(customDiceInput)
+    self.createButton(customDiceSpawnButton)
+    self.createButton(customDiceInputBG)
+    if self.getPosition().z < 0 then selectedColor="Blue" else selectedColor="Red" end modifyMenu(selectedColor)
+
+end
+
+local lethalHitsImageURL = "https://steamusercontent-a.akamaihd.net/ugc/10593277004116480902/D0CC2FC9091B2A05F33B6C76BD78E9C2EEAA62C8/"
+
+local spawnedObjects = {
+    Red = {
+        lethalHits = nil,
+        text = nil
+    },
+    Blue = {
+        lethalHits = nil,
+        text = nil
+    }
+}
+
+local RED_LETHAL_HITS_GUID = "7ac8ba"
+local BLUE_LETHAL_HITS_GUID = "71ab21"
+
+function ensureLethalHitsObjects()
+    if currentMat == "Red" then
+        if not spawnedObjects.Red.lethalHits then
+            local redLethalHitsObject = spawnObject({
+                type = "Custom_Token",
+                position = {21.1, 0.87, 23.5},
+                rotation = {0, 0, 0},
+                scale = {0.7, 0.7, 0.7},
+            })
+            if(Global.getVar("redLethalFace")) then
+                redLethalHitsObject.setCustomObject({
+                    image = lethalHitsImageURL,
+                    thickness = 0.2,
+                    merge_distance_pixels = 15,
+                    stand_up = false,
+                    stackable = false,
+                })
+                redLethalHitsObject.setLock(true)
+                redLethalHitsObject.setDescription("RaulDeFama Week!! Special thanks for creating 4k versions of the Letahl Hits Face!")
+                spawnedObjects.Red.lethalHits = redLethalHitsObject
+            end
+        end
+    elseif currentMat == "Blue" then
+        if not spawnedObjects.Blue.lethalHits then
+            local blueLethalHitsObject = spawnObject({
+                type = "Custom_Token",
+                position = {-21.1, 0.97, -23.5},
+                rotation = {0, 180, 0},
+                scale = {0.7, 0.7, 0.7},
+                nickname = "Blue Lethal Hits",
+                description = "This is the area for lethal hits (Blue)."
+            })
+            if(Global.getVar("blueLethalFace")) then
+                blueLethalHitsObject.setCustomObject({
+                    image = lethalHitsImageURL,
+                    thickness = 0.2,
+                    merge_distance_pixels = 15,
+                    stand_up = false,
+                    stackable = false
+                })
+                blueLethalHitsObject.setLock(true)
+                blueLethalHitsObject.setDescription("RaulDeFama Week!! Special thanks for creating 4k versions of the Letahl Hits Face!")
+                spawnedObjects.Blue.lethalHits = blueLethalHitsObject
+            end
+        end
+    else
+        print("Error: Unknown mat type '" .. tostring(currentMat) .. "'.")
+    end
+end
+
+
+function startLethalHitCheck()
+    Wait.time(checkLethalHitArea, 0.5, -1)
+end
+
+local RED_LETHAL_HITS_GUID = "7ac8ba"
+local BLUE_LETHAL_HITS_GUID = "71ab21"
+local updateInterval = 1
+local lethalHitsObjects = {
+    Red = nil,
+    Blue = nil
+}
+local textDisplays = {
+    Red = nil,
+    Blue = nil
+}
+
+local nbTextDisplays = {
+    Red = nil,
+    Blue = nil
+}
+
+function initializeLethalHits()
+    ensureLethalHitsObjects()
+
+    if currentMat == "Red" then
+        lethalHitsObjects.Red = getObjectFromGUID(RED_LETHAL_HITS_GUID)
+        if lethalHitsObjects.Red then
+            setupLethalHitsDisplay("Red", lethalHitsObjects.Red)
+        else
+            print("Error: Red Lethal Hits object not found! Check the GUID.")
+        end
+    elseif currentMat == "Blue" then
+        lethalHitsObjects.Blue = getObjectFromGUID(BLUE_LETHAL_HITS_GUID)
+        if lethalHitsObjects.Blue then
+            setupLethalHitsDisplay("Blue", lethalHitsObjects.Blue)
+        else
+            print("Error: Blue Lethal Hits object not found! Check the GUID.")
+        end
+    end
+
+    Wait.time(updateLethalHits, updateInterval, -1)
+end
+
+function updateLethalHits()
+    for zone, lethalHitsObject in pairs(lethalHitsObjects) do
+        if lethalHitsObject then
+            local bounds = lethalHitsObject.getBounds()
+            local diceCount = 0
+
+            for _, obj in ipairs(getAllObjects()) do
+                if obj.tag == "Dice" and obj.resting then
+                    local objPos = obj.getPosition()
+                    if objPos.x > bounds.center.x - (bounds.size.x / 2) and
+                       objPos.x < bounds.center.x + (bounds.size.x / 2) and
+                       objPos.z > bounds.center.z - (bounds.size.z / 2) and
+                       objPos.z < bounds.center.z + (bounds.size.z / 2) then
+                        diceCount = diceCount + 1
+                    end
+                end
+            end
+
+            if textDisplays[zone] then
+                textDisplays[zone].TextTool.setValue(" Lethal Hits (" .. tostring(diceCount) .. ")")
+            elseif textDisplays[zone] then
+                print("Error: Text display is missing for " .. zone .. ".")
+            end
+        end
+    end
+end
+
+function cleanupLethalHits()
+    originalPositions = {}
+
+    for zone, textDisplay in pairs(textDisplays) do
+        if textDisplay then
+            textDisplay.destruct()
+            textDisplays[zone] = nil
+        end
+    end
+
+    for zone, nbTextDisplay in pairs(nbTextDisplays or {}) do
+        if nbTextDisplay then
+            nbTextDisplay.destruct()
+            nbTextDisplays[zone] = nil
+        end
+    end
+
+    for zone, lethalHitsObject in pairs(lethalHitsObjects or {}) do
+        if lethalHitsObject then
+            local bounds = lethalHitsObject.getBounds()
+
+            for _, obj in ipairs(getAllObjects()) do
+                if obj.tag == "Dice" and obj.resting then
+                    local objPos = obj.getPosition()
+                    if objPos.x > bounds.center.x - (bounds.size.x / 2) and
+                       objPos.x < bounds.center.x + (bounds.size.x / 2) and
+                       objPos.z > bounds.center.z - (bounds.size.z / 2) and
+                       objPos.z < bounds.center.z + (bounds.size.z / 2) then
+                        obj.destroy()
+                    end
+                end
+            end
+        end
+    end
+end
+
+function setupLethalHitsDisplay(zone, lethalHitsObject)
+    local position = {}
+    local rotation = {90, 180, 0}
+    local nbTextPosition = {}
+
+    if zone == "Red" then
+        position = {18, 0.97, 22}
+        nbTextPosition = {15, 0.97, 34}
+    elseif zone == "Blue" then
+        rotation = {90, 0, 0}
+        position = {-18, 0.97, -22}
+        nbTextPosition = {-15, 0.97, -34}
+    else
+        print("Invalid player. Use 'Red' or 'Blue'.")
+        return
+    end
+
+    local textDisplay = spawnObject({
+        type = "3DText",
+        position = position,
+        rotation = rotation,
+        scale = {1, 1, 1},
+        nickname = "LethalHitsText" .. zone
+    })
+
+    textDisplay.TextTool.setValue("Lethal Hits (0)")
+    textDisplay.TextTool.setFontSize(50)
+    textDisplay.TextTool.setFontColor({1, 1, 1})
+
+    textDisplays[zone] = textDisplay
+
+    local nbTextDisplay = spawnObject({
+        type = "3DText",
+        position = nbTextPosition,
+        rotation = rotation,
+        scale = {1, 1, 1},
+        nickname = "N.B Lethal Hits"
+    })
+
+    nbTextDisplay.TextTool.setValue("*Clear Mat when finished with lethal/sus hits")
+    nbTextDisplay.TextTool.setFontSize(25)
+    nbTextDisplay.TextTool.setFontColor({1, 1, 1})
+
+    nbTextDisplays[zone] = nbTextDisplay
+end
+
+
+
+function createLethalText(remove)
+    if remove then
+        if spawnedObjects[currentMat].text then
+            spawnedObjects[currentMat].text.destroy()
+            spawnedObjects[currentMat].text = nil
+        end
+
+        if spawnedObjects[currentMat].lethalHits then
+            spawnedObjects[currentMat].lethalHits.destroy()
+            spawnedObjects[currentMat].lethalHits = nil
+        end
+        return
+    end
+end
+
+local config = {
+    shiftX = 10,
+    spacing = 1.1,
+    desiredMinCols = 2,
+    minSizeX = 10,
+    minSizeZ = 5,
+    fallbackSize = { x = 15, y = 1, z = 1.5 },
+    yOffset = 0.5
+}
+
+local resetButtonName = "da3319"
+local resetPositions = {
+    { x = 0, y = 1, z = 0 },
+    { x = 1, y = 1, z = 0 },
+    { x = 2, y = 1, z = 0 },
+    { x = 3, y = 1, z = 0 },
+}
+
+local originalPositions = {}
+
+local isMoving = false
+
+local initialLethalHitBounds = nil
+
+function moveLethalHits(isSustainedAndLethal)
+    if isMoving then
+        print("Error: moveLethalHits function is already running.")
+        return
+    end
+    isMoving = true
+    if not currentMat then
+        print("Error: currentMat is nil.")
+        isMoving = false
+        return
+    end
+    ensureLethalHitsObjects()
+    if not spawnedObjects[currentMat].lethalHits then
+        print("Error: Lethal Hits object not found for " .. currentMat)
+        isMoving = false
+        return
+    end
+    local lethalHitsObject = spawnedObjects[currentMat].lethalHits
+    local lethalHitAreaBounds = lethalHitsObject.getBounds()
+    if not lethalHitAreaBounds or not lethalHitAreaBounds.center then
+        print("Error: Invalid lethal hit area bounds.")
+        isMoving = false
+        return
+    end
+    if not lethalHitAreaBounds.size or
+       lethalHitAreaBounds.size.x == 0 or
+       lethalHitAreaBounds.size.z == 0 then
+        lethalHitAreaBounds.size = config.fallbackSize
+    end
+    if lethalHitAreaBounds.size.x < config.minSizeX or lethalHitAreaBounds.size.z < config.minSizeZ then
+        lethalHitAreaBounds.size = config.fallbackSize
+    end
+    if not initialLethalHitBounds then
+        initialLethalHitBounds = {
+            center = {
+                x = lethalHitAreaBounds.center.x,
+                y = lethalHitAreaBounds.center.y,
+                z = lethalHitAreaBounds.center.z
+            },
+            size = {
+                x = lethalHitAreaBounds.size.x,
+                y = lethalHitAreaBounds.size.y,
+                z = lethalHitAreaBounds.size.z
+            }
+        }
+    end
+    lethalHitAreaBounds = initialLethalHitBounds
+    local directionMultiplier = (currentMat == "Blue") and 1 or -1
+    local rowLimit = 25
+    local spacing = config.spacing
+    local startX = lethalHitAreaBounds.center.x + (lethalHitAreaBounds.size.x / 2) - 0.5 + (directionMultiplier * config.shiftX)
+    if currentMat == "Blue" then
+        startX = startX - 15
+    end
+    local startZ = lethalHitAreaBounds.center.z - (lethalHitAreaBounds.size.z / 2) + 0.5
+    local yPosition = lethalHitAreaBounds.center.y + config.yOffset
+    local diceInZone = 0
+    for guid, _ in pairs(originalPositions) do  -- Count only the dice that were previously moved
+        diceInZone = diceInZone + 1
+    end
+
+    local currentRow = math.floor(diceInZone / rowLimit)
+    local currentCol = diceInZone % rowLimit
+    local dice = getDice()
+    local threshold = isSustainedAndLethal and sustainedLethalHitsThreshold or lethalHitsThreshold
+    local movedCount = 0
+    for _, die in ipairs(dice) do
+        if die.getValue() >= threshold then
+            if not originalPositions[die.getGUID()] then
+                originalPositions[die.getGUID()] = die.getPosition()
+            end
+            local newPos = {
+                x = startX + (currentCol * spacing * directionMultiplier),
+                y = yPosition,
+                z = startZ + (currentRow * spacing),
+            }
+            die.setPosition(newPos)
+            movedCount = movedCount + 1
+            currentCol = currentCol + 1
+            if currentCol >= rowLimit then
+                currentCol = 0
+                currentRow = currentRow + 1
+            end
+        end
+    end
+
+    isMoving = false
+    return movedCount
+end
+
+function onObjectClicked(clicked_object, player_color, alt_click)
+    local nickname = clicked_object.getNickname()
+    if nickname == "Red Lethal Hits" then
+        print(player_color .. " clicked on Red Lethal Hits")
+        moveDiceBackToBoard("Red")
+    elseif nickname == "Blue Lethal Hits" then
+        print(player_color .. " clicked on Blue Lethal Hits")
+        moveDiceBackToBoard("Blue")
+    elseif clicked_object.getName() == resetButtonName then
+        moveDiceBackToBoard()
+    end
+end
+
+function moveDiceBackToBoard(color)
+    if color then
+        moveDiceForColor(color)
+    else
+        moveDiceForColor("Red")
+        moveDiceForColor("Blue")
+    end
+    originalPositions = {}  -- Add this line to clear the originalPositions table
+end
+
+function moveDiceForColor(color)
+    local dice = getDiceInZone(color)
+
+    for i, die in ipairs(dice) do
+        local originalPos = originalPositions[die.getGUID()]
+        if originalPos then
+            die.setPositionSmooth(originalPos)
+            print(string.format("Moved die #%d to its original position at (%.2f, %.2f, %.2f) for %s",
+                i, originalPos.x, originalPos.y, originalPos.z, color))
+
+            originalPositions[die.getGUID()] = nil
+        else
+            local targetPos = resetPositions[i] or resetPositions[1]
+            die.setPositionSmooth(targetPos)
+            print(string.format("Moved die #%d to default reset position at (%.2f, %.2f, %.2f) for %s",
+                i, targetPos.x, targetPos.y, targetPos.z, color))
+        end
+    end
+end
+
+function getDiceInZone(color)
+    local diceInZone = {}
+    local lethalHitsObject = spawnedObjects[color] and spawnedObjects[color].lethalHits
+
+    if not lethalHitsObject then
+        print("Warning: Lethal Hits object not found for " .. tostring(color))
+        return diceInZone
+    end
+
+    local bounds = lethalHitsObject.getBounds()
+
+    for _, obj in ipairs(getAllObjects()) do
+        if obj.tag == "Dice" and obj.resting then
+            local objPos = obj.getPosition()
+            if objPos.x > (bounds.center.x - (bounds.size.x / 2)) and
+               objPos.x < (bounds.center.x + (bounds.size.x / 2)) and
+               objPos.z > (bounds.center.z - (bounds.size.z / 2)) and
+               objPos.z < (bounds.center.z + (bounds.size.z / 2)) then
+                table.insert(diceInZone, obj)
+            end
+        end
+    end
+
+    return diceInZone
+end
+
+function lethalHitsAction(lethalHits, color, alt)
+    local lethalNumbers = false
+    if lethalHits == 'sustainedAndLethal' then
+        lethalNumbers = true
+    end
+    -- Set threshold based on click: left-click = 6+, right-click = 5+
+    local oldLethal = lethalHitsThreshold
+    local oldSustainedLethal = sustainedLethalHitsThreshold
+    if lethalNumbers then
+        sustainedLethalHitsThreshold = alt and 5 or 6
+    else
+        lethalHitsThreshold = alt and 5 or 6
+    end
+
+    local moved = moveLethalHits(lethalNumbers)
+    if not spawnedObjects[currentMat].lethalHits then
+        createLethalText(false)
+    elseif not spawnedObjects[currentMat].text then
+        createLethalText(false)
+    end
+
+    if not textDisplays[currentMat] then
+        initializeLethalHits()
+    end
+
+    -- restore old thresholds
+    lethalHitsThreshold = oldLethal
+    sustainedLethalHitsThreshold = oldSustainedLethal
+
+    -- Log for players how many lethal/sustained were moved
+    printToAll("Lethal hits moved: " .. tostring(moved) .. " (threshold " .. tostring(alt and 5 or 6) .. "+)")
+end
+
+function modifyMenu1()
+    modifyMenu("Red")
+end
+function modifyMenu2()
+    modifyMenu("Blue")
+end
+function modifyMenu3()
+    modifyMenu("Black")
+end
+function modifyMenu4()
+    modifyMenu("Green")
+end
+function modifyMenu(color)
+    customDiceImage = nil
+    selectedColor = color
+    setDiceType()
+    self.editButton({index=7, color=color})
+    self.editButton({index=8, color=color})
+    self.editButton({index=9, color=color})
+    self.editButton({index=10, color=color})
+    self.editButton({index=11, color=color})
+    self.editButton({index=32, color=color})
+    self.editButton({index=33, color=color})
+    self.editButton({index=34, color="White"})
+    self.editButton({index=35, color="White"})
+    self.editButton({index=36, color="White"})
+end
+
+function setDiceType()
+    if customDiceImage ~= nil then
+        diceType = "Custom_Dice"
+    elseif pipColorBtn.color == "White" then
+        diceType = "Die_6_Rounded"
+    else
+        diceType = "Die_6"
+    end
+end
+
+function setDefaultState()
+	self.setDescription(JSON.encode_pretty({
+		Cumulative = 'no',Update_Frequency = '0.2'
+	}))
+end
+
+function checkDice()
+    local data = JSON.decode(self.getDescription())
+    if not data then
+        setDefaultState()
+        data = JSON.decode(self.getDescription())
+        printToAll('Warning - invalid description. Restored default configuration.', {0.8,0.5,0})
+    end
+    if not self.resting then return end
+
+    local b = self.getBounds()
+    local leftBound  = b.center.x - b.size.x/2
+    local rightBound = b.center.x + b.size.x/2
+    local lowerBound = b.center.z - b.size.z/2
+    local upperBound = b.center.z + b.size.z/2
+    if currentMat == "Red" then
+        rightBound = rightBound - 5
+        lowerBound = lowerBound + 2.9
+        upperBound = upperBound - 0.5
+    else
+        leftBound  = leftBound  + 5
+        lowerBound = lowerBound + 0.5
+        upperBound = upperBound - 2.9
+    end
+    local ylowerBound = b.center.y - b.size.y/2
+
+    local valueToCounter, valuesToSort, totaldice, diceSum = {}, {}, 0, 0
+    for _, obj in pairs(getAllObjects()) do
+        if obj.tag == 'Dice' and obj.resting then
+            local p = obj.getPosition()
+            if p.x > leftBound and p.x < rightBound
+            and p.z > lowerBound and p.z < upperBound
+            and p.y > ylowerBound then
+                local v = obj.getValue()
+                if v then
+                    if not valueToCounter[v] then
+                        valueToCounter[v] = 0
+                        table.insert(valuesToSort, v)
+                    end
+                    valueToCounter[v] = valueToCounter[v] + 1
+                    diceSum    = diceSum + v
+                    totaldice  = totaldice + 1
+                end
+            end
+        end
+    end
+
+    local textLines, lineCount = {}, 0
+    if data.Cumulative == 'yes' then
+        table.sort(valuesToSort)
+        for i = 1, 12 do valueToCounter[i] = valueToCounter[i] or 0 end
+        for i = 11, 1, -1 do
+            valueToCounter[i] = valueToCounter[i] + valueToCounter[i+1]
+        end
+        for _, v in ipairs(valuesToSort) do
+            local suffix = (v == 1) and "'s: " or "+: "
+            table.insert(textLines, tostring(v) .. suffix .. valueToCounter[v])
+            lineCount = lineCount + 1
+        end
+    else
+        table.sort(valuesToSort)
+        for _, v in ipairs(valuesToSort) do
+            table.insert(textLines, "#" .. v .. ": " .. valueToCounter[v])
+            lineCount = lineCount + 1
+        end
+    end
+    for i = lineCount+1, 6 do
+        table.insert(textLines, " ")
+    end
+
+    local text = table.concat(textLines, "\n")
+    if text == "" then text = emptyText end
+    local totaltext = (totaldice == 0) and " " or ("\n" .. totaldice .. " ∑ " .. diceSum)
+
+    if lineCount > 6 then
+        fontSize      = defaultFontSize - ((lineCount-6)*37)
+        divisionLabel = defaultDivisionLabel
+    else
+        fontSize      = defaultFontSize
+        divisionLabel = ""
+    end
+
+    self.editButton({ index = 0, label = text .. totaltext, font_size = fontSize })
+    self.editButton({ index = 1, label = divisionLabel })
+end
+
+function swapPipColor()
+    customDiceImage = nil
+    if pipColorBtn.color == "Black" then
+        pipColorBtn.label = "White"
+        pipColorBtn.color = "White"
+        pipColorBtn.font_color = "Black"
+    else
+        pipColorBtn.label = "Black"
+        pipColorBtn.color = "Black"
+        pipColorBtn.font_color = "White"
+    end
+
+    setDiceType()
+
+    self.editButton(pipColorBtn)
+end
+
+function arrangeModelsWith2Inch(a, b, c)
+    -- Support being called from a button or a hotkey. When invoked via a button
+    -- the first argument is the object and the second is the player color.
+    -- When invoked via a hotkey the first argument is the player color.
+    local playerColor
+    if type(a) == "string" then
+        playerColor = a
+    else
+        playerColor = b
+    end
+
+    local playerObj = Player[playerColor]
+    if not playerObj then
+      print("Player object not found for color: " .. playerColor)
+      return
+    end
+
+    local objs = playerObj.getSelectedObjects()
+    if #objs < 2 then
+      print("Less than 2 objects selected; nothing to arrange.")
+      return
+    end
+
+    local minPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    local maxPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    for i = 2, #objs do
+      local p = objs[i].getPosition()
+      if p.x < minPos.x then minPos.x = p.x end
+      if p.z < minPos.z then minPos.z = p.z end
+      if p.x > maxPos.x then maxPos.x = p.x end
+      if p.z > maxPos.z then maxPos.z = p.z end
+    end
+
+    local dx = maxPos.x - minPos.x
+    local dz = maxPos.z - minPos.z
+    local mag = math.sqrt(dx * dx + dz * dz)
+    local d = {}
+    if mag < 0.0001 then
+      d.x, d.z = 1, 0
+    else
+      d.x, d.z = dx / mag, dz / mag
+    end
+
+    local items = {}
+    for _, obj in ipairs(objs) do
+      local pos = obj.getPosition()
+      local half = obj.getBoundsNormalized().size.x / 2
+      local proj = pos.x * d.x + pos.z * d.z
+      table.insert(items, { obj = obj, pos = pos, half = half, proj = proj })
+    end
+
+    table.sort(items, function(a, b) return a.proj < b.proj end)
+
+    local offsetCount = 0
+    if #items > 7 then
+      offsetCount = 2
+    end
+
+    local startIndex = 1
+    if offsetCount == 2 then
+      startIndex = 3
+    end
+
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+
+    for i = startIndex + 1, #items - offsetCount do
+      local prev = items[i - 1]
+      local gapDist = prev.half + 2 + items[i].half
+      items[i].newPos = {
+        x = prev.newPos.x + d.x * gapDist,
+        y = items[i].pos.y,
+        z = prev.newPos.z + d.z * gapDist
+      }
+    end
+
+    if offsetCount == 2 then
+      local p = { x = -d.z, z = d.x }
+
+      -- start offsets: arrange three items as a triangle so pairwise edge gap ~= 2"
+      local baseStart = items[startIndex].newPos -- apex on main line
+      local a = items[startIndex]
+      local b = items[1]
+      local c = items[2]
+      local desiredGap = 2
+      local baseSep = b.half + c.half + desiredGap
+      local baseHalf = baseSep / 2
+      local s1 = a.half + b.half + desiredGap
+      local s2 = a.half + c.half + desiredGap
+      -- compute apex->baseCenter distance from triangle right-triangle: t = sqrt(s1^2 - baseHalf^2)
+      local t1 = math.sqrt(math.max(0, s1 * s1 - baseHalf * baseHalf))
+      local t2 = math.sqrt(math.max(0, s2 * s2 - baseHalf * baseHalf))
+      local t = (t1 + t2) / 2
+      local baseCenter = { x = baseStart.x - d.x * t, z = baseStart.z - d.z * t }
+      items[1].newPos = { x = baseCenter.x + p.x * baseHalf, y = b.pos.y, z = baseCenter.z + p.z * baseHalf }
+      items[2].newPos = { x = baseCenter.x - p.x * baseHalf, y = c.pos.y, z = baseCenter.z - p.z * baseHalf }
+
+      -- debug: print the starting three indices and pairwise distances
+      if true then
+        local function dist(a,b)
+          local dx = a.x - b.x; local dz = a.z - b.z; return math.sqrt(dx*dx + dz*dz)
+        end
+        local Apos = a.pos; local Bpos = b.pos; local Cpos = c.pos
+        local Anew = a.newPos; local Bnew = b.newPos; local Cnew = c.newPos
+        print(string.format("Start triangle items indexes: apex=%s base1=%s base2=%s", a.obj.getGUID(), b.obj.getGUID(), c.obj.getGUID()))
+        print(string.format("Before: AB=%.2f AC=%.2f BC=%.2f", dist(Apos,Bpos), dist(Apos,Cpos), dist(Bpos,Cpos)))
+        print(string.format("After:  AB=%.2f AC=%.2f BC=%.2f", dist(Anew,Bnew), dist(Anew,Cnew), dist(Bnew,Cnew)))
+      end
+
+      -- end offsets
+      local baseEnd = items[#items - offsetCount].newPos
+      -- end offsets: triangle at the end (apex on main line, base beyond)
+      local a_e = items[#items - offsetCount] -- apex at end of line
+      local b_e = items[#items - 1]
+      local c_e = items[#items]
+      local desiredGap = 2
+      local baseSep_e = b_e.half + c_e.half + desiredGap
+      local baseHalf_e = baseSep_e / 2
+      local s1_e = a_e.half + b_e.half + desiredGap
+      local s2_e = a_e.half + c_e.half + desiredGap
+      local t1_e = math.sqrt(math.max(0, s1_e * s1_e - baseHalf_e * baseHalf_e))
+      local t2_e = math.sqrt(math.max(0, s2_e * s2_e - baseHalf_e * baseHalf_e))
+      local t_e = (t1_e + t2_e) / 2
+      local baseCenter_e = { x = baseEnd.x + d.x * t_e, z = baseEnd.z + d.z * t_e }
+      items[#items - 1].newPos = { x = baseCenter_e.x + p.x * baseHalf_e, y = b_e.pos.y, z = baseCenter_e.z + p.z * baseHalf_e }
+      items[#items].newPos     = { x = baseCenter_e.x - p.x * baseHalf_e, y = c_e.pos.y, z = baseCenter_e.z - p.z * baseHalf_e }
+
+      -- debug: print the final three indices and pairwise distances
+      if true then
+        local function dist(a,b)
+          local dx = a.x - b.x; local dz = a.z - b.z; return math.sqrt(dx*dx + dz*dz)
+        end
+        local Apos = a_e.pos; local Bpos = b_e.pos; local Cpos = c_e.pos
+        local Anew = a_e.newPos; local Bnew = b_e.newPos; local Cnew = c_e.newPos
+        print(string.format("End triangle items indexes: apex=%s base1=%s base2=%s", a_e.obj.getGUID(), b_e.obj.getGUID(), c_e.obj.getGUID()))
+        print(string.format("Before: AB=%.2f AC=%.2f BC=%.2f", dist(Apos,Bpos), dist(Apos,Cpos), dist(Bpos,Cpos)))
+        print(string.format("After:  AB=%.2f AC=%.2f BC=%.2f", dist(Anew,Bnew), dist(Anew,Cnew), dist(Bnew,Cnew)))
+      end
+    end
+
+    for _, item in ipairs(items) do
+      item.obj.setPositionSmooth(item.newPos)
+    end
+
+    print("Arranged " .. #items .. " models with a 2-inch gap along the detected orientation.")
+end
+
+function arrangeModelsWith1Inch(a, b, c)
+    local playerColor
+    if type(a) == "string" then
+        playerColor = a
+    else
+        playerColor = b
+    end
+
+    local playerObj = Player[playerColor]
+    if not playerObj then
+      print("Player object not found for color: " .. playerColor)
+      return
+    end
+
+    local objs = playerObj.getSelectedObjects()
+    if #objs < 2 then
+      print("Less than 2 objects selected; nothing to arrange.")
+      return
+    end
+
+    local minPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    local maxPos = { x = objs[1].getPosition().x, z = objs[1].getPosition().z }
+    for i = 2, #objs do
+      local p = objs[i].getPosition()
+      if p.x < minPos.x then minPos.x = p.x end
+      if p.z < minPos.z then minPos.z = p.z end
+      if p.x > maxPos.x then maxPos.x = p.x end
+      if p.z > maxPos.z then maxPos.z = p.z end
+    end
+
+    local dx = maxPos.x - minPos.x
+    local dz = maxPos.z - minPos.z
+    local mag = math.sqrt(dx * dx + dz * dz)
+    local d = {}
+    if mag < 0.0001 then
+      d.x, d.z = 1, 0
+    else
+      d.x, d.z = dx / mag, dz / mag
+    end
+
+    local items = {}
+    for _, obj in ipairs(objs) do
+      local pos = obj.getPosition()
+      local half = obj.getBoundsNormalized().size.x / 2
+      local proj = pos.x * d.x + pos.z * d.z
+      table.insert(items, { obj = obj, pos = pos, half = half, proj = proj })
+    end
+
+    table.sort(items, function(a, b) return a.proj < b.proj end)
+
+    local offsetCount = 0
+    if #items > 7 then
+      offsetCount = 2
+    end
+
+    local startIndex = 1
+    if offsetCount == 2 then
+      startIndex = 3
+    end
+
+    local anchorPos = { x = items[startIndex].pos.x, z = items[startIndex].pos.z }
+    items[startIndex].newPos = { x = anchorPos.x, y = items[startIndex].pos.y, z = anchorPos.z }
+
+    for i = startIndex + 1, #items - offsetCount do
+      local prev = items[i - 1]
+      local gapDist = prev.half + 1 + items[i].half
+      items[i].newPos = {
+        x = prev.newPos.x + d.x * gapDist,
+        y = items[i].pos.y,
+        z = prev.newPos.z + d.z * gapDist
+      }
+    end
+
+    if offsetCount == 2 then
+      local p = { x = -d.z, z = d.x }
+
+      -- start offsets: arrange three items as a triangle so pairwise edge gap ~= 1"
+      local baseStart = items[startIndex].newPos -- apex on main line
+      local a = items[startIndex]
+      local b = items[1]
+      local c = items[2]
+      local desiredGap = 1
+      local baseSep = b.half + c.half + desiredGap
+      local baseHalf = baseSep / 2
+      local s1 = a.half + b.half + desiredGap
+      local s2 = a.half + c.half + desiredGap
+      local t1 = math.sqrt(math.max(0, s1 * s1 - baseHalf * baseHalf))
+      local t2 = math.sqrt(math.max(0, s2 * s2 - baseHalf * baseHalf))
+      local t = (t1 + t2) / 2
+      local baseCenter = { x = baseStart.x - d.x * t, z = baseStart.z - d.z * t }
+      items[1].newPos = { x = baseCenter.x + p.x * baseHalf, y = b.pos.y, z = baseCenter.z + p.z * baseHalf }
+      items[2].newPos = { x = baseCenter.x - p.x * baseHalf, y = c.pos.y, z = baseCenter.z - p.z * baseHalf }
+
+      -- end offsets: triangle at the end (apex on main line, base beyond)
+      local baseEnd = items[#items - offsetCount].newPos
+      local a_e = items[#items - offsetCount] -- apex at end of line
+      local b_e = items[#items - 1]
+      local c_e = items[#items]
+      local desiredGap_e = 1
+      local baseSep_e = b_e.half + c_e.half + desiredGap_e
+      local baseHalf_e = baseSep_e / 2
+      local s1_e = a_e.half + b_e.half + desiredGap_e
+      local s2_e = a_e.half + c_e.half + desiredGap_e
+      local t1_e = math.sqrt(math.max(0, s1_e * s1_e - baseHalf_e * baseHalf_e))
+      local t2_e = math.sqrt(math.max(0, s2_e * s2_e - baseHalf_e * baseHalf_e))
+      local t_e = (t1_e + t2_e) / 2
+      local baseCenter_e = { x = baseEnd.x + d.x * t_e, z = baseEnd.z + d.z * t_e }
+      items[#items - 1].newPos = { x = baseCenter_e.x + p.x * baseHalf_e, y = b_e.pos.y, z = baseCenter_e.z + p.z * baseHalf_e }
+      items[#items].newPos     = { x = baseCenter_e.x - p.x * baseHalf_e, y = c_e.pos.y, z = baseCenter_e.z - p.z * baseHalf_e }
+    end
+
+    for _, item in ipairs(items) do
+      item.obj.setPositionSmooth(item.newPos)
+    end
+
+    print("Arranged " .. #items .. " models with a 1-inch gap along the detected orientation.")
+end
+
+function determineBaseInInches(model)
+    local savedBase = model.getTable("chosenBase")
+
+    if savedBase ~= nil then
+        return savedBase.base
+    else
+        local chosenBase =  VALID_BASE_SIZES_IN_MM[1]
+        local modelSize = model.getBoundsNormalized().size
+        local modelSizeX = modelSize.x
+        local modelSizeZ = modelSize.z
+        local closestSum = 10000000000
+        local chosenBaseIdx = 1
+
+        for k, base in pairs(VALID_BASE_SIZES_IN_MM) do
+            local baseInchX = (MM_TO_INCH - 0.001) * base.x
+            local baseInchZ = (MM_TO_INCH - 0.001) * base.z
+            if modelSizeX > baseInchX and modelSizeZ > baseInchZ then
+                local distSum = (modelSizeX - baseInchX) + (modelSizeZ - baseInchZ)
+                if distSum < closestSum then
+                    closestSum = distSum
+                    chosenBase = base
+                    chosenBaseIdx = k
+                end
+            end
+        end
+
+        if chosenBase == nil then
+            chosenBase = { x=modelSizeX/2, z=modelSizeZ/2}
+        else
+            chosenBase = {
+                x = (chosenBase.x * MM_TO_INCH)/2,
+                z = (chosenBase.z * MM_TO_INCH)/2
+            }
+        end
+
+        model.setTable("chosenBase", { baseIdx=chosenBaseIdx, base=chosenBase })
+
+        return chosenBase
+    end
+end
+
+function getCircleVectorPoints(radius, baseX, baseZ, obj)
+    local result = {}
+    local scaleFactor = 1/obj.getScale().x
+    local rotationDegrees =  obj.getRotation().y
+    local steps = 64
+    local degrees,sin,cos,toRads = 360/steps, math.sin, math.cos, math.rad
+
+    for i = 0,steps do
+        table.insert(result,{
+            x = cos(toRads(degrees*i))*((radius+baseX)*scaleFactor),
+            z = MEASURING_RING_Y_OFFSET,
+            y = sin(toRads(degrees*i))*((radius+baseZ)*scaleFactor)
+        })
+    end
+
+    return result
+end
+
+function getRectangleVectorPoints(radius, sizeX, sizeZ, obj)
+    local result = {}
+    local scaleFactor = 1/obj.getScale().x
+
+    sizeX = sizeX*scaleFactor
+    sizeZ = sizeZ*scaleFactor
+    radius = radius*scaleFactor
+
+    local steps = 65
+    local degrees,sin,cos,toRads = 360/(steps-1), math.sin, math.cos, math.rad
+    local xOffset,zOffset = sizeX,sizeZ
+    table.insert(result,{
+        x = (cos(toRads(degrees*0))*radius)+sizeX-0.001,
+        y = (sin(toRads(degrees*0))*radius)+sizeZ,
+        z = MEASURING_RING_Y_OFFSET
+    })
+
+    for i = 1,steps-1 do
+        if i == 16 then
+            table.insert(result,{ x= sizeX, y=(radius+sizeZ), z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-sizeX, y=(radius+sizeZ), z=MEASURING_RING_Y_OFFSET })
+            xOffset = -sizeX
+        elseif i == 33 then
+            table.insert(result,{ x=-radius-sizeX,       y= sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-radius-sizeX-0.001, y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=-radius-sizeX,       y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            zOffset = -sizeZ
+        elseif i == 49 then
+            table.insert(result,{ x=-sizeX, y=-radius-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x= sizeX, y=-radius-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            xOffset = sizeX
+        elseif i == 65 then
+            table.insert(result,{ x=radius+sizeX,       y=-sizeZ, z=MEASURING_RING_Y_OFFSET })
+            table.insert(result,{ x=radius+sizeX-0.001, y= sizeZ, z=MEASURING_RING_Y_OFFSET })
+        else
+            table.insert(result,{
+                x = (cos(toRads(degrees*i))*radius)+xOffset,
+                y = (sin(toRads(degrees*i))*radius)+zOffset,
+                z = MEASURING_RING_Y_OFFSET
+            })
+        end
+    end
+    table.insert(result,{
+        x = (cos(toRads(degrees*0))*radius)+sizeX-0.001,
+        y = (sin(toRads(degrees*0))*radius)+sizeZ,
+        z = MEASURING_RING_Y_OFFSET
+    })
+
+    return result
+end
+
+function toggleMeasurementCircleForSelection(radius, playerColor)
+    local playerObj = Player[playerColor]
+    if not playerObj then return end
+    local objs = playerObj.getSelectedObjects()
+    for _, obj in ipairs(objs) do
+        changeMeasurementCircle(radius, obj, nil, playerColor)
+    end
+end
+
+function toggle1Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(1, playerColor)
+end
+
+function toggle3Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(3, playerColor)
+end
+
+function toggle6Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(6, playerColor)
+end
+
+function toggle9Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(9, playerColor)
+end
+
+function toggle12Bubble(obj, playerColor, alt)
+    toggleMeasurementCircleForSelection(12.01, playerColor)
+end
+
+local customBubbleSize = 0
+function setCustomBubbleSize(_, _, value, _)
+    customBubbleSize = tonumber(value) or 0
+end
+
+function applyCustomBubble(_, player, _)
+    if customBubbleSize > 0 then
+        toggleMeasurementCircleForSelection(customBubbleSize, player)
+    else
+        printToColor("Please enter a valid bubble size", player, "Red")
+    end
+end
+
+function changeMeasurementCircle(newRequestedRadius, target, presetBase, ownerColor)
+    if target == nil then return end
+
+    local measuringRings = target.getTable("ym-measuring-circles")
+    local currentColor = "Teal"
+    local currentColorRadius
+
+    if measuringRings == nil then
+        measuringRings = {}
+        currentColorRadius = 0
+    else
+        for idx = #measuringRings, 1, -1 do
+            if (measuringRings[idx].name == currentColor) or
+               (measuringRings[idx].name == nil and currentColor == nil) then
+                currentColorRadius = measuringRings[idx].radius
+                table.remove(measuringRings, idx)
+            elseif measuringRings[idx].name == "base" then
+                table.remove(measuringRings, idx)
+            end
+        end
+
+        if currentColorRadius == nil then currentColorRadius = 0 end
+    end
+
+    local newRadius
+    if currentColorRadius == newRequestedRadius then
+        newRadius = 0
+    else
+        newRadius = newRequestedRadius
+    end
+
+    if newRadius ~= 0 then
+        local isRectangular = target.hasTag("rectangularMeasuring")
+        local measuring = {
+            name = currentColor,
+            color = Color.fromString(currentColor),
+            radius = newRadius,
+            thickness = 0.5,
+            rotation = {270, 0, 0},
+            owner = ownerColor -- track who created this measuring circle
+        }
+        local base = {
+            name = "base",
+            color = Color.fromString(currentColor),
+            thickness = 0.2,
+            rotation = {270, 0, 0},
+            owner = ownerColor
+        }
+
+        local measuringPoints, basePoints
+        if isRectangular then
+            local modelBounds = target.getBoundsNormalized()
+            measuringPoints = getRectangleVectorPoints(newRadius, modelBounds.size.x / 2, modelBounds.size.z / 2, target)
+            basePoints = getRectangleVectorPoints(0, modelBounds.size.x / 2, modelBounds.size.z / 2, target)
+        else
+            local baseRadiuses = (presetBase == nil) and determineBaseInInches(target) or presetBase
+            measuringPoints = getCircleVectorPoints(newRadius, baseRadiuses.x, baseRadiuses.z, target)
+            basePoints = getCircleVectorPoints(0, baseRadiuses.x, baseRadiuses.z, target)
+        end
+
+        measuring.points = measuringPoints
+        base.points = basePoints
+
+        table.insert(measuringRings, measuring)
+        table.insert(measuringRings, base)
+    end
+
+    target.setVectorLines(measuringRings)
+    target.setTable("ym-measuring-circles", measuringRings)
+end
+
+-- Clear measuring circles helper
+function clearMeasuringCircles(obj, playerColor, alt)
+    -- Always perform an aggressive clear (clear all vector lines/tables on Global, this mat and all objects)
+    local clearedAll = 0
+    if Global and Global.setVectorLines then
+        Global.setVectorLines({})
+        if Global.setTable then Global.setTable("ym-measuring-circles", nil) end
+    end
+    if self and self.setVectorLines then
+        self.setVectorLines({})
+        if self.setTable then self.setTable("ym-measuring-circles", nil) end
+    end
+    for _, o in ipairs(getAllObjects()) do
+        if o and o.setVectorLines then
+            o.setVectorLines({})
+            if o.setTable then o.setTable("ym-measuring-circles", nil) end
+            clearedAll = clearedAll + 1
+        end
+    end
+    printToAll("Cleared vector lines on "..clearedAll.." objects.", {1,1,1})
+end

@@ -1,0 +1,137 @@
+[
+  {
+    "GUID": "138b06",
+    "Name": "go_game_piece_black",
+    "Transform": {
+      "posX": -28.4,
+      "posY": -0.81,
+      "posZ": -0.99,
+      "rotX": 0,
+      "rotY": 90,
+      "rotZ": 0,
+      "scaleX": 1.19999981,
+      "scaleY": 1.19999981,
+      "scaleZ": 1.19999981
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "function onLoad()\r\n    local params = {\r\n        input_function = \"onInput\",\r\n        function_owner = self,\r\n        label = \"URL\",\r\n        position = {0, 1.91, 0},\r\n        rotation = {0, 180, 0},\r\n        width = 13000,\r\n        height = 480,\r\n        font_size = 420,\r\n        value = \"This is not a sponsor! I'm helping out a friend! > patreon.com/c/Hutber/\",\r\n        tooltip = \"Click, then Ctrl+C to copy!\",\r\n        color = {0, 0.184, 0.263, 1},\r\n        font_color = {1, 1, 1}\r\n    }\r\n    self.createInput(params)\r\nend\r\n\r\nfunction onInput(self, ply, text, selected) end",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "138b05",
+    "Name": "go_game_piece_black",
+    "Transform": {
+      "posX": 68,
+      "posY": -0.81,
+      "posZ": -23.14704,
+      "rotX": 0,
+      "rotY": 90,
+      "rotZ": 0,
+      "scaleX": 1.19999981,
+      "scaleY": 1.19999981,
+      "scaleZ": 1.19999981
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "function onLoad()\r\n local params = {\r\n        input_function = \"onInput\",\r\n        function_owner = self,\r\n        label = \"URL\",\r\n        position = {0, 1.81, 0},\r\n        rotation = {0, 180, 0},\r\n        width = 5000,\r\n        height = 480,\r\n        font_size = 420,\r\n        value = \"discord.gg/tts40k\",\r\n        tooltip = \"Click, then Ctrl+C to copy!\"\r\n    }\r\n    self.createInput(params)\r\nend\r\nfunction onInput(self, ply, text, selected)end",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "138b06",
+    "Name": "go_game_piece_black",
+    "Transform": {
+      "posX": 67.58314,
+      "posY": -0.81,
+      "posZ": 22.71644,
+      "rotX": 0,
+      "rotY": 90,
+      "rotZ": 0,
+      "scaleX": 1.19999981,
+      "scaleY": 1.19999981,
+      "scaleZ": 1.19999981
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0,
+      "g": 0,
+      "b": 0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "function onLoad()\r\n local params = {\r\n        input_function = \"onInput\",\r\n        function_owner = self,\r\n        label = \"URL\",\r\n        position = {0, 1.81, 0},\r\n        rotation = {0, 180, 0},\r\n        width = 5000,\r\n        height = 480,\r\n        font_size = 420,\r\n        value = \"discord.gg/Drpzcwwmm6\",\r\n        tooltip = \"Click, then Ctrl+C to copy!\"\r\n    }\r\n    self.createInput(params)\r\nend\r\nfunction onInput(self, ply, text, selected)end",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

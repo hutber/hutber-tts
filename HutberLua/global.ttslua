@@ -1,0 +1,999 @@
+--"LuaScript":\s*"(?:\\.|[^\\"])*"
+
+--[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
+
+-- Having all these GUIDs centrally managed helps to ensure that any changes to
+-- them only need to be made in one place, and hard-to-find stuff isn't inadvertently
+-- broken.
+--
+-- If you're looking at this and thinking "surely this should be a table" - why,
+-- yes it should. Unfortunately, I saw the documentation for Object.getVar said
+-- "Cannot return a table", and missed that Object.getTable existed, and now I'm
+-- too lazy to change it all again.
+centerCircle_GUID = "51ee2f"
+quarterCircle_GUID = "51ee3f"
+templateObjective_GUID = "573333"
+startMenu_GUID = "738804"
+redDiceMat_GUID = "c57d70" -- diceTable
+blueDiceMat_GUID = "a84ed2" -- diceTable
+redDiceRoller_GUID = "beae28" -- kustom40kDiceRoller
+blueDiceRoller_GUID = "4e0e0b" -- kustom40kDiceRoller
+redMissionManager_GUID = "cff35b"
+blueMissionManager_GUID = "471de1"
+
+-- Hutber IDs
+templateObjective_Hutber_GUID = "a8aca1"
+
+redControlBoard_GUID = "5a328f"
+blueControlBoard_GUID = "32ed4c"
+
+RedSelectionHighlighter = "27de4f"
+BlueSelectionHighlighter = "84c3a4"
+
+redCustomDiceMat_GUID = "acae21" -- diceTable
+blueCustomDiceMat_GUID = "839fcc" -- diceTable
+
+redCustomDiceRoller_GUID = "17ca2b" -- kustom40kDiceRoller
+blueCustomDiceRoller_GUID = "927ca1" -- kustom40kDiceRoller
+
+redLethalHits_GUID = "7ac8ba"
+blueLethalHits_GUID = "71ab21"
+
+RedVortexGUID = "be2cdb"
+BlueVortexGUID = "4b1a7b"
+
+redLethalFace = true
+blueLethalFace = true
+
+-- End Hutber IDS
+redVPCounter_GUID = "8b0541"
+blueVPCounter_GUID = "a77a54"
+redCPCounter_GUID = "e446f7"
+blueCPCounter_GUID = "deb9f2"
+orangePCounter_GUID = "25fc4a"
+purpleCPCounter_GUID = "61c2f8"
+redTurnCounter_GUID = "055302"
+blueTurnCounter_GUID = "7e4111"
+gameTurnCounter_GUID = "ee92cf"
+scoresheet_GUID = "06d627"
+blankObjCard_GUID = "d618cb"
+activation_GUID = "229946"
+wounds_GUID = "ad63ba"
+
+table_GUID = "948ce5"
+felt_GUID = "28865a"
+mat_GUID = "4ee1f2"
+matURLDisplay_GUID = "c5e288"
+flexControl_GUID = "bd69bd"
+tableLeg1_GUID = "afc863"
+tableLeg2_GUID = "c8edca"
+tableLeg3_GUID = "393bf7"
+tableLeg4_GUID = "12c65e"
+tableSideBottom_GUID = "f938a2"
+tableSideTop_GUID = "35b95f"
+tableSideLeft_GUID = "9f95fd"
+tableSideRight_GUID = "5af8f2"
+extractTerrain_GUID = "70b9f6"
+
+redHandZone_GUID = "f7d85a"
+blueHandZone_GUID = "731345"
+redHiddenZone_GUID = "28419e"
+blueHiddenZone_GUID = "e1e91a"
+deploymentCardZone_GUID = "dcf95b"
+primaryCardZone_GUID = "740abc"
+secondary11CardZone_GUID = "0ec215"
+secondary12CardZone_GUID = "d865d4"
+secondary21CardZone_GUID = "3c8d71"
+secondary22CardZone_GUID = "88cac4"
+challengerCardZone_GUID = "cdecf2"
+
+deploymentDeck_GUID = "2dc2e8"
+challengerDeck_GUID = "ffdf05"
+primaryDeck_GUID = "d26e9c"
+redSecondaryDeck_GUID = "c0fb49"
+blueSecondaryDeck_GUID = "e1da3b"
+
+interactiveButtonTableQuarters_State = 1
+interactiveButtonAreaDenial = 1
+interactiveButtonStratReserves = 1
+interactiveButtonDeploymentZones = 1
+interactiveButton9InchZone = 1
+
+CPMissionBook_GUID = "731ec4"
+
+teamModels = { Red = {}, Blue = {} }
+Global.setTable("teamModels", teamModels)
+
+-- Action Icons
+ActionInProgress_GUID = "https://steamusercontent-a.akamaihd.net/ugc/12413768925086392778/385D1E7F4CF527EE13008502130B0288E17AF648/"
+Battleshock_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13010387546801221302/5C4BD741352EA2EFD9EB642178AAACA4F853518E/"
+Advance_GUID = "https://steamusercontent-a.akamaihd.net/ugc/13599023424133435651/70EAB474609C925585CFED9AF60F4A6D137585BC/"
+
+--[[
+GUID reference for primary / mission / deployment cards
+Yeah, I could use variables but I didn't, oh well
+
+Pariah Nexus:
+-------------
+
+Burden of Trust 85718e
+Linchpin 540fd0
+Purge the Foe d9d35a
+Scorched Earth 6860de
+Supply Drop 981226
+Take and Hold bffd57
+Terraform 7fa6d0
+Hidden Supplies 85718f
+The Ritual 7067e2
+Unexploded Ordnance 41f293
+
+Crucible of Battle e96d18
+Dawn of War 7f45dc
+Hammer and Anvil 97f3f0
+Search and Destroy 09c961
+Sweeping Engagement c6edf3
+Tipping Point 77cde6
+
+]]--
+
+MISSION_PACK_PARIAH_NEXUS = 1
+game_version_ID = 16
+LOCKED_IN_SECONDARIES = 0
+packSelected = nil
+missionPackData = {
+    {
+        id = MISSION_PACK_PARIAH_NEXUS,
+        name = "Chapter Approved 2025",
+        deploymentDeck_GUID = "2dc2e8",
+        primaryDeck_GUID = "d26e9c",
+        fixedSecondaryDeck_GUID = "b55459",
+        redSecondaryDeck_GUID = "c0fb49",
+        blueSecondaryDeck_GUID = nil,
+        tournamentMissions = {
+            -- A: Take and Hold / Tipping Point
+            {name = "A", primary = "bffd57", deployment = "77cde6"},
+            -- B: Supply Drop / Tipping Point
+            {name = "B", primary = "981226", deployment = "77cde6"},
+            -- C: Linchpin / Tipping Point
+            {name = "C", primary = "540fd0", deployment = "77cde6"},
+            -- D: Scorched Earth / Tipping Point
+            {name = "D", primary = "6860de", deployment = "77cde6"},
+            -- E: Take and Hold / Hammer and Anvil
+            {name = "E", primary = "bffd57", deployment = "97f3f0"},
+            -- F: Hidden Supplies / Hammer and Anvil
+            {name = "F", primary = "85718f", deployment = "97f3f0"},
+            -- G: Purge the Foe / Hammer and Anvil
+            {name = "G", primary = "d9d35a", deployment = "97f3f0"},
+            -- H: Supply Drop / Hammer and Anvil
+            {name = "H", primary = "981226", deployment = "97f3f0"},
+            -- I: Hidden Supplies / Search and Destroy
+            {name = "I", primary = "85718f", deployment = "09c961"},
+            -- J: Linchpin / Search and Destroy
+            {name = "J", primary = "540fd0", deployment = "09c961"},
+            -- K: Scorched Earth / Search and Destroy
+            {name = "K", primary = "6860de", deployment = "09c961"},
+            -- L: Take and Hold / Search and Destroy
+            {name = "L", primary = "bffd57", deployment = "09c961"},
+            -- M: Purge the Foe / Crucible of Battle
+            {name = "M", primary = "d9d35a", deployment = "e96d18"},
+            -- N: Hidden Supplies / Crucible of Battle
+            {name = "N", primary = "85718f", deployment = "e96d18"},
+            -- O: Terraform / Crucible of Battle
+            {name = "O", primary = "7fa6d0", deployment = "e96d18"},
+            -- P: Scorched Earth / Crucible of Battle
+            {name = "P", primary = "6860de", deployment = "e96d18"},
+            -- Q: Supply Drop / Sweeping Engagement
+            {name = "Q", primary = "981226", deployment = "c6edf3"},
+            -- R: Terraform / Sweeping Engagement
+            {name = "R", primary = "7fa6d0", deployment = "c6edf3"},
+            -- S: Linchpin / Dawn of War
+            {name = "S", primary = "540fd0", deployment = "7f45dc"},
+            -- T: Purge the Foe / Dawn of War
+            { name = "T", primary = "d9d35a", deployment = "7f45dc" },
+            -- UKTC Maps
+            {name = "U", primary = "7fa6d0", deployment = "c6edf3"},
+            {name = "V", primary = "d9d35a", deployment = "e96d18"},
+            {name = "W", primary = "85718f", deployment = "09c961"},
+            {name = "X", primary = "540fd0", deployment = "7f45dc"},
+            {name = "Y", primary = "bffd57", deployment = "09c961"},
+            {name = "Z", primary = "bffd57", deployment = "09c961"}
+        }
+    },
+}
+
+turnOrder = {}
+nonPlaying = {"White", "Brown","Orange","Yellow","Green","Teal","Purple","Pink"}
+allowMenu = false
+allowAutoSeat = true
+redPlayerID = ""
+bluePlayerID = ""
+redDiceSpawnTime = "slow"
+blueDiceSpawnTime = "slow"
+
+-- storage for the latest edits
+feedbackName    = ""
+feedbackEmail   = ""
+feedbackType    = ""
+feedbackLike    = "Yes"
+feedbackMessage = ""
+
+-- callback for the Name field
+function onNameChanged(player, newText)
+    feedbackName = newText
+end
+
+-- callback for the Email field
+function onEmailChanged(player, newText)
+    feedbackEmail = newText
+end
+
+-- callback for the Type dropdown
+function onTypeChanged(player, newValue)
+    feedbackType = newValue
+end
+
+-- callback for the Like dropdown
+function onLikeChanged(player, newValue)
+    feedbackLike = newValue
+end
+
+-- callback for the Message field
+function onMessageChanged(player, newText)
+    feedbackMessage = newText
+end
+
+local monitoredID = "5c328f"  -- Original injection detector
+local monitoredID2 = "899f22" -- Malicious script detected object
+local warningInterval
+local pollInterval
+local detectedMissing = false
+
+-- Function to check if the objects exist in the game
+function checkForMonitoredID()
+    local obj = getObjectFromGUID(monitoredID)
+    local obj2 = getObjectFromGUID(monitoredID2)
+
+    if obj2 ~= nil then
+        -- If monitoredID2 is found, it means a malicious script was detected
+        if not detectedMissing then
+            detectedMissing = true
+            broadcastToAll("Reminder!!! A infected object has been loaded.... please leave the game and clean all objects.", "Red")
+
+            -- Stop further polling
+            stopPolling()
+        end
+    elseif obj == nil then
+        -- If monitoredID is missing, it means the detector was deleted, possible cheating
+        if not detectedMissing then
+            detectedMissing = true
+            broadcastToAll("Warning: Somebody is cheating!", "Red")
+
+            -- Start issuing warnings every 10 seconds
+            warningInterval = Wait.time(function()
+                broadcastToAll("Warning: Somebody is cheating!", "Red")
+            end, 10, -1)
+
+            -- Stop further polling
+            stopPolling()
+        end
+    end
+end
+
+-- Start polling every 30 seconds
+function startPolling()
+    checkForMonitoredID()  -- Initial check immediately
+    pollInterval = Wait.time(checkForMonitoredID, 30, -1)
+end
+
+-- Stop polling when needed
+function stopPolling()
+    if pollInterval ~= nil then
+        Wait.stop(pollInterval)
+        pollInterval = nil
+    end
+
+    if warningInterval ~= nil then
+        Wait.stop(warningInterval)
+        warningInterval = nil
+    end
+end
+
+function onSave()
+    blueSecondaryDeckGUID = nil
+    if packSelected then
+        blueSecondaryDeckGUID = missionPackData[packSelected].blueSecondaryDeck_GUID
+    end
+    saved_data = JSON.encode({
+        svredPlayerID = redPlayerID,
+        svbluePlayerID = bluePlayerID,
+        svPackSelected = packSelected,
+        svBlueSecondaryDeckGUID = blueSecondaryDeckGUID
+    })
+    --saved_data = ""
+    return saved_data
+end
+
+function updateTeamModel(obj, team)
+    local teamModels = Global.getTable("teamModels") or { Red = {}, Blue = {} }
+    -- Remove the object's GUID from any team it might already be in.
+    for _, t in ipairs({"Red", "Blue"}) do
+        for i = #teamModels[t], 1, -1 do
+            if teamModels[t][i] == obj.getGUID() then
+                table.remove(teamModels[t], i)
+            end
+        end
+    end
+    -- Add the object to the proper team.
+    table.insert(teamModels[team], obj.getGUID())
+    Global.setTable("teamModels", teamModels)
+end
+
+function tagSelectedAsRed(playerColor, target)
+    local objs = Player[playerColor].getSelectedObjects()
+    for _, obj in ipairs(objs) do
+      obj.setGMNotes("Red")
+      updateTeamModel(obj, "Red")
+    end
+    printToColor("Tagged selected objects as Red", playerColor, "Red")
+  end
+
+  function tagSelectedAsBlue(playerColor, target)
+    local objs = Player[playerColor].getSelectedObjects()
+    for _, obj in ipairs(objs) do
+      obj.setGMNotes("Blue")
+      updateTeamModel(obj, "Blue")
+    end
+    printToColor("Tagged selected objects as Blue", playerColor, "Blue")
+  end
+
+function spawnOppositeForGUID(guid)
+    local orig = getObjectFromGUID(guid)
+    if not orig then return end
+    local data = JSON.decode(orig.getJSON())
+    data.Transform.posX = -data.Transform.posX
+    data.Transform.posZ = -data.Transform.posZ
+    data.Transform.rotY = (data.Transform.rotY + 180) % 360
+    spawnObjectJSON({
+        json = JSON.encode(data),
+        callback_function = function(obj) obj.lock() end
+    })
+end
+
+-- function spawnActionTokens()
+--     local guids = {"ca12da", "ad19a7", "ab9a21"}
+--     for _, guid in ipairs(guids) do
+--         spawnOppositeForGUID(guid)
+--     end
+-- end
+
+function onLoad(saved_data)
+    --addHotkey("Tag Selected as Red", tagSelectedAsRed)
+    --addHotkey("Tag Selected as Blue", tagSelectedAsBlue)
+    addHotkey("Marker - Battleshock", function(playerColor, target)
+        onToggleButtonHotKey("ca12da", target)
+    end)
+    addHotkey("Marker - Advanced", function(playerColor, target)
+        onToggleButtonHotKey("ab9a21", target)
+    end)
+    addHotkey("Marker - Action-in-progress", function(playerColor, target)
+        onToggleButtonHotKey("a09c4e", target)
+    end)
+
+    -- spawnActionTokens()
+    Turns.enable=false
+    --- load vars from saved
+    if saved_data ~= "" then
+         local loaded_data = JSON.decode(saved_data)
+         redPlayerID = loaded_data.svredPlayerID
+         bluePlayerID = loaded_data.svbluePlayerID
+         packSelected = loaded_data.svPackSelected
+         if packSelected then
+            missionPackData[packSelected].blueSecondaryDeck_GUID = loaded_data.svBlueSecondaryDeckGUID
+         end
+    else
+        redPlayerID = ""
+        bluePlayerID = ""
+        packSelected = nil
+    end
+    ---- end loading
+    if allowMenu then
+        if allowAutoSeat and redPlayerID ~= "" and bluePlayerID ~= "" then --  if the game is not started dont autoseat
+                autoSeatAll()
+        else
+            Global.UI.setAttribute("main", "active", "true")
+            local presentPersons= Player.getPlayers()
+            for i, person in ipairs(presentPersons) do
+                person.team="Diamonds"
+            end
+            presentPersons= Player.getSpectators()
+            for i, person in ipairs(presentPersons) do
+                person.team="Diamonds"
+            end
+            showHideRedBlueBtn()
+        end
+    else
+        Global.UI.setAttribute("main", "active", "false")
+    end
+    --startPolling()
+end
+
+function setMissionPack(params)
+    packSelected = params.pack
+    redSecondaryDeck = getObjectFromGUID(missionPackData[packSelected].redSecondaryDeck_GUID)
+    blueSecondaryDeck = redSecondaryDeck.clone({position = redSecondaryDeck.getPosition()})
+    missionPackData[packSelected].blueSecondaryDeck_GUID = blueSecondaryDeck.getGUID()
+end
+
+function autoSeatPerson(_person)
+    if _person.steam_id == redPlayerID then
+        if Player.Red.seated then
+            Player.Red.changeColor("Grey")
+        end
+        _person.changeColor("Red")
+        _person.team="None"
+        return
+    end
+    if _person.steam_id == bluePlayerID then
+        if Player.Blue.seated then
+            Player.Blue.changeColor("Grey")
+        end
+        _person.changeColor("Blue")
+        _person.team="None"
+        return
+    end
+    --_person.changeColor("Grey")
+    _person.team="None"
+end
+
+function autoSeatGroup(persons)
+    for i, person in ipairs(persons) do
+        autoSeatPerson(person)
+    end
+end
+
+function autoSeatAll()
+    if redPlayerID=="" or bluePlayerID=="" then --  if the game is not started dont autoseat
+        return
+    end
+    local presents = Player.getPlayers()
+    autoSeatGroup(presents)
+    presents = Player.getSpectators()
+    autoSeatGroup(presents)
+end
+
+function recordPlayers()
+    redPlayerID = Player.Red.steam_id
+    bluePlayerID = Player.Blue.steam_id
+end
+
+function onPlayerChangeColor(player_color)
+    promotePlayers()
+    --demotePlayers()  -- RIC
+    showHideRedBlueBtn()
+end
+
+function onPlayerConnect(player_id)
+    if allowMenu then
+        if allowAutoSeat and redPlayerID ~= "" and bluePlayerID ~= "" then --  if the game is not started dont autoseat
+                autoSeatPerson(player_id)
+        else
+        player_id.team="Diamonds"
+        end
+    end
+end
+
+function promotePlayers()
+    local colors={"Red", "Blue", "Orange", "Yellow", "Purple", "Teal"}
+    for i, color in ipairs(colors) do
+        if Player[color].seated and  Player[color].host == false and not Player[color].promoted then
+            Player[color].promote()
+        end
+    end
+end
+
+function demotePlayers()
+    for i, color in ipairs(nonPlaying) do
+        if Player[color].seated  and Player[color].host == false then
+            Player[color].promote(false)
+        end
+    end
+    local spectators=Player.getSpectators()
+    for i, person in ipairs(spectators) do
+        if person.host == false then
+            person.promote(false)
+        end
+    end
+end
+
+function promotePlayersOnConnect()  --NOT USED
+    if player_color == "Red" or player_color == "Blue"  then
+        Player["Red"].promote(true)
+        Player["Blue"].promote(true)
+    end
+end
+
+function showHideRedBlueBtn()
+    if allowMenu then
+        if Player.Red.seated == true then
+            Global.UI.setAttribute("redBtn", "active", "false")
+        else
+            Global.UI.setAttribute("redBtn", "active", "true")
+        end
+        if Player.Blue.seated == true then
+            Global.UI.setAttribute("blueBtn", "active", "false")
+        else
+            Global.UI.setAttribute("blueBtn", "active", "true")
+        end
+    end
+end
+
+function setViewForPlayer(player, color)
+    if color=="Grey" then return end
+    local pos= {0,0,0}
+    if color == "Red" then
+        pos = getObjectFromGUID(redDiceMat_GUID).getPosition()
+    end
+    if color == "Blue" then
+        pos = getObjectFromGUID(blueDiceMat_GUID).getPosition()
+    end
+    player.lookAt({
+        position = pos,
+        pitch    = 25,
+        yaw      = 180,
+        distance = 20,
+        })
+end
+
+function onScriptingButtonDown(index, playerColor)
+    if index == 1 then
+        -- If '=' is bound to scripting button 1
+        local diceMat = getObjectFromGUID(redCustomDiceMat_GUID)
+        diceMat.call("changeSustainedHitsThreshold", { 1 })
+    elseif index == 2 then
+        -- If '-' is bound to scripting button 2
+        local diceMat = getObjectFromGUID(redCustomDiceMat_GUID)
+        diceMat.call("changeSustainedHitsThreshold", { -1 })
+    end
+end
+
+function placeToColor(player, color)
+    player.changeColor(color)
+    player.team="None"
+    broadcastToColor("READ INSTRUCTIONS FIRST!\n(Click Notebook at the top)", color, "Purple")
+    --setViewForPlayer(player, color) --bugged
+end
+
+function placeToRed(player, value, id)
+    placeToColor(player, "Red")
+    --player.changeColor("Red")
+    --player.team="None"
+end
+
+function placeToBlue(player, value, id)
+    placeToColor(player, "Blue")
+    --player.changeColor("Blue")
+    --player.team="None"
+end
+function placeToGray(player, value, id)
+    placeToColor(player, "Grey")
+    local selectPariahNexus = Global.getVar("selectPariahNexus")
+    if selectPariahNexus then
+        selectPariahNexus()
+    else
+        print("Error: selectPariahNexus function not found!")
+    end
+end
+
+function closeMenu(player, value, id)
+    player.team="None"
+    broadcastToColor("READ INSTRUCTIONS FIRST!\n(Click Notebook at the top)", player.color, "Purple")
+end
+
+backPosition={{0,0,0},{0,0,0},{0,0,0},{0,0,0}}
+function goToDiceRoller(player)
+    local matPositionOffset=12
+    local color=player.color
+    local diceMatGUID=redDiceMat_GUID
+    local i=1
+    if color == "Red" then
+        i=1
+    end
+    if color == "Orange" then
+        i=2
+    end
+    if color == "Blue" then
+        diceMatGUID = blueDiceMat_GUID
+        i=3
+        matPositionOffset=-matPositionOffset
+    end
+    if color == "Teal" then
+        diceMatGUID = blueDiceMat_GUID
+        i=4
+        matPositionOffset=-matPositionOffset
+    end
+    if Player[color].getSelectedObjects()[1] ~= nil then
+        backPosition[i]=Player[color].getSelectedObjects()[1].getPosition()
+    end
+
+    local matPos=getObjectFromGUID(diceMatGUID).getPosition()
+    matPos.x=matPos.x+matPositionOffset
+    moveCameraTo(matPos,30,color)
+end
+function goToScoreBoard(player)
+    local matPositionOffset = 0 -- Define matPositionOffset with a default value
+    local color = player.color
+    local matPos = getObjectFromGUID("06d627").getPosition()
+    matPos.x = matPos.x + matPositionOffset
+     moveCameraTo(matPos, 30, color, 90)
+end
+
+function goToSquad(player)
+    local i = 1
+    local color=player.color
+    if color == "Red" then
+        i=1
+    end
+    if color == "Orange" then
+        i=2
+    end
+    if color == "Blue" then
+        i=3
+    end
+    if color == "Teal" then
+        i=4
+    end
+    moveCameraTo(backPosition[i], 20, color)
+end
+
+function moveCameraTo(pos, dist, color, pitchOverride)
+    local rot = {0, 0, 0} -- Default rotation
+
+    if color == "Red" or color == "Orange" then
+        rot = {0, 180, 0}
+    elseif color == "Blue" or color == "Teal" then
+        rot = {0, 0, 0}
+    end
+
+    if pos[2] == 0 then
+        dist = dist + 30
+    end
+
+    local yaw = pitchOverride or rot[2]
+
+    Player[color].lookAt({
+        position = pos,
+        pitch = 90,
+        yaw = yaw,
+        distance = dist
+    })
+end
+
+function moveAllFromZoneToDeck(params)
+    local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
+    local deckObj = getObjectFromGUID(missionPackData[packSelected][params.deck .. "Deck_GUID"])
+
+    local objects = zoneObj.getObjects()
+    for _,object in ipairs(objects) do
+        object.locked = false
+        deckObj.putObject(object)
+    end
+
+    deckObj.shuffle()
+end
+
+function updatePrimaryCardPosition(cardGUID, isPurgeTheFoe)
+    local obj = getObjectFromGUID(cardGUID)
+    if not obj then
+        print("[updatePrimaryCardPosition] Could not find object:", cardGUID)
+        return
+    end
+
+    local pos = obj.getPosition()
+    if isPurgeTheFoe then
+        pos.y = -0.33
+    else
+        pos.y = -4.33
+    end
+    obj.setPosition(pos)
+end
+
+function moveOneFromDeckToZone(params)
+    local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
+    local deckObj = getObjectFromGUID(Global.getVar(params.deck .. "Deck_GUID"))
+    local takeParams = {}
+    takeParams.position = zoneObj.getPosition()
+    takeParams.flip = true
+    takeParams.smooth = true
+    takeParams.callback_function = function(card)
+        Wait.frames(function()
+            card.locked = true
+            local name = card.getName()
+            local isPurge = name:find("Purge The Foe")
+            updatePrimaryCardPosition("5d3485", isPurge)
+            updatePrimaryCardPosition("c41f82", isPurge)
+        end)
+    end
+    if params["card"] then
+        takeParams.guid = params.card
+    else
+        deckObj.shuffle()
+    end
+    deckObj.takeObject(takeParams)
+end
+
+
+function moveOneFromDeckToZoneBlue(params)
+    local zoneObj = getObjectFromGUID(Global.getVar(params.zone .. "CardZone_GUID"))
+    local deckObj = getObjectFromGUID(missionPackData[packSelected][params.deck .. "Deck_GUID"])
+    local takeParams = {}
+    takeParams.position = zoneObj.getPosition()
+    takeParams.flip = true
+    takeParams.smooth = true
+    takeParams.callback_function = function(card)
+        Wait.frames(function()
+            card.locked = true
+        end)
+    end
+    if params["card"] then
+        takeParams.guid = params.card
+    else
+        deckObj.shuffle()
+    end
+    deckObj.takeObject(takeParams)
+end
+
+globalFloatingIcons = globalFloatingIcons or {}
+
+local extraLargeNames = {
+    "knight",
+    "titan",
+    "reaver",
+    "warhound",
+    "stompa",
+}
+local largeNames = {
+    "warhound",
+    "shadowsword",
+    "stormlord",
+    "mauler",
+    "mutalith",
+    "bloodthirster",
+    "magnus",
+}
+local mediumNames = {
+    "avatar",
+    "khaine",
+    "mutalith",
+    "unclean",
+    "fulgrim",
+    "baneblade",
+    "warlord",
+    "be'lakor"
+}
+
+guidMap = {
+    ["ca12da"] = Battleshock_GUID,
+    ["ae9056"] = Battleshock_GUID,
+    ["ab9a21"] = Advance_GUID,
+    ["3b0476"] = Advance_GUID,
+    ["ad19a7"] = ActionInProgress_GUID,
+    ["a09c4e"] = ActionInProgress_GUID,
+}
+tokenHeights = {
+    ["ca12da"] = 0.029,
+    ["ae9056"] = 0.029,
+    ["ab9a21"] = 0.01,
+    ["3b0476"] = 0.006,
+    ["ad19a7"] = 0.0,
+    ["a09c4e"] = 0.007,
+}
+
+function getIcons(obj)
+    local guid = obj.getGUID()
+    globalFloatingIcons[guid] = globalFloatingIcons[guid] or {}
+    return globalFloatingIcons[guid]
+end
+
+function addIcon(obj, icon, uid, url, isFloor)
+    local guid = obj.getGUID()
+    globalFloatingIcons[guid] = globalFloatingIcons[guid] or {}
+    table.insert(globalFloatingIcons[guid], { obj = icon, updateID = uid, imageURL = url, isFloor = isFloor })
+end
+
+function removeIcon(obj, url, isFloor)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for i = #icons, 1, -1 do
+        local e = icons[i]
+        if e.imageURL == url and e.isFloor == isFloor then
+            if e.updateID then Wait.stop(e.updateID) end
+            e.obj.destroy()
+            table.remove(icons, i)
+        end
+    end
+    if #icons == 0 then globalFloatingIcons[guid] = nil end
+end
+
+function clearIcons(obj)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for _, e in ipairs(icons) do
+        if e.updateID then Wait.stop(e.updateID) end
+        e.obj.destroy()
+    end
+    globalFloatingIcons[guid] = nil
+end
+
+function toggleFloatingIconGeneric(params)
+    local floorObj = getObjectFromGUID(felt_GUID)
+    local FLOOR_Y = floorObj and floorObj.getPosition().y or 1
+
+    local obj = params.hoveredObject or params.obj
+    local url = params.imageURL
+    local isFloor = params.floor == true
+    local name = (params.name or ""):lower()
+    if not obj then return end
+
+    for _, e in ipairs(getIcons(obj)) do
+        if e.imageURL == url and e.isFloor == isFloor then
+            removeIcon(obj, url, isFloor)
+            return
+        end
+    end
+
+    -- size category
+    local name = (params.name or ""):lower()
+    local isMedium, isExtraLarge, isLarge = false, false, false
+    for _, k in ipairs(mediumNames)     do if name:find(k,1,true) then isMedium     = true break end end
+    for _, k in ipairs(extraLargeNames) do if name:find(k,1,true) then isExtraLarge = true break end end
+    if not isMedium and not isExtraLarge then
+        for _, k in ipairs(largeNames) do if name:find(k,1,true) then isLarge = true break end end
+    end
+
+    local normalH, normalO, normalS = 5,  -2,   1.2
+    local largeH,  largeO,  largeS  = 8,  -3,   1.8
+    local medH,    medO,    medS    = 6,  -2.5, 1.5
+    local exH,     exO,     exS     = 10, -4,   2
+    local baseH, baseO, baseS = normalH, normalO, normalS
+    if     isExtraLarge then baseH, baseO, baseS = exH,   exO,   exS
+    elseif isLarge      then baseH, baseO, baseS = largeH, largeO, largeS
+    elseif isMedium     then baseH, baseO, baseS = medH,   medO,   medS end
+
+    local b0 = obj.getBounds()
+    local halfHeight0 = b0.size.y / 2
+    local minDist0 = b0.size.x / 2 + 1.2
+    local sign0 = (baseO < 0) and -1 or 1
+    local bottom0 = b0.center.y - halfHeight0
+    local spawnY = isFloor and math.max(bottom0, FLOOR_Y) or (b0.center.y + halfHeight0 + baseH)
+    if isFloor then spawnY = math.min(spawnY, 1.3) end
+    local spawnX = isFloor and (b0.center.x + sign0 * minDist0) or b0.center.x
+    local spawnZ = b0.center.z
+
+    local icon = spawnObject({
+        type         = "Custom_Token",
+        position     = {spawnX, spawnY, spawnZ},
+        rotation     = {0, obj.getRotation().y, 0},
+        scale        = {0.4,0.4,0.4},
+        cast_shadows = false,
+    })
+    icon.setCustomObject({
+        image          = url,
+        thickness      = 0.05+tokenHeights[params.extraHeightId],
+        merge_distance = 0.2,
+        stand_up       = false,
+        stackable      = false,
+    })
+    icon.setLock(true)
+    -- icon.setColorTint({1,1,1,0.95})
+
+    local function follow()
+        local b = obj.getBounds()
+        local halfH = b.size.y / 2
+        local minDist = b.size.x / 2 + 1.2
+        local bottom = b.center.y - halfH
+        local sign = (baseO < 0) and -1 or 1
+        local maxStep = 1
+        local fh   = math.max(bottom, FLOOR_Y)
+        local floorPos = math.max(b.center.y - halfH, FLOOR_Y)
+        local vel = obj.getVelocity() or {x=0,y=0,z=0}
+        local speed = math.sqrt(vel.x*vel.x + vel.y*vel.y + vel.z*vel.z)
+        local useY = floorPos
+        if isFloor and speed > 0 then useY = math.min(useY, 1.2) end
+
+        local icons= getIcons(obj)
+
+        if isFloor then
+            -- Arrange floor icons on an orbit that follows the object's yaw.
+            local floors, prev = {}, minDist
+            for _, e in ipairs(getIcons(obj)) do if e.isFloor then table.insert(floors, e) end end
+            local count = #floors
+            if count > 0 then
+                -- compute radii preserving incremental spacing behavior
+                local radii = {}
+                for i = 1, count do
+                    local dist = (i == 1) and minDist or (prev + math.min(minDist * (baseS^(i-1)) - prev, maxStep))
+                    prev = dist
+                    radii[i] = dist
+                end
+
+                -- base angle follows object's yaw
+                local baseAngle = math.rad(obj.getRotation().y or 0)
+                for i, e in ipairs(floors) do
+                    local offset = ((i-1) - (count-1)/2) * (2 * math.pi / math.max(count,1))
+                    local angle = baseAngle + offset
+                    local r = radii[i]
+                    local x = b.center.x + math.cos(angle) * r * sign
+                    local z = b.center.z + math.sin(angle) * r
+                    local rotY = (math.deg(angle) + 90) % 360
+                    e.obj.setRotation({0, rotY, 0})
+                    e.obj.setPosition({ x, useY, z }, false)
+                end
+            end
+        else
+            local floats = {}
+            for _, e in ipairs(getIcons(obj)) do if not e.isFloor then table.insert(floats, e) end end
+            local spacing = math.min(minDist * baseS, maxStep)
+            local totalW = (#floats - 1) * spacing
+            for i, e in ipairs(floats) do
+                local off = -totalW/2 + (i-1)*spacing
+                e.obj.setRotation({0, obj.getRotation().y, 0})
+                e.obj.setPosition({ b.center.x + off, b.center.y + halfH + baseH, b.center.z }, false)
+            end
+        end
+    end
+
+    Wait.frames(follow, 2)
+    local uid = Wait.time(follow, 0.01, -1)
+    addIcon(obj, icon, uid, url, isFloor)
+end
+
+function onObjectDestroy(obj)
+    local objGUID = obj.getGUID()
+    for originGUID, icons in pairs(globalFloatingIcons) do
+        for i, e in ipairs(icons) do
+            if e.obj and e.obj.getGUID() == objGUID then
+                if e.updateID then Wait.stop(e.updateID) end
+                table.remove(icons, i)
+                if #icons == 0 then globalFloatingIcons[originGUID] = nil end
+                return
+            end
+        end
+    end
+    clearIcons(obj)
+end
+
+function clearIconsOfType(obj, floorType)
+    local guid = obj.getGUID()
+    local icons = globalFloatingIcons[guid]
+    if not icons then return end
+    for i = #icons, 1, -1 do
+        local e = icons[i]
+        if e.isFloor == floorType then
+            if e.updateID then Wait.stop(e.updateID) end
+            e.obj.destroy()
+            table.remove(icons, i)
+        end
+    end
+    if #icons == 0 then
+        globalFloatingIcons[guid] = nil
+    end
+end
+
+function onToggleButtonHotKey(type, target)
+    if not target or not target.getGUID then
+        print("No target selected.")
+        return
+    end
+    local target = target
+    local params = {
+        hoveredObject = target,
+        imageURL      = guidMap[type],
+        floor         = true,
+        name          = target.getName(),
+        extraHeightId   = type,
+    }
+    clearIconsOfType(target, false)
+    toggleFloatingIconGeneric(params)
+end

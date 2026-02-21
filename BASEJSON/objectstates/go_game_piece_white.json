@@ -1,0 +1,151 @@
+[
+  {
+    "GUID": "5c328f",
+    "Name": "go_game_piece_white",
+    "Transform": {
+      "posX": 68.34854,
+      "posY": -5,
+      "posZ": -63.2423248,
+      "rotX": 2.495925e-06,
+      "rotY": 359.993134,
+      "rotZ": -8.10718348e-07,
+      "scaleX": 3,
+      "scaleY": 3,
+      "scaleZ": 3
+    },
+    "Nickname": "Injection Detector",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.6617647,
+      "g": 0.6617647,
+      "b": 0.6617647
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": false,
+    "Autoraise": true,
+    "interactable": false,
+    "Sticky": true,
+    "Tooltip": false,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "States": {
+      "2": {
+        "GUID": "899f22",
+        "Name": "go_game_piece_white",
+        "Transform": {
+          "posX": 0,
+          "posY": 7.18299866,
+          "posZ": 0,
+          "rotX": 4.44650219e-08,
+          "rotY": 359.993134,
+          "rotZ": 5.18434462e-10,
+          "scaleX": 1.5,
+          "scaleY": 1.5,
+          "scaleZ": 1.5
+        },
+        "Nickname": "Malicious Scripts Detected!",
+        "Description": "",
+        "GMNotes": "",
+        "AltLookAngle": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "ColorDiffuse": {
+          "r": 0.65882355,
+          "g": 0.65882355,
+          "b": 0.65882355,
+          "a": 0
+        },
+        "LayoutGroupSortIndex": 0,
+        "Value": 0,
+        "Locked": true,
+        "Grid": true,
+        "Snap": true,
+        "IgnoreFoW": false,
+        "MeasureMovement": false,
+        "DragSelectable": true,
+        "Autoraise": true,
+        "Sticky": true,
+        "Tooltip": true,
+        "GridProjection": false,
+        "HideWhenFaceDown": false,
+        "Hands": false,
+        "LuaScript": "",
+        "LuaScriptState": "",
+        "XmlUI": "",
+        "ChildObjects": [
+          {
+            "GUID": "6fb2cf",
+            "Name": "Custom_Assetbundle",
+            "Transform": {
+              "posX": -1.84482979e-05,
+              "posY": 0.28299582,
+              "posZ": -1.63822293e-07,
+              "rotX": 0.0004609494,
+              "rotY": 120.004173,
+              "rotZ": 180.000046,
+              "scaleX": 0.200000033,
+              "scaleY": 0.2,
+              "scaleZ": 0.200000018
+            },
+            "Nickname": "[FF0200]Mystic Tenticles",
+            "Description": "",
+            "GMNotes": "",
+            "AltLookAngle": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "ColorDiffuse": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0
+            },
+            "LayoutGroupSortIndex": 0,
+            "Value": 0,
+            "Locked": false,
+            "Grid": true,
+            "Snap": true,
+            "IgnoreFoW": false,
+            "MeasureMovement": false,
+            "DragSelectable": true,
+            "Autoraise": true,
+            "Sticky": true,
+            "Tooltip": true,
+            "GridProjection": false,
+            "HideWhenFaceDown": false,
+            "Hands": false,
+            "CustomAssetbundle": {
+              "AssetbundleURL": "https://steamusercontent-a.akamaihd.net/ugc/1697279045389234686/E75776B84B3966DEF588E4C6B187CC05DBDC71C5/",
+              "AssetbundleSecondaryURL": "",
+              "MaterialIndex": 0,
+              "TypeIndex": 0,
+              "LoopingEffectIndex": 2
+            },
+            "LuaScript": "",
+            "LuaScriptState": "",
+            "XmlUI": ""
+          }
+        ]
+      }
+    }
+  }
+]

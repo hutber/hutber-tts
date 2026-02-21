@@ -1,0 +1,90 @@
+[
+  {
+    "GUID": "2671c8",
+    "Name": "Digital_Clock",
+    "Transform": {
+      "posX": 79.0,
+      "posY": 0.85,
+      "posZ": 23.0,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 3.0,
+      "scaleY": 3.0,
+      "scaleZ": 0.2
+    },
+    "Nickname": "Timer",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Clock": {
+      "Mode": 3,
+      "SecondsPassed": 0,
+      "Paused": true
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "1fcbf0",
+    "Name": "Digital_Clock",
+    "Transform": {
+      "posX": 79.0,
+      "posY": 0.85,
+      "posZ": -23.0,
+      "rotX": 90.0,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 3.0,
+      "scaleY": 3.0,
+      "scaleZ": 0.2
+    },
+    "Nickname": "Clock",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.2499899,
+      "g": 0.2499899,
+      "b": 0.2499899
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Clock": {
+      "Mode": 0,
+      "SecondsPassed": 0,
+      "Paused": false
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

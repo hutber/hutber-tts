@@ -1,9 +1,65 @@
 param ([Switch]$test)
 
+function ResolveLuaIncludes([string]$fileName, [hashtable]$includeStack = $null)
+{
+    if ($null -eq $includeStack)
+    {
+        $includeStack = @{}
+    }
+
+    $resolvedPath = (Resolve-Path $fileName).Path
+    if ($includeStack.ContainsKey($resolvedPath))
+    {
+        throw "Circular Lua include detected: $resolvedPath"
+    }
+    $includeStack[$resolvedPath] = $true
+
+    $regexLuaInclude = '^\s*--\s*@include\s+(.+?)\s*$'
+    $baseDir = Split-Path $resolvedPath -Parent
+    $resolvedLines = New-Object System.Collections.Generic.List[string]
+    $sourceLines = Get-Content $resolvedPath
+
+    foreach($line in $sourceLines)
+    {
+        $match = [regex]::Match($line, $regexLuaInclude)
+        if($match.Success)
+        {
+            $relativeInclude = $match.Groups[1].Value.Trim()
+            if(($relativeInclude.StartsWith('"') -and $relativeInclude.EndsWith('"')) -or
+               ($relativeInclude.StartsWith("'") -and $relativeInclude.EndsWith("'")))
+            {
+                $relativeInclude = $relativeInclude.Substring(1, $relativeInclude.Length - 2)
+            }
+
+            $includePath = Join-Path $baseDir $relativeInclude
+            if(!(Test-Path $includePath))
+            {
+                throw "Lua include not found: $relativeInclude (from $resolvedPath)"
+            }
+
+            $resolvedLines.Add("-- BEGIN include: $relativeInclude")
+            $includedLines = ResolveLuaIncludes $includePath $includeStack
+            foreach($includedLine in $includedLines)
+            {
+                $resolvedLines.Add($includedLine)
+            }
+            $resolvedLines.Add("-- END include: $relativeInclude")
+        }
+        else
+        {
+            $resolvedLines.Add($line)
+        }
+    }
+
+    $includeStack.Remove($resolvedPath)
+    return ,$resolvedLines.ToArray()
+}
+
 function WriteLuaScriptToJsonContent([int]$jsonLineNumber, [int]$luaScriptFileIdx)
 {
     $fileName = ('{0}{1}' -f $pathLua, $luaScriptFiles[$luaScriptFileIdx])
-    $luaContent = Get-Content $fileName | Out-String | ConvertTo-Json
+    $resolvedLuaLines = ResolveLuaIncludes $fileName
+    $luaContent = ($resolvedLuaLines -join [Environment]::NewLine) | ConvertTo-Json
 
     $curJsonContentOnLine = $jsonContent[$jsonLineNumber] -replace ".{3}$"
 
