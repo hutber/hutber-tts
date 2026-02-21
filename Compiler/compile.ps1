@@ -1,15 +1,117 @@
 param ([Switch]$test)
 
+function ResolveLuaIncludes([string]$fileName, [hashtable]$includeStack = $null)
+{
+    if ($null -eq $includeStack)
+    {
+        $includeStack = @{}
+    }
+
+    $resolvedPath = (Resolve-Path $fileName).Path
+    if ($includeStack.ContainsKey($resolvedPath))
+    {
+        throw "Circular Lua include detected: $resolvedPath"
+    }
+    $includeStack[$resolvedPath] = $true
+
+    $regexLuaInclude = '^\s*--\s*@include\s+(.+?)\s*$'
+    $baseDir = Split-Path $resolvedPath -Parent
+    $resolvedLines = New-Object System.Collections.Generic.List[string]
+    $sourceLines = Get-Content $resolvedPath
+
+    foreach($line in $sourceLines)
+    {
+        $match = [regex]::Match($line, $regexLuaInclude)
+        if($match.Success)
+        {
+            $relativeInclude = $match.Groups[1].Value.Trim()
+            if(($relativeInclude.StartsWith('"') -and $relativeInclude.EndsWith('"')) -or
+               ($relativeInclude.StartsWith("'") -and $relativeInclude.EndsWith("'")))
+            {
+                $relativeInclude = $relativeInclude.Substring(1, $relativeInclude.Length - 2)
+            }
+
+            $includePath = Join-Path $baseDir $relativeInclude
+            if(!(Test-Path $includePath))
+            {
+                throw "Lua include not found: $relativeInclude (from $resolvedPath)"
+            }
+
+            $resolvedLines.Add("-- BEGIN include: $relativeInclude")
+            $includedLines = ResolveLuaIncludes $includePath $includeStack
+            foreach($includedLine in $includedLines)
+            {
+                $resolvedLines.Add($includedLine)
+            }
+            $resolvedLines.Add("-- END include: $relativeInclude")
+        }
+        else
+        {
+            $resolvedLines.Add($line)
+        }
+    }
+
+    $includeStack.Remove($resolvedPath)
+    return ,$resolvedLines.ToArray()
+}
+
 function WriteLuaScriptToJsonContent([int]$jsonLineNumber, [int]$luaScriptFileIdx)
 {
     $fileName = ('{0}{1}' -f $pathLua, $luaScriptFiles[$luaScriptFileIdx])
-    $luaContent = Get-Content $fileName | Out-String | ConvertTo-Json
+    $resolvedLuaLines = ResolveLuaIncludes $fileName
+    $luaContent = ($resolvedLuaLines -join [Environment]::NewLine) | ConvertTo-Json
 
     $curJsonContentOnLine = $jsonContent[$jsonLineNumber] -replace ".{3}$"
 
     Write-Host "Writing to JSON line number $jsonLineNumber. " -NoNewLine
     $jsonContent[$jsonLineNumber] = $curJsonContentOnLine + $luaContent + ","
 }
+
+function SyncXmlUiFiles()
+{
+    $sourceXmlPath = Join-Path $repoRoot 'BASEJSON\hutber_base_ui.xml'
+    $expandedXmlPath = Join-Path $repoRoot 'TTSJSON\ftc_base_ui.xml'
+    $jsonPath = Join-Path $repoRoot 'TTSJSON\ftc_base.json'
+
+    if(!(Test-Path $sourceXmlPath))
+    {
+        throw "XmlUI source not found: $sourceXmlPath"
+    }
+
+    Copy-Item -Force -Path $sourceXmlPath -Destination $expandedXmlPath
+
+    $xml = Get-Content -Raw -Encoding UTF8 -Path $sourceXmlPath
+    $lines = $xml -split "\r?\n"
+    $lines = $lines | ForEach-Object { $_.TrimStart() }
+    $xmlTrimmed = $lines -join "`r`n"
+    $xmlNorm = $xmlTrimmed -replace "`r`n","`n" -replace "`r","`n" -replace "`n","`r`n"
+
+    $xmlEsc = $xmlNorm -replace '\\', '\\\\'
+    $xmlEsc = $xmlEsc -replace '"', '\"'
+    $xmlEsc = $xmlEsc -replace "`r`n", '\r\n'
+    $xmlEsc = $xmlEsc -replace "`r", '\r'
+    $xmlEsc = $xmlEsc -replace "`n", '\n'
+    $xmlEsc = $xmlEsc -replace "`t", '\t'
+    $xmlEsc = $xmlEsc -replace "`b", '\b'
+    $xmlEsc = $xmlEsc -replace "`f", '\f'
+
+    $raw = Get-Content -Raw -Encoding UTF8 -Path $jsonPath
+    $pattern = '"XmlUI"\s*:\s*"((?:\\.|[^"\\])*)"'
+    $m = [regex]::Match($raw, $pattern, 'Singleline')
+    if (-not $m.Success)
+    {
+        throw "Could not find XmlUI value in $jsonPath"
+    }
+
+    $valStart = $m.Groups[1].Index
+    $valLen = $m.Groups[1].Length
+    $newRaw = $raw.Substring(0, $valStart) + $xmlEsc + $raw.Substring($valStart + $valLen)
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($jsonPath, $newRaw, $utf8NoBom)
+    Write-Host "Synced XmlUI from $sourceXmlPath"
+}
+
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 
 # Update this if TTS is installed elsewhere.
 $osIsWindows = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::Windows)
@@ -56,14 +158,19 @@ if(!(Test-Path $fileName))
     Write-Host "$fileName could not be found! Ending compilation..."
 }
 
+SyncXmlUiFiles
+
 # ask user to give a version number
 # blank input gives no version
 if ($test -eq $false)
 {
-    $version = Read-Host "Version number"
-    if($version -ne "")
+    $versionInput = Read-Host "Version number"
+    $version = ""
+
+    if(-not [string]::IsNullOrWhiteSpace($versionInput))
     {
-        if($version.substring(0,1) -ne "v")
+        $version = $versionInput.Trim()
+        if(-not $version.StartsWith("v"))
         {
             $version = "v" + $version
         }

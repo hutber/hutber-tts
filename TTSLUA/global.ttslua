@@ -247,6 +247,8 @@ local monitoredID2 = "899f22" -- Malicious script detected object
 local warningInterval
 local pollInterval
 local detectedMissing = false
+local trackedConsentCheckRequestId = 0
+local trackedConsentCheckPendingBySide = {}
 
 -- Function to check if the objects exist in the game
 function checkForMonitoredID()
@@ -560,6 +562,13 @@ function placeToColor(player, color)
     player.changeColor(color)
     player.team="None"
     broadcastToColor("READ INSTRUCTIONS FIRST!\n(Click Notebook at the top)", color, "Purple")
+    if color == "Red" or color == "Blue" then
+        Wait.time(function()
+            showTrackingConsentPopupForPlayer(player, color)
+        end, 0.25)
+    else
+        closeTrackingConsentPopup(player)
+    end
     --setViewForPlayer(player, color) --bugged
 end
 
@@ -587,6 +596,167 @@ end
 function closeMenu(player, value, id)
     player.team="None"
     broadcastToColor("READ INSTRUCTIONS FIRST!\n(Click Notebook at the top)", player.color, "Purple")
+    Wait.time(function()
+        showTrackingConsentPopupForPlayer(player)
+    end, 0.1)
+end
+
+function getStartMenuObject()
+    local guid = Global.getVar("startMenu_GUID")
+    if not guid or guid == "" then
+        return nil
+    end
+    return getObjectFromGUID(guid)
+end
+
+function getTrackingConsentPopupState(side)
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        return nil
+    end
+    local ok, data = pcall(function()
+        return startMenu.call("getTrackedConsentPanelState", { side = side })
+    end)
+    if not ok or type(data) ~= "table" then
+        return nil
+    end
+    return data
+end
+
+function getTrackingConsentSeatForPlayer(player, preferredSeat)
+    if preferredSeat == "Red" or preferredSeat == "Blue" then
+        return preferredSeat
+    end
+    if not player then
+        return nil
+    end
+
+    local playerColor = player.color
+    if playerColor == "Red" or playerColor == "Blue" then
+        return playerColor
+    end
+
+    local steamId = player.steam_id and tostring(player.steam_id) or nil
+    if steamId and steamId ~= "" then
+        if Player.Red and tostring(Player.Red.steam_id or "") == steamId then
+            return "Red"
+        end
+        if Player.Blue and tostring(Player.Blue.steam_id or "") == steamId then
+            return "Blue"
+        end
+    end
+
+    return nil
+end
+
+function buildTrackingConsentBodyText(side, state)
+    return ""
+end
+
+function openTrackingConsentPopupForSeat(side)
+    if side ~= "Red" and side ~= "Blue" then
+        return
+    end
+
+    local state = getTrackingConsentPopupState(side)
+    if state and state.status == "accepted" then
+        closeTrackingConsentPopup()
+        return
+    end
+
+    Global.UI.setAttribute("trackingConsentTitle", "text", "UNLOCK GAME STATS AND MATCH FEATURES")
+    Global.UI.setAttribute(
+        "trackingConsentBody",
+        "text",
+        buildTrackingConsentBodyText(side, state)
+    )
+    Global.UI.setAttribute("trackingConsentPopup", "visibility", side)
+    Global.UI.setAttribute("trackingConsentPopup", "active", "true")
+end
+
+function onTrackedConsentCheckComplete(params)
+    local side = params and params.side or nil
+    local requestId = params and params.requestId or nil
+    if side ~= "Red" and side ~= "Blue" then
+        return
+    end
+    if trackedConsentCheckPendingBySide[side] ~= requestId then
+        return
+    end
+
+    trackedConsentCheckPendingBySide[side] = nil
+    openTrackingConsentPopupForSeat(side)
+end
+
+function showTrackingConsentPopupForSeat(side)
+    if side ~= "Red" and side ~= "Blue" then
+        return
+    end
+
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        openTrackingConsentPopupForSeat(side)
+        return
+    end
+
+    trackedConsentCheckRequestId = trackedConsentCheckRequestId + 1
+    trackedConsentCheckPendingBySide[side] = trackedConsentCheckRequestId
+
+    local ok = pcall(function()
+        startMenu.call("primeTrackedConsentCheck", {
+            side = side,
+            requestId = trackedConsentCheckRequestId
+        })
+    end)
+
+    if not ok then
+        trackedConsentCheckPendingBySide[side] = nil
+        openTrackingConsentPopupForSeat(side)
+    end
+end
+
+function showTrackingConsentPopupForPlayer(player, preferredSeat)
+    local side = getTrackingConsentSeatForPlayer(player, preferredSeat)
+    if side ~= "Red" and side ~= "Blue" then
+        return
+    end
+    showTrackingConsentPopupForSeat(side)
+end
+
+function closeTrackingConsentPopup(player, value, id)
+    Global.UI.setAttribute("trackingConsentPopup", "active", "false")
+end
+
+function allowTrackingConsent(player, value, id)
+    local seat = player and player.color or nil
+    if seat ~= "Red" and seat ~= "Blue" then
+        broadcastToColor("Only the seated Red or Blue player can choose tracking.", player.color, "Yellow")
+        return
+    end
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        return
+    end
+    pcall(function()
+        startMenu.call("recordTrackedConsentChoice", { side = seat, decision = "accepted" })
+    end)
+    closeTrackingConsentPopup()
+end
+
+function declineTrackingConsent(player, value, id)
+    local seat = player and player.color or nil
+    if seat ~= "Red" and seat ~= "Blue" then
+        broadcastToColor("Only the seated Red or Blue player can choose tracking.", player.color, "Yellow")
+        return
+    end
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        return
+    end
+    pcall(function()
+        startMenu.call("recordTrackedConsentChoice", { side = seat, decision = "declined" })
+    end)
+    closeTrackingConsentPopup()
 end
 
 backPosition={{0,0,0},{0,0,0},{0,0,0},{0,0,0}}

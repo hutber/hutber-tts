@@ -1,0 +1,518 @@
+[
+  {
+    "GUID": "5d3485",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 44.118576,
+      "posY": -4.8219983,
+      "posZ": 27.2172737,
+      "rotX": 6.58745137e-07,
+      "rotY": 90.0263748,
+      "rotZ": 1.799043e-06,
+      "scaleX": 2.60000086,
+      "scaleY": 2.60000086,
+      "scaleZ": 2.60000086
+    },
+    "Nickname": "Purge the Foe Kill Counter",
+    "Description": "Red Player\n",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.856,
+      "g": 0.0999838039,
+      "b": 0.09398375
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "-- FTC-GUID: 7e4111,055302\n-- Description contains the guid of game turn counter\n\n\nfunction increaseSelf()\n        self.Counter.increment()\n        gameUpdate()\n\nend\n\nfunction gameUpdate()\n    guidGC=self.getDescription()\n    gameTurn=getObjectFromGUID(guidGC)\n\n    -- required to inform startMenu of change in Round\n    startMenu=getObjectFromGUID(Global.getVar(\"startMenu_GUID\"))\n\n    if gameTurn == nil then\n    else\n        if self.Counter.getValue() > gameTurn.Counter.getValue() then\n            gameTurn.Counter.setValue(self.Counter.getValue())\n            gameTurn.call(\"checkGameEnd\")\n            startMenu.call(\"newRoundStarted\")\n        end\n    end\nend\n",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "c41f82",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 44.118576,
+      "posY": -4.8219983,
+      "posZ": -27.2172737,
+      "rotX": 6.58745137e-07,
+      "rotY": 90.0263748,
+      "rotZ": 1.799043e-06,
+      "scaleX": 2.60000086,
+      "scaleY": 2.60000086,
+      "scaleZ": 2.60000086
+    },
+    "Nickname": "Purge the Foe Kill Counter",
+    "Description": "Blue Player\n",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.117983066,
+      "g": 0.53,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "-- FTC-GUID: 7e4111,055302\n-- Description contains the guid of game turn counter\n\n\nfunction increaseSelf()\n        self.Counter.increment()\n        gameUpdate()\n\nend\n\nfunction gameUpdate()\n    guidGC=self.getDescription()\n    gameTurn=getObjectFromGUID(guidGC)\n\n    -- required to inform startMenu of change in Round\n    startMenu=getObjectFromGUID(Global.getVar(\"startMenu_GUID\"))\n\n    if gameTurn == nil then\n    else\n        if self.Counter.getValue() > gameTurn.Counter.getValue() then\n            gameTurn.Counter.setValue(self.Counter.getValue())\n            gameTurn.call(\"checkGameEnd\")\n            startMenu.call(\"newRoundStarted\")\n        end\n    end\nend\n",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "e446f7",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -1.33,
+      "posZ": 37.5,
+      "rotX": 0.0,
+      "rotY": 89.99996,
+      "rotZ": 0.0,
+      "scaleX": 3.59999728,
+      "scaleY": 3.59999728,
+      "scaleZ": 3.59999728
+    },
+    "Nickname": "Command Points",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "61c2f8",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -10.33,
+      "posZ": -55,
+      "rotX": 0.0,
+      "rotY": 89.99996,
+      "rotZ": 0.0,
+      "scaleX": 3.59999728,
+      "scaleY": 3.59999728,
+      "scaleZ": 3.59999728
+    },
+    "Nickname": "Command Points",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.5,
+      "g": 0,
+      "b": 0.5
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "25fc4a",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 51.3211021,
+      "posY": -10.33,
+      "posZ": 37.5,
+      "rotX": 0.0,
+      "rotY": 89.99996,
+      "rotZ": 0.0,
+      "scaleX": 3.59999728,
+      "scaleY": 3.59999728,
+      "scaleZ": 3.59999728
+    },
+    "Nickname": "Command Points",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 0,
+      "b": 0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "8b0541",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -1.32,
+      "posZ": 27.0,
+      "rotX": -8.33763336e-10,
+      "rotY": 89.99997,
+      "rotZ": 0.0,
+      "scaleX": 3.59999728,
+      "scaleY": 3.59999728,
+      "scaleZ": 3.59999728
+    },
+    "Nickname": "Victory Points",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.191982508,
+      "g": 0.701,
+      "b": 0.167982489
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "a77a54",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -1.32,
+      "posZ": -26.9956322,
+      "rotX": 0.0,
+      "rotY": 89.99998,
+      "rotZ": 0.0,
+      "scaleX": 3.59999728,
+      "scaleY": 3.59999728,
+      "scaleZ": 3.59999728
+    },
+    "Nickname": "Victory Points",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.191982508,
+      "g": 0.701,
+      "b": 0.167982489
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "deb9f2",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -1.32,
+      "posZ": -37.4957352,
+      "rotX": 0.0,
+      "rotY": 89.99988,
+      "rotZ": 0.0,
+      "scaleX": 3.59999728,
+      "scaleY": 3.59999728,
+      "scaleZ": 3.59999728
+    },
+    "Nickname": "Command Points",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "ee92cf",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5,
+      "posY": -1.32,
+      "posZ": 0.0,
+      "rotX": -3.86806761e-07,
+      "rotY": 90.0,
+      "rotZ": -3.461906e-07,
+      "scaleX": 4.0,
+      "scaleY": 3.6,
+      "scaleZ": 3.6
+    },
+    "Nickname": "Game Rounds",
+    "Description": "",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.0823529139,
+      "g": 0.0823529139,
+      "b": 0.0823529139
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "055302",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -1.32,
+      "posZ": 16.5,
+      "rotX": 8.3387e-10,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 3.6,
+      "scaleY": 3.6,
+      "scaleZ": 3.6
+    },
+    "Nickname": "Red Turns",
+    "Description": "ee92cf",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.856,
+      "g": 0.09998388,
+      "b": 0.09398384
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "021302",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 40.2592964,
+      "posY": -5,
+      "posZ": 36.626152,
+      "rotX": -1.59887338e-06,
+      "rotY": 179.9915,
+      "rotZ": 4.82049245e-07,
+      "scaleX": 2.500001,
+      "scaleY": 2.500001,
+      "scaleZ": 2.500001
+    },
+    "Nickname": "Red Custom Counter",
+    "Description": "ee92cf",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.856,
+      "g": 0.09998388,
+      "b": 0.09398384
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "7e4111",
+    "Name": "Counter",
+    "Transform": {
+      "posX": 59.5018,
+      "posY": -1.32,
+      "posZ": -16.495657,
+      "rotX": 8.3387e-10,
+      "rotY": 90.0,
+      "rotZ": 0.0,
+      "scaleX": 3.6,
+      "scaleY": 3.6,
+      "scaleZ": 3.6
+    },
+    "Nickname": "Blue Turns",
+    "Description": "ee92cf",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.1179832,
+      "g": 0.53,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "Counter": {
+      "value": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

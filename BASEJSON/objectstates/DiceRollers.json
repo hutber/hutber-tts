@@ -1,0 +1,124 @@
+[
+  {
+    "GUID": "839fcc",
+    "Name": "Custom_Tile",
+    "Transform": {
+      "posX": 0.0,
+      "posY": 0.87,
+      "posZ": -29.0,
+      "rotX": 0.0,
+      "rotY": 180.0,
+      "rotZ": 0.0,
+      "scaleX": 3.75,
+      "scaleY": 1.0,
+      "scaleZ": 3.75
+    },
+    "Nickname": "Blue Custom Dice Table",
+    "Description": "{\n  \"Cumulative\": \"no\",\n  \"Update_Frequency\": \"0.2\"\n}",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": false,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": false,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomImage": {
+      "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935692054/F32489A74087FB9D9E26AC5F9461841B8C40B37A/",
+      "ImageSecondaryURL": "",
+      "ImageScalar": 1.0,
+      "WidthScale": 0.0,
+      "CustomTile": {
+        "Type": 0,
+        "Thickness": 0.1,
+        "Stackable": false,
+        "Stretch": true
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "AttachedSnapPoints": [
+      {
+        "Position": {
+          "x": 5.714623,
+          "y": 0.1,
+          "z": -0.8406986
+        },
+        "Tags": []
+      }
+    ]
+  },
+  {
+    "GUID": "acae21",
+    "Name": "Custom_Tile",
+    "Transform": {
+      "posX": 0.0,
+      "posY": 0.87,
+      "posZ": 29.0,
+      "rotX": 0.0,
+      "rotY": 0.0,
+      "rotZ": 0.0,
+      "scaleX": 3.75,
+      "scaleY": 1.0,
+      "scaleZ": 3.75
+    },
+    "Nickname": "Red Custom Dice Table",
+    "Description": "{\n  \"Cumulative\": \"no\",\n  \"Update_Frequency\": \"0.2\"\n}",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": false,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": false,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomImage": {
+      "ImageURL": "http://cloud-3.steamusercontent.com/ugc/786374678935692054/F32489A74087FB9D9E26AC5F9461841B8C40B37A/",
+      "ImageSecondaryURL": "",
+      "ImageScalar": 1.0,
+      "WidthScale": 0.0,
+      "CustomTile": {
+        "Type": 0,
+        "Thickness": 0.1,
+        "Stackable": false,
+        "Stretch": true
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": "",
+    "AttachedSnapPoints": [
+      {
+        "Position": {
+          "x": 5.714623,
+          "y": 0.1,
+          "z": -0.8406986
+        },
+        "Tags": []
+      }
+    ]
+  }
+]

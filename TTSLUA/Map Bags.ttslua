@@ -72,6 +72,132 @@ function onload(saved_data)
     end
 end
 
+mapTrackingApiBaseUrl = "https://stats.hutber.com/api/ttsGame"
+
+function mapTrackingNormalizeText(value)
+    if value == nil then
+        return nil
+    end
+    local text = tostring(value)
+    text = text:gsub("^%s+", ""):gsub("%s+$", "")
+    if text == "" then
+        return nil
+    end
+    return text
+end
+
+function mapTrackingUrlEncode(value)
+    local text = tostring(value or "")
+    text = text:gsub("\n", "\r\n")
+    return text:gsub("([^%w%-_%.~])", function(char)
+        return string.format("%%%02X", string.byte(char))
+    end)
+end
+
+function mapTrackingAppendQuery(parts, key, value)
+    local text = mapTrackingNormalizeText(value)
+    if text == nil then
+        return
+    end
+    table.insert(parts, key .. "=" .. mapTrackingUrlEncode(text))
+end
+
+function mapTrackingBuildUrl(path, params)
+    local parts = {}
+    for _, pair in ipairs(params) do
+        mapTrackingAppendQuery(parts, pair[1], pair[2])
+    end
+    if #parts == 0 then
+        return mapTrackingApiBaseUrl .. path
+    end
+    return mapTrackingApiBaseUrl .. path .. "?" .. table.concat(parts, "&")
+end
+
+function isMapTrackingTokenBag()
+    local guid = self.getGUID()
+    return guid == "7aca71" or guid == "10a26a"
+end
+
+function inferMapPackFromBagName(bagName)
+    local lower = string.lower(bagName or "")
+    if string.find(lower, "uktc", 1, true) then return "UKTC" end
+    if string.find(lower, "wtc", 1, true) then return "WTC" end
+    if string.find(lower, "chapter approved", 1, true) then return "Chapter Approved 2025" end
+    if string.find(lower, "marcus", 1, true) then return "Marcus Miniatures" end
+    if string.find(lower, "alpine", 1, true) then return "Alpine Cup NRW" end
+    return bagName
+end
+
+function inferMapLayoutFromBagObjects(objects)
+    if objects == nil then
+        return nil
+    end
+    for _, bagObj in ipairs(objects) do
+        local bagObjName = mapTrackingNormalizeText(bagObj.name)
+        if bagObjName ~= nil then
+            if string.match(bagObjName, "^[A-Z]%-[A-Z]%-[A-Z]%-[A-Z]$") then
+                return bagObjName
+            end
+            if string.match(bagObjName, "^[A-Z]%-[A-Z]$") then
+                return bagObjName
+            end
+        end
+    end
+    return nil
+end
+
+function buildLoadedMapTrackingData()
+    local bagName = mapTrackingNormalizeText(self.getName()) or "Unknown Map Bag"
+    local bagGuid = mapTrackingNormalizeText(self.getGUID())
+    local bagObjects = self.getObjects()
+    local mapLayout = inferMapLayoutFromBagObjects(bagObjects)
+    local mapPack = inferMapPackFromBagName(bagName)
+    local mapKey = mapPack .. "|" .. bagName .. "|" .. (mapLayout or bagGuid or "")
+
+    return {
+        mapPack = mapPack,
+        mapName = bagName,
+        mapVariant = mapLayout,
+        mapId = bagGuid,
+        mapLayout = mapLayout,
+        mapKey = mapKey,
+    }
+end
+
+function rememberLoadedMapForTracking(mapData)
+    if type(mapData) ~= "table" then
+        return
+    end
+    Global.setTable("ttsLastLoadedMap", mapData)
+end
+
+function sendMapLoadSnapshotTracking(mapData)
+    local trackedSession = Global.getTable("ttsTrackedSession")
+    if type(trackedSession) ~= "table" then
+        return
+    end
+    local gameId = trackedSession.gameId
+    if gameId == nil or tostring(gameId) == "" then
+        return
+    end
+
+    local url = mapTrackingBuildUrl("/snapshot", {
+        {"game_id", gameId},
+        {"capture_source", "mapLoad"},
+        {"game_type", trackedSession.gameType},
+        {"map_size", trackedSession.mapSize},
+        {"map_pack", mapData.mapPack},
+        {"map_name", mapData.mapName},
+        {"map_variant", mapData.mapVariant},
+        {"map_id", mapData.mapId},
+        {"map_layout", mapData.mapLayout},
+        {"map_key", mapData.mapKey},
+    })
+
+    WebRequest.get(url, function(_response)
+    end)
+end
+
 
 --Beginning Setup
 
@@ -412,6 +538,13 @@ end
 
 --Sends objects from bag/table to their saved position/rotation
 function buttonClick_place()
+    local isTokenBag = isMapTrackingTokenBag()
+    local loadedMapData = nil
+    if not isTokenBag then
+        loadedMapData = buildLoadedMapTrackingData()
+        rememberLoadedMapForTracking(loadedMapData)
+    end
+
     local bagObjList = self.getObjects()
     for guid, entry in pairs(memoryList) do
         local obj = getObjectFromGUID(guid)
@@ -437,6 +570,11 @@ function buttonClick_place()
     if(obj) then
         destroyObject(obj)
     end
+
+    if not isTokenBag and loadedMapData ~= nil then
+        sendMapLoadSnapshotTracking(loadedMapData)
+    end
+
     broadcastToAll("Objects Placed", {1,1,1})
 end
 

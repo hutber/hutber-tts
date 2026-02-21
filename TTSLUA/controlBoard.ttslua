@@ -41,6 +41,7 @@ local VALID_BASE_SIZES_IN_MM = {
 
 local RedControlBoard = {
     VortexGUID = "be2cdb",
+    DiceMat_GUID = "acae21",
     StatHelper_GUID = "7c7c20",
     SelectionHighlighterGUID = "27de4f",
     ReservesBoardGUID = "fe7926",
@@ -92,7 +93,7 @@ local RedControlBoard = {
         },
         {
             name = "Action Tokens",
-            state = false,
+            state = true,
             title = "Toggle between Action Token groups"
         },
          --{
@@ -110,7 +111,7 @@ local RedControlBoard = {
 
 local BlueControlBoard = {
     VortexGUID = "4b1a7b",
-    DiceMat_GUID = "a84ed2",
+    DiceMat_GUID = "839fcc",
     StatHelper_GUID = "b7ac7a",
     SelectionHighlighterGUID = "84c3a4",
     ReservesBoardGUID = "85f0cf",
@@ -165,7 +166,7 @@ local BlueControlBoard = {
         },
         {
             name = "Action Tokens",
-            state = false,
+            state = true,
             title = "Toggle between Action Token groups"
         },
         -- {
@@ -182,6 +183,110 @@ local boards = {
 }
 
 local originalPositions = {}
+local trackingConsentPanelState = {}
+
+local function normalizeUiString(value)
+    if type(value) ~= "string" then
+        return value
+    end
+    local text = value:match("^%s*(.-)%s*$")
+    local quoted = text:match("^'(.*)'$")
+    if quoted then
+        return quoted
+    end
+    quoted = text:match('^"(.*)"$')
+    if quoted then
+        return quoted
+    end
+    return text
+end
+
+local function getStartMenuObject()
+    local guid = Global.getVar("startMenu_GUID")
+    if not guid or guid == "" then
+        return nil
+    end
+    return getObjectFromGUID(guid)
+end
+
+local function getTrackingConsentState(color)
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        return {
+            status = "error",
+            statusLabel = "Start menu missing",
+            steamId = nil,
+            displayName = nil,
+        }
+    end
+
+    local ok, data = pcall(function()
+        return startMenu.call("getTrackedConsentPanelState", {side = color})
+    end)
+
+    if not ok or type(data) ~= "table" then
+        return {
+            status = "error",
+            statusLabel = "Consent unavailable",
+            steamId = nil,
+            displayName = nil,
+        }
+    end
+
+    trackingConsentPanelState[color] = data
+    return data
+end
+
+local function getTrackingConsentButtonColors(status)
+    if status == "accepted" then
+        return "#77DD77|#66CC66|#55BB55"
+    elseif status == "declined" then
+        return "#FFCCCC|#FFB3B3|#FFA6A6"
+    elseif status == "loading" then
+        return "#FFE599|#FFD966|#F1C232"
+    elseif status == "unavailable" then
+        return "#D9D9D9|#CCCCCC|#B7B7B7"
+    elseif status == "error" then
+        return "#F4CCCC|#EA9999|#E06666"
+    end
+    return "#FFF2CC|#FFE599|#F1C232"
+end
+
+local function resolveDiceMatGUID(color, board)
+    local candidates = {}
+    local seen = {}
+
+    local function addCandidate(guid)
+        if type(guid) == "string" and guid ~= "" and not seen[guid] then
+            seen[guid] = true
+            table.insert(candidates, guid)
+        end
+    end
+
+    if board then
+        addCandidate(board.DiceMat_GUID)
+    end
+
+    if color == "Red" then
+        addCandidate(Global.getVar("redCustomDiceMat_GUID"))
+        addCandidate("c9d2b1") -- portrait red custom dice table
+        addCandidate("acae21") -- legacy red custom dice table
+        addCandidate("c57d70") -- legacy red dice mat
+    else
+        addCandidate(Global.getVar("blueCustomDiceMat_GUID"))
+        addCandidate("d4e8a2") -- portrait blue custom dice table
+        addCandidate("839fcc") -- legacy blue custom dice table
+        addCandidate("a84ed2") -- legacy blue dice mat
+    end
+
+    for _, guid in ipairs(candidates) do
+        if getObjectFromGUID(guid) then
+            return guid
+        end
+    end
+
+    return nil
+end
 
 function buildControlPanel(color)
     local board = boards[color]
@@ -189,6 +294,7 @@ function buildControlPanel(color)
         print("Invalid color: " .. tostring(color))
         return
     end
+    local consentState = getTrackingConsentState(color)
 
     -- Define pastel colors:
     local onColor = "#77DD77|#66CC66|#55BB55"    -- Pastel green (normal, hover, pressed)
@@ -267,6 +373,73 @@ function buildControlPanel(color)
         })
     end
 
+    table.insert(panel.children[2].children, {
+        tag = "Text",
+        attributes = {
+            text = "Profile Logging",
+            fontSize = "24",
+            alignment = "MiddleCenter",
+            color = "White",
+            fontStyle = "Bold",
+            padding = "12 16 4 16",
+        },
+    })
+
+    table.insert(panel.children[2].children, {
+        tag = "Button",
+        attributes = {
+            id = color .. "_tracking_status",
+            text = consentState.statusLabel or "Choice needed",
+            toolTip = "Profile logging preference for the seated " .. color .. " player.",
+            fontSize = "18",
+            width = "382",
+            height = "52",
+            colors = getTrackingConsentButtonColors(consentState.status),
+            interactable = "false",
+        },
+    })
+
+    table.insert(panel.children[2].children, {
+        tag = "HorizontalLayout",
+        children = {
+            {
+                tag = "Button",
+                attributes = {
+                    text = "ALLOW",
+                    toolTip = "Allow profile logging for your Steam account on this map.",
+                    onClick = "chooseTrackingConsent('accepted', '" .. color .. "')",
+                    fontSize = "20",
+                    width = "120",
+                    height = "52",
+                    colors = "#77DD77|#66CC66|#55BB55",
+                },
+            },
+            {
+                tag = "Button",
+                attributes = {
+                    text = "DECLINE",
+                    toolTip = "Keep profile logging private for your Steam account on this map.",
+                    onClick = "chooseTrackingConsent('declined', '" .. color .. "')",
+                    fontSize = "20",
+                    width = "120",
+                    height = "52",
+                    colors = "#FFCCCC|#FFB3B3|#FFA6A6",
+                },
+            },
+            {
+                tag = "Button",
+                attributes = {
+                    text = "REFRESH",
+                    toolTip = "Refresh the stored profile logging preference from stats.hutber.com.",
+                    onClick = "refreshTrackingConsent('" .. color .. "')",
+                    fontSize = "18",
+                    width = "120",
+                    height = "52",
+                },
+            },
+        },
+    })
+
     local boardObjectGUID = (color == "Red") and "32ed4c" or "83ab2a"
     local boardObject = getObjectFromGUID(boardObjectGUID)
     if boardObject then
@@ -277,6 +450,11 @@ function buildControlPanel(color)
 end
 
 function toggleObjectState(objectGUID, state, customHiddenPosition)
+    if type(objectGUID) ~= "string" or objectGUID == "" then
+        print("toggleObjectState called with invalid GUID")
+        return
+    end
+
     local obj = getObjectFromGUID(objectGUID)
     if obj then
         if not originalPositions[objectGUID] then
@@ -317,7 +495,131 @@ function toggleObjectState(objectGUID, state, customHiddenPosition)
     end
 end
 
+function refreshTrackingConsentPanel(params)
+    if type(params) == "table" and (params.side == "Red" or params.side == "Blue") then
+        buildControlPanel(params.side)
+        return
+    end
+    buildControlPanel("Red")
+    buildControlPanel("Blue")
+end
 
+function setTrackingConsentStatusUi(color, status, label)
+    local statusId = color .. "_tracking_status"
+    local buttonColors = getTrackingConsentButtonColors(status)
+    self.UI.setAttributes(statusId, {
+        text = label,
+        colors = buttonColors,
+    })
+end
+
+function refreshTrackingConsent(player, color)
+    local expectedColor = color
+    if expectedColor ~= "Red" and expectedColor ~= "Blue" then
+        expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
+    end
+
+    local playerColor = nil
+    if type(player) == "table" and player.color then
+        playerColor = player.color
+    end
+    if playerColor and playerColor ~= expectedColor then
+        print("Access denied: " .. tostring(playerColor) .. " tried to use the " .. expectedColor .. " control board.")
+        return
+    end
+
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        print("Start menu not found")
+        return
+    end
+
+    setTrackingConsentStatusUi(expectedColor, "loading", "Checking...")
+
+    local ok, err = pcall(function()
+        startMenu.call("refreshTrackedConsentStatusForSide", expectedColor)
+    end)
+    if not ok then
+        print("Failed to refresh tracking consent: " .. tostring(err))
+        setTrackingConsentStatusUi(expectedColor, "error", "Check failed")
+        return
+    end
+
+    Wait.time(function()
+        buildControlPanel(expectedColor)
+    end, 0.2)
+end
+
+function chooseTrackingConsent(player, decision, color)
+    local chosenDecision = nil
+    local expectedColor = nil
+
+    if type(player) == "string" and (player == "accepted" or player == "declined") then
+        chosenDecision = player
+        expectedColor = decision
+    else
+        chosenDecision = decision
+        expectedColor = color
+    end
+    chosenDecision = normalizeUiString(chosenDecision)
+    expectedColor = normalizeUiString(expectedColor)
+    if expectedColor ~= "Red" and expectedColor ~= "Blue" then
+        expectedColor = (self.getGUID() == "32ed4c") and "Red" or "Blue"
+    end
+
+    local playerColor = nil
+    if type(player) == "table" and player.color then
+        playerColor = player.color
+    elseif type(decision) == "table" and decision.color then
+        playerColor = decision.color
+    elseif type(color) == "table" and color.color then
+        playerColor = color.color
+    end
+    if playerColor and playerColor ~= expectedColor then
+        print("Access denied: " .. tostring(playerColor) .. " tried to use the " .. expectedColor .. " control board.")
+        return
+    end
+
+    print(
+        "[profileLogging] control board click decision=" ..
+        tostring(chosenDecision) ..
+        " expectedColor=" .. tostring(expectedColor) ..
+        " playerColor=" .. tostring(playerColor)
+    )
+
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        print("Start menu not found")
+        return
+    end
+
+    if chosenDecision == "accepted" or chosenDecision == "declined" then
+        setTrackingConsentStatusUi(expectedColor, "loading", "Loading...")
+    end
+
+    local ok, result = pcall(function()
+        return startMenu.call("recordTrackedConsentChoice", {
+            side = expectedColor,
+            decision = chosenDecision,
+        })
+    end)
+    if not ok then
+        print("[profileLogging] Failed to save consent: " .. tostring(result))
+        setTrackingConsentStatusUi(expectedColor, "error", "Save failed")
+        return
+    end
+
+    print("[profileLogging] recordTrackedConsentChoice returned: " .. tostring(result))
+
+    if result == false then
+        buildControlPanel(expectedColor)
+        return
+    end
+
+    Wait.time(function()
+        buildControlPanel(expectedColor)
+    end, 0.2)
+end
 
 function toggleOption(player, index, color)
     -- Be tolerant of multiple calling styles from the UI:
@@ -390,6 +692,7 @@ function toggleOption(player, index, color)
     elseif option.name == "Stat Helper" then
         toggleObjectState(board.StatHelper_GUID, option.state, option.customHiddenPosition)
     elseif option.name == "Dice Roller" then
+        board.DiceMat_GUID = resolveDiceMatGUID(expectedColor, board)
         toggleObjectState(board.DiceMat_GUID, option.state)
     elseif option.name == "Vortex" then
         toggleObjectState(board.VortexGUID, option.state, option.customHiddenPosition)
@@ -590,23 +893,20 @@ function onLoad()
         end
     end
 
-    -- Hide and disable DiceRollers, Dice Bags, and Custom Counter objects for each board.
+    -- Initialize board-linked objects.
+    -- Keep dice mats visible on load; only capture their positions so option toggles can use them.
+    -- Dice bags and custom counters remain hidden by default.
     for color, board in pairs(boards) do
-        local diceRoller = getObjectFromGUID(board.DiceMat_GUID)
-        if diceRoller then
-            if not originalPositions[board.DiceMat_GUID] then
-                originalPositions[board.DiceMat_GUID] = diceRoller.getPosition()
+        local diceMatGUID = resolveDiceMatGUID(color, board)
+        board.DiceMat_GUID = diceMatGUID
+
+        local diceMat = diceMatGUID and getObjectFromGUID(diceMatGUID) or nil
+        if diceMat then
+            if not originalPositions[diceMatGUID] then
+                originalPositions[diceMatGUID] = diceMat.getPosition()
             end
-            local hiddenPosition = {
-                originalPositions[board.DiceMat_GUID][1],
-                originalPositions[board.DiceMat_GUID][2] - 3,
-                originalPositions[board.DiceMat_GUID][3]
-            }
-            diceRoller.setPosition(hiddenPosition)
-            diceRoller.setLock(true)
-            diceRoller.interactable = false
         else
-            print(color .. " DiceRoller object not found during onLoad")
+            print(color .. " Dice mat object not found during onLoad")
         end
 
         for _, guid in pairs(board.bagIds) do

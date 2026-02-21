@@ -9,6 +9,11 @@ currentPhase = "none" -- Tracks the current phase: "none", "hit", "wound", "spec
 previousRoll = {}      -- Stores dice rolled in the last phase
 currentRoll = {}       -- Stores dice rolled in the current phase
 specialRollDice = {}   -- Tracks dice moved for special rolls (e.g., Lethal/Sustained Hits)
+defaultTtsGameApiBaseUrl = "https://stats.hutber.com/api/ttsGame"
+diceRollApiHeaders = {
+    ["Content-Type"] = "application/json",
+    Accept = "application/json"
+}
 
 -- Track stats
 totalHits = 0          -- Total successful hits
@@ -141,6 +146,74 @@ function showStats()
     printToAll(msg, "White")
 end
 
+function resetRollTracking()
+    rolledFaces = {}
+    lastRolls = {}
+    if type(resultsTotal) == "table" then
+        for i = 1, #resultsTotal do
+            resultsTotal[i] = 0
+        end
+    end
+end
+
+function getRollAnalytics()
+    local totalRolls = #rolledFaces
+    local sumOfAll = 0
+    local totalBadRolls = 0
+    local totalBestDice = 0
+    local totalWorstDice = 0
+    local currentBadStreak = 0
+    local maxBadStreak = 0
+
+    for i, face in ipairs(rolledFaces) do
+        sumOfAll = sumOfAll + face
+        if face >= 5 then
+            totalBestDice = totalBestDice + 1
+        end
+        if face <= 2 then
+            totalWorstDice = totalWorstDice + 1
+        end
+        if face <= 3 then
+            totalBadRolls = totalBadRolls + 1
+            currentBadStreak = currentBadStreak + 1
+            if currentBadStreak > maxBadStreak then
+                maxBadStreak = currentBadStreak
+            end
+        else
+            currentBadStreak = 0
+        end
+    end
+
+    local average = 0
+    if totalRolls > 0 then
+        average = sumOfAll / totalRolls
+    end
+    local expectedTotal = totalRolls * 3.5
+    local badRollRate = 0
+    local bestDiceRate = 0
+    local worstDiceRate = 0
+    if totalRolls > 0 then
+        badRollRate = totalBadRolls / totalRolls
+        bestDiceRate = totalBestDice / totalRolls
+        worstDiceRate = totalWorstDice / totalRolls
+    end
+
+    return {
+        totalRolls = totalRolls,
+        sum = sumOfAll,
+        average = average,
+        expectedTotal = expectedTotal,
+        deltaFromExpected = sumOfAll - expectedTotal,
+        badRolls = totalBadRolls,
+        badRollRate = badRollRate,
+        bestDiceCount = totalBestDice,
+        bestDiceRate = bestDiceRate,
+        worstDiceCount = totalWorstDice,
+        worstDiceRate = worstDiceRate,
+        longestBadStreak = maxBadStreak
+    }
+end
+
 function printChances()
     local i=0
     for k,v in ipairs(resultsTotal) do
@@ -175,6 +248,197 @@ function getPastelIfRedOrBlue(pColor)
     else
         return stringColorToRGB(pColor) or {1,1,1}
     end
+end
+
+function getTrackedSessionData()
+    local ok, trackedSession = pcall(function()
+        return Global.getTable("ttsTrackedSession")
+    end)
+    if ok and type(trackedSession) == "table" then
+        return trackedSession
+    end
+    return nil
+end
+
+function getDiceRollApiBaseUrl()
+    local trackedSession = getTrackedSessionData()
+    if trackedSession and trackedSession.apiBaseUrl and trackedSession.apiBaseUrl ~= "" then
+        return tostring(trackedSession.apiBaseUrl)
+    end
+    return defaultTtsGameApiBaseUrl
+end
+
+function getTrackedDiceGameId()
+    local trackedSession = getTrackedSessionData()
+    if not trackedSession then
+        return nil
+    end
+    local gameId = tonumber(trackedSession.gameId)
+    if gameId == nil then
+        return nil
+    end
+    return math.floor(gameId)
+end
+
+function isTrackedDiceGameActive()
+    local trackedSession = getTrackedSessionData()
+    if not trackedSession then
+        return false
+    end
+    return trackedSession.isGameActive == true
+end
+
+function getDicePlayerSide(color)
+    if color == "Red" then
+        return "red"
+    elseif color == "Blue" then
+        return "blue"
+    end
+    return nil
+end
+
+function getTrackedPlayerIdentifierForDice(color)
+    local playerRef = color and Player[color] or nil
+    if playerRef and playerRef.steam_id and tostring(playerRef.steam_id) ~= "" then
+        return tostring(playerRef.steam_id)
+    end
+    if playerRef and playerRef.steam_name and tostring(playerRef.steam_name) ~= "" then
+        return tostring(playerRef.steam_name)
+    end
+    if color and color ~= "" then
+        return string.lower(color) .. "_unknown"
+    end
+    return nil
+end
+
+function getTrackedConsentStatusForDice(color)
+    local startMenuGuid = Global.getVar("startMenu_GUID")
+    if not startMenuGuid then
+        return nil
+    end
+    local startMenu = getObjectFromGUID(startMenuGuid)
+    if not startMenu then
+        return nil
+    end
+    local ok, state = pcall(function()
+        return startMenu.call("getTrackedConsentPanelState", { side = color })
+    end)
+    if not ok or type(state) ~= "table" then
+        return nil
+    end
+    return state.status
+end
+
+function diceRollUrlEncode(value)
+    local text = tostring(value or "")
+    text = text:gsub("\n", "\r\n")
+    return text:gsub("([^%w%-_%.~])", function(char)
+        return string.format("%%%02X", string.byte(char))
+    end)
+end
+
+function appendDiceRollQuery(parts, key, value)
+    if value == nil then
+        return
+    end
+    local text = tostring(value)
+    if text == "" then
+        return
+    end
+    table.insert(parts, key .. "=" .. diceRollUrlEncode(text))
+end
+
+function buildDiceRollRequestUrl(payload)
+    local parts = {}
+    appendDiceRollQuery(parts, "game_id", payload.gameId)
+    appendDiceRollQuery(parts, "steam_id", payload.steamId)
+    appendDiceRollQuery(parts, "player_side", payload.playerSide)
+    appendDiceRollQuery(parts, "rolled_at", payload.rolledAt)
+    appendDiceRollQuery(parts, "results", payload.results and table.concat(payload.results, ",") or nil)
+    return getDiceRollApiBaseUrl() .. "/diceRoll?" .. table.concat(parts, "&")
+end
+
+function buildResolvedResultsArray(faceCounts)
+    local results = {}
+
+    for dieFace, numRolled in ipairs(faceCounts) do
+        local count = tonumber(numRolled) or 0
+        if count > 0 then
+            if dieFace < 1 or dieFace > 6 then
+                return nil, "unsupported die face " .. tostring(dieFace)
+            end
+            for i = 1, count do
+                table.insert(results, dieFace)
+            end
+        end
+    end
+
+    if #results == 0 then
+        return nil, "empty results batch"
+    end
+
+    return results, nil
+end
+
+function submitResolvedRollBatch(faceCounts, rollingColor)
+    if not WebRequest then
+        return
+    end
+
+    if not isTrackedDiceGameActive() then
+        return
+    end
+
+    local gameId = getTrackedDiceGameId()
+    if gameId == nil then
+        return
+    end
+
+    local steamId = nil
+    if getTrackedConsentStatusForDice(rollingColor) == "accepted" then
+        steamId = getTrackedPlayerIdentifierForDice(rollingColor)
+    end
+
+    local results, buildErr = buildResolvedResultsArray(faceCounts)
+    if not results then
+        return
+    end
+
+    local payload = {
+        gameId = gameId,
+        steamId = steamId,
+        results = results,
+        rolledAt = os.date("!%Y-%m-%dT%H:%M:%SZ")
+    }
+
+    local playerSide = getDicePlayerSide(rollingColor)
+    if playerSide ~= nil then
+        payload.playerSide = playerSide
+    end
+
+    local body = JSON.encode(payload)
+    local url = buildDiceRollRequestUrl(payload)
+
+    WebRequest.get(url, function(request)
+        if request.is_error then
+            return
+        end
+
+        local statusCode = tonumber(request.response_code) or 0
+        if statusCode < 200 or statusCode >= 300 then
+            return
+        end
+
+        if request.text and request.text ~= "" then
+            local ok, responseData = pcall(JSON.decode, request.text)
+            if not ok then
+                return
+            end
+            if type(responseData) == "table" and responseData.error then
+                return
+            end
+        end
+    end)
 end
 
 --Initialize Global Variables and pRNG Seed
@@ -463,6 +727,7 @@ end
             table.remove(lastRolls, 1)
         end
         table.insert(lastRolls, #lastRolls + 1, rolltorecord)
+        submitResolvedRollBatch(resultsTable, playerColor)
     end
 
     if sum(resultsTable) > 0 and data.Results == 'yes' then

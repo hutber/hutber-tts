@@ -341,7 +341,6 @@ function getWeaponMapNumAttacks(weaponMapData)
   local attack = DecomposeAttackStr(weaponMapData.attack)
   local numAttacks = attack.rawNum
 
-  -- Roll D6 dice and display each result
   if attack.numD6 > 0 then
     local randResult = 0
     for i = 1, attack.numD6 do
@@ -352,7 +351,6 @@ function getWeaponMapNumAttacks(weaponMapData)
     numAttacks = numAttacks + randResult
   end
 
-  -- Roll D3 dice and display each result
   if attack.numD3 > 0 then
     local randResult = 0
     for i = 1, attack.numD3 do
@@ -371,29 +369,6 @@ function getWeaponMapAttacks(weaponMapData)
     return getBonusAttackValueForCount(weaponMapData.data.bonusAttack, weaponMapData.count)
   end
   return weaponMapData.attack
-end
-
-function getBonusAttackAppendum(appendum)
-  if tonumber(appendum) ~= nil then
-    return tonumber(appendum)
-  end
-
-  if string.find(appendum, "D") ~= nil then
-    local split = splitStr(appendum, "D")
-    local count = (#split == 2) and tonumber(split[1]) or 1
-    local value = (#split == 2) and tonumber(split[2]) or tonumber(split[1])
-    local result = 0
-
-    -- Roll the dice and display each result
-    for i = 1, count do
-      local roll = math.random(value)
-      printMessage("Rolling one D" .. value .. ", the value is: " .. roll)
-      result = result + roll
-    end
-    return result
-  end
-
-  return 0
 end
 
 

@@ -1,0 +1,308 @@
+[
+  {
+    "GUID": "c43f37",
+    "Name": "Custom_PDF",
+    "Transform": {
+      "posX": 100,
+      "posY": 9.5,
+      "posZ": 20,
+      "rotX": 45.0000153,
+      "rotY": 270.000061,
+      "rotZ": 4.829674e-06,
+      "scaleX": 6,
+      "scaleY": 1,
+      "scaleZ": 6
+    },
+    "Nickname": "",
+    "Description": "Pariah Nexus reference",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomPDF": {
+      "PDFUrl": "https://steamusercontent-a.akamaihd.net/ugc/2459609498429494599/9DA0D5C2C2A71EA33B723AB7622207D3AF7BB011/",
+      "PDFPassword": "",
+      "PDFPage": 0,
+      "PDFPageOffset": 1
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "fc461d",
+    "Name": "Custom_PDF",
+    "Transform": {
+      "posX": 100,
+      "posY": 9.5,
+      "posZ": 0,
+      "rotX": 45.0000153,
+      "rotY": 270.000061,
+      "rotZ": 4.829674e-06,
+      "scaleX": 6,
+      "scaleY": 1,
+      "scaleZ": 6
+    },
+    "Nickname": "",
+    "Description": "Chapter Approved Tournament Companion",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomPDF": {
+      "PDFUrl": "https://assets.warhammer-community.com/eng_11-02_wh40k_core&key_chapter_approved_tournament_companion-fzhlwjzwf4-agxpall6br.pdf",
+      "PDFPassword": "",
+      "PDFPage": 0,
+      "PDFPageOffset": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "c96934",
+    "Name": "Custom_PDF",
+    "Transform": {
+      "posX": 100,
+      "posY": 9.5,
+      "posZ": -20,
+      "rotX": 45.0000153,
+      "rotY": 270.000061,
+      "rotZ": 4.829674e-06,
+      "scaleX": 6,
+      "scaleY": 1,
+      "scaleZ": 6
+    },
+    "Nickname": "",
+    "Description": "CORE RULES UPDATES",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomPDF": {
+      "PDFUrl": "https://assets.warhammer-community.com/eng_22-10_warhammer40000_core_rules_updates-kikyythcsl-5iydvuj9w6.pdf",
+      "PDFPassword": "",
+      "PDFPage": 0,
+      "PDFPageOffset": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "88785f",
+    "Name": "Custom_PDF",
+    "Transform": {
+      "posX": 78.0,
+      "posY": 0.9,
+      "posZ": -64,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 4.0,
+      "scaleY": 1.0,
+      "scaleZ": 4.0
+    },
+    "Nickname": "",
+    "Description": "Keyword reference",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomPDF": {
+      "PDFUrl": "http://cloud-3.steamusercontent.com/ugc/2085787500446644939/880E061D67C4F8F410BD2470795836BC0F12C1C9/",
+      "PDFPassword": "",
+      "PDFPage": 0,
+      "PDFPageOffset": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "97f8c3",
+    "Name": "Custom_PDF",
+    "Transform": {
+      "posX": 73.74253,
+      "posY": 0.9,
+      "posZ": 84.24611,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 6.0,
+      "scaleY": 1.0,
+      "scaleZ": 6.0
+    },
+    "Nickname": "",
+    "Description": "Core stratagem reference",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomPDF": {
+      "PDFUrl": "https://assets.warhammer-community.com/warhammer40000_core&key_corerules_eng_24.09-5xfayxjekm.pdf",
+      "PDFPassword": "",
+      "PDFPage": 40,
+      "PDFPageOffset": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "731ec4",
+    "Name": "Custom_PDF",
+    "Transform": {
+      "posX": 51.52537,
+      "posY": 0.9,
+      "posZ": 88.1827,
+      "rotX": 0.0,
+      "rotY": 270.0,
+      "rotZ": 0.0,
+      "scaleX": 4.0,
+      "scaleY": 1.0,
+      "scaleZ": 4.0
+    },
+    "Nickname": "Combat Patrol Missions",
+    "Description": "Only for use on 44\"x30\" boards. Setups tagged with (CP) in the deployment manager.",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "CustomPDF": {
+      "PDFUrl": "https://assets.warhammer-community.com/warhammer40000_combatpatrol_rules_eng.24.09-rbtns7zwbh.pdf",
+      "PDFPassword": "",
+      "PDFPage": 6,
+      "PDFPageOffset": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

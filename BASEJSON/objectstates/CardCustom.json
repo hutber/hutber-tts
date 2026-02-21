@@ -1,0 +1,768 @@
+[
+  {
+    "GUID": "64c6bb",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 37.7512856,
+      "posY": 1.18,
+      "posZ": 38.1768532,
+      "rotX": 1.10573467e-06,
+      "rotY": 346.292236,
+      "rotZ": -7.75089745e-07,
+      "scaleX": 1,
+      "scaleY": 1,
+      "scaleZ": 1
+    },
+    "Nickname": "Corrr a bloody new thing!!",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 182300,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "1823": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/11958910485415805338/853BB6FCD83FFEE794D657DD291AEB13FDF4D5C3/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/11958910485415805338/853BB6FCD83FFEE794D657DD291AEB13FDF4D5C3/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "64b6bb",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": -37.37495,
+      "posY": 1.185186,
+      "posZ": -38.4182472,
+      "rotX": 358.9882,
+      "rotY": 165.533981,
+      "rotZ": 350.801758,
+      "scaleX": 1,
+      "scaleY": 1,
+      "scaleZ": 1
+    },
+    "Nickname": "Corrr a bloody new thing!!",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 182300,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "1823": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/11958910485415805338/853BB6FCD83FFEE794D657DD291AEB13FDF4D5C3/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/11958910485415805338/853BB6FCD83FFEE794D657DD291AEB13FDF4D5C3/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "531758",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 112.427048,
+      "posY": 22.0243835,
+      "posZ": 20,
+      "rotX": 45.0000076,
+      "rotY": 270,
+      "rotZ": -1.62089475e-06,
+      "scaleX": 3,
+      "scaleY": 1,
+      "scaleZ": 3
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 181900,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "1819": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/12150519478245216853/9B7BA66FD6E373B83B4A25890DC616E7AA780B11/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/12150519478245216853/9B7BA66FD6E373B83B4A25890DC616E7AA780B11/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "838115",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 112.427048,
+      "posY": 22.0243835,
+      "posZ": -20,
+      "rotX": 45.0000076,
+      "rotY": 270,
+      "rotZ": 0,
+      "scaleX": 3,
+      "scaleY": 1,
+      "scaleZ": 3
+    },
+    "Nickname": "",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 39900,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "399": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/2459609498429571828/2AE33ACC82298486739A71A815CF9EFF7A9918BB/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2459609498429571828/2AE33ACC82298486739A71A815CF9EFF7A9918BB/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "3c1373",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 22.30549,
+      "posY": -2,
+      "posZ": -2.765328,
+      "rotX": 4.57716e-05,
+      "rotY": 269.9765,
+      "rotZ": -0.000233304745,
+      "scaleX": 2,
+      "scaleY": 1,
+      "scaleZ": 2
+    },
+    "Nickname": "Marcus Miniatures - My Local Competitive Scene and Maps",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 186300,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "1863": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/12105009825832238501/A154DC8F1E3BF927F748D7FC45B18CD5E3E36C65/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/12105009825832238501/A154DC8F1E3BF927F748D7FC45B18CD5E3E36C65/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "3c8a1b",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 22.1972027,
+      "posY": -2,
+      "posZ": 12.198926,
+      "rotX": 1.02543854e-05,
+      "rotY": 270.0014,
+      "rotZ": -5.43986462e-05,
+      "scaleX": 2,
+      "scaleY": 1,
+      "scaleZ": 2
+    },
+    "Nickname": "UKTC Layout",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 77000,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "770": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/34438955568040889/755D3A10C149D4CB7C14292624FB24B9FBE05751/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/34438955568040889/755D3A10C149D4CB7C14292624FB24B9FBE05751/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "4bb528",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 12.9833994,
+      "posY": -3,
+      "posZ": -12.1371355,
+      "rotX": 5.00610838e-07,
+      "rotY": 269.9765,
+      "rotZ": -1.66532566e-08,
+      "scaleX": 2,
+      "scaleY": 1,
+      "scaleZ": 2
+    },
+    "Nickname": "WTC Layout",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 76900,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "769": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/2492270746261741492/655905A13069C5AE9D5BD48B33154E300B6DA79E/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/2492270746261741492/655905A13069C5AE9D5BD48B33154E300B6DA79E/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "8a7c7a",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 22.119688,
+      "posY": -3,
+      "posZ": -15.8608742,
+      "rotX": 5.00610838e-07,
+      "rotY": 269.9765,
+      "rotZ": -1.66532566e-08,
+      "scaleX": 2,
+      "scaleY": 1,
+      "scaleZ": 2
+    },
+    "Nickname": "Alpine Cup Layout",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 76900,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "769": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/34446555856803334/3FD1FBAA23B45260F8FE24168EC6C7252E227B3B/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/34441311436046576/F5AD59FD0DE91FF151ABC58705F5CAE2CC32F71C/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "8395b2",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": 13.2366428,
+      "posY": -3,
+      "posZ": 5.340162,
+      "rotX": -1.533123e-07,
+      "rotY": 269.999939,
+      "rotZ": 7.888284e-08,
+      "scaleX": 2,
+      "scaleY": 1,
+      "scaleZ": 2
+    },
+    "Nickname": "GW Layout",
+    "Description": "",
+    "GMNotes": "",
+    "AltLookAngle": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": true,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 76800,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "768": {
+        "FaceURL": "https://steamusercontent-a.akamaihd.net/ugc/16383072478302738912/C8EFA3075960E21B822E879D2CE2C2F69762C172/",
+        "BackURL": "https://steamusercontent-a.akamaihd.net/ugc/16383072478302738912/C8EFA3075960E21B822E879D2CE2C2F69762C172/",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "a847c1",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": -40.9592438,
+      "posY": 2.97473979,
+      "posZ": -57.89186,
+      "rotX": 0.000289212738,
+      "rotY": 90.01173,
+      "rotZ": -0.001071628,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "Tactical Objectives",
+    "Description": "Select both of these cards to indicate that you will be using Tactical Missions instead of Fixed Missions for this game.",
+    "GMNotes": "TacticalObjectives",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 10000,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "100": {
+        "FaceURL": "http://cloud-3.steamusercontent.com/ugc/2028354869666888393/D6190B80FC2CBE43F5CD03793558BF2A717A74C5/",
+        "BackURL": "http://cloud-3.steamusercontent.com/ugc/17801021975631056595/BCFAF42935766E2E8990738EECB161793D5566D3//",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "7ee8c9",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": -40.9592438,
+      "posY": 3.07473969,
+      "posZ": -56.1081352,
+      "rotX": -1.60000775e-06,
+      "rotY": 90.00556,
+      "rotZ": 3.19558552,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "Tactical Objectives",
+    "Description": "Select both of these cards to indicate that you will be using Tactical Missions instead of Fixed Missions for this game.",
+    "GMNotes": "TacticalObjectives",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 10000,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "100": {
+        "FaceURL": "http://cloud-3.steamusercontent.com/ugc/2028354869666888393/D6190B80FC2CBE43F5CD03793558BF2A717A74C5/",
+        "BackURL": "http://cloud-3.steamusercontent.com/ugc/17801021975631056595/BCFAF42935766E2E8990738EECB161793D5566D3//",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "838a9b",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": -42,
+      "posY": 2.97473979,
+      "posZ": 47.10814,
+      "rotX": 0,
+      "rotY": 90,
+      "rotZ": 0,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "Tactical Objectives",
+    "Description": "Select both of these cards to indicate that you will be using Tactical Missions instead of Fixed Missions for this game.",
+    "GMNotes": "TacticalObjectives",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 10000,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "100": {
+        "FaceURL": "http://cloud-3.steamusercontent.com/ugc/2028354869666888393/D6190B80FC2CBE43F5CD03793558BF2A717A74C5/",
+        "BackURL": "http://cloud-3.steamusercontent.com/ugc/17801021975631056595/BCFAF42935766E2E8990738EECB161793D5566D3//",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  },
+  {
+    "GUID": "89fa29",
+    "Name": "CardCustom",
+    "Transform": {
+      "posX": -42,
+      "posY": 3.06055784,
+      "posZ": 48.89186,
+      "rotX": 359.647,
+      "rotY": 89.9853439,
+      "rotZ": 0.5257112,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "scaleZ": 1.0
+    },
+    "Nickname": "Tactical Objectives",
+    "Description": "Select both of these cards to indicate that you will be using Tactical Missions instead of Fixed Missions for this game.",
+    "GMNotes": "TacticalObjectives",
+    "AltLookAngle": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "ColorDiffuse": {
+      "r": 0.713235259,
+      "g": 0.713235259,
+      "b": 0.713235259
+    },
+    "Tags": [
+      "secondaryCard"
+    ],
+    "LayoutGroupSortIndex": 0,
+    "Value": 0,
+    "Locked": false,
+    "Grid": true,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": true,
+    "Tooltip": true,
+    "GridProjection": false,
+    "HideWhenFaceDown": true,
+    "Hands": true,
+    "CardID": 10000,
+    "SidewaysCard": false,
+    "CustomDeck": {
+      "100": {
+        "FaceURL": "http://cloud-3.steamusercontent.com/ugc/2028354869666888393/D6190B80FC2CBE43F5CD03793558BF2A717A74C5/",
+        "BackURL": "http://cloud-3.steamusercontent.com/ugc/17801021975631056595/BCFAF42935766E2E8990738EECB161793D5566D3//",
+        "NumWidth": 1,
+        "NumHeight": 1,
+        "BackIsHidden": true,
+        "UniqueBack": false,
+        "Type": 0
+      }
+    },
+    "LuaScript": "",
+    "LuaScriptState": "",
+    "XmlUI": ""
+  }
+]

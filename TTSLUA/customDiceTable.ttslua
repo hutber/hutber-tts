@@ -476,6 +476,172 @@ if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
 end
 roller = getObjectFromGUID(rollerGUID)
 
+defaultTtsGameApiBaseUrl = "https://stats.hutber.com/api/ttsGame"
+
+function getTrackedSessionData()
+    local ok, trackedSession = pcall(function()
+        return Global.getTable("ttsTrackedSession")
+    end)
+    if ok and type(trackedSession) == "table" then
+        return trackedSession
+    end
+    return nil
+end
+
+function getDiceRollApiBaseUrl()
+    local trackedSession = getTrackedSessionData()
+    if trackedSession and trackedSession.apiBaseUrl and trackedSession.apiBaseUrl ~= "" then
+        return tostring(trackedSession.apiBaseUrl)
+    end
+    return defaultTtsGameApiBaseUrl
+end
+
+function getTrackedDiceGameId()
+    local trackedSession = getTrackedSessionData()
+    if not trackedSession then
+        return nil
+    end
+    local gameId = tonumber(trackedSession.gameId)
+    if gameId == nil then
+        return nil
+    end
+    return math.floor(gameId)
+end
+
+function isTrackedDiceGameActive()
+    local trackedSession = getTrackedSessionData()
+    if not trackedSession then
+        return false
+    end
+    return trackedSession.isGameActive == true
+end
+
+function getDicePlayerSide(color)
+    if color == "Red" then
+        return "red"
+    elseif color == "Blue" then
+        return "blue"
+    end
+    return nil
+end
+
+function getTrackedPlayerIdentifierForDice(color)
+    local playerRef = color and Player[color] or nil
+    if playerRef and playerRef.steam_id and tostring(playerRef.steam_id) ~= "" then
+        return tostring(playerRef.steam_id)
+    end
+    if playerRef and playerRef.steam_name and tostring(playerRef.steam_name) ~= "" then
+        return tostring(playerRef.steam_name)
+    end
+    if color and color ~= "" then
+        return string.lower(color) .. "_unknown"
+    end
+    return nil
+end
+
+function getTrackedConsentStatusForDice(color)
+    local startMenuGuid = Global.getVar("startMenu_GUID")
+    if not startMenuGuid then
+        return nil
+    end
+    local startMenu = getObjectFromGUID(startMenuGuid)
+    if not startMenu then
+        return nil
+    end
+    local ok, state = pcall(function()
+        return startMenu.call("getTrackedConsentPanelState", { side = color })
+    end)
+    if not ok or type(state) ~= "table" then
+        return nil
+    end
+    return state.status
+end
+
+function diceRollUrlEncode(value)
+    local text = tostring(value or "")
+    text = text:gsub("\n", "\r\n")
+    return text:gsub("([^%w%-_%.~])", function(char)
+        return string.format("%%%02X", string.byte(char))
+    end)
+end
+
+function appendDiceRollQuery(parts, key, value)
+    if value == nil then
+        return
+    end
+    local text = tostring(value)
+    if text == "" then
+        return
+    end
+    table.insert(parts, key .. "=" .. diceRollUrlEncode(text))
+end
+
+function buildDiceRollRequestUrl(payload)
+    local parts = {}
+    appendDiceRollQuery(parts, "game_id", payload.gameId)
+    appendDiceRollQuery(parts, "steam_id", payload.steamId)
+    appendDiceRollQuery(parts, "player_side", payload.playerSide)
+    appendDiceRollQuery(parts, "rolled_at", payload.rolledAt)
+    appendDiceRollQuery(parts, "results", payload.results and table.concat(payload.results, ",") or nil)
+    return getDiceRollApiBaseUrl() .. "/diceRoll?" .. table.concat(parts, "&")
+end
+
+function submitResolvedRollBatch(results, rollingColor)
+    if not WebRequest then
+        return
+    end
+    if not isTrackedDiceGameActive() then
+        return
+    end
+
+    local gameId = getTrackedDiceGameId()
+    if gameId == nil then
+        return
+    end
+
+    local steamId = nil
+    if getTrackedConsentStatusForDice(rollingColor) == "accepted" then
+        steamId = getTrackedPlayerIdentifierForDice(rollingColor)
+    end
+
+    if type(results) ~= "table" or #results == 0 then
+        return
+    end
+
+    for _, face in ipairs(results) do
+        local value = tonumber(face)
+        if value == nil or value < 1 or value > 6 or value ~= math.floor(value) then
+            return
+        end
+    end
+
+    local payload = {
+        gameId = gameId,
+        steamId = steamId,
+        results = results,
+        rolledAt = os.date("!%Y-%m-%dT%H:%M:%SZ")
+    }
+
+    local playerSide = getDicePlayerSide(rollingColor)
+    if playerSide ~= nil then
+        payload.playerSide = playerSide
+    end
+
+    local body = JSON.encode(payload)
+    local url = buildDiceRollRequestUrl(payload)
+
+    WebRequest.get(url, function(request)
+        if request.is_error then
+            return
+        end
+
+        local statusCode = tonumber(request.response_code) or 0
+        if statusCode < 200 or statusCode >= 300 then
+            return
+        end
+    end)
+end
+
 function importOpposDice(obj, player, alt)
     -- clear existing dice
     for _, d in ipairs(getDice()) do d.destroy() end
@@ -804,6 +970,7 @@ end
 function autoRoll(obj, player, alt, numDice)
     numDice = numDice or 1
     local total = 0
+    local rolledResults = {}
     local directionMultiplier = (currentMat == "Blue") and 1 or -1
     local startX = self.getPosition().x + (currentMat == "Blue" and -16 or 16)
     local startY = self.getPosition().y + 1
@@ -831,6 +998,7 @@ function autoRoll(obj, player, alt, numDice)
     for i = 1, numDice do
         local result = math.random(6)
         total = total + result
+        table.insert(rolledResults, result)
         printToAll(player .. " rolled a D6: " .. result, stringColorToRGB(player))
         local position = {
             x = startX + directionMultiplier * (i - 1) * 1.5,
@@ -866,6 +1034,7 @@ function autoRoll(obj, player, alt, numDice)
         end
     end
     printToAll(player .. " rolled a total of " .. total .. " (" .. numDice .. "D6)", stringColorToRGB(player))
+    submitResolvedRollBatch(rolledResults, player)
 end
 
 
