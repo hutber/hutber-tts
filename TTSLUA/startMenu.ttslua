@@ -31,6 +31,7 @@ function onLoad(saved_data)
     --self.setRotation({0,270,0})
     -- load from saved
     --getData()
+    deploySelected = nil
     if saved_data ~= "" then
         local loaded_data = JSON.decode(saved_data)
         gameMode = loaded_data.svgameMode
@@ -44,7 +45,12 @@ function onLoad(saved_data)
         packSelected = loaded_data.svPackSelected
     end
 
-    if not sizeConfirmed then
+    if sizeConfirmed then
+        setDeployZonesForSize(true)
+        if not deploySelected or not DeployZonesData[deploySelected] then
+            deploySelected = #DeployZonesData
+        end
+    else
         deploySelected = #DeployZonesData
     end
 
@@ -756,7 +762,7 @@ function confirmSizeMat(type)
     sizeConfirmed=true
     mat.setScale(sizeData[mapSizeSelected].scale)
     self.setRotation({0,270,0})
-    setDeployZonesForSize()
+    setDeployZonesForSize(false)
     writeMenus()
     if gameMode == "game" then
     end
@@ -959,23 +965,25 @@ DeployZonesDefault = {
 DeployZonesData = DeployZonesDefault
 deployMode = "strikeForce"
 
-function setDeployZonesForSize()
-    local sizeId = sizeData[mapSizeSelected].id
+function setDeployZonesForSize(preserveSelected)
+    -- Use Strike Force data if we have an invalid mapSizeSelected
+    local sizeEntry = sizeData[mapSizeSelected] or sizeData[4]
+    local sizeId = sizeEntry.id
     if sizeId == 1 then
-        setDeployZonesMode("colosseum")
+        setDeployZonesMode("colosseum", preserveSelected)
     elseif sizeId == 2 then
-        setDeployZonesMode("combatPatrol")
+        setDeployZonesMode("combatPatrol", preserveSelected)
     elseif sizeId == 3 then
-        setDeployZonesMode("incursion")
+        setDeployZonesMode("incursion", preserveSelected)
     elseif sizeId == 4 or sizeId == 5 then
-        setDeployZonesMode("strikeForce")
+        setDeployZonesMode("strikeForce", preserveSelected)
     else
-        -- Default to Strike Force
-        setDeployZonesMode("strikeForce")
+        -- Default to Strike Force here as well
+        setDeployZonesMode("strikeForce", preserveSelected)
     end
 end
 
-function setDeployZonesMode(mode)
+function setDeployZonesMode(mode, preserveSelected)
     local byMode = {
         colosseum = DeployZonesColosseum,
         combatPatrol = DeployZonesCombatPatrol,
@@ -984,6 +992,9 @@ function setDeployZonesMode(mode)
     }
     deployMode = mode
     DeployZonesData = byMode[mode] or DeployZonesDefault
+    if preserveSelected and deploySelected and DeployZonesData[deploySelected] then
+        return
+    end
     deploySelected = #DeployZonesData
 end
 
