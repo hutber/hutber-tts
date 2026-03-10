@@ -165,6 +165,61 @@
     "XmlUI": ""
   },
   {
+    "GUID": "17ca2e",
+    "Name": "Custom_Model_Bag",
+    "Transform": {
+      "posX": -55.7,
+      "posY": 0.957778037,
+      "posZ": -1.0,
+      "rotX": -1.02551053e-06,
+      "rotY": 359.969971,
+      "rotZ": -1.71391818e-07,
+      "scaleX": 0.55000037,
+      "scaleY": 0.55000037,
+      "scaleZ": 0.55000037
+    },
+    "Nickname": "Red Custom Kustom 40k Dice Roller Mk3 (Duplicate)",
+    "Description": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
+    "GMNotes": "",
+    "ColorDiffuse": {
+      "r": 0.9999998,
+      "g": 0.992160261,
+      "b": 0.9999998
+    },
+    "LayoutGroupSortIndex": 0,
+    "Locked": true,
+    "Grid": false,
+    "Snap": true,
+    "IgnoreFoW": false,
+    "MeasureMovement": false,
+    "DragSelectable": true,
+    "Autoraise": true,
+    "Sticky": false,
+    "Tooltip": false,
+    "GridProjection": false,
+    "HideWhenFaceDown": false,
+    "Hands": false,
+    "MaterialIndex": -1,
+    "MeshIndex": -1,
+    "Number": 0,
+    "CustomMesh": {
+      "MeshURL": "http://cloud-3.steamusercontent.com/ugc/94979895601488369/894F4E9B36D9116E12A24DAAFE1B4FD26A1880D2/",
+      "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/34445199169868588/DA62A66722C3DAD30148A5882BC16322B989C557/",
+      "NormalURL": "",
+      "ColliderURL": "",
+      "Convex": true,
+      "MaterialIndex": 3,
+      "TypeIndex": 6,
+      "CastShadows": true
+    },
+    "Bag": {
+      "Order": 0
+    },
+    "LuaScript": "",
+    "LuaScriptState": "{\n  \"Results\": \"no\",\n  \"Rows\": \"yes\",\n  \"SmoothDice\": \"no\",\n  \"RotateDice\": \"no\",\n  \"SortNoRows\": \"asc\",\n  \"Split_on_D12\": \"yes\",\n  \"Step\": 1.05,\n  \"Version\": \"BCB-2020-04-20 Hotfix Z\"\n}",
+    "XmlUI": ""
+  },
+  {
     "GUID": "4e0e0b",
     "Name": "Custom_Model_Bag",
     "Transform": {

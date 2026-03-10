@@ -5,7 +5,7 @@
     "Transform": {
       "posX": 0.0,
       "posY": 0.87,
-      "posZ": 29.0,
+      "posZ": 31.0,
       "rotX": 0.0,
       "rotY": 0.0,
       "rotZ": 0.0,
@@ -38,8 +38,8 @@
     "MeshIndex": -1,
     "Number": 0,
     "CustomMesh": {
-      "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/9774073700099981535/65B878DFE784C6F40A47CE80D36C56C93CA305FE/",
-      "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/14115203571366399741/19CFED1CC12386A68CED7B54A0BE4CAEAF354B44/",
+      "MeshURL": "https://steamusercontent-a.akamaihd.net/ugc/14408222268802512112/6FF6A7B48AA07527BBA13E010ECFDD969B6025A1/",
+      "DiffuseURL": "https://steamusercontent-a.akamaihd.net/ugc/16542610029280899541/B0039C6701FE49663CD3BF08099D1910A83C04F6/",
       "NormalURL": "",
       "ColliderURL": "https://steamusercontent-a.akamaihd.net/ugc/10802030163584314/48B91B57F40DF1772CEB16A690D3AFF4C4BC2FB4/",
       "Convex": true,
@@ -58,6 +58,16 @@
           "z": -0.8406986
         },
         "Tags": []
+      },
+      {
+        "Position": {
+          "x": 4.3,
+          "y": 0.1,
+          "z": 0.0
+        },
+        "Tags": [
+          "kustom_dice_roller_placeholder"
+        ]
       }
     ]
   },
@@ -189,7 +199,7 @@
     "Transform": {
       "posX": 0.0,
       "posY": 0.87,
-      "posZ": 29.0,
+      "posZ": 59.0,
       "rotX": 0.0,
       "rotY": 0.0,
       "rotZ": 0.0,

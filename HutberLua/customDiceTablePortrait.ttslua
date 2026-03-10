@@ -45,9 +45,16 @@ local VALID_BASE_SIZES_IN_MM = {
     {x = 170, z = 109}
 }
 
+-- Portrait workflow layout (d4e8a2/c9d2b1): maximize usable dice space in center.
+local uiTopZ = -1.52
+local uiMainZ = -1.15
+local uiRowsStartZ = -0.45
+local uiRowsStep = 0.33
+local uiBottomZ = 1.35
+
 clearAllDiceBtn={
     label="Clear mat\n(right click)", click_function="clearDiceAll", function_owner=self,
-    position={-4.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=400,
+    position={-5.1, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=400,
     font_size=60, color={0,0,0}, font_color={1,1,1}
 }
 
@@ -57,7 +64,7 @@ selectAllLabel = "Select all dice"
 selectAllTooltip = "Left-click to select all dice. Right-click to switch to rolling dice."
 rollOrSelectAllBtn={
     label=rollAllLabel, tooltip=rollAllTooltip, click_function="RollOrSelectDice", function_owner=self,
-    position={-3.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    position={-3.95, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -65,57 +72,57 @@ orderedRollLabel = "Ordered roll"
 orderedRollTooltip = "Roll all dice, and display them in the order they're rolled in rather than by results."
 orderedRollBtn={
     label=orderedRollLabel, tooltip=orderedRollTooltip, click_function="RollDiceOrdered", function_owner=self,
-    position={-2.4, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=520,
+    position={-2.75, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=520,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 orderedRollGroup2Label = "In 2s"
 orderedRollGroup2Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 2s."
 orderedRollGroup2Btn={
     label=orderedRollGroup2Label, tooltip=orderedRollGroup2Tooltip, click_function="RollDiceOrderedGroup2", function_owner=self,
-    position={-1.6, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={-1.85, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 orderedRollGroup3Label = "In 3s"
 orderedRollGroup3Tooltip = "Roll all dice, and display them in the order they're rolled in rather than by results, grouped into 3s."
 orderedRollGroup3Btn={
     label=orderedRollGroup3Label, tooltip=orderedRollGroup3Tooltip, click_function="RollDiceOrderedGroup3", function_owner=self,
-    position={-1.1, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={-1.25, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
 add1d6Btn={
     label="+ 1d6", click_function="spawnDice1", function_owner=self,
-    position={-0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={-0.45, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add2d6Btn={
     label="+ 2d6", click_function="spawnDice2", function_owner=self,
-    position={0.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={0.15, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add3d6Btn={
     label="+ 3d6", click_function="spawnDice3", function_owner=self,
-    position={0.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={0.75, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add4d6Btn={
     label="+ 4d6", click_function="spawnDice4", function_owner=self,
-    position={1.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={1.35, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add5d6Btn={
     label="+ 5d6", click_function="spawnDice5", function_owner=self,
-    position={1.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={1.95, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add10d6Btn={
     label="+ 10d6", click_function="spawnDice10", function_owner=self,
-    position={2.0, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={2.65, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 add25d6Btn={
     label="+ 25d6", click_function="spawnDice25", function_owner=self,
-    position={2.5, Yoffset ,-0.87}, rotation={0,0,0}, height=50, width=250,
+    position={3.35, Yoffset ,uiMainZ}, rotation={0,0,0}, height=50, width=250,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -123,34 +130,34 @@ colorBtnDimension=150
 colorBtnOffset=3.0
 color1Btn={
     label="", click_function="modifyMenu1", function_owner=self,
-    position={colorBtnOffset, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={3.95, Yoffset ,uiMainZ}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Red", font_color={0,0,0}
 }
 color2Btn={
     label="", click_function="modifyMenu2", function_owner=self,
-    position={colorBtnOffset+0.35, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={4.30, Yoffset ,uiMainZ}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Blue", font_color={0,0,0}
 }
 color3Btn={
     label="", click_function="modifyMenu3", function_owner=self,
-    position={colorBtnOffset+0.35*2, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={4.65, Yoffset ,uiMainZ}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Black", font_color={0,0,0}
 }
 color4Btn={
     label="", click_function="modifyMenu4", function_owner=self,
-    position={colorBtnOffset+0.35*3, Yoffset ,-0.87}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
+    position={5.00, Yoffset ,uiMainZ}, rotation={0,0,0}, height=colorBtnDimension, width=colorBtnDimension,
     font_size=60, color="Green", font_color={0,0,0}
 }
 pipColorBtn=
 {
   index=17, label="White", click_function="swapPipColor", function_owner=self,
-  position={colorBtnOffset + 0.35 * 4 + 0.1, Yoffset, -0.87}, rotation={0, 0, 0}, height=50, width=250,
+  position={5.45, Yoffset, uiMainZ}, rotation={0, 0, 0}, height=50, width=250,
   font_size=60, color="White", font_color="Black"
 }
 
 customDiceBtn={
     label="Custom Dice", click_function="customDice", function_owner=self,
-    position={colorBtnOffset+0.35*9, Yoffset ,-0.85}, rotation={0,0,0}, height=50, width=420,
+    position={4.85, Yoffset ,uiTopZ}, rotation={0,0,0}, height=50, width=420,
     font_size=60, color={1,1,1}, font_color={0,0,0}
 }
 
@@ -159,13 +166,13 @@ clearDiceBtnLabel="Del\n"
 clearDiceBtntooltip="LMB Delete this row\nRMB Delete this row and lowers/uppers"
 clearDiceBtn={
     label=clearDiceBtnLabel, tooltip=clearDiceBtntooltip, click_function="filledInLater", function_owner=self,
-    position={-5.8, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    position={-5.35, Yoffset ,uiRowsStartZ}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
     font_size=350, color="Black", font_color="Red"
 }
 
 rollOrSelectDiceBtn={
     label="filled in later", tooltip="filled in later", click_function="filledInLater", function_owner=self,
-    position={-5.45, Yoffset ,-0.85}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
+    position={-4.95, Yoffset ,uiRowsStartZ}, rotation={0,0,0}, height=1000, width=1300, scale={0.1,0.1,0.1},
     font_size=350, color="White", font_color={0,0,0}
 }
 
@@ -175,7 +182,7 @@ lowerSign=" (-)"
 upperSign=" (+)"
 lowerUpperBtn={
     label="RMB\n- / +", tooltip="Changes to upper for the next click", click_function="toggleLowerUpper", function_owner=self,
-    position={-5.62, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
+    position={-5.15, Yoffset ,uiBottomZ}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
@@ -183,19 +190,19 @@ warningLbl="NO FAST REPETITIONS"
 warningLbl=""
 warningBtn={
     label=warningLbl, click_function="modifyMenu4", function_owner=self,
-    position={-1.75, Yoffset ,-0.67}, rotation={0,0,0}, height=0, width=0,
+    position={0.0, Yoffset ,-0.8}, rotation={0,0,0}, height=0, width=0,
     font_size=50, color="White", font_color="Red"
 }
 
 lowerUpper=true
 oneTimeUpper=true
-lethalButtonsOffset = -4
+lethalButtonsOffset = -1.9
 
 lethalLabel = "Lethal Hits"
 lethalTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5."
 lethalHitsBtn={
     label=lethalLabel, tooltip=lethalTip, click_function="lethalHitsAction", function_owner=self,
-    position={lethalButtonsOffset, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
+    position={lethalButtonsOffset, Yoffset ,uiBottomZ}, rotation={0,0,0}, height=1000, width=2800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
@@ -203,7 +210,7 @@ susLabel = "Sustained Hits"
 susTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5."
 sustainedHitsBtn={
     label=susLabel, tooltip=susTip, click_function="sustainedHitsAction", function_owner=self,
-    position={lethalButtonsOffset + 0.7, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=3800, scale={0.1,0.1,0.1},
+    position={lethalButtonsOffset + 1.25, Yoffset ,uiBottomZ}, rotation={0,0,0}, height=1000, width=3800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 
@@ -212,14 +219,14 @@ susLethalTip   = "Left-click: move dice >= 6. Right-click: move dice >= 5. Appli
 
 sustainedLethalHitsBtn = {
     label=susLethalLabel, tooltip=susLethalTip, click_function="sustainedLethalHitsAction", function_owner=self,
-    position={lethalButtonsOffset + 1.61, Yoffset ,1.1}, rotation={0,0,0}, height=1000, width=4800, scale={0.1,0.1,0.1},
+    position={lethalButtonsOffset + 2.65, Yoffset ,uiBottomZ}, rotation={0,0,0}, height=1000, width=4800, scale={0.1,0.1,0.1},
     font_size=500, color="White", font_color={0,0,0}
 }
 copyOthersDiceBtn = {
     tooltip="Copy opposite player's dice",
     click_function = "importOpposDice",
     function_owner = self,
-    position       = {-7.5, Yoffset, 0.86},
+    position       = {2.95, Yoffset, uiTopZ},
     rotation       = { 0, 0, 0 },
     width = 1300, height = 300, font_size = 150,
     color = (currentMat == "Red" and "Blue" or "Red"), -- Button changes color based on current player
@@ -234,7 +241,7 @@ local hasObjectSaved = false
 savePositionLabel = "Save"
 saveBtn={
     label=savePositionLabel, tooltip=savePositionTip, click_function="save", function_owner=self,
-    position={-7.70, Yoffset ,-1.69}, rotation={0,0,0},
+    position={-5.25, Yoffset ,uiTopZ}, rotation={0,0,0},
     width = 550, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -245,7 +252,7 @@ saveBtn={
 restorePositionLabel = "Restore Position"
 restoreBtn={
     label=restorePositionLabel, click_function="restore", function_owner=self,
-    position={-6.76, Yoffset ,-1.69}, rotation={0,0,0},
+    position={-4.25, Yoffset ,uiTopZ}, rotation={0,0,0},
     width = 1250, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -256,56 +263,56 @@ restoreBtn={
 
 gap2Btn={
     label='1" Gap', tooltip='Arrange models with 1" spacing', click_function='arrangeModelsWith1Inch', function_owner=self,
-    position={-7.7, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    position={3.25, Yoffset ,0.95}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
     font_size=750, color='White', font_color={0,0,0}
 }
 
 gap1Btn={
     label='2" Gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
-    position={-7.15, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
+    position={3.9, Yoffset ,0.95}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
     font_size=750, color='White', font_color={0,0,0}
 }
 
 clearMeasureAllBtn={
     label='Clear Bubbles', tooltip='Clear all measuring bubbles on the table', click_function='clearMeasuringCircles', function_owner=self,
-    position={-6.325, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
+    position={4.1, Yoffset ,1.55}, rotation={0,0,0}, height=1000, width=5200, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
 
 measure1Btn={
     label='1"', tooltip='Toggle 1" bubble', click_function='toggle1Bubble', function_owner=self,
-    position={-7.82, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    position={3.1, Yoffset ,1.25}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
 
 measure3Btn={
     label='3"', tooltip='Toggle 3" bubble', click_function='toggle3Bubble', function_owner=self,
-    position={-7.52, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    position={3.4, Yoffset ,1.25}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
 
 measure6Btn={
     label='6"', tooltip='Toggle 6" bubble', click_function='toggle6Bubble', function_owner=self,
-    position={-7.22, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    position={3.7, Yoffset ,1.25}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
 
 measure9Btn={
     label='9"', tooltip='Toggle 9" bubble', click_function='toggle9Bubble', function_owner=self,
-    position={-6.92, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
+    position={4.0, Yoffset ,1.25}, rotation={0,0,0}, height=1000, width=1400, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
 
 measure12Btn={
     label='12"', tooltip='Toggle 12" bubble', click_function='toggle12Bubble', function_owner=self,
-    position={-6.59, Yoffset ,-1.40}, rotation={0,0,0}, height=1000, width=1600, scale={0.1,0.1,0.1},
+    position={4.35, Yoffset ,1.25}, rotation={0,0,0}, height=1000, width=1600, scale={0.1,0.1,0.1},
     font_size=700, color='White', font_color={0,0,0}
 }
 
 -- Custom Bubble Input BG
 customBubbleInputBG = {
     label = "", click_function = "none", function_owner = self,
-    position = {-6.27, Yoffset, -1.40}, rotation = {0, 0, 0},
+    position = {4.7, Yoffset, 1.25}, rotation = {0, 0, 0},
     width = 1100, height = 1000, font_size = 100,
     color = {0.95, 0.95, 0.95, 1},
     scale = {0.1, 0.1, 0.1}
@@ -314,7 +321,7 @@ customBubbleInputBG = {
 -- Custom Bubble Input Field
 customBubbleInput = {
     label = "Size", input_function = "setCustomBubbleSize", function_owner = self,
-    position = {-6.27, Yoffset, -1.40}, rotation = {0, 0, 0},
+    position = {4.7, Yoffset, 1.25}, rotation = {0, 0, 0},
     width = 900, height = 800, font_size = 500, alignment = 3, scale = {0.1, 0.1, 0.1},
     color = {1, 1, 1, 1}, font_color = {0.2, 0.2, 0.2}
 }
@@ -322,7 +329,7 @@ customBubbleInput = {
 -- Custom Bubble Button
 customBubbleBtn = {
     label = "Go", tooltip = "Apply custom bubble size", click_function = "applyCustomBubble", function_owner = self,
-    position = {-6.07, Yoffset, -1.40}, rotation = {0, 0, 0},
+    position = {4.95, Yoffset, 1.25}, rotation = {0, 0, 0},
     width = 800, height = 1000, font_size = 500,
     color = {0.13, 0.13, 0.13, 1}, font_color = {1, 1, 1},
     hover_color = {0.2, 0.2, 0.2, 1},
@@ -370,7 +377,7 @@ local auto1D6 = {
     tooltip="Roll 1D6 Instantly",
     click_function = "autoRoll1D6",
     function_owner = self,
-    position       = {-7.5, Yoffset, 0.52},
+    position       = {0.35, Yoffset, uiTopZ},
     rotation       = { 0, 0, 0 },
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
@@ -385,7 +392,7 @@ local auto2D6 = {
     tooltip="Roll 2D6 Instantly",
     click_function = "autoRoll2D6",
     function_owner = self,
-    position       = {-7.5, Yoffset, 0.18},
+    position       = {1.15, Yoffset, uiTopZ},
     rotation       = { 0, 0, 0 },
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
@@ -401,7 +408,7 @@ local revertRollBtn = {
     tooltip="It takes 1 second after rolling to 'lock in'",
     click_function = "revertRoll",
     function_owner = self,
-    position       = {-7.5, Yoffset, -0.16},
+    position       = {-1.35, Yoffset, uiTopZ},
     rotation       = { 0, 0, 0 },
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
@@ -416,7 +423,7 @@ local redoRollBtn = {
     tooltip        = "Redo previously reverted roll",
     click_function = "redoRoll",
     function_owner = self,
-    position       = {-6.0, Yoffset, -0.16},
+    position       = {-0.55, Yoffset, uiTopZ},
     rotation       = { 0, 0, 0 },
     width = 800, height = 300, font_size = 120,
     color = {0.13, 0.13, 0.13, 1},
@@ -429,7 +436,7 @@ local redoRollBtn = {
 -- Background Box (Soft Off-White for a Professional Look)
 local customDiceInputBG = {
     label = "", click_function = "none", function_owner = self,
-    position = {-7.5, Yoffset, -0.82}, rotation = {0, 0, 0},
+    position = {-3.2, Yoffset, uiTopZ}, rotation = {0, 0, 0},
     width = 1300, height = 375, font_size = 100,
     color = {0.95, 0.95, 0.95, 1}, -- Soft off-white
     scale = {0.5, 0.5, 0.5}
@@ -438,7 +445,7 @@ local customDiceInputBG = {
 -- Input Field (Bright White)
 local customDiceInput = {
     label = "Enter Dice #", input_function = "setCustomDiceCount", function_owner = self,
-    position = {-7.5, Yoffset, -0.82}, rotation = {0, 0, 0},
+    position = {-3.2, Yoffset, uiTopZ}, rotation = {0, 0, 0},
     width = 1100, height = 225, font_size = 180, alignment = 2, scale = {0.5, 0.5, 0.5},
     color = {1, 1, 1, 1}, -- Pure white
     font_color = {0.2, 0.2, 0.2} -- Dark gray text
@@ -447,7 +454,7 @@ local customDiceInput = {
 -- Modern Black "Spawn Dice" Button
 local customDiceSpawnButton = {
     label = "Spawn Dice", click_function = "spawnCustomDice", function_owner = self,
-    position = {-7.5, Yoffset, -0.50}, rotation = {0, 0, 0},
+    position = {-2.25, Yoffset, uiTopZ}, rotation = {0, 0, 0},
     width = 1300, height = 300, font_size = 150,
     color = {0.13, 0.13, 0.13, 1}, -- Black button (not pure black for smoother look)
     font_color = {1, 1, 1}, -- White text for high contrast
@@ -473,6 +480,10 @@ maxPreviousRolls = 10
 rollerGUID = Global.getVar("redCustomDiceRoller_GUID")
 if self.guid == Global.getVar("blueCustomDiceMat_GUID") then
     rollerGUID = Global.getVar("blueCustomDiceRoller_GUID")
+end
+if currentMat == "Red" then
+    -- Route portrait red mat through the duplicated portrait roller.
+    rollerGUID = "17ca2e"
 end
 roller = getObjectFromGUID(rollerGUID)
 

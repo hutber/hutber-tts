@@ -183,6 +183,424 @@ local boards = {
 }
 
 local originalPositions = {}
+local ARMY_LISTS_API_URL = "https://apistats.hutber.com/api/tts/armyLists"
+local armyListsPopupVisible = false
+local armyListsPopupTitle = "Army Lists"
+local armyListsPopupStatus = "Select refresh to load army lists."
+local armyListsPopupBody = "No army lists loaded."
+local armyListsRequestNonce = 0
+local VALID_PLAYER_COLORS = {
+    White = true,
+    Brown = true,
+    Red = true,
+    Orange = true,
+    Yellow = true,
+    Green = true,
+    Teal = true,
+    Blue = true,
+    Purple = true,
+    Pink = true,
+    Grey = true,
+    Black = true,
+}
+
+local function getBoardColor()
+    return (self.getGUID() == "32ed4c") and "Red" or "Blue"
+end
+
+local function normalizePlayerColor(value)
+    if type(value) == "table" and type(value.color) == "string" and VALID_PLAYER_COLORS[value.color] then
+        return value.color
+    end
+
+    if type(value) == "string" and value ~= "" then
+        if VALID_PLAYER_COLORS[value] then
+            return value
+        end
+
+        for _, seatedPlayer in ipairs(Player.getPlayers()) do
+            if seatedPlayer and seatedPlayer.steam_name == value then
+                local seatedColor = seatedPlayer.color
+                if type(seatedColor) == "string" and VALID_PLAYER_COLORS[seatedColor] then
+                    return seatedColor
+                end
+            end
+        end
+    end
+
+    return nil
+end
+
+local function getBoardPlayerColor(player, fallback)
+    return normalizePlayerColor(player) or normalizePlayerColor(fallback)
+end
+
+local function canUseBoard(player, fallback)
+    local boardColor = getBoardColor()
+    local playerColor = getBoardPlayerColor(player, fallback)
+    if not playerColor then
+        return true
+    end
+    return playerColor == boardColor or playerColor == "Black"
+end
+
+local function getArmyListsPopupIds(color)
+    return {
+        popup = color .. "_armyListsPopup",
+        title = color .. "_armyListsTitle",
+        status = color .. "_armyListsStatus",
+        body = color .. "_armyListsBody",
+    }
+end
+
+local function updateArmyListsPopupUI()
+    local ids = getArmyListsPopupIds(getBoardColor())
+    self.UI.setAttribute(ids.popup, "active", armyListsPopupVisible and "true" or "false")
+    self.UI.setAttribute(ids.title, "text", armyListsPopupTitle)
+    self.UI.setAttribute(ids.status, "text", armyListsPopupStatus)
+    self.UI.setAttribute(ids.body, "text", armyListsPopupBody)
+end
+
+local function getArmyListsSteamId(color)
+    local playerObj = Player[color]
+    if playerObj and playerObj.seated and playerObj.steam_id and playerObj.steam_id ~= "" then
+        return tostring(playerObj.steam_id)
+    end
+    local key = color == "Red" and "redPlayerID" or "bluePlayerID"
+    local fromGlobal = Global.getVar(key)
+    if fromGlobal and tostring(fromGlobal) ~= "" then
+        return tostring(fromGlobal)
+    end
+    return ""
+end
+
+local function getArmyListsPlayerName(color)
+    local playerObj = Player[color]
+    if playerObj and playerObj.seated and playerObj.steam_name and playerObj.steam_name ~= "" then
+        return tostring(playerObj.steam_name)
+    end
+    return color .. " player"
+end
+
+local function safeValue(value, fallback)
+    if value == nil or value == "" then
+        return fallback or ""
+    end
+    return tostring(value)
+end
+
+local function getWebResponseCode(response)
+    if not response then
+        return "unknown"
+    end
+    return safeValue(response.response_code or response.status_code or response.code, "unknown")
+end
+
+local function looksLikeHtmlResponse(text)
+    local raw = string.lower(safeValue(text, ""))
+    return string.sub(raw, 1, 15) == "<!doctype html>" or string.sub(raw, 1, 5) == "<html"
+end
+
+local function getArmyListsApiUrl()
+    local override = Global.getVar("ttsArmyListsApiBaseUrl")
+    if override and tostring(override) ~= "" then
+        return tostring(override)
+    end
+    return ARMY_LISTS_API_URL
+end
+
+local function trimText(value)
+    local text = safeValue(value, "")
+    local startIndex = 1
+    local endIndex = #text
+
+    while startIndex <= endIndex do
+        local byteValue = string.byte(text, startIndex)
+        if byteValue ~= 32 and byteValue ~= 9 and byteValue ~= 10 and byteValue ~= 13 then
+            break
+        end
+        startIndex = startIndex + 1
+    end
+
+    while endIndex >= startIndex do
+        local byteValue = string.byte(text, endIndex)
+        if byteValue ~= 32 and byteValue ~= 9 and byteValue ~= 10 and byteValue ~= 13 then
+            break
+        end
+        endIndex = endIndex - 1
+    end
+
+    if startIndex > endIndex then
+        return ""
+    end
+
+    return string.sub(text, startIndex, endIndex)
+end
+
+local function collapseBlankLines(text)
+    local collapsed = safeValue(text, "")
+    while string.find(collapsed, "\n\n\n", 1, true) do
+        collapsed = string.gsub(collapsed, "\n\n\n", "\n\n")
+    end
+    return collapsed
+end
+
+local function splitLines(text)
+    local lines = {}
+    local normalized = safeValue(text, "")
+    if normalized == "" then
+        return lines
+    end
+
+    local startIndex = 1
+    while startIndex <= #normalized do
+        local breakIndex = string.find(normalized, "\n", startIndex, true)
+        if not breakIndex then
+            table.insert(lines, string.sub(normalized, startIndex))
+            break
+        end
+        table.insert(lines, string.sub(normalized, startIndex, breakIndex - 1))
+        startIndex = breakIndex + 1
+    end
+
+    if #normalized > 0 and string.sub(normalized, -1) == "\n" then
+        table.insert(lines, "")
+    end
+    return lines
+end
+
+local function normalizeArmyListText(value)
+    local text = safeValue(value, "")
+    if text == "" then
+        return ""
+    end
+
+    text = string.gsub(text, "\r\n", "\n")
+    text = string.gsub(text, "\r", "\n")
+    text = string.gsub(text, "\t", " ")
+    text = string.gsub(text, "undefined", "")
+    text = string.gsub(text, "([0-9]+ points)([A-Z])", "%1\n%2")
+    text = string.gsub(text, "([0-9]+pts)([A-Z])", "%1\n%2")
+    text = string.gsub(text, "([a-z%)])([A-Z][A-Za-z'%-]+ [0-9]+ points)", "%1\n%2")
+    text = string.gsub(text, "([a-z%)])([0-9]+x? [A-Z])", "%1\n%2")
+    text = string.gsub(text, "([a-z])([A-Z])", "%1 %2")
+
+    local sectionHeaders = {
+        "FACTION KEYWORD",
+        "DETACHMENT",
+        "TOTAL ARMY POINTS",
+        "WARLORD",
+        "ENHANCEMENT",
+        "NUMBER OF UNITS",
+        "SECONDARY",
+        "CHARACTERS",
+        "BATTLELINE",
+        "DEDICATED TRANSPORTS",
+        "OTHER DATASHEETS",
+        "ALLIED UNITS",
+        "DEDICATED TRANSPORT",
+        "EPIC HERO",
+    }
+
+    for _, header in ipairs(sectionHeaders) do
+        text = string.gsub(text, "%s*" .. header, "\n" .. header)
+    end
+
+    text = string.gsub(text, "%s*Exported with App Version", "\nExported with App Version")
+    text = collapseBlankLines(text)
+
+    local output = {}
+    for _, rawLine in ipairs(splitLines(text)) do
+        local line = trimText(rawLine)
+        if line ~= "" then
+            table.insert(output, line)
+        elseif #output > 0 and output[#output] ~= "" then
+            table.insert(output, "")
+        end
+    end
+
+    return trimText(table.concat(output, "\n"))
+end
+
+local function getArmyListTitle(list)
+    if list.source == "builder" then
+        return safeValue(list.eventName, "Saved builder list")
+    end
+    return safeValue(list.eventName, "Unknown event")
+end
+
+local function formatArmyListsPopupBody(payload)
+    local linkedPlayers = payload and payload.linkedPlayers or {}
+    local armyLists = payload and payload.armyLists or {}
+    local lines = {}
+
+    table.insert(lines, "Steam: " .. safeValue(payload and payload.steamDisplayName, payload and payload.steamId or "Unknown"))
+
+    if linkedPlayers and #linkedPlayers > 0 then
+        local names = {}
+        for _, linked in ipairs(linkedPlayers) do
+            table.insert(names, safeValue(linked.playerName, "Unknown player"))
+        end
+        table.insert(lines, "Linked players: " .. table.concat(names, ", "))
+    else
+        table.insert(lines, "Linked players: none")
+    end
+
+    if not armyLists or #armyLists == 0 then
+        table.insert(lines, "")
+        if linkedPlayers and #linkedPlayers > 0 then
+            table.insert(lines, "No saved army lists were found for this linked account.")
+        else
+            table.insert(lines, "No verified linked player was found for this Steam account yet.")
+        end
+        return table.concat(lines, "\n")
+    end
+
+    for index, list in ipairs(armyLists) do
+        table.insert(lines, "")
+        table.insert(lines, string.format("%d. %s", index, getArmyListTitle(list)))
+
+        local meta = {}
+        if list.source and tostring(list.source) ~= "" then
+            table.insert(meta, tostring(list.source) == "builder" and "Builder" or "Event")
+        end
+        if list.eventStart and tostring(list.eventStart) ~= "" then
+            table.insert(meta, string.sub(tostring(list.eventStart), 1, 10))
+        end
+        if list.playerName and tostring(list.playerName) ~= "" then
+            table.insert(meta, tostring(list.playerName))
+        end
+        if list.factionName and tostring(list.factionName) ~= "" then
+            table.insert(meta, tostring(list.factionName))
+        end
+        if list.detachmentName and tostring(list.detachmentName) ~= "" then
+            table.insert(meta, tostring(list.detachmentName))
+        end
+        if list.points ~= nil and tostring(list.points) ~= "" then
+            table.insert(meta, tostring(list.points) .. " pts")
+        end
+        if list.standing ~= nil and tostring(list.standing) ~= "" then
+            table.insert(meta, "Standing " .. tostring(list.standing))
+        end
+        if #meta > 0 then
+            table.insert(lines, table.concat(meta, " | "))
+        end
+
+        if list.localListId and tostring(list.localListId) ~= "" then
+            table.insert(lines, "Builder ID: " .. tostring(list.localListId))
+        end
+        if list.bcpListId and tostring(list.bcpListId) ~= "" then
+            table.insert(lines, "BCP: https://www.bestcoastpairings.com/list/" .. tostring(list.bcpListId))
+        end
+
+        local mappedModels = list.mappedModels or {}
+        if mappedModels and #mappedModels > 0 then
+            local modelNames = {}
+            for _, model in ipairs(mappedModels) do
+                table.insert(modelNames, safeValue(model.name, "Unknown model"))
+            end
+            table.insert(lines, "Mapped models: " .. table.concat(modelNames, ", "))
+        end
+
+        local formattedArmyList = normalizeArmyListText(list.armyList)
+        if formattedArmyList ~= "" then
+            table.insert(lines, "")
+            table.insert(lines, formattedArmyList)
+        end
+    end
+
+    return table.concat(lines, "\n")
+end
+
+local function fetchArmyListsForBoard(boardColor)
+    local steamId = getArmyListsSteamId(boardColor)
+    armyListsPopupVisible = true
+    armyListsPopupTitle = getArmyListsPlayerName(boardColor) .. " Army Lists"
+
+    if steamId == "" then
+        armyListsPopupStatus = "No Steam ID is recorded for this seat yet."
+        armyListsPopupBody = "Seat both players and start the game once so the board can resolve each side's Steam ID."
+        updateArmyListsPopupUI()
+        return
+    end
+
+    armyListsPopupStatus = "Loading army lists..."
+    armyListsPopupBody = "Fetching data for Steam ID " .. steamId .. "..."
+    updateArmyListsPopupUI()
+
+    armyListsRequestNonce = armyListsRequestNonce + 1
+    local requestNonce = armyListsRequestNonce
+    local url = getArmyListsApiUrl() .. "?steam_id=" .. steamId
+
+    WebRequest.get(url, function(response)
+        if requestNonce ~= armyListsRequestNonce then
+            return
+        end
+
+        if response.is_error then
+            armyListsPopupStatus = "Request failed."
+            armyListsPopupBody = "Error: " .. safeValue(response.error, "Unknown request error")
+            updateArmyListsPopupUI()
+            return
+        end
+
+        local ok, payload = pcall(JSON.decode, response.text)
+        if not ok or type(payload) ~= "table" then
+            if looksLikeHtmlResponse(response.text) then
+                armyListsPopupStatus = "Endpoint returned HTML."
+                armyListsPopupBody = "HTTP "
+                    .. getWebResponseCode(response)
+                    .. ". The configured army-lists URL is not serving JSON.\n"
+                    .. "URL: " .. url
+            else
+                armyListsPopupStatus = "Invalid response."
+                armyListsPopupBody = string.sub(safeValue(response.text, "No response body"), 1, 600)
+            end
+            updateArmyListsPopupUI()
+            return
+        end
+
+        if payload.error then
+            armyListsPopupStatus = "Could not load army lists."
+            armyListsPopupBody = tostring(payload.error)
+            updateArmyListsPopupUI()
+            return
+        end
+
+        local totalLists = payload.armyLists and #payload.armyLists or 0
+        local totalPlayers = payload.linkedPlayers and #payload.linkedPlayers or 0
+        armyListsPopupStatus = string.format(
+            "Loaded %d list%s across %d linked player%s.",
+            totalLists,
+            totalLists == 1 and "" or "s",
+            totalPlayers,
+            totalPlayers == 1 and "" or "s"
+        )
+        armyListsPopupBody = formatArmyListsPopupBody(payload)
+        updateArmyListsPopupUI()
+    end)
+end
+
+function openArmyListsPopup(player, value, id)
+    if not canUseBoard(player, value) then
+        print("Access denied: only the matching seat can open this army-lists popup.")
+        return
+    end
+    fetchArmyListsForBoard(getBoardColor())
+end
+
+function refreshArmyListsPopup(player, value, id)
+    if not canUseBoard(player, value) then
+        print("Access denied: only the matching seat can refresh this army-lists popup.")
+        return
+    end
+    fetchArmyListsForBoard(getBoardColor())
+end
+
+function closeArmyListsPopup(player, value, id)
+    armyListsPopupVisible = false
+    updateArmyListsPopupUI()
+end
 
 local function resolveDiceMatGUID(color, board)
     local candidates = {}
@@ -303,6 +721,127 @@ function buildControlPanel(color)
             },
         })
     end
+
+    table.insert(panel.children[2].children, {
+        tag = "Button",
+        attributes = {
+            text = "Army Lists",
+            toolTip = "Fetch all army lists for the player seated on this side.",
+            onClick = "openArmyListsPopup",
+            fontSize = "24",
+            height = "60",
+            width = "396",
+            colors = "#8FCBFF|#7BBFFF|#63B1FF|#8FCBFF",
+        },
+    })
+
+    table.insert(panel.children, {
+        tag = "Panel",
+        attributes = {
+            id = color .. "_armyListsPopup",
+            active = "false",
+            width = "1180",
+            height = "980",
+            position = "0 0 -3",
+            rectAlignment = "MiddleCenter",
+            color = "#101010EE",
+            outline = "#D9D9D9",
+            outlineSize = "4",
+            padding = "20",
+        },
+        children = {
+            {
+                tag = "VerticalLayout",
+                attributes = {
+                    width = "1140",
+                    height = "940",
+                    spacing = "12",
+                    childForceExpandHeight = "false",
+                    childForceExpandWidth = "true",
+                },
+                children = {
+                    {
+                        tag = "Text",
+                        attributes = {
+                            id = color .. "_armyListsTitle",
+                            text = color .. " Army Lists",
+                            fontSize = "34",
+                            color = "White",
+                            fontStyle = "Bold",
+                            alignment = "MiddleCenter",
+                            height = "48",
+                        },
+                    },
+                    {
+                        tag = "Text",
+                        attributes = {
+                            id = color .. "_armyListsStatus",
+                            text = "Select refresh to load army lists.",
+                            fontSize = "20",
+                            color = "#D0D0D0",
+                            alignment = "MiddleLeft",
+                            height = "34",
+                        },
+                    },
+                    {
+                        tag = "HorizontalLayout",
+                        attributes = {
+                            spacing = "12",
+                            childForceExpandHeight = "false",
+                            childForceExpandWidth = "false",
+                        },
+                        children = {
+                            {
+                                tag = "Button",
+                                attributes = {
+                                    text = "Refresh",
+                                    onClick = "refreshArmyListsPopup",
+                                    width = "220",
+                                    height = "56",
+                                    fontSize = "24",
+                                },
+                            },
+                            {
+                                tag = "Button",
+                                attributes = {
+                                    text = "Close",
+                                    onClick = "closeArmyListsPopup",
+                                    width = "220",
+                                    height = "56",
+                                    fontSize = "24",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        tag = "VerticalScrollView",
+                        attributes = {
+                            width = "1100",
+                            height = "780",
+                            color = "#00000055",
+                            verticalScrollbarVisibility = "AutoHideAndExpandViewport",
+                        },
+                        children = {
+                            {
+                                tag = "Text",
+                                attributes = {
+                                    id = color .. "_armyListsBody",
+                                    text = "No army lists loaded.",
+                                    fontSize = "20",
+                                    color = "White",
+                                    alignment = "UpperLeft",
+                                    resizeTextForBestFit = "false",
+                                    horizontalOverflow = "Wrap",
+                                    verticalOverflow = "Overflow",
+                                    width = "1060",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    })
 
     local boardObjectGUID = (color == "Red") and "32ed4c" or "83ab2a"
     local boardObject = getObjectFromGUID(boardObjectGUID)

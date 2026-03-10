@@ -1,4 +1,4 @@
--- FTC-GUID: 17ca2b,927ca1
+-- FTC-GUID: 17ca2b,927ca1,17ca2e
 --Based off: https://steamcommunity.com/sharedfiles/filedetails/?id=726800282
 --Link for this mod: https://steamcommunity.com/sharedfiles/filedetails/?id=959360907
 lastRolls={}
@@ -263,9 +263,32 @@ orderedOnNextRoll = false
 groupSizeOnNextRoll = 1
 
 objectToPlaceDiceOnGUID = thisBoxIsBlue and Global.getVar("blueCustomDiceMat_GUID") or Global.getVar("redCustomDiceMat_GUID")
+if self.getGUID() == "17ca2e" then
+    -- Portrait red custom roller should output onto the portrait red custom mat.
+    objectToPlaceDiceOnGUID = "d4e8a2"
+end
 objectToPlaceDiceOn = getObjectFromGUID(objectToPlaceDiceOnGUID)
 if objectToPlaceDiceOn == nil then
     objectToPlaceDiceOn = self
+end
+
+local function resolveObjectToPlaceDiceOn()
+    local guid = objectToPlaceDiceOnGUID
+    if self.getGUID() == "17ca2e" then
+        guid = "d4e8a2"
+    end
+
+    local target = getObjectFromGUID(guid)
+    if target == nil then
+        local fallbackGuid = thisBoxIsBlue and Global.getVar("blueCustomDiceMat_GUID") or Global.getVar("redCustomDiceMat_GUID")
+        target = getObjectFromGUID(fallbackGuid)
+    end
+    if target == nil then
+        target = self
+    end
+
+    objectToPlaceDiceOn = target
+    return target
 end
 
 function clearDataForGC(data)
@@ -398,9 +421,10 @@ function takeDiceOut(tab)
 	local groupSize = groupSizeOnNextRoll
 	groupSizeOnNextRoll = 1
 
-	local objs = self.getObjects()
-	local position = objectToPlaceDiceOn.getPosition()
-	rotation = objectToPlaceDiceOn.getRotation()
+    local objs = self.getObjects()
+    local targetSurface = resolveObjectToPlaceDiceOn()
+    local position = targetSurface.getPosition()
+    rotation = targetSurface.getRotation()
 	local displayInRows = true
 	if data.Rows == 'no' then displayInRows = false end
 	if ordered then displayInRows = false end
@@ -470,8 +494,12 @@ function takeDiceOut(tab)
 
 	printresultsTable()
     Wait.time(function()
-        -- "objectToPlaceDiceOn" is your dice-mat object
-        objectToPlaceDiceOn.call("storeCurrentDiceAsPreviousRoll")
+        local targetForStore = resolveObjectToPlaceDiceOn()
+        if targetForStore ~= nil then
+            pcall(function()
+                targetForStore.call("storeCurrentDiceAsPreviousRoll")
+            end)
+        end
     end, 1)
 end
 
@@ -629,10 +657,11 @@ function printResults(n)
 
     -- Determine if the dice roller is red or blue based on GUID
     local redDiceRollerGUID = "17ca2b"
+    local redDiceRollerPortraitGUID = "17ca2e"
     local blueDiceRollerGUID = "927ca1"
     local diceColor = {1, 1, 1}  -- Default to white
 
-    if self.getGUID() == redDiceRollerGUID then
+    if self.getGUID() == redDiceRollerGUID or self.getGUID() == redDiceRollerPortraitGUID then
         diceColor = {0.91, 0.29, 0.23} -- Red color for red dice roller
     elseif self.getGUID() == blueDiceRollerGUID then
         diceColor = {0.2, 0.62, 0.91}   -- Blue color for blue dice roller
@@ -728,6 +757,10 @@ end
 
 function setValueCallback(obj, tab)
     function insidef()
+        if obj == nil or tab == nil or tab[1] == nil then
+            return 1
+        end
+
         local data = JSON.decode(self.getDescription())
 
         obj.setValue(tab[1])
@@ -739,7 +772,22 @@ function setValueCallback(obj, tab)
         end
 
         local rotValues = obj.getRotationValues()
-	    obj.setRotation(rotValues[tab[1]].rotation + Vector(0, 180.0 + objectToPlaceDiceOn.getRotation()[2], 0))
+        if rotValues == nil or rotValues[tab[1]] == nil then
+            return 1
+        end
+
+        local targetSurface = resolveObjectToPlaceDiceOn()
+        local targetYaw = 0
+        if targetSurface ~= nil then
+            local ok, surfaceRot = pcall(function()
+                return targetSurface.getRotation()
+            end)
+            if ok and surfaceRot ~= nil then
+                targetYaw = surfaceRot[2] or 0
+            end
+        end
+
+	    obj.setRotation(rotValues[tab[1]].rotation + Vector(0, 180.0 + targetYaw, 0))
 
         return 1
     end
