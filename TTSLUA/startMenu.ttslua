@@ -32,6 +32,7 @@ function onLoad(saved_data)
     -- load from saved
     --getData()
     deploySelected = nil
+    deployMode = nil
     if saved_data ~= "" then
         local loaded_data = JSON.decode(saved_data)
         gameMode = loaded_data.svgameMode
@@ -42,11 +43,16 @@ function onLoad(saved_data)
         mapSizeSelected = loaded_data.svmapSizeSelected
         sizeConfirmed = loaded_data.svsizeConfirmed
         deploySelected = loaded_data.svdeploySelected
+        deployMode = loaded_data.svdeployMode
         packSelected = loaded_data.svPackSelected
     end
 
     if sizeConfirmed then
-        setDeployZonesForSize(true)
+        if isValidDeployMode(deployMode) then
+            setDeployZonesMode(deployMode, true)
+        else
+            setDeployZonesForSize(true)
+        end
         if not deploySelected or not DeployZonesData[deploySelected] then
             deploySelected = #DeployZonesData
         end
@@ -98,6 +104,7 @@ function onSave()
         svmapSizeSelected = mapSizeSelected,
         svsizeConfirmed = sizeConfirmed,
         svdeploySelected = deploySelected,
+        svdeployMode = deployMode,
         svPackSelected = packSelected,
     })
 
@@ -964,6 +971,10 @@ DeployZonesDefault = {
 
 DeployZonesData = DeployZonesDefault
 deployMode = "strikeForce"
+
+function isValidDeployMode(mode)
+    return mode == "colosseum" or mode == "combatPatrol" or mode == "incursion" or mode == "strikeForce"
+end
 
 function setDeployZonesForSize(preserveSelected)
     -- Use Strike Force data if we have an invalid mapSizeSelected
