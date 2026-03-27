@@ -113,14 +113,15 @@ end
 
 function makeAnnouncement()
     local features={
-    "1.6.19: BUbble: New Custom Buddle size button",
-    "1.6.19: Maps: Added alternative Hammer and Anvil objective markers",
-    "1.6.18: Maps: Updated maps 2 & 6 with small tweaks to ruins thanks @Engwar01",
-    "1.6.18: Rules: Updated rule PDFs to latest",
-    "1.6.18: Fix: Added clock back, cus why was it even gone like?",
-    "1.6.17: Fix: Fix GW Map 8. Updated GW Map selection images",
-    "1.6.16: Feat: Updated UKTC maps",
-    "1.6.16: I've completely got back into compeitive painting!",
+    "1.6.20: BUbble: New Custom Buddle size button",
+    "1.6.20: fix: save and load deployMode @gareth3001 thanks for the fix",
+    -- "1.6.19: Maps: Added alternative Hammer and Anvil objective markers",
+    -- "1.6.18: Maps: Updated maps 2 & 6 with small tweaks to ruins thanks @Engwar01",
+    -- "1.6.18: Rules: Updated rule PDFs to latest",
+    -- "1.6.18: Fix: Added clock back, cus why was it even gone like?",
+    -- "1.6.17: Fix: Fix GW Map 8. Updated GW Map selection images",
+    -- "1.6.16: Feat: Updated UKTC maps",
+    -- "1.6.16: I've completely got back into compeitive painting!",
     -- "1.6.15: Fix: Updated UKTC map 4 to correct map",
     -- "1.6.14: Feat: Marcus Miniatures Maps updated after £4000 payment finally completed",
     -- "1.6.13: Feat: Lethal and sustained hits completely reworked, now you can click multiple times to add more hits and right/left click to add 5/6 hits",
