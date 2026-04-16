@@ -53,13 +53,14 @@ function onLoad(saved_data)
         ensureTrackedConsentStateTable()
         for _, side in ipairs({"Red", "Blue"}) do
             local entry = trackedConsentStateBySide[side]
-            if entry and entry.status ~= "accepted" then
+            if entry and entry.status ~= "accepted" and entry.status ~= "declined" then
                 entry.status = "unknown"
                 entry.updatedAt = nil
             end
         end
     end
     refreshTrackedConsentStatuses()
+    pingAnonymousMapEntry()
 
     if sizeConfirmed then
         if isValidDeployMode(deployMode) then
@@ -119,9 +120,9 @@ function onSave()
     }
     for _, side in ipairs({"Red", "Blue"}) do
         local entry = trackedConsentStateBySide and trackedConsentStateBySide[side] or nil
-        if entry and entry.status == "accepted" then
+        if entry and (entry.status == "accepted" or entry.status == "declined") then
             persistedTrackedConsentStateBySide[side] = {
-                status = "accepted",
+                status = entry.status,
                 steamId = entry.steamId,
                 displayName = entry.displayName,
                 updatedAt = entry.updatedAt
@@ -159,6 +160,9 @@ end
 
 function makeAnnouncement()
     local features={
+    "1.7.6: Stats: Display your private TTS profile page URL to each user privately ",
+    "1.7.5: Feat: Allow players to view their dice rolls after game when signing up to https://stats.hutber.com",
+    "1.7.3: Feat: Added Profile Logging controls, in-map consent popup, and stats.hutber.com game/profile links",
     "1.7.2: fix: save and load deployMode @gareth3001 thanks for the fix",
     "1.7.1: Feat: Added 'End Game' button that displays stats and who should have won based on dice rolls",
     --"1.7.1: Fix: Made tokens draggable by default",

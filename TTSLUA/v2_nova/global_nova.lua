@@ -478,6 +478,10 @@ local function requestTracking(path, params, onSuccess)
   end)
 end
 
+local function pingAnonymousMapEntry()
+  requestTracking("mapEntry", {}, nil)
+end
+
 local function trackingContext()
   return {
     round = STATE.battleRound,
@@ -713,6 +717,7 @@ function onLoad(saved)
     announce("Default gaming board spawned.")
   end
 
+  pingAnonymousMapEntry()
   renderUi()
 end
 

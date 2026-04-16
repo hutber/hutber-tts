@@ -19,6 +19,10 @@ trackedConsentStateBySide = {
     Red = { status = "unknown", steamId = nil, displayName = nil, updatedAt = nil },
     Blue = { status = "unknown", steamId = nil, displayName = nil, updatedAt = nil }
 }
+trackedConsentUrlNotifiedBySide = {
+    Red = false,
+    Blue = false
+}
 trackedConsentPolicyVersion = "2026-04-04"
 
 trackedActionStartPosRed = {-34, 5, -8.2}

@@ -472,6 +472,11 @@ function onPlayerChangeColor(player_color)
     promotePlayers()
     --demotePlayers()  -- RIC
     showHideRedBlueBtn()
+    if player_color == "Red" or player_color == "Blue" then
+        Wait.time(function()
+            showTrackedPublicProfileUrlForSeat(player_color)
+        end, 0.35)
+    end
 end
 
 function onPlayerConnect(player_id)
@@ -621,6 +626,44 @@ function getTrackingConsentPopupState(side)
         return nil
     end
     return data
+end
+
+function getTrackedPublicProfileUrlForSeat(side)
+    if side ~= "Red" and side ~= "Blue" then
+        return nil
+    end
+
+    local state = getTrackingConsentPopupState(side)
+    if type(state) ~= "table" or state.status ~= "accepted" then
+        return nil
+    end
+
+    local steamId = state.steamId and tostring(state.steamId) or nil
+    if steamId == nil or steamId == "" then
+        return nil
+    end
+
+    local startMenu = getStartMenuObject()
+    if not startMenu then
+        return nil
+    end
+
+    local ok, profileUrl = pcall(function()
+        return startMenu.call("getTrackedProfileViewerUrlForSteamId", { steamId = steamId })
+    end)
+    if not ok or type(profileUrl) ~= "string" or profileUrl == "" then
+        return nil
+    end
+
+    return profileUrl
+end
+
+function showTrackedPublicProfileUrlForSeat(side)
+    local profileUrl = getTrackedPublicProfileUrlForSeat(side)
+    if not profileUrl then
+        return
+    end
+    printToColor("Your public stats URL: " .. tostring(profileUrl), side, "Green")
 end
 
 function getTrackingConsentSeatForPlayer(player, preferredSeat)

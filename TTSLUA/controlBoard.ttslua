@@ -580,13 +580,6 @@ function chooseTrackingConsent(player, decision, color)
         return
     end
 
-    print(
-        "[profileLogging] control board click decision=" ..
-        tostring(chosenDecision) ..
-        " expectedColor=" .. tostring(expectedColor) ..
-        " playerColor=" .. tostring(playerColor)
-    )
-
     local startMenu = getStartMenuObject()
     if not startMenu then
         print("Start menu not found")
@@ -604,12 +597,10 @@ function chooseTrackingConsent(player, decision, color)
         })
     end)
     if not ok then
-        print("[profileLogging] Failed to save consent: " .. tostring(result))
+        print("Failed to save consent: " .. tostring(result))
         setTrackingConsentStatusUi(expectedColor, "error", "Save failed")
         return
     end
-
-    print("[profileLogging] recordTrackedConsentChoice returned: " .. tostring(result))
 
     if result == false then
         buildControlPanel(expectedColor)

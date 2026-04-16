@@ -40,6 +40,19 @@ function makeTtsGameUrl(path, params)
     return ttsGameApiBaseUrl .. path .. "?" .. table.concat(parts, "&")
 end
 
+function pingAnonymousMapEntry()
+    if not WebRequest then
+        return
+    end
+
+    local url = makeTtsGameUrl("/mapEntry", {})
+    WebRequest.get(url, function(response)
+        if response.is_error then
+            ttsDebugLog("[ttsMapEntry] ping failed: " .. tostring(response.error))
+        end
+    end)
+end
+
 function getZoneCardNameByGuidVar(guidVarName)
     local zoneGuid = Global.getVar(guidVarName)
     if not zoneGuid then
@@ -267,6 +280,21 @@ function getTrackedPlayerDisplayName(playerColor)
     return nil
 end
 
+function notifyTrackedSide(message, playerColor, tint)
+    local playerRef = Player[playerColor]
+    local hasSeatedPlayer = playerRef and (
+        (playerRef.steam_id and tostring(playerRef.steam_id) ~= "") or
+        (playerRef.steam_name and playerRef.steam_name ~= "")
+    )
+
+    if hasSeatedPlayer then
+        broadcastToColor(message, playerColor, tint)
+        return
+    end
+
+    printToAll(message, tint)
+end
+
 function getTrackedGameType()
     if singlesMode and singlesMode ~= "" then
         return singlesMode
@@ -301,7 +329,92 @@ function syncTrackedSessionTable()
     end
     session.isGameActive = inGame == true and trackedGameId ~= nil
     session.apiBaseUrl = ttsGameApiBaseUrl
+    session.gameUrl = getTrackedGameViewerUrl()
     Global.setTable("ttsTrackedSession", session)
+end
+
+function getTrackedStatsSiteBaseUrl()
+    if type(ttsGameApiBaseUrl) ~= "string" or ttsGameApiBaseUrl == "" then
+        return "https://stats.hutber.com"
+    end
+    return tostring(ttsGameApiBaseUrl):gsub("/api/ttsGame/?$", "")
+end
+
+function getTrackedDirectUrl(source, keys)
+    if type(source) ~= "table" then
+        return nil
+    end
+
+    for _, key in ipairs(keys) do
+        local value = source[key]
+        if type(value) == "string" and value ~= "" then
+            return value
+        end
+    end
+
+    return nil
+end
+
+function getTrackedGameViewerUrl(game)
+    local source = game
+    if type(source) ~= "table" then
+        source = { gameId = trackedGameId }
+    end
+
+    local directUrl = getTrackedDirectUrl(source, {"publicUrl", "gameUrl", "url", "href"})
+    if directUrl then
+        return directUrl
+    end
+
+    local gameId = source.gameId or source.game_id or trackedGameId
+    if gameId == nil or tostring(gameId) == "" then
+        return nil
+    end
+
+    return getTrackedStatsSiteBaseUrl() .. "/tts/game?game_id=" .. tostring(gameId)
+end
+
+function getTrackedProfileViewerUrl(source, steamId)
+    local directUrl = getTrackedDirectUrl(source, {"publicUrl", "profileUrl", "userProfileUrl", "url", "href"})
+    if directUrl then
+        return directUrl
+    end
+
+    if steamId and tostring(steamId) ~= "" then
+        return getTrackedStatsSiteBaseUrl() .. "/tts/s/" .. tostring(steamId)
+    end
+
+    return getTrackedStatsSiteBaseUrl() .. "/tts/userprofile"
+end
+
+function getTrackedProfileViewerUrlForSteamId(params)
+    local steamId = nil
+    if type(params) == "table" then
+        steamId = params.steamId or params.steam_id
+    else
+        steamId = params
+    end
+    return getTrackedProfileViewerUrl(nil, steamId)
+end
+
+function markTrackedConsentUrlNotification(side, wasNotified)
+    if type(trackedConsentUrlNotifiedBySide) ~= "table" then
+        trackedConsentUrlNotifiedBySide = { Red = false, Blue = false }
+    end
+    trackedConsentUrlNotifiedBySide[side] = wasNotified == true
+end
+
+function hasTrackedConsentUrlNotification(side)
+    if type(trackedConsentUrlNotifiedBySide) ~= "table" then
+        trackedConsentUrlNotifiedBySide = { Red = false, Blue = false }
+    end
+    return trackedConsentUrlNotifiedBySide[side] == true
+end
+
+function notifyTrackedProfileUrl(side, entry, source)
+    local profileUrl = getTrackedProfileViewerUrl(source, entry and entry.steamId or nil)
+    notifyTrackedSide("Your public stats URL: " .. tostring(profileUrl), side, "Green")
+    markTrackedConsentUrlNotification(side, true)
 end
 
 function ensureTrackedConsentStateTable()
@@ -338,6 +451,7 @@ function getTrackedConsentEntry(side)
         entry.steamId = steamId
         entry.displayName = displayName
         entry.updatedAt = nil
+        markTrackedConsentUrlNotification(side, false)
         if steamId == nil or steamId == "" then
             entry.status = "unavailable"
         else
@@ -417,8 +531,21 @@ function buildTrackedConsentUrl(params)
     return makeTtsGameUrl("/consent", params)
 end
 
-function debugTrackedUrl(label, url)
-    print("[ttsTracking] " .. tostring(label) .. ": " .. tostring(url))
+function buildTrackedConsentRequestParams(side, entry, decision)
+    local params = {
+        {"steam_id", entry.steamId},
+        {"display_name", entry.displayName or getTrackedPlayerIdentifier(side)},
+        {"decision", decision},
+        {"source", "tts_control_board"},
+        {"policy_version", trackedConsentPolicyVersion}
+    }
+
+    if trackedGameId ~= nil then
+        table.insert(params, {"game_id", trackedGameId})
+        table.insert(params, {"player_side", string.lower(side)})
+    end
+
+    return params
 end
 
 function refreshTrackedConsentStatusForSide(side, callback)
@@ -447,7 +574,6 @@ function refreshTrackedConsentStatusForSide(side, callback)
     local url = buildTrackedConsentUrl({
         {"steam_id", entry.steamId}
     })
-    debugTrackedUrl("consent status " .. side, url)
 
     WebRequest.get(url, function(response)
         if response.is_error then
@@ -482,6 +608,11 @@ function refreshTrackedConsentStatusForSide(side, callback)
         end
         entry.updatedAt = os.time()
         notifyTrackedConsentBoards()
+        if entry.status == "accepted" and not hasTrackedConsentUrlNotification(side) then
+            notifyTrackedProfileUrl(side, entry, item)
+        elseif entry.status ~= "accepted" then
+            markTrackedConsentUrlNotification(side, false)
+        end
         if callback then
             callback(side, entry.status)
         end
@@ -527,35 +658,22 @@ end
 function recordTrackedConsentChoice(params)
     local side = normalizeTrackedUiString(params and params.side or nil)
     local decision = normalizeTrackedUiString(params and params.decision or nil)
-    print("[profileLogging] recordTrackedConsentChoice side=" .. tostring(side) .. " decision=" .. tostring(decision))
     if side ~= "Red" and side ~= "Blue" then
-        print("[profileLogging] invalid side for consent choice")
         return false
     end
     if decision ~= "accepted" and decision ~= "declined" then
-        print("[profileLogging] invalid decision for consent choice")
         return false
     end
 
     local entry = getTrackedConsentEntry(side)
-    print("[profileLogging] consent entry steamId=" .. tostring(entry.steamId) .. " status=" .. tostring(entry.status))
     if entry.steamId == nil or entry.steamId == "" then
-        print("[profileLogging] no steam id seated on " .. tostring(side))
-        broadcastToColor("No Steam player is seated on " .. side .. ".", side, "Yellow")
+        notifyTrackedSide("No Steam player is seated on " .. side .. ".", side, "Yellow")
         notifyTrackedConsentBoards()
         return false
     end
-    if decision == "declined" then
-        print("[profileLogging] decline selected; storing private session state locally")
-        entry.status = "declined"
-        entry.updatedAt = os.time()
-        notifyTrackedConsentBoards()
-        broadcastToColor("You will stay private for this session. Profile logging can still be enabled later.", side, "Yellow")
-        return true
-    end
 
     if not WebRequest then
-        broadcastToColor("Profile logging preference could not be saved right now.", side, "Yellow")
+        notifyTrackedSide("Profile logging preference could not be saved right now.", side, "Yellow")
         entry.status = "error"
         notifyTrackedConsentBoards()
         return false
@@ -564,15 +682,7 @@ function recordTrackedConsentChoice(params)
     entry.status = "loading"
     notifyTrackedConsentBoards()
 
-    local url = buildTrackedConsentUrl({
-        {"steam_id", entry.steamId},
-        {"display_name", entry.displayName or getTrackedPlayerIdentifier(side)},
-        {"decision", decision},
-        {"source", "tts_control_board"},
-        {"policy_version", trackedConsentPolicyVersion}
-    })
-    print("[profileLogging] accepted path will call consent url")
-    debugTrackedUrl("consent save " .. side, url)
+    local url = buildTrackedConsentUrl(buildTrackedConsentRequestParams(side, entry, decision))
 
     WebRequest.get(url, function(response)
         if response.is_error then
@@ -580,7 +690,7 @@ function recordTrackedConsentChoice(params)
             entry.status = "error"
             entry.updatedAt = os.time()
             notifyTrackedConsentBoards()
-            broadcastToColor("Could not save your profile logging preference. Try again.", side, "Yellow")
+            notifyTrackedSide("Could not save your profile logging preference. Try again.", side, "Yellow")
             return
         end
 
@@ -591,16 +701,25 @@ function recordTrackedConsentChoice(params)
         if ok and type(data) == "table" then
             if type(data.item) == "table" then
                 item = data.item
-            elseif data.trackingConsentStatus or data.status == "accepted" then
+            elseif data.trackingConsentStatus or data.status == "accepted" or data.status == "declined" then
                 item = data
             end
         end
+
+        if type(item) ~= "table" and decision == "declined" then
+            entry.status = "declined"
+            entry.updatedAt = os.time()
+            notifyTrackedConsentBoards()
+            notifyTrackedSide("Profile logging has been disabled for your Steam account on this map.", side, "Yellow")
+            return
+        end
+
         if type(item) ~= "table" then
             entry.status = "error"
             entry.updatedAt = os.time()
             notifyTrackedConsentBoards()
             ttsDebugLog("[ttsConsent] unexpected save response for " .. side .. ": " .. rawText)
-            broadcastToColor("Unexpected response while saving your profile logging preference.", side, "Yellow")
+            notifyTrackedSide("Unexpected response while saving your profile logging preference.", side, "Yellow")
             return
         end
 
@@ -609,7 +728,11 @@ function recordTrackedConsentChoice(params)
         notifyTrackedConsentBoards()
 
         if entry.status == "accepted" then
-            broadcastToColor("Profile logging enabled for your Steam account on this map.", side, "Green")
+            notifyTrackedSide("Profile logging enabled for your Steam account on this map.", side, "Green")
+            notifyTrackedProfileUrl(side, entry, item)
+        elseif entry.status == "declined" then
+            notifyTrackedSide("Profile logging has been disabled for your Steam account on this map.", side, "Yellow")
+            markTrackedConsentUrlNotification(side, false)
         end
     end)
 
@@ -650,7 +773,7 @@ function getTrackingContext()
     }, "|")
 
     return {
-        missionType = missionPackName,
+        missionType = primaryMissionCard,
         missionPack = missionPackName,
         gameType = getTrackedGameType(),
         mapSize = getTrackedMapSize(),
@@ -669,10 +792,8 @@ function getTrackingContext()
         blueTotal = getCounterValueByGuidVar("blueVPCounter_GUID"),
         redPrimary = scoreSummary and scoreSummary.red and scoreSummary.red.primary or nil,
         redSecondary = scoreSummary and scoreSummary.red and scoreSummary.red.secondary or nil,
-        redChallenger = scoreSummary and scoreSummary.red and scoreSummary.red.challenger or nil,
         bluePrimary = scoreSummary and scoreSummary.blue and scoreSummary.blue.primary or nil,
-        blueSecondary = scoreSummary and scoreSummary.blue and scoreSummary.blue.secondary or nil,
-        blueChallenger = scoreSummary and scoreSummary.blue and scoreSummary.blue.challenger or nil
+        blueSecondary = scoreSummary and scoreSummary.blue and scoreSummary.blue.secondary or nil
     }
 end
 
@@ -687,11 +808,9 @@ function buildTrackedSnapshotUrl(gameId, captureSource, context, roundValue)
         {"round", roundValue},
         {"red_primary", context.redPrimary},
         {"red_secondary", context.redSecondary},
-        {"red_challenger", context.redChallenger},
         {"red_total", context.redTotal},
         {"blue_primary", context.bluePrimary},
         {"blue_secondary", context.blueSecondary},
-        {"blue_challenger", context.blueChallenger},
         {"blue_total", context.blueTotal},
         {"mission_type", context.missionType},
         {"game_type", context.gameType},
@@ -721,10 +840,8 @@ function buildTrackedCumulativeRoundContext(baseContext, scoreSummary, roundNo)
 
     local redPrimary = 0
     local redSecondary = 0
-    local redChallenger = 0
     local bluePrimary = 0
     local blueSecondary = 0
-    local blueChallenger = 0
 
     for r = 1, roundNo do
         local rr = redRounds[r] or {}
@@ -732,23 +849,19 @@ function buildTrackedCumulativeRoundContext(baseContext, scoreSummary, roundNo)
 
         redPrimary = redPrimary + toTrackedNumber(rr.primary, 0)
         redSecondary = redSecondary + toTrackedNumber(rr.secondary, 0)
-        redChallenger = redChallenger + toTrackedNumber(rr.challenger, 0)
 
         bluePrimary = bluePrimary + toTrackedNumber(br.primary, 0)
         blueSecondary = blueSecondary + toTrackedNumber(br.secondary, 0)
-        blueChallenger = blueChallenger + toTrackedNumber(br.challenger, 0)
     end
 
     if redPrimary > 50 then redPrimary = 50 end
     if redSecondary > 40 then redSecondary = 40 end
-    if redChallenger > 12 then redChallenger = 12 end
 
     if bluePrimary > 50 then bluePrimary = 50 end
     if blueSecondary > 40 then blueSecondary = 40 end
-    if blueChallenger > 12 then blueChallenger = 12 end
 
-    local redTotal = redPrimary + redSecondary + redChallenger + 10
-    local blueTotal = bluePrimary + blueSecondary + blueChallenger + 10
+    local redTotal = redPrimary + redSecondary + 10
+    local blueTotal = bluePrimary + blueSecondary + 10
     if redTotal > 100 then redTotal = 100 end
     if blueTotal > 100 then blueTotal = 100 end
 
@@ -772,10 +885,8 @@ function buildTrackedCumulativeRoundContext(baseContext, scoreSummary, roundNo)
         blueTotal = blueTotal,
         redPrimary = redPrimary,
         redSecondary = redSecondary,
-        redChallenger = redChallenger,
         bluePrimary = bluePrimary,
-        blueSecondary = blueSecondary,
-        blueChallenger = blueChallenger
+        blueSecondary = blueSecondary
     }
     return context
 end
@@ -784,11 +895,9 @@ function trackedRoundValidationSignature(context)
     return table.concat({
         tostring(context.redPrimary or ""),
         tostring(context.redSecondary or ""),
-        tostring(context.redChallenger or ""),
         tostring(context.redTotal or ""),
         tostring(context.bluePrimary or ""),
         tostring(context.blueSecondary or ""),
-        tostring(context.blueChallenger or ""),
         tostring(context.blueTotal or "")
     }, "|")
 end
@@ -1101,6 +1210,10 @@ function startTrackedGameSyncApproved()
         lastEndedTrackedGameId = nil
         syncTrackedSessionTable()
         ttsDebugLog("[ttsGame] start complete, game_id=" .. tostring(trackedGameId))
+        local gameUrl = getTrackedGameViewerUrl(game)
+        if gameUrl and gameUrl ~= "" then
+            print("[ttsGame] game url: " .. tostring(gameUrl))
+        end
         writeMenus()
         startTrackedSnapshotTimer()
         sendTrackedSnapshot("start")
@@ -1114,27 +1227,24 @@ function startTrackedGameSync()
         local redReady = redConsent.status == "accepted" or redConsent.status == "declined"
         local blueReady = blueConsent.status == "accepted" or blueConsent.status == "declined"
 
-        if redReady and blueReady then
-            startTrackedGameSyncApproved()
-            return
+        if not redReady or not blueReady then
+            local pendingSides = {}
+            if not redReady then
+                table.insert(pendingSides, "Red")
+            end
+            if not blueReady then
+                table.insert(pendingSides, "Blue")
+            end
+
+            ttsGameLog(
+                "Game tracking started. " ..
+                table.concat(pendingSides, " and ") ..
+                " can still choose Allow or Decline on the control board at any time.",
+                "Yellow"
+            )
         end
 
-        writeMenus()
-        syncTrackedSessionTable()
-
-        local missingSides = {}
-        if not redReady then
-            table.insert(missingSides, "Red")
-        end
-        if not blueReady then
-            table.insert(missingSides, "Blue")
-        end
-
-        ttsGameLog(
-            "Tracked stats need an explicit choice first. Use the control board on " ..
-            table.concat(missingSides, " and ") .. " to Allow or Decline tracking.",
-            "Yellow"
-        )
+        startTrackedGameSyncApproved()
     end)
 end
 
@@ -1296,18 +1406,15 @@ function printTrackedMatchSummary(context, scoreSummary)
 
     local redPrimary = toTrackedNumber(scoreSummary.red.primary)
     local redSecondary = toTrackedNumber(scoreSummary.red.secondary)
-    local redChallenger = toTrackedNumber(scoreSummary.red.challenger)
     local bluePrimary = toTrackedNumber(scoreSummary.blue.primary)
     local blueSecondary = toTrackedNumber(scoreSummary.blue.secondary)
-    local blueChallenger = toTrackedNumber(scoreSummary.blue.challenger)
 
-    ttsGameLog("Red P/S/C " .. redPrimary .. "/" .. redSecondary .. "/" .. redChallenger, "White")
-    ttsGameLog("Blue P/S/C " .. bluePrimary .. "/" .. blueSecondary .. "/" .. blueChallenger, "White")
+    ttsGameLog("Red P/S " .. redPrimary .. "/" .. redSecondary, "White")
+    ttsGameLog("Blue P/S " .. bluePrimary .. "/" .. blueSecondary, "White")
 
     local laneDiffs = {
         { label = "Primary", diff = redPrimary - bluePrimary },
         { label = "Secondary", diff = redSecondary - blueSecondary },
-        { label = "Challenger", diff = redChallenger - blueChallenger },
     }
     local decidingLane = laneDiffs[1]
     for i = 2, #laneDiffs do
@@ -1320,7 +1427,7 @@ function printTrackedMatchSummary(context, scoreSummary)
         local sideColor = decidingLane.diff > 0 and redPlayer.seatColor or bluePlayer.seatColor
         ttsGameLog("Where it was won: " .. decidingLane.label .. " (" .. sideName .. " +" .. math.abs(decidingLane.diff) .. ")", sideColor)
     else
-        ttsGameLog("Where it was won: even split across primary/secondary/challenger")
+        ttsGameLog("Where it was won: even split across primary/secondary")
     end
 
     local redRounds = scoreSummary.red.rounds or {}
