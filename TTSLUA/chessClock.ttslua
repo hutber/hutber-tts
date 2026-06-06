@@ -21,6 +21,30 @@ pColors = {
 	pColor2 = "Red"
 }
 
+-- HUD overlay colours (hex rgba). Richer tones vs flat named colours.
+-- pColors above is kept for setColorTint() which only accepts TTS named colours.
+uiPanelColors = {
+	pColor1 = "#1A5FC8E6",  -- rich navy-blue, 90% opaque
+	pColor2 = "#B52020E6"   -- deep crimson,   90% opaque
+}
+
+-- Outline styles for active (running) vs passive (waiting) clock panels.
+UI_ACTIVE_OUTLINE       = "#FFFFFF"
+UI_ACTIVE_OUTLINE_SIZE  = "6"
+UI_P1_PASSIVE_OUTLINE   = "#5B8FDECC"
+UI_P2_PASSIVE_OUTLINE   = "#D46060CC"
+UI_PASSIVE_OUTLINE_SIZE = "2"
+
+-- Clock pill states: active (running) vs paused.
+CLOCK_PILL_ACTIVE_OUTLINE      = "#FFFFFF"
+CLOCK_PILL_ACTIVE_OUTLINE_SIZE = "4"
+CLOCK_PILL_ACTIVE_BG           = "rgba(0,0,0,0)"
+CLOCK_PILL_ACTIVE_TEXT         = "White"
+CLOCK_PILL_PASSIVE_OUTLINE     = "rgba(0,0,0,0)"
+CLOCK_PILL_PASSIVE_SIZE        = "0"
+CLOCK_PILL_PASSIVE_BG          = "#1A1A1ACC"
+CLOCK_PILL_PASSIVE_TEXT        = "#FFFFFF40"
+
 
 -- Original Vars
 
@@ -34,8 +58,8 @@ holdColor_1 ="" holdColor_2 ="" holdColor=""
 holdPlayer_1="" holdPlayer_2=""
 
 data = {
-	start_1  = 0      ,start_2     = 0,
-	seconds_1= 0      ,seconds_2   = 0,
+	start_1  = 5400   ,start_2     = 5400,
+	seconds_1= 5400   ,seconds_2   = 5400,
 	bonus_1  = 0      ,bonus_2     = 0,
 	delay_1  = 0      ,delay_2     = 0,
 	selDigit = 6      ,delayed     = 0,
@@ -140,37 +164,49 @@ end
 -- Gizmo's click functions
 	function Click_1(player, _, _)
 	    if hold_1Time<HOLD then
-	        if data.ended_2==true and data.seconds_2==0 then
-	            data.storedState=11 data.ended_2=false
-	            data.seconds_2 = data.start_2
+	        if data.ended_1==true and data.seconds_1==0 then
+	            data.storedState=11 data.ended_1=false
+	            data.seconds_1 = data.start_1
 	        end
 	        if player.color == "Grey" or (data.DoTurns == true and data.color_1 ~= player.color and data.color_2 ~= player.color and player.color ~= "Black") then
 				holding_1=true
 	            hold_1Time=0
 	            return
 	        end
-	        if data.state==11 or data.state==1 or data.state==3 or data.state==9 then
-				-- Start Liyarin's Color code
-					self.setColorTint(pColors.pColor2)
-					Global.UI.setAttribute("ChsStpPanel1", "scale", "0.9 0.9 0.9")
-					Global.UI.setAttribute("ChsStpPanel2", "scale", "1.1 1.1 1.1")
-				-- End Liyarin's Color code
-				Resume()
-	            if data.start_2==0 then
-	                data.seconds_2 = data.seconds_2-data.bonus_2
-	                if data.delay_2==0 then
-	                    data.state = 2
+	        -- Blue clock already running → pause and turn panel Beige
+	        if data.state==1 or data.state==3 or data.state==9 then
+	            Pause()
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "outline", value = CLOCK_PILL_PASSIVE_OUTLINE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "outlineSize", value = CLOCK_PILL_PASSIVE_SIZE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "color", value = CLOCK_PILL_PASSIVE_BG})
+	            Global.call("setHudAttribute", {id = "ChsStpWatch1", attr = "color", value = CLOCK_PILL_PASSIVE_TEXT})
+	        elseif data.state==11 or data.state==1 or data.state==3 or data.state==9 or data.state==2 or data.state==4 or data.state==10 then
+	            -- Start player 1 (Blue) clock
+	            self.setColorTint(pColors.pColor1)
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "outline", value = CLOCK_PILL_ACTIVE_OUTLINE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "outlineSize", value = CLOCK_PILL_ACTIVE_OUTLINE_SIZE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "color", value = CLOCK_PILL_ACTIVE_BG})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "outline", value = CLOCK_PILL_PASSIVE_OUTLINE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "outlineSize", value = CLOCK_PILL_PASSIVE_SIZE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "color", value = CLOCK_PILL_PASSIVE_BG})
+	            Global.call("setHudAttribute", {id = "ChsStpWatch1", attr = "color", value = CLOCK_PILL_ACTIVE_TEXT})
+	            Global.call("setHudAttribute", {id = "ChsStpWatch2", attr = "color", value = CLOCK_PILL_PASSIVE_TEXT})
+	            Resume()
+	            if data.start_1==0 then
+	                data.seconds_1 = data.seconds_1-data.bonus_1
+	                if data.delay_1==0 then
+	                    data.state = 1
 	                else
-	                    data.delayed = data.delay_2
-	                    data.state = 10
+	                    data.delayed = data.delay_1
+	                    data.state = 9
 	                end
 	            else
-	                data.seconds_2 = data.seconds_2+data.bonus_2
-	                if data.delay_2==0 then
-	                    data.state = 4
+	                data.seconds_1 = data.seconds_1+data.bonus_1
+	                if data.delay_1==0 then
+	                    data.state = 3
 	                else
-	                    data.delayed = data.delay_2
-	                    data.state = 10
+	                    data.delayed = data.delay_1
+	                    data.state = 9
 	                end
 	            end
 	            SetTurn()
@@ -207,37 +243,49 @@ end
 	end
 	function Click_2(player, _, _)
 	    if hold_2Time<HOLD then
-	        if data.ended_1==true and data.seconds_1==0 then
-	            data.storedState=11 data.ended_1=false
-	            data.seconds_1 = data.start_1
+	        if data.ended_2==true and data.seconds_2==0 then
+	            data.storedState=11 data.ended_2=false
+	            data.seconds_2 = data.start_2
 	        end
 	        if player.color == "Grey" or (data.DoTurns == true and data.color_1 ~= player.color and data.color_2 ~= player.color and player.color ~= "Black") then
 	            holding_2=true
 	            hold_2Time=0
 	            return
 	        end
-	        if data.state==11 or data.state==2 or data.state==4 or data.state==10 then
-				-- Start Liyarin's Color code
-					self.setColorTint(pColors.pColor1)
-					Global.UI.setAttribute("ChsStpPanel1", "scale", "1.1 1.1 1.1")
-					Global.UI.setAttribute("ChsStpPanel2", "scale", "0.9 0.9 0.9")
-				-- End Liyarin's Color code
+	        -- Red clock already running → pause and turn panel Beige
+	        if data.state==2 or data.state==4 or data.state==10 then
+	            Pause()
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "outline", value = CLOCK_PILL_PASSIVE_OUTLINE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "outlineSize", value = CLOCK_PILL_PASSIVE_SIZE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "color", value = CLOCK_PILL_PASSIVE_BG})
+	            Global.call("setHudAttribute", {id = "ChsStpWatch2", attr = "color", value = CLOCK_PILL_PASSIVE_TEXT})
+	        elseif data.state==11 or data.state==1 or data.state==3 or data.state==9 or data.state==2 or data.state==4 or data.state==10 then
+	            -- Start player 2 (Red) clock
+	            self.setColorTint(pColors.pColor2)
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "outline", value = CLOCK_PILL_ACTIVE_OUTLINE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "outlineSize", value = CLOCK_PILL_ACTIVE_OUTLINE_SIZE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel2", attr = "color", value = CLOCK_PILL_ACTIVE_BG})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "outline", value = CLOCK_PILL_PASSIVE_OUTLINE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "outlineSize", value = CLOCK_PILL_PASSIVE_SIZE})
+	            Global.call("setHudAttribute", {id = "ClockSubPanel1", attr = "color", value = CLOCK_PILL_PASSIVE_BG})
+	            Global.call("setHudAttribute", {id = "ChsStpWatch2", attr = "color", value = CLOCK_PILL_ACTIVE_TEXT})
+	            Global.call("setHudAttribute", {id = "ChsStpWatch1", attr = "color", value = CLOCK_PILL_PASSIVE_TEXT})
 	            Resume()
-	            if data.start_1==0 then
-	                data.seconds_1 = data.seconds_1-data.bonus_1
-	                if data.delay_1==0 then
-	                    data.state = 1
+	            if data.start_2==0 then
+	                data.seconds_2 = data.seconds_2-data.bonus_2
+	                if data.delay_2==0 then
+	                    data.state = 2
 	                else
-	                    data.delayed = data.delay_1
-	                    data.state = 9
+	                    data.delayed = data.delay_2
+	                    data.state = 10
 	                end
 	            else
-	                data.seconds_1 = data.seconds_1+data.bonus_1
-	                if data.delay_1==0 then
-	                    data.state = 3
+	                data.seconds_2 = data.seconds_2+data.bonus_2
+	                if data.delay_2==0 then
+	                    data.state = 4
 	                else
-	                    data.delayed = data.delay_1
-	                    data.state = 9
+	                    data.delayed = data.delay_2
+	                    data.state = 10
 	                end
 	            end
 	            SetTurn()
@@ -847,22 +895,13 @@ end
 -- Liyarin's color functions
 
 function ensureChessStopwatchUI()
-	-- The Chess Stopwatch panel is now defined in the base XML (hidden by default). We only need 
-	-- to activate it and wire up the dynamic attributes.
-	-- IMPORTANT: We never call Global.UI.setXml() at runtime because it rebuilds the entire Global
-	-- UI and causes host/guest desync over high-latency links.
-	local isActive = Global.UI.getAttribute("Chess Stopwatch", "active")
-	if isActive == "true" or isActive == "True" then
-		return false
-	end
-
 	local guid = self.getGUID()
-	Global.UI.setAttribute("ChsStpBtn1", "onClick", guid .. "/Click_1")
-	Global.UI.setAttribute("ChsStpBtn2", "onClick", guid .. "/Click_2")
-	Global.UI.setAttribute("ChsStpPanel1", "color", pColors.pColor1)
-	Global.UI.setAttribute("ChsStpPanel2", "color", pColors.pColor2)
-	Global.UI.setAttribute("Chess Stopwatch", "active", "true")
-	return true
+	Global.call("setHudAttribute", {id = "ChsStpBtn1", attr = "onClick", value = guid .. "/Click_1"})
+	Global.call("setHudAttribute", {id = "ChsStpBtn2", attr = "onClick", value = guid .. "/Click_2"})
+	Global.call("setHudAttribute", {id = "ChsStpMinus1", attr = "onClick", value = guid .. "/SubTime1"})
+	Global.call("setHudAttribute", {id = "ChsStpPlus1", attr = "onClick", value = guid .. "/AddTime1"})
+	Global.call("setHudAttribute", {id = "ChsStpMinus2", attr = "onClick", value = guid .. "/SubTime2"})
+	Global.call("setHudAttribute", {id = "ChsStpPlus2", attr = "onClick", value = guid .. "/AddTime2"})
 end
 
 -- Changes the color of the UI buttons based on the set colors
@@ -872,15 +911,7 @@ function changeButtonColors()
 	self.UI.setAttribute("pColor2", "color", pColors.pColor2)
 
 	--UI Buttons
-	local waitTime = 0
-	if ensureChessStopwatchUI() then
-		waitTime = 10
-	end
-
-	Wait.frames(function()
-		Global.UI.setAttribute("ChsStpPanel1", "color", pColors.pColor1)
-		Global.UI.setAttribute("ChsStpPanel2", "color", pColors.pColor2)
-	end, waitTime)
+	ensureChessStopwatchUI()
 end
 
 -- Changes the button of one side based on the player that clicked it
@@ -892,10 +923,16 @@ function changeColors(clickPlayer, clickBtn, buttonID)
 	end
 end
 
+-- +/- 5-minute adjustments from the HUD buttons
+function AddTime1() data.seconds_1 = data.seconds_1 + 300; DisplayClock(1, data.seconds_1) end
+function SubTime1() data.seconds_1 = math.max(0, data.seconds_1 - 300); DisplayClock(1, data.seconds_1) end
+function AddTime2() data.seconds_2 = data.seconds_2 + 300; DisplayClock(2, data.seconds_2) end
+function SubTime2() data.seconds_2 = math.max(0, data.seconds_2 - 300); DisplayClock(2, data.seconds_2) end
+
 -- Calculates numbers for UI clock
 function DisplayUIClock(which) -- which 1,2
 	ensureChessStopwatchUI()
-	local clockString = math.floor(hours%10) ..":".. math.floor(minutes/10) .. math.floor(minutes%10) ..":".. math.floor(secs/10) .. math.floor(secs%10)
+	local clockString = string.format("%02d:%02d:%02d", math.floor(hours), math.floor(minutes), math.floor(secs))
 
-	Global.UI.setAttribute("ChsStpWatch"..which, "text", clockString)
+	Global.call("setHudAttribute", {id = "ChsStpWatch"..which, attr = "text", value = clockString})
 end

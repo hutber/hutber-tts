@@ -30,6 +30,451 @@ blueControlBoard_GUID = "32ed4c"
 RedSelectionHighlighter = "27de4f"
 BlueSelectionHighlighter = "84c3a4"
 
+HUD_PANEL_PREFIXES = {"RedHud_", "BlueHud_", "GreyHud_"}
+
+function setHudAttribute(params)
+    if not params or not params.id or not params.attr then return end
+    for _, prefix in ipairs(HUD_PANEL_PREFIXES) do
+        pcall(function()
+            Global.UI.setAttribute(prefix .. params.id, params.attr, params.value)
+        end)
+    end
+end
+
+function setHudValue(params)
+    if not params or not params.id then return end
+    for _, prefix in ipairs(HUD_PANEL_PREFIXES) do
+        pcall(function()
+            local uiId = prefix .. params.id
+            Global.UI.setValue(uiId, params.value)
+            Global.UI.setAttribute(uiId, "text", params.value)
+        end)
+    end
+end
+
+playerHudSettings = {
+    Red = {settingsOpen = false, scoringOverlayOpen = false, clockHidden = false, hudVisible = true, scale = "Medium"},
+    Blue = {settingsOpen = false, scoringOverlayOpen = false, clockHidden = false, hudVisible = true, scale = "Medium"},
+    Grey = {settingsOpen = false, scoringOverlayOpen = false, clockHidden = false, hudVisible = true, scale = "Medium"},
+}
+
+function getDefaultHudSettings()
+    return {settingsOpen = false, scoringOverlayOpen = false, clockHidden = false, hudVisible = true, scale = "Medium"}
+end
+
+function ensureHudSettings(color)
+    if color ~= "Red" and color ~= "Blue" and color ~= "Grey" then
+        color = "Blue"
+    end
+    if not playerHudSettings then
+        playerHudSettings = {}
+    end
+    if not playerHudSettings[color] then
+        playerHudSettings[color] = getDefaultHudSettings()
+    end
+    local defaults = getDefaultHudSettings()
+    for key, value in pairs(defaults) do
+        if playerHudSettings[color][key] == nil then
+            playerHudSettings[color][key] = value
+        end
+    end
+    return playerHudSettings[color]
+end
+
+function getHudColorFromCallback(player, id)
+    if id then
+        local fromId = string.match(id, "^(Red)Hud_") or string.match(id, "^(Blue)Hud_") or string.match(id, "^(Grey)Hud_")
+        if fromId then
+            return fromId
+        end
+    end
+    if type(player) == "table" and player.color then
+        if player.color == "Red" or player.color == "Blue" or player.color == "Grey" then
+            return player.color
+        end
+    elseif player == "Red" or player == "Blue" or player == "Grey" then
+        return player
+    end
+    return "Blue"
+end
+
+function setHudAttributeForColor(color, params)
+    if not params or not params.id or not params.attr then return end
+    local prefix = color .. "Hud_"
+    pcall(function()
+        Global.UI.setAttribute(prefix .. params.id, params.attr, params.value)
+    end)
+end
+
+-- ===== HUD CP action row (PASS TURN / GAIN CP / USE CP) =====
+-- GAIN CP / USE CP mutate the player's own CP counter widget directly
+-- (e446f7 Red / deb9f2 Blue). The cpCounter poller then syncs the HUD CPWatch
+-- text and posts the same chat line as the overlay +/- buttons, so nothing else
+-- needs to be updated here. GAIN CP is capped at once per battle round per
+-- player; USE CP is unlimited. PASS TURN is wired straight to the mission
+-- manager's hudPassTurn (738804) in the XML, matching the ROUND badge.
+cpGainRoundUsed = cpGainRoundUsed or {}   -- player color -> battle round GAIN CP was last used
+
+function cpCounterForColor(color)
+    if color == "Red" then return getObjectFromGUID(redCPCounter_GUID) end
+    if color == "Blue" then return getObjectFromGUID(blueCPCounter_GUID) end
+    return nil
+end
+
+function currentBattleRound()
+    local roundObj = getObjectFromGUID(gameTurnCounter_GUID)
+    return (roundObj and roundObj.Counter.getValue()) or 0
+end
+
+function hudGainCP(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    if color ~= "Red" and color ~= "Blue" then return end
+    local counter = cpCounterForColor(color)
+    if not counter then return end
+    local round = currentBattleRound()
+    if cpGainRoundUsed[color] == round then
+        broadcastToColor("You can't gain more CP this round.", color, "Orange")
+        return
+    end
+    cpGainRoundUsed[color] = round
+    counter.Counter.increment()
+    setHudAttribute({id = (color == "Blue" and "CPWatch1" or "CPWatch2"), attr = "text", value = "CP: " .. counter.Counter.getValue()})
+end
+
+function hudUseCP(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    if color ~= "Red" and color ~= "Blue" then return end
+    local counter = cpCounterForColor(color)
+    if not counter then return end
+    counter.Counter.decrement()
+    setHudAttribute({id = (color == "Blue" and "CPWatch1" or "CPWatch2"), attr = "text", value = "CP: " .. counter.Counter.getValue()})
+end
+
+-- ===== Minimalist HUD (per player, toggled by the "-" control button) =====
+-- Minimalist mode hides the PASS/GAIN/USE CP action row (Row3) and both per-turn
+-- phase-icon strips, then resizes the panel + control column to fit. Red and Blue
+-- are independent (separate panels); Grey has no "-" button so it is never minimal.
+hudMinimalist = hudMinimalist or {}   -- player color -> bool
+
+-- Per-mode geometry. Minimalist drops the panel width by the phase-strip width and
+-- the height by the Row3 line, and shrinks the 4-button control column (and its
+-- font) so the glyphs still fit. width/height are visual estimates — tune in-game.
+local HUD_FULL = { width = "1160", height = "228", controlsH = "172", btnFont = "28", shown = "true"  }
+local HUD_MIN  = { width = "740",  height = "155", controlsH = "143", btnFont = "24", shown = "false" }
+
+-- The clock readout + its steppers (same id set the clock-hide toggle uses).
+local HUD_CLOCK_IDS = {"ClockSubPanel1", "ClockSubPanel2", "ChsStpPlus1", "ChsStpMinus1", "ChsStpPlus2", "ChsStpMinus2"}
+
+function applyMinimalistForColor(color)
+    if color ~= "Red" and color ~= "Blue" then return end
+    local minimal = hudMinimalist[color]
+    local d = minimal and HUD_MIN or HUD_FULL
+    local p = color .. "Hud_"
+    -- Minimalist always hides the clock; full mode hands it back to the player's
+    -- own clock toggle so we don't override a manually hidden clock.
+    local clockShown = (not minimal) and (not ensureHudSettings(color).clockHidden)
+    pcall(function()
+        Global.UI.setAttribute(p .. "Row3",      "active", d.shown)
+        Global.UI.setAttribute(p .. "PhaseRow1", "active", d.shown)
+        Global.UI.setAttribute(p .. "PhaseRow2", "active", d.shown)
+        for _, id in ipairs(HUD_CLOCK_IDS) do
+            Global.UI.setAttribute(p .. id, "active", clockShown and "true" or "false")
+        end
+        Global.UI.setAttribute(p .. "VPScores",  "width",  d.width)
+        Global.UI.setAttribute(p .. "VPScores",  "height", d.height)
+        Global.UI.setAttribute(color .. "HudControls", "preferredHeight", d.controlsH)
+        for _, b in ipairs({"SettingsBtn", "LockBtn", "ClockBtn", "MinusBtn"}) do
+            Global.UI.setAttribute(p .. b, "fontSize", d.btnFont)
+        end
+    end)
+end
+
+function hudToggleMinimalist(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    if color ~= "Red" and color ~= "Blue" then return end
+    hudMinimalist[color] = not hudMinimalist[color]
+    applyMinimalistForColor(color)
+end
+
+function applyHudPreferencesForColor(color)
+    local settings = ensureHudSettings(color)
+    local settingsActive = settings.settingsOpen and "true" or "false"
+    local overlayActive = settings.hudVisible and "true" or "false"
+    local scoringOverlayActive = settings.scoringOverlayOpen and "true" or "false"
+    local clockActive = not settings.clockHidden
+
+    setHudAttributeForColor(color, {id = "Settings", attr = "active", value = settingsActive})
+    setHudAttributeForColor(color, {id = "VPScores", attr = "active", value = overlayActive})
+    setHudAttributeForColor(color, {id = "ScoringOverlay", attr = "active", value = scoringOverlayActive})
+    setHudAttributeForColor(color, {id = "LockBtn", attr = "color", value = "#FFFFFF"})
+    setHudAttributeForColor(color, {id = "ClockBtn", attr = "color", value = "#FFFFFF"})
+
+    for _, id in ipairs({"ClockSubPanel1", "ClockSubPanel2", "ChsStpPlus1", "ChsStpMinus1", "ChsStpPlus2", "ChsStpMinus2"}) do
+        setHudAttributeForColor(color, {id = id, attr = "active", value = clockActive and "true" or "false"})
+    end
+end
+
+function applyHudPreferences()
+    applyHudPreferencesForColor("Red")
+    applyHudPreferencesForColor("Blue")
+    applyHudPreferencesForColor("Grey")
+end
+
+function hudToggleSettings(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    local settings = ensureHudSettings(color)
+    settings.settingsOpen = false
+    applyHudPreferencesForColor(color)
+    if type(player) == "table" and player.color then
+        printToColor("Settings Panel is coming soon :)", player.color, {1, 1, 1})
+    else
+        broadcastToAll("Settings Panel is coming soon :)", {1, 1, 1})
+    end
+end
+
+function hudCloseSettings(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    local settings = ensureHudSettings(color)
+    settings.settingsOpen = false
+    applyHudPreferencesForColor(color)
+end
+
+function hudToggleLock(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    local settings = ensureHudSettings(color)
+    settings.scoringOverlayOpen = not settings.scoringOverlayOpen
+    if settings.scoringOverlayOpen then
+        refreshScoringOverlay()
+        scheduleScoringOverlayRefreshLoop()
+    end
+    applyHudPreferencesForColor(color)
+end
+
+function hudCloseScoringOverlay(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    local settings = ensureHudSettings(color)
+    settings.scoringOverlayOpen = false
+    applyHudPreferencesForColor(color)
+end
+
+-- Reached via obj.call from the "Show Scoreboard" hotkey (registered in
+-- customDiceTable.ttslua). obj.call passes a single params table, so we wrap
+-- hudToggleLock which expects (player, value, id).
+function hotkeyToggleScoringOverlay(params)
+    hudToggleLock(params.playerColor, nil, nil)
+end
+
+function formatSecondaryListColumns(names, cap, numbered)
+    if not names or #names == 0 then return "—", "" end
+    local count = #names
+    if cap and count > cap then count = cap end
+    local splitAt = math.ceil(count / 2)
+    local left = {}
+    local right = {}
+    for i = 1, count do
+        local line
+        if numbered then
+            line = i .. ". " .. names[i]
+        else
+            line = "• " .. names[i]
+        end
+        if i <= splitAt then
+            left[#left + 1] = line
+        else
+            right[#right + 1] = line
+        end
+    end
+    return table.concat(left, "\n"), table.concat(right, "\n")
+end
+
+function setHudListColumns(id, names, cap, numbered)
+    local left, right = formatSecondaryListColumns(names, cap, numbered)
+    setHudValue({id = id .. "L", value = left})
+    setHudValue({id = id .. "R", value = right})
+end
+
+function isAnyScoringOverlayOpen()
+    for _, color in ipairs({"Red", "Blue", "Grey"}) do
+        local settings = ensureHudSettings(color)
+        if settings.scoringOverlayOpen then
+            return true
+        end
+    end
+    return false
+end
+
+function scheduleScoringOverlayRefreshLoop()
+    if scoringOverlayRefreshScheduled then
+        return
+    end
+    scoringOverlayRefreshScheduled = true
+    Wait.time(function()
+        scoringOverlayRefreshScheduled = false
+        if not isAnyScoringOverlayOpen() then
+            return
+        end
+        refreshScoringOverlay()
+        scheduleScoringOverlayRefreshLoop()
+    end, 2)
+end
+
+function getActiveSecondaryNames(color)
+    local zoneGuids = (color == "Red") and redSecondaryCardZone_GUIDs or blueSecondaryCardZone_GUIDs
+    local names = {}
+    for _, guid in ipairs(zoneGuids) do
+        local zone = getObjectFromGUID(guid)
+        local name = getSecondaryCardName(zone)
+        if name then
+            names[#names + 1] = name
+        end
+    end
+    return names
+end
+
+function getRemainingDeckSecondaryNames(color)
+    local deck = getSecondaryDeckByColor(color)
+    if not deck then return {} end
+    local names = {}
+    local contents = deck.getObjects()
+    if contents then
+        for _, descriptor in ipairs(contents) do
+            if descriptor.name and descriptor.name ~= "" then
+                names[#names + 1] = descriptor.name
+            end
+        end
+    end
+    table.sort(names)
+    return names
+end
+
+function getDiscardedSecondaryNames(color)
+    local pos = getSecondaryDiscardPosition(color)
+    if not pos then return {} end
+    local names = {}
+    for _, obj in ipairs(getAllObjects()) do
+        local tag = obj.tag
+        if tag == "Card" or tag == "Deck" then
+            local objPos = obj.getPosition()
+            if math.abs(objPos.x - pos.x) < 2.5 and math.abs(objPos.z - pos.z) < 2.5 then
+                if tag == "Card" then
+                    local n = obj.getName()
+                    if n and n ~= "" then
+                        names[#names + 1] = n
+                    end
+                else
+                    local contents = obj.getObjects()
+                    if contents then
+                        for _, descriptor in ipairs(contents) do
+                            if descriptor.name and descriptor.name ~= "" then
+                                names[#names + 1] = descriptor.name
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return names
+end
+
+function refreshScoringOverlay()
+    local sheet = getObjectFromGUID(scoresheet_GUID)
+    if not sheet then return end
+    local summary = sheet.call("getMatchSummary")
+    if not summary then return end
+
+    local roundCounter = getObjectFromGUID(gameTurnCounter_GUID)
+    local roundNum = (roundCounter and roundCounter.Counter and roundCounter.Counter.getValue()) or 0
+    setHudValue({id = "ScoringOverlay_Title", value = "⚔ Round " .. roundNum .. " ⚔"})
+
+    local redName = summary.red.name or "Red"
+    local blueName = summary.blue.name or "Blue"
+    local redTotal = summary.red.total or 0
+    local blueTotal = summary.blue.total or 0
+    setHudValue({id = "ScoringOverlay_RedName", value = redName .. " (" .. redTotal .. ")"})
+    setHudValue({id = "ScoringOverlay_BlueName", value = blueName .. " (" .. blueTotal .. ")"})
+
+    local redRoundsText = ""
+    local blueRoundsText = ""
+    for j = 1, 5 do
+        local r = summary.red.rounds and summary.red.rounds[j] or {}
+        local b = summary.blue.rounds and summary.blue.rounds[j] or {}
+        redRoundsText = redRoundsText .. string.format("<b>Round %d</b> | PRI: %d - SEC: %d |\n",
+            j, r.primary or 0, r.secondary or 0)
+        blueRoundsText = blueRoundsText .. string.format("<b>Round %d</b> | PRI: %d - SEC: %d |\n",
+            j, b.primary or 0, b.secondary or 0)
+    end
+    setHudValue({id = "ScoringOverlay_RedRounds", value = redRoundsText})
+    setHudValue({id = "ScoringOverlay_BlueRounds", value = blueRoundsText})
+
+    local redActive = getActiveSecondaryNames("Red")
+    local blueActive = getActiveSecondaryNames("Blue")
+    local redDiscard = getDiscardedSecondaryNames("Red")
+    local blueDiscard = getDiscardedSecondaryNames("Blue")
+    local redDeck = getRemainingDeckSecondaryNames("Red")
+    local blueDeck = getRemainingDeckSecondaryNames("Blue")
+
+    setHudListColumns("ScoringOverlay_RedActive", redActive, 8, true)
+    setHudListColumns("ScoringOverlay_BlueActive", blueActive, 8, true)
+    setHudListColumns("ScoringOverlay_RedDiscard", redDiscard, nil, false)
+    setHudListColumns("ScoringOverlay_BlueDiscard", blueDiscard, nil, false)
+    setHudListColumns("ScoringOverlay_RedDeck", redDeck, nil, false)
+    setHudListColumns("ScoringOverlay_BlueDeck", blueDeck, nil, false)
+
+    -- Dynamic, symmetric section heights based on content count.
+    -- Both sides get the same height per section (max of red/blue) so columns line up.
+    local lineHeight = 22
+    local minSection = 26  -- room for "—" placeholder
+    local function sectionH(count)
+        if count <= 0 then return minSection end
+        return math.ceil(count / 2) * lineHeight + 4
+    end
+    local activeCount = math.max(math.min(#redActive, 8), math.min(#blueActive, 8))
+    local discardCount = math.max(#redDiscard, #blueDiscard)
+    local deckCount = math.max(#redDeck, #blueDeck)
+
+    local activeH = sectionH(activeCount)
+    local discardH = sectionH(discardCount)
+    local deckH = sectionH(deckCount)
+
+    -- If total exceeds the panel's content budget, scale all sections down proportionally.
+    local contentBudget = 770
+    local needed = activeH + discardH + deckH
+    if needed > contentBudget then
+        local scale = contentBudget / needed
+        activeH = math.floor(activeH * scale)
+        discardH = math.floor(discardH * scale)
+        deckH = math.floor(deckH * scale)
+    end
+
+    setHudAttribute({id = "ScoringOverlay_RedActive", attr = "preferredHeight", value = tostring(activeH)})
+    setHudAttribute({id = "ScoringOverlay_BlueActive", attr = "preferredHeight", value = tostring(activeH)})
+    setHudAttribute({id = "ScoringOverlay_RedDiscard", attr = "preferredHeight", value = tostring(discardH)})
+    setHudAttribute({id = "ScoringOverlay_BlueDiscard", attr = "preferredHeight", value = tostring(discardH)})
+    setHudAttribute({id = "ScoringOverlay_RedDeck", attr = "preferredHeight", value = tostring(deckH)})
+    setHudAttribute({id = "ScoringOverlay_BlueDeck", attr = "preferredHeight", value = tostring(deckH)})
+end
+
+function hudToggleClock(player, value, id)
+    local color = getHudColorFromCallback(player, id)
+    local settings = ensureHudSettings(color)
+    settings.clockHidden = not settings.clockHidden
+    applyHudPreferencesForColor(color)
+end
+
+function toggleHudOverlayForColor(params)
+    local color = params and params.color or "Blue"
+    if color ~= "Red" and color ~= "Blue" then
+        color = "Blue"
+    end
+    local settings = ensureHudSettings(color)
+    settings.hudVisible = not settings.hudVisible
+    if not settings.hudVisible then
+        settings.settingsOpen = false
+    end
+    applyHudPreferencesForColor(color)
+end
+
 redCustomDiceMat_GUID = "acae21" -- diceTable
 blueCustomDiceMat_GUID = "839fcc" -- diceTable
 
@@ -81,23 +526,124 @@ redHiddenZone_GUID = "28419e"
 blueHiddenZone_GUID = "e1e91a"
 deploymentCardZone_GUID = "dcf95b"
 primaryCardZone_GUID = "740abc"
-secondary11CardZone_GUID = "0ec215"
-secondary12CardZone_GUID = "d865d4"
-secondary21CardZone_GUID = "3c8d71"
-secondary22CardZone_GUID = "88cac4"
+secondary11CardZone_GUID = "c1e001"
+secondary12CardZone_GUID = "c1e002"
+secondary21CardZone_GUID = "b1e001"
+secondary22CardZone_GUID = "b1e002"
+redSecondaryCardZone_GUIDs = {
+    "c1e001",
+    "c1e002",
+    "c1e003",
+    "c1e004",
+    "c1e005",
+    "c1e006",
+    "c1e007",
+    "c1e008",
+}
+redSecondaryName_GUIDs = {
+    "5423ba",
+    "5423bb",
+    "5423bc",
+    "5423bd",
+    "5423be",
+}
+blueSecondaryCardZone_GUIDs = {
+    "b1e001",
+    "b1e002",
+    "b1e003",
+    "b1e004",
+    "b1e005",
+    "b1e006",
+    "b1e007",
+    "b1e008",
+}
+blueSecondaryName_GUIDs = {
+    "5423a5",
+    "5423a6",
+    "5423a7",
+    "5423a8",
+    "5423a9",
+}
 challengerCardZone_GUID = "cdecf2"
 
-deploymentDeck_GUID = "2dc2e8"
+deploymentDeck_GUID = "23699d"
 challengerDeck_GUID = "ffdf05"
 primaryDeck_GUID = "d26e9c"
-redSecondaryDeck_GUID = "c0fb49"
-blueSecondaryDeck_GUID = "e1da3b"
+redPrimaryDeck_GUID = "25c0d8"
+bluePrimaryDeck_GUID = "e64441"
+redSecondaryDeck_GUID = "8104e1"
+blueSecondaryDeck_GUID = "994347"
+missionCardZone_RedPrimary1_GUID = "d1e001"
+missionCardZone_RedPrimary2_GUID = "d1e002"
+missionCardZone_BluePrimary1_GUID = "d1e003"
+missionCardZone_BluePrimary2_GUID = "d1e004"
+missionCardZone_Deployment_GUID = "d1e005"
+missionCardZone_Twist_GUID = "d1e006"
+
+PLACEHOLDER_MISSION = "Blank Primary"
+
+missionMatchups = {
+    ["1_1"] = { red = "Outmaneuver",            blue = "Outmaneuver" },
+    ["1_2"] = { red = "Locate and Deny",        blue = "Extract Relic" },
+    ["1_3"] = { red = "Delay Battle",          blue = "Punishment" },
+    ["1_4"] = { red = "Smoke and Mirrors",     blue = "Surveil the Foe" },
+    ["1_5"] = { red = "Death Trap",            blue = "Determined Acquisition" },
+    ["2_1"] = { red = "Extract Relic",         blue = "Locate and Deny" },
+    ["2_2"] = { red = "Sabotage",              blue = "Sabotage" },
+    ["2_3"] = { red = "Vital Link",            blue = "Destroyer's Wrath" },
+    ["2_4"] = { red = "Vanguard Operation",    blue = "Search and Scour" },
+    ["2_5"] = { red = "Secure Asset",          blue = "Inescapable Dominion" },
+    ["3_1"] = { red = "Punishment",            blue = "Delay Battle" },
+    ["3_2"] = { red = "Destroyer's Wrath",     blue = "Vital Link" },
+    ["3_3"] = { red = "Meatgrinder",           blue = "Meatgrinder" },
+    ["3_4"] = { red = "Consecrate",            blue = "Triangulation" },
+    ["3_5"] = { red = "Unstoppable Force",     blue = "Immovable Object" },
+    ["4_1"] = { red = "Surveil the Foe",       blue = "Smoke and Mirrors" },
+    ["4_2"] = { red = "Search and Scour",      blue = "Vanguard Operation" },
+    ["4_3"] = { red = "Triangulation",         blue = "Consecrate" },
+    ["4_4"] = { red = "Gather Intel",          blue = "Gather Intel" },
+    ["4_5"] = { red = "Reconnaissance Sweep",  blue = "Purge and Secure" },
+    ["5_1"] = { red = "Determined Acquisition", blue = "Death Trap" },
+    ["5_2"] = { red = "Inescapable Dominion",   blue = "Secure Asset" },
+    ["5_3"] = { red = "Immovable Object",       blue = "Unstoppable Force" },
+    ["5_4"] = { red = "Purge and Secure",       blue = "Reconnaissance Sweep" },
+    ["5_5"] = { red = "Battlefield Dominance",  blue = "Battlefield Dominance" },
+}
+
+missionDeploymentMatchups = {
+    ["1_1"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["1_2"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["1_3"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["1_4"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["1_5"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["2_1"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["2_2"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["2_3"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["2_4"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["2_5"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["3_1"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["3_2"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["3_3"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["3_4"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["3_5"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["4_1"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["4_2"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["4_3"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["4_4"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["4_5"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["5_1"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["5_2"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["5_3"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["5_4"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+    ["5_5"] = {"Hammer And Anvil", "Crucible Of Battle", "Search And Destroy"},
+}
 
 interactiveButtonTableQuarters_State = 1
 interactiveButtonAreaDenial = 1
 interactiveButtonStratReserves = 1
 interactiveButtonDeploymentZones = 1
 interactiveButton9InchZone = 1
+interactiveButtonTerritoryLine = 1
 
 CPMissionBook_GUID = "731ec4"
 
@@ -144,11 +690,11 @@ missionPackData = {
     {
         id = MISSION_PACK_PARIAH_NEXUS,
         name = "Chapter Approved 2025",
-        deploymentDeck_GUID = "2dc2e8",
+        deploymentDeck_GUID = "23699d",
         primaryDeck_GUID = "d26e9c",
         fixedSecondaryDeck_GUID = "b55459",
-        redSecondaryDeck_GUID = "c0fb49",
-        blueSecondaryDeck_GUID = nil,
+        redSecondaryDeck_GUID = "8104e1",
+        blueSecondaryDeck_GUID = "994347",
         tournamentMissions = {
             -- A: Take and Hold / Tipping Point
             {name = "A", primary = "bffd57", deployment = "77cde6"},
@@ -301,14 +847,17 @@ function stopPolling()
 end
 
 function onSave()
+    redSecondaryDeckGUID = nil
     blueSecondaryDeckGUID = nil
     if packSelected then
+        redSecondaryDeckGUID = missionPackData[packSelected].redSecondaryDeck_GUID
         blueSecondaryDeckGUID = missionPackData[packSelected].blueSecondaryDeck_GUID
     end
     saved_data = JSON.encode({
         svredPlayerID = redPlayerID,
         svbluePlayerID = bluePlayerID,
         svPackSelected = packSelected,
+        svRedSecondaryDeckGUID = redSecondaryDeckGUID,
         svBlueSecondaryDeckGUID = blueSecondaryDeckGUID
     })
     --saved_data = ""
@@ -390,7 +939,8 @@ function onLoad(saved_data)
          bluePlayerID = loaded_data.svbluePlayerID
          packSelected = loaded_data.svPackSelected
          if packSelected then
-            missionPackData[packSelected].blueSecondaryDeck_GUID = loaded_data.svBlueSecondaryDeckGUID
+            missionPackData[packSelected].redSecondaryDeck_GUID = loaded_data.svRedSecondaryDeckGUID or redSecondaryDeck_GUID
+            missionPackData[packSelected].blueSecondaryDeck_GUID = loaded_data.svBlueSecondaryDeckGUID or blueSecondaryDeck_GUID
          end
     else
         redPlayerID = ""
@@ -421,9 +971,11 @@ end
 
 function setMissionPack(params)
     packSelected = params.pack
-    redSecondaryDeck = getObjectFromGUID(missionPackData[packSelected].redSecondaryDeck_GUID)
-    blueSecondaryDeck = redSecondaryDeck.clone({position = redSecondaryDeck.getPosition()})
-    missionPackData[packSelected].blueSecondaryDeck_GUID = blueSecondaryDeck.getGUID()
+    local packData = missionPackData[packSelected]
+    if not packData then return end
+
+    packData.redSecondaryDeck_GUID = params.redSecondaryDeck_GUID or packData.redSecondaryDeck_GUID or redSecondaryDeck_GUID
+    packData.blueSecondaryDeck_GUID = params.blueSecondaryDeck_GUID or packData.blueSecondaryDeck_GUID or blueSecondaryDeck_GUID
 end
 
 function autoSeatPerson(_person)
@@ -879,6 +1431,361 @@ function moveCameraTo(pos, dist, color, pitchOverride)
         yaw = yaw,
         distance = dist
     })
+end
+
+function getSecondaryCardZones(zoneGuids)
+    local zones = {}
+    for index, guid in ipairs(zoneGuids) do
+        local zone = getObjectFromGUID(guid)
+        if zone then
+            table.insert(zones, {
+                index = index,
+                guid = guid,
+                zone = zone,
+            })
+        end
+    end
+
+    return zones
+end
+
+function getCardsInSecondarySlot(zone)
+    if not zone then
+        return {}
+    end
+
+    local found = {}
+    local seen = {}
+    local function add(obj)
+        if obj and (obj.tag == "Card" or obj.tag == "Deck" or obj.type == "Card" or obj.type == "Deck") and not seen[obj.getGUID()] then
+            seen[obj.getGUID()] = true
+            found[#found + 1] = obj
+        end
+    end
+
+    for _, obj in ipairs(zone.getObjects()) do
+        add(obj)
+    end
+
+    local bounds = zone.getBounds()
+    local center = bounds.center
+    local halfX = bounds.size.x / 2
+    local halfZ = bounds.size.z / 2
+    for _, obj in ipairs(getAllObjects()) do
+        local pos = obj.getPosition()
+        if math.abs(pos.x - center.x) <= halfX and
+           math.abs(pos.z - center.z) <= halfZ and
+           pos.y > 0.5 and pos.y < 3.0 then
+            add(obj)
+        end
+    end
+
+    return found
+end
+
+function getSecondarySlotCardPosition(zone)
+    local pos = zone.getPosition()
+    pos.y = pos.y + 0.15
+    return pos
+end
+
+function isSecondaryCardZone(zone, zoneGuids)
+    if not zone then
+        return false
+    end
+
+    local zoneGuid = zone.getGUID()
+    for _, guid in ipairs(zoneGuids) do
+        if zoneGuid == guid then
+            return true
+        end
+    end
+
+    return false
+end
+
+function isBlueSecondaryCardZone(zone)
+    return isSecondaryCardZone(zone, blueSecondaryCardZone_GUIDs)
+end
+
+function isRedSecondaryCardZone(zone)
+    return isSecondaryCardZone(zone, redSecondaryCardZone_GUIDs)
+end
+
+function getSecondaryCardName(zone)
+    if not zone then
+        return nil
+    end
+
+    for _, object in ipairs(getCardsInSecondarySlot(zone)) do
+        local name = object.getName()
+        if name and name ~= "" then
+            return name
+        end
+    end
+
+    return nil
+end
+
+function getSecondaryCardZoneByIndex(color, index)
+    local zoneGuids = (color == "Red") and redSecondaryCardZone_GUIDs or blueSecondaryCardZone_GUIDs
+    local zoneGuid = zoneGuids[index]
+    if not zoneGuid then
+        return nil
+    end
+
+    return getObjectFromGUID(zoneGuid)
+end
+
+function getSecondaryDeckByColor(color)
+    if not packSelected or not missionPackData[packSelected] then
+        return nil
+    end
+
+    local deckGuidKey = (color == "Red") and "redSecondaryDeck_GUID" or "blueSecondaryDeck_GUID"
+    return getObjectFromGUID(missionPackData[packSelected][deckGuidKey])
+end
+
+function getSecondaryDiscardPosition(color)
+    if color == "Red" then
+        return {x = 77.04, y = 0.98, z = 16.60}
+    end
+
+    return {x = 77.04, y = 0.98, z = -16.60}
+end
+
+function refreshSecondaryNamesForColor(color)
+    if color == "Red" then
+        refreshRedSecondaryNames()
+    else
+        refreshBlueSecondaryNames()
+    end
+end
+
+function setSecondaryName(nameGuids, index, cardName)
+    local labelObj = getObjectFromGUID(nameGuids[index])
+    if not labelObj then
+        return
+    end
+
+    local text = tostring(index) .. "."
+    if cardName and cardName ~= "" then
+        text = text .. " " .. cardName
+    end
+
+    labelObj.setValue(text)
+end
+
+function setBlueSecondaryName(index, cardName)
+    setSecondaryName(blueSecondaryName_GUIDs, index, cardName)
+end
+
+function setRedSecondaryName(index, cardName)
+    setSecondaryName(redSecondaryName_GUIDs, index, cardName)
+end
+
+function refreshSecondaryNames(zoneGuids, nameGuids, setter)
+    for index = 1, #nameGuids do
+        local zoneGuid = zoneGuids[index]
+        local zone = getObjectFromGUID(zoneGuid)
+        local cardName = getSecondaryCardName(zone)
+        setter(index, cardName)
+    end
+end
+
+function refreshBlueSecondaryNames()
+    refreshSecondaryNames(blueSecondaryCardZone_GUIDs, blueSecondaryName_GUIDs, setBlueSecondaryName)
+end
+
+function refreshRedSecondaryNames()
+    refreshSecondaryNames(redSecondaryCardZone_GUIDs, redSecondaryName_GUIDs, setRedSecondaryName)
+end
+
+function refreshBlueSecondaryNamesSoon()
+    Wait.time(refreshBlueSecondaryNames, 0.25)
+end
+
+function refreshRedSecondaryNamesSoon()
+    Wait.time(refreshRedSecondaryNames, 0.25)
+end
+
+function onObjectEnterScriptingZone(zone, object)
+    if isRedSecondaryCardZone(zone) then
+        refreshRedSecondaryNamesSoon()
+    end
+    if isBlueSecondaryCardZone(zone) then
+        refreshBlueSecondaryNamesSoon()
+    end
+end
+
+function onObjectLeaveScriptingZone(zone, object)
+    if isRedSecondaryCardZone(zone) then
+        refreshRedSecondaryNamesSoon()
+    end
+    if isBlueSecondaryCardZone(zone) then
+        refreshBlueSecondaryNamesSoon()
+    end
+end
+
+secondaryDrawBusy = {Red = false, Blue = false}
+
+function drawSecondaryToFirstOpenSlot(params)
+    if secondaryDrawBusy[params.color] then
+        broadcastToColor("Hold on - previous draw still in progress.", params.color, "Yellow")
+        return
+    end
+
+    if not packSelected or not missionPackData[packSelected] then
+        broadcastToColor("Select a mission pack before drawing secondary cards.", params.color, "Yellow")
+        return
+    end
+
+    local deckObj = getObjectFromGUID(missionPackData[packSelected][params.deckGuidKey])
+    if not deckObj then
+        broadcastToColor(params.deckMissingMessage, params.color, "Red")
+        return
+    end
+
+    local maxCards = params.maxCards or 2
+    local openSlots = {}
+    for _, slot in ipairs(getSecondaryCardZones(params.zoneGuids)) do
+        if #getCardsInSecondarySlot(slot.zone) == 0 then
+            openSlots[#openSlots + 1] = slot
+            if #openSlots >= maxCards then break end
+        end
+    end
+
+    if #openSlots == 0 then
+        broadcastToColor(params.fullMessage, params.color, "Yellow")
+        return
+    end
+
+    secondaryDrawBusy[params.color] = true
+    deckObj.shuffle()
+
+    for _, slot in ipairs(openSlots) do
+        deckObj.takeObject({
+            position = getSecondarySlotCardPosition(slot.zone),
+            rotation = {x = 0, y = 270, z = 180},
+            flip = true,
+            smooth = true,
+            callback_function = function(card)
+                Wait.frames(function()
+                    card.locked = true
+                    params.refreshNames()
+                end)
+            end
+        })
+    end
+
+    Wait.time(function()
+        secondaryDrawBusy[params.color] = false
+    end, 1.5)
+end
+
+function drawBlueSecondaryToFirstOpenSlot()
+    drawSecondaryToFirstOpenSlot({
+        color = "Blue",
+        zoneGuids = blueSecondaryCardZone_GUIDs,
+        deckGuidKey = "blueSecondaryDeck_GUID",
+        refreshNames = refreshBlueSecondaryNames,
+        fullMessage = "Blue already has 8 active secondary cards.",
+        deckMissingMessage = "Blue secondary deck could not be found.",
+    })
+end
+
+function drawRedSecondaryToFirstOpenSlot()
+    drawSecondaryToFirstOpenSlot({
+        color = "Red",
+        zoneGuids = redSecondaryCardZone_GUIDs,
+        deckGuidKey = "redSecondaryDeck_GUID",
+        refreshNames = refreshRedSecondaryNames,
+        fullMessage = "Red already has 8 active secondary cards.",
+        deckMissingMessage = "Red secondary deck could not be found.",
+    })
+end
+
+function drawBlueSecondaryToFirstOpenSlotSingle()
+    drawSecondaryToFirstOpenSlot({
+        color = "Blue",
+        zoneGuids = blueSecondaryCardZone_GUIDs,
+        deckGuidKey = "blueSecondaryDeck_GUID",
+        refreshNames = refreshBlueSecondaryNames,
+        fullMessage = "Blue already has 8 active secondary cards.",
+        deckMissingMessage = "Blue secondary deck could not be found.",
+        maxCards = 1,
+    })
+end
+
+function drawRedSecondaryToFirstOpenSlotSingle()
+    drawSecondaryToFirstOpenSlot({
+        color = "Red",
+        zoneGuids = redSecondaryCardZone_GUIDs,
+        deckGuidKey = "redSecondaryDeck_GUID",
+        refreshNames = refreshRedSecondaryNames,
+        fullMessage = "Red already has 8 active secondary cards.",
+        deckMissingMessage = "Red secondary deck could not be found.",
+        maxCards = 1,
+    })
+end
+
+function discardSecondarySlot(params)
+    local color = params.color
+    local zone = getSecondaryCardZoneByIndex(color, params.index)
+    if not zone then
+        broadcastToColor("Secondary slot could not be found.", color, "Red")
+        return
+    end
+
+    local discardPosition = getSecondaryDiscardPosition(color)
+    for _, object in ipairs(getCardsInSecondarySlot(zone)) do
+        object.locked = false
+        object.setPositionSmooth(discardPosition)
+    end
+
+    Wait.time(function() refreshSecondaryNamesForColor(color) end, 0.25)
+end
+
+function recycleSecondarySlot(params)
+    local color = params.color
+    local zone = getSecondaryCardZoneByIndex(color, params.index)
+    if not zone then
+        broadcastToColor("Secondary slot could not be found.", color, "Red")
+        return
+    end
+
+    local deckObj = getSecondaryDeckByColor(color)
+    if not deckObj then
+        broadcastToColor(color .. " secondary deck could not be found.", color, "Red")
+        return
+    end
+
+    local recycledAny = false
+    for _, object in ipairs(getCardsInSecondarySlot(zone)) do
+        object.locked = false
+        deckObj = deckObj.putObject(object) or deckObj
+        recycledAny = true
+    end
+
+    if not recycledAny then
+        return
+    end
+
+    deckObj.shuffle()
+    Wait.frames(function()
+        deckObj.takeObject({
+            position = getSecondarySlotCardPosition(zone),
+            rotation = {x = 0, y = 270, z = 180},
+            flip = true,
+            smooth = true,
+            callback_function = function(card)
+                Wait.frames(function()
+                    card.locked = true
+                    refreshSecondaryNamesForColor(color)
+                end)
+            end
+        })
+    end, 2)
 end
 
 function moveAllFromZoneToDeck(params)

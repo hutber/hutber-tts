@@ -1,4 +1,6 @@
 -- FTC-GUID: ee92cf
+local _lastValue = nil
+
 titleBtn={
     index=1, label="Game rounds", click_function="none", function_owner=self,
     position={0,0.3,0.23}, rotation={0,180,0}, height=0, width=00,
@@ -23,36 +25,36 @@ continueBtn={
     font_size=90, color={0,0.6,0}, font_color={1,1,1}
 }
 function onLoad()
-    counterA=getObjectFromGUID(Global.getVar("redVPCounter_GUID"))
-    counterB=getObjectFromGUID(Global.getVar("blueVPCounter_GUID"))
     startObject=getObjectFromGUID(Global.getVar("startMenu_GUID"))
+    scoreSheet=getObjectFromGUID(Global.getVar("scoreSheet_GUID"))
+    _lastValue = self.Counter.getValue()
+    updateHUD()
+    Wait.time(checkValue, 0.5, -1)
 end
 
-function writeButtons()
-    self.clearButtons()
-    self.createButton(continueBtn)
-    self.createButton(endBtn)
+function checkValue()
+    local current = self.Counter.getValue()
+    if current ~= _lastValue then
+        _lastValue = current
+        updateHUD()
+        if startObject then
+            startObject.call("newRoundStarted")
+        end
+        if current == 6 then
+            broadcastToAll("GAME OVER - feel free to continue playing!", "Yellow")
+        end
+    end
+end
+
+function updateHUD()
+    _lastValue = self.Counter.getValue()
+    Global.call("setHudValue", {id = "RoundWatch", value = tostring(_lastValue)})
 end
 
 function checkGameEnd()
-    if self.Counter.getValue() > 5 then
-        --[[startObject.setVar("checkEnd", true)
-        startObject.call("writeMenus")
-    end
+    updateHUD()
     if self.Counter.getValue() == 6 then
-        broadcastToAll("Check if game ends now", "Yellow")
-        continueBtn.label="Continue\n3+"
-        writeButtons()
-    end
-    if self.Counter.getValue() == 7 then
-        broadcastToAll("Check if game ends now", "Yellow")
-        continueBtn.label="Continue\n4+"
-        writeButtons()
-    end
-    if self.Counter.getValue() > 7 then--]]
-        broadcastToAll("GAME OVER", "Red")
-        gameOver()
-
+        broadcastToAll("GAME OVER - feel free to continue playing!", "Yellow")
     end
 end
 
@@ -60,13 +62,15 @@ function gameOver()
     self.clearButtons()
     startObject.setVar("checkEnd", false)
     startObject.call("writeMenus")
-    if  counterA.Counter.getValue() > counterB.Counter.getValue() then
+    local scoreA = scoreSheet.call("playerSum", {1})
+    local scoreB = scoreSheet.call("playerSum", {2})
+    if scoreA > scoreB then
         broadcastToAll("Red Player WINS !", "Green")
     end
-    if  counterA.Counter.getValue() < counterB.Counter.getValue() then
+    if scoreA < scoreB then
         broadcastToAll("Blue Player WINS !", "Green")
     end
-    if  counterA.Counter.getValue() == counterB.Counter.getValue() then
+    if scoreA == scoreB then
         broadcastToAll("Game ends in a DRAW !", "Green")
     end
 end

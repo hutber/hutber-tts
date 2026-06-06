@@ -3,21 +3,6 @@
 -- Note: this code handles per-player elements of mission management. Global elements are
 -- handled by code in startMenu.ttslua.
 
-lockInSecondariesBtn = {
-    -- Removed spaces between letters
-    label = "LOCK IN\n\nSECONDARIES",
-    click_function = "lockInSecondaries",
-    function_owner = self,
-    position = {18, 6.07, 7},
-    rotation = {0, 90, 0},
-    height = 900,
-    width = 1600,
-    font_size = 200,
-    color = {0, 0, 0},
-    font_color = {1, 1, 1},
-    tooltip = "With the initial set of secondary missions in your hand, select two of them by flipping them face down with the F key, then press this button. To use Tactical Missions, flip the two Tactical cards. To use Fixed Missions, flip your choice of two other cards."
-}
-
 -- Same removal of extra spaces
 lockGambitBtnPariahNexusTooltip = "After pressing Prepare Secrets and then selecting one by flipping it face down with the F key, press this button to lock in your choice."
 
@@ -25,6 +10,10 @@ missionPackData = nil
 selectedPack = nil
 playerColor = nil
 cardsDealt = false
+secondariesLockedIn = false
+fixedSecondaryHandSetupEnabled = false
+fixedChoiceCardGuids = nil
+tacticalCardGuidToKeep = nil
 handZone = nil
 secondaryDeck = nil
 secondaryDeckPosition = nil
@@ -36,11 +25,17 @@ gambitDeck = nil
 gambitPosition = nil
 discardPosition = nil
 targetRotation = {x = 0, y = 270, z = 180}
+fixedChoiceRotation = {x = 0, y = 90, z = 0}
+fixedSecondaryBoardRotation = {x = 0, y = 270, z = 0}
 
 function onSave()
     saved_data = JSON.encode({
         svSelectedPack = selectedPack,
         svCardsDealt = cardsDealt,
+        svSecondariesLockedIn = secondariesLockedIn,
+        svFixedSecondaryHandSetupEnabled = fixedSecondaryHandSetupEnabled,
+        svFixedChoiceCardGuids = fixedChoiceCardGuids,
+        svTacticalCardGuidToKeep = tacticalCardGuidToKeep,
     })
 
     return saved_data
@@ -51,6 +46,10 @@ function onLoad(saved_data)
         local loaded_data = JSON.decode(saved_data)
         selectedPack = loaded_data.svSelectedPack
         cardsDealt = loaded_data.svCardsDealt
+        secondariesLockedIn = loaded_data.svSecondariesLockedIn or false
+        fixedSecondaryHandSetupEnabled = loaded_data.svFixedSecondaryHandSetupEnabled or false
+        fixedChoiceCardGuids = loaded_data.svFixedChoiceCardGuids
+        tacticalCardGuidToKeep = loaded_data.svTacticalCardGuidToKeep
     end
 
     if self.getGUID() == Global.getVar("redMissionManager_GUID") then
@@ -64,8 +63,8 @@ function onLoad(saved_data)
         otherSecondary1Zone = getObjectFromGUID(Global.getVar("secondary21CardZone_GUID"))
         otherSecondary2Zone = getObjectFromGUID(Global.getVar("secondary22CardZone_GUID"))
         gambitPosition = { x = 70.25, y = 1.5, z = 8.05 }
-        discardPosition = { x = 79.25, y = 1.5, z = 8.05 }
-        secondaryDeckPosition = { x = 74.75, y = 0.94, z = 8.05 }
+        discardPosition = { x = 77.04, y = 0.98, z = 16.60 }
+        secondaryDeckPosition = { x = 76.95, y = 1.02, z = 8.38 }
     else
         self.setName("Mission Manager Blue")
         self.setPosition({-27,-5,-70.5})
@@ -77,8 +76,8 @@ function onLoad(saved_data)
         otherSecondary1Zone = getObjectFromGUID(Global.getVar("secondary11CardZone_GUID"))
         otherSecondary2Zone = getObjectFromGUID(Global.getVar("secondary12CardZone_GUID"))
         gambitPosition = { x = 70.25, y = 1.5, z = -8.05 }
-        discardPosition = { x = 79.25, y = 1.5, z = -8.05 }
-        secondaryDeckPosition = { x = 74.75, y = 0.94, z = -8.05 }
+        discardPosition = { x = 77.04, y = 0.98, z = -16.60 }
+        secondaryDeckPosition = { x = 76.95, y = 1.02, z = -8.38 }
     end
     self.setScale({0.6,1,0.6})
     if selectedPack then
@@ -92,11 +91,22 @@ function updateForSelectedPack()
     secondaryDeck = getObjectFromGUID(missionPackData[string.lower(playerColor) .. "SecondaryDeck_GUID"])
 
     self.clearButtons()
-    self.createButton(lockInSecondariesBtn)
+    updateSecondaryDeckButton()
+end
+
+function updateSecondaryDeckButton()
+    if not secondaryDeck then
+        return
+    end
+
+    secondaryDeck.clearButtons()
 end
 
 function packSelected(params)
     selectedPack = params.pack
+    fixedSecondaryHandSetupEnabled = params.dealFixedSecondaries == true
+    fixedChoiceCardGuids = params.fixedChoiceCardGuids
+    tacticalCardGuidToKeep = params.tacticalCardGuidToKeep
     updateForSelectedPack()
 
     secondaryDeck.setPosition(secondaryDeckPosition)
@@ -104,6 +114,7 @@ function packSelected(params)
     secondaryDeck.locked = false
     secondaryDeck.tooltip = true
     secondaryDeck.interactable = true
+    updateSecondaryDeckButton()
 
     tryDealFixedSecondaries()
 end
@@ -118,77 +129,368 @@ end
 function tryDealFixedSecondaries()
     -- Only deal out the cards if our player is seated, we know what mission pack
     -- we're playing, and we haven't already dealt them.
-    if Player[playerColor].seated and selectedPack and not cardsDealt then
-        fixedDeck = getObjectFromGUID(missionPackData.fixedSecondaryDeck_GUID)
-        newFixedDeck = fixedDeck.clone({position = fixedDeck.getPosition()})
-        newFixedDeck.deal(fixedDeck.getQuantity(), playerColor)
+    if fixedSecondaryHandSetupEnabled and Player[playerColor].seated and selectedPack and not cardsDealt then
+        if isEdition11FixedChoiceSetup() then
+            removeExtraTacticalSecondaries()
+            dealFixedChoiceCards()
+        else
+            ensureLegacyTacticalSecondaries()
+            local fixedDeck = getObjectFromGUID(missionPackData.fixedSecondaryDeck_GUID)
+            local newFixedDeck = fixedDeck.clone({position = fixedDeck.getPosition()})
+            newFixedDeck.deal(fixedDeck.getQuantity(), playerColor)
+            Wait.time(flipTacticalSecondariesFaceDown, 1)
+            Wait.time(flipTacticalSecondariesFaceDown, 2.5)
+        end
+
         cardsDealt = true
     end
 end
 
-function lockInSecondaries()
-    local cardsInHand = handZone.getObjects()
+function getFixedChoiceDealPosition(index, count)
+    local pos = handZone.getPosition()
+    local spacing = 1.8
+    local tacticalOffset = 6.0
+    local fixedChoiceOffset = 2.5
+    return {
+        x = pos.x,
+        y = pos.y + 1.5,
+        z = pos.z + tacticalOffset + fixedChoiceOffset + ((index - 1) * spacing),
+    }
+end
+
+function dealFixedChoiceCards()
+    if not secondaryDeck or not handZone then
+        return
+    end
+
+    local count = #fixedChoiceCardGuids
+    for index, guid in ipairs(fixedChoiceCardGuids) do
+        secondaryDeck.takeObject({
+            guid = guid,
+            position = getFixedChoiceDealPosition(index, count),
+            rotation = fixedChoiceRotation,
+            smooth = true,
+            callback_function = function(card)
+                if card.is_face_down then
+                    card.flip()
+                end
+            end
+        })
+    end
+end
+
+function isEdition11FixedChoiceSetup()
+    return fixedChoiceCardGuids and #fixedChoiceCardGuids > 0
+end
+
+function addSecondaryHandCard(cardsByGuid, card)
+    if not card then
+        return
+    end
+
+    local guid = card.getGUID and card.getGUID() or nil
+    if guid then
+        cardsByGuid[guid] = card
+    end
+end
+
+function getSecondaryCardsInHand()
+    local cardsByGuid = {}
+
+    if handZone then
+        for _, card in ipairs(handZone.getObjects()) do
+            addSecondaryHandCard(cardsByGuid, card)
+        end
+    end
+
+    if Player[playerColor] and Player[playerColor].getHandObjects then
+        for _, card in ipairs(Player[playerColor].getHandObjects()) do
+            addSecondaryHandCard(cardsByGuid, card)
+        end
+    end
+
+    local cards = {}
+    for _, card in pairs(cardsByGuid) do
+        table.insert(cards, card)
+    end
+    return cards
+end
+
+function removeExtraTacticalSecondaries()
+    if not handZone or not tacticalCardGuidToKeep then
+        return
+    end
+
+    for _, card in ipairs(getSecondaryCardsInHand()) do
+        if card.getGMNotes() == "TacticalObjectives" and card.getGUID() != tacticalCardGuidToKeep then
+            card.destruct()
+        end
+    end
+end
+
+function ensureLegacyTacticalSecondaries()
+    if not handZone then
+        return
+    end
+
+    local tacticalCards = {}
+    for _, card in ipairs(getSecondaryCardsInHand()) do
+        if card.getGMNotes() == "TacticalObjectives" then
+            table.insert(tacticalCards, card)
+        end
+    end
+
+    if #tacticalCards == 0 then
+        return
+    end
+
+    while #tacticalCards < 2 do
+        local source = tacticalCards[1]
+        local pos = source.getPosition()
+        local clone = source.clone({
+            position = {x = pos.x, y = pos.y + 0.1, z = pos.z + (1.8 * #tacticalCards)},
+            rotation = source.getRotation(),
+        })
+        table.insert(tacticalCards, clone)
+    end
+end
+
+function flipTacticalSecondariesFaceDown()
+    if not handZone then
+        return
+    end
+
+    for _, card in ipairs(getSecondaryCardsInHand()) do
+        if card.getGMNotes() == "TacticalObjectives" and not card.is_face_down then
+            card.flip()
+        end
+    end
+end
+
+function validateSecondaries()
+    if secondariesLockedIn then
+        return true
+    end
+
+    if isEdition11FixedChoiceSetup() then
+        return validateEdition11Secondaries()
+    end
+
+    local cardsInHand = getSecondaryCardsInHand()
     local faceDownCards = 0
+    local selectedFixedCards = 0
     for _,card in ipairs(cardsInHand) do
         if card.is_face_down then
             faceDownCards = faceDownCards + 1
+            if card.getGMNotes() != "TacticalObjectives" then
+                selectedFixedCards = selectedFixedCards + 1
+            end
         end
     end
 
     if faceDownCards != 2 then
-        broadcastToColor("Select exactly two secondary missions by flipping them face down (hover over them and press F) before pressing Lock In Secondaries.", playerColor, "Yellow")
+        broadcastToColor("Select exactly two secondary missions by flipping them face down (hover over them and press F) before starting the game.", playerColor, "Yellow")
+        return false
+    end
+
+    if selectedFixedCards != 0 and selectedFixedCards != 2 then
+        broadcastToColor("Select either the two Tactical cards or exactly two Fixed secondary missions before starting the game.", playerColor, "Yellow")
+        return false
+    end
+
+    return true
+end
+
+function validateEdition11Secondaries()
+    local tacticalCard = nil
+    local selectedFixedCards = 0
+    for _,card in ipairs(getSecondaryCardsInHand()) do
+        if card.getGMNotes() == "TacticalObjectives" then
+            tacticalCard = card
+        elseif card.is_face_down then
+            selectedFixedCards = selectedFixedCards + 1
+        end
+    end
+
+    if not tacticalCard then
+        broadcastToColor("The Tactical/Fixed mode card is missing from your hand.", playerColor, "Yellow")
+        return false
+    end
+
+    if not tacticalCard.is_face_down then
+        if selectedFixedCards == 0 then
+            return true
+        end
+
+        broadcastToColor("Tactical mode is selected. Leave the Fixed secondary cards face up so they can return to the deck.", playerColor, "Yellow")
+        return false
+    end
+
+    if selectedFixedCards == 2 then
+        return true
+    end
+
+    broadcastToColor("Fixed mode is selected. Flip exactly two Fixed secondary missions face down before starting the game.", playerColor, "Yellow")
+    return false
+end
+
+function getSecondarySelectionSummary()
+    local cardsInHand = getSecondaryCardsInHand()
+    local selectedFixedCards = 0
+    local selectedNames = {}
+    local edition11Setup = isEdition11FixedChoiceSetup()
+    local tacticalCard = nil
+
+    for _, card in ipairs(cardsInHand) do
+        if card.getGMNotes() == "TacticalObjectives" then
+            tacticalCard = card
+        elseif card.is_face_down then
+            selectedFixedCards = selectedFixedCards + 1
+        end
+    end
+
+    local tacticalMode = edition11Setup and tacticalCard and not tacticalCard.is_face_down
+
+    for _, card in ipairs(cardsInHand) do
+        if card.is_face_down and (not edition11Setup or card.getGMNotes() != "TacticalObjectives") then
+            local name = card.getName()
+            if not name or name == "" then
+                name = "Unnamed secondary"
+            end
+            table.insert(selectedNames, name)
+        elseif tacticalMode and card.getGMNotes() == "TacticalObjectives" then
+            local name = card.getName()
+            if not name or name == "" then
+                name = "Tactical Objectives"
+            end
+            table.insert(selectedNames, name)
+        end
+    end
+
+    return {
+        color = playerColor,
+        mode = ((edition11Setup and tacticalMode) or (not edition11Setup and selectedFixedCards == 0)) and "Tactical" or "Fixed",
+        cards = selectedNames,
+    }
+end
+
+function getSecondarySelectionSummaryJson()
+    return JSON.encode(getSecondarySelectionSummary())
+end
+
+function lockInSecondaries(params)
+    local force = params and params.force == true
+
+    if secondariesLockedIn then
+        return getSecondarySelectionSummaryJson()
+    end
+
+    if not force and not validateSecondaries() then
+        return false
+    end
+
+    local summaryJson = getSecondarySelectionSummaryJson()
+    if isEdition11FixedChoiceSetup() then
+        lockInEdition11Secondaries()
+        return summaryJson
+    end
+
+    local cardsInHand = getSecondaryCardsInHand()
+    local selectedFixedCards = 0
+    for _,card in ipairs(cardsInHand) do
+        if card.is_face_down and card.getGMNotes() != "TacticalObjectives" then
+            selectedFixedCards = selectedFixedCards + 1
+        end
+    end
+
+    for _,card in ipairs(cardsInHand) do
+        if card.getGMNotes() == "TacticalObjectives" then
+            card.destruct()
+        elseif not card.is_face_down then
+            secondaryDeck.putObject(card)
+        end
+    end
+
+    if selectedFixedCards == 0 then
+        secondaryDeck.shuffle()
+    end
+
+    local lockedCount = Global.getVar("LOCKED_IN_SECONDARIES") or 0
+    lockedCount = lockedCount + 1
+    Global.setVar("LOCKED_IN_SECONDARIES", lockedCount)
+    self.clearButtons()
+    secondariesLockedIn = true
+    return summaryJson
+end
+
+
+function lockInEdition11Secondaries()
+    local cardsInHand = getSecondaryCardsInHand()
+    local fixedSlots = {secondary1Zone, secondary2Zone}
+    local fixedSlotIndex = 1
+    local selectedFixedCards = 0
+
+    for _, card in ipairs(cardsInHand) do
+        if card.is_face_down and card.getGMNotes() != "TacticalObjectives" then
+            selectedFixedCards = selectedFixedCards + 1
+        end
+    end
+
+    for _, card in ipairs(cardsInHand) do
+        if card.getGMNotes() == "TacticalObjectives" then
+            moveCardToDiscardPile(card)
+        elseif card.is_face_down then
+            moveFixedSecondaryToSlot(card, fixedSlots[fixedSlotIndex])
+            fixedSlotIndex = fixedSlotIndex + 1
+        else
+            secondaryDeck.putObject(card)
+        end
+    end
+
+    if selectedFixedCards == 0 then
+        secondaryDeck.shuffle()
+    end
+
+    local lockedCount = Global.getVar("LOCKED_IN_SECONDARIES") or 0
+    lockedCount = lockedCount + 1
+    Global.setVar("LOCKED_IN_SECONDARIES", lockedCount)
+    self.clearButtons()
+    secondariesLockedIn = true
+end
+
+function moveCardToDiscardPile(card)
+    card.use_hands = false
+    card.setLock(false)
+    card.setRotation(targetRotation)
+    card.setPosition(discardPosition)
+end
+
+function moveFixedSecondaryToSlot(card, zone)
+    if not zone then
         return
     end
 
-    local cardsMoved = 0
-    for _,card in ipairs(cardsInHand) do
-        local cardMoved = false
+    local slotPosition = getMissionManagerSecondarySlotCardPosition(zone)
+    local settlingPosition = {x = slotPosition.x, y = 1.25, z = slotPosition.z}
+
+    card.use_hands = false
+    card.setLock(false)
+    card.setPosition(settlingPosition)
+    card.setRotation(fixedSecondaryBoardRotation)
+
+    Wait.frames(function()
+        card.setPosition(slotPosition)
+        card.setRotation(fixedSecondaryBoardRotation)
         if card.is_face_down then
-            if cardsMoved == 0 then
-                card.setPosition(secondary1Zone.getPosition())
-                card.setRotation(targetRotation)
-                cardMoved = true
-                cardsMoved = 1
-            elseif cardsMoved == 1 then
-                card.setPosition(secondary2Zone.getPosition())
-                card.setRotation(targetRotation)
-                cardMoved = true
-                cardsMoved = 2
-            end
+            card.flip()
         end
-
-        if not cardMoved then
-            if card.getGMNotes() == "TacticalObjectives" then
-                card.destruct()
-            else
-                secondaryDeck.putObject(card)
-            end
-        end
-    end
-
-    Wait.time(shuffleAndMaybeFlipSecondaries, 0.5)
+        card.setLock(true)
+        Global.call("refreshSecondaryNamesForColor", playerColor)
+    end, 20)
 end
 
-
-function shuffleAndMaybeFlipSecondaries()
-    secondaryDeck.shuffle()
-    local secondariesLockedIn = Global.getVar("LOCKED_IN_SECONDARIES") or 0
-   secondariesLockedIn = secondariesLockedIn + 1
-   Global.setVar("LOCKED_IN_SECONDARIES", secondariesLockedIn)
-
-    if #secondary1Zone.getObjects() > 0 and #secondary2Zone.getObjects() > 0 and #otherSecondary1Zone.getObjects() > 0 and #otherSecondary2Zone.getObjects() > 0 then
-        flipCardsInZone(secondary1Zone)
-        flipCardsInZone(secondary2Zone)
-        flipCardsInZone(otherSecondary1Zone)
-        flipCardsInZone(otherSecondary2Zone)
-    end
-end
-
-function flipCardsInZone(zone)
-    local objects = zone.getObjects()
-    for _,object in ipairs(objects) do
-        if object.type == "Card" then
-            object.flip()
-        end
-    end
+function getMissionManagerSecondarySlotCardPosition(zone)
+    local pos = zone.getPosition()
+    pos.y = 0.95
+    return pos
 end

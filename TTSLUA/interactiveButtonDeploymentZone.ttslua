@@ -23,15 +23,19 @@ function toggleQuarters()
     local state = Global.getVar("interactiveButtonDeploymentZones")
     local manager = getObjectFromGUID("738804")
     manager.call("showHideIngameDeployment")
-    if state == 1 then
-        params = {
-            image = onState,
-        }
-    else
-        params = {
-            image = offState,
-        }
+    syncDeploymentZoneButtonImage(state == 1)
+end
+
+function syncDeploymentZoneButtonImage(forceOn)
+    local state = Global.getVar("interactiveButtonDeploymentZones")
+    local showOn = forceOn
+    if showOn == nil then
+        showOn = state == 2
     end
+
+    local params = {
+        image = showOn and onState or offState,
+    }
     self.setCustomObject(params)
     self.reload()
 end

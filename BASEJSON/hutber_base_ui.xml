@@ -1,4 +1,4 @@
-﻿<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->
+<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->
 <Defaults>
   <Button width="550" height="300" fontSize="40" onClick="" fontStyle="Bold"/>
   <Text fontSize="100" color="#000000" fontStyle="Bold"/>
@@ -58,17 +58,445 @@
   <Text id="passTurnTxt" offsetXY="0 0" color="#FFFFFF" width="180" height="180" fontSize="35" fontStyle="Bold" onClick="nextPhase">NEXT PHASE</Text>
 </Panel>
 
-<Panel id="Chess Stopwatch" active="false" scale="1 1 1" width="180" height="120" rectAlignment="UpperRight" offsetXY="-270 0" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
-  <VerticalLayout spacing="5" padding="5">
-    <Panel id="ChsStpPanel1" color="Blue">
-      <Button id="ChsStpBtn1" scale="1 1 1" width="180" height="60" onClick="" color="rgba(0,0,0,0)"/>
-      <Text id="ChsStpWatch1" text="0:00:00" fontSize="40" color="White"/>
+<Panel id="RedHud_VPScores" visibility="Red" active="true" scale="0.43 0.43 0.43" width="1160" height="228" rectAlignment="UpperRight" offsetXY="-290 -72" color="#0D0D1AE6" outline="#2a2a4a" outlineSize="3" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
+  <HorizontalLayout spacing="6" padding="6" childForceExpandWidth="false" childForceExpandHeight="false" childAlignment="MiddleLeft">
+    <VerticalLayout id="RedHudControls" flexibleWidth="0" preferredWidth="54" preferredHeight="172" flexibleHeight="0" spacing="4">
+      <Button id="RedHud_SettingsBtn" text="⚙" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleSettings" tooltip="Settings"/>
+      <Button id="RedHud_LockBtn" text="★" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleLock" tooltip="Show scoring"/>
+      <Button id="RedHud_ClockBtn" text="◴" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleClock" tooltip="Toggle clock"/>
+      <Button id="RedHud_MinusBtn" text="-" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleMinimalist" tooltip="Minimalist UI"/>
+    </VerticalLayout>
+    <VerticalLayout id="RedHud_RightCol" flexibleWidth="1" spacing="6" childForceExpandHeight="false" childAlignment="UpperLeft">
+    <HorizontalLayout spacing="6" preferredHeight="143" flexibleHeight="0" childForceExpandWidth="false">
+    <Panel id="RedHud_RoundBadge" flexibleWidth="0" preferredWidth="96" color="#1A1A2AE6" outline="#2a2a4aCC" outlineSize="3" roundEdges="true">
+      <Button id="RedHud_RoundWatchBtn" width="96" height="143" color="rgba(0,0,0,0)" onClick="738804/hudPassTurn"/>
+      <Text text="ROUND" fontSize="18" fontStyle="Bold" color="#FFFFFFAA" offsetXY="0 48" alignment="MiddleCenter"/>
+      <Text id="RedHud_RoundWatch" text="0" fontSize="80" fontStyle="Bold" color="White" shadow="#000000AA" shadowDistance="2 -2" offsetXY="0 -8" alignment="MiddleCenter"/>
     </Panel>
-    <Panel id="ChsStpPanel2" color="Red">
-      <Button id="ChsStpBtn2" scale="1 1 1" width="180" height="60" onClick="" color="rgba(0,0,0,0)"/>
-      <Text id="ChsStpWatch2" text="0:00:00" fontSize="40" color="White"/>
+    <VerticalLayout flexibleWidth="1" spacing="6">
+    <Panel id="RedHud_ChsStpPanel1" color="#1A5FC8E6" outline="#5B8FDECC" outlineSize="2">
+      <HorizontalLayout spacing="4" padding="4">
+        <Panel id="RedHud_TVWatchPanel1" color="rgba(0,0,0,0)" minWidth="120" minHeight="50">
+          <Button id="RedHud_TVWatchBtn1" width="120" height="50" color="rgba(0,0,0,0)" onClick="738804/hudTurnWatch1" />
+          <Text id="RedHud_TVWatch1" text="Turn 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <HorizontalLayout id="RedHud_PhaseRow1" spacing="2">
+          <Button id="RedHud_Ph11" text="✸" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseCmdBlue"/>
+          <Button id="RedHud_Ph21" text="⇢" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseMovBlue"/>
+          <Button id="RedHud_Ph31" text="◎" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseShtBlue"/>
+          <Button id="RedHud_Ph41" text="⚡" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseChrBlue"/>
+          <Button id="RedHud_Ph51" text="⚔" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseFgtBlue"/>
+        </HorizontalLayout>
+        <Text id="RedHud_VPWatch1" text="VP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Text id="RedHud_CPWatch1" text="CP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Panel id="RedHud_ClockSubPanel1" color="#1A1A1ACC" outline="rgba(0,0,0,0)" outlineSize="4" roundEdges="true" minWidth="190" minHeight="1" margin="12 0 0 0">
+          <Button id="RedHud_ChsStpBtn1" width="190" height="58" onClick="" color="rgba(0,0,0,0)" roundEdges="true"/>
+          <Text id="RedHud_ChsStpWatch1" text="01:30:00" fontSize="40" color="#FFFFFF40" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <VerticalLayout spacing="2">
+          <Button id="RedHud_ChsStpPlus1"  text="+" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+          <Button id="RedHud_ChsStpMinus1" text="−" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+        </VerticalLayout>
+      </HorizontalLayout>
+    </Panel>
+    <Panel id="RedHud_ChsStpPanel2" color="#B52020E6" outline="#D46060CC" outlineSize="2">
+      <HorizontalLayout spacing="4" padding="4">
+        <Panel id="RedHud_TVWatchPanel2" color="rgba(0,0,0,0)" minWidth="120" minHeight="50">
+          <Button id="RedHud_TVWatchBtn2" width="120" height="50" color="rgba(0,0,0,0)" onClick="738804/hudTurnWatch2" />
+          <Text id="RedHud_TVWatch2" text="Turn 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <HorizontalLayout id="RedHud_PhaseRow2" spacing="2">
+          <Button id="RedHud_Ph12" text="✸" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseCmdRed"/>
+          <Button id="RedHud_Ph22" text="⇢" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseMovRed"/>
+          <Button id="RedHud_Ph32" text="◎" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseShtRed"/>
+          <Button id="RedHud_Ph42" text="⚡" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseChrRed"/>
+          <Button id="RedHud_Ph52" text="⚔" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseFgtRed"/>
+        </HorizontalLayout>
+        <Text id="RedHud_VPWatch2" text="VP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Text id="RedHud_CPWatch2" text="CP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Panel id="RedHud_ClockSubPanel2" color="#1A1A1ACC" outline="rgba(0,0,0,0)" outlineSize="4" roundEdges="true" minWidth="190" minHeight="1" margin="12 0 0 0">
+          <Button id="RedHud_ChsStpBtn2" width="190" height="58" onClick="" color="rgba(0,0,0,0)" roundEdges="true"/>
+          <Text id="RedHud_ChsStpWatch2" text="01:30:00" fontSize="40" color="#FFFFFF40" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <VerticalLayout spacing="2">
+          <Button id="RedHud_ChsStpPlus2"  text="+" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+          <Button id="RedHud_ChsStpMinus2" text="−" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+        </VerticalLayout>
+      </HorizontalLayout>
     </Panel>
   </VerticalLayout>
+    </HorizontalLayout>
+    <Panel id="RedHud_Row3" preferredHeight="67" flexibleHeight="0" color="#1A1A2AE6" outline="#2a2a4aCC" outlineSize="2" roundEdges="true">
+      <HorizontalLayout spacing="6" padding="4">
+        <Button id="RedHud_PassTurnBtn" text="Pass Turn" fontSize="34" fontStyle="Bold" textColor="#FFFFFF" color="#5A6275" outline="#2a2a4aCC" outlineSize="2" roundEdges="true" onClick="738804/hudPassTurn"/>
+        <Button id="RedHud_GainCPBtn" text="Gain CP" fontSize="34" fontStyle="Bold" textColor="#FFFFFF" color="#2EAD5A" outline="#2a2a4aCC" outlineSize="2" roundEdges="true" onClick="hudGainCP"/>
+        <Button id="RedHud_UseCPBtn" text="Use CP" fontSize="34" fontStyle="Bold" textColor="#FFFFFF" color="#E38B2C" outline="#2a2a4aCC" outlineSize="2" roundEdges="true" onClick="hudUseCP"/>
+      </HorizontalLayout>
+    </Panel>
+    </VerticalLayout>
+  </HorizontalLayout>
+</Panel>
+<Panel id="BlueHud_VPScores" visibility="Blue" active="true" scale="0.43 0.43 0.43" width="1160" height="228"
+rectAlignment="UpperRight" offsetXY="-290 -72" color="#0D0D1AE6" outline="#2a2a4a" outlineSize="3" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
+  <HorizontalLayout spacing="6" padding="6" childForceExpandWidth="false" childForceExpandHeight="false" childAlignment="MiddleLeft">
+    <VerticalLayout id="BlueHudControls" flexibleWidth="0" preferredWidth="54" preferredHeight="172" flexibleHeight="0" spacing="4">
+      <Button id="BlueHud_SettingsBtn" text="⚙" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleSettings" tooltip="Settings"/>
+      <Button id="BlueHud_LockBtn" text="★" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleLock" tooltip="Show scoring"/>
+      <Button id="BlueHud_ClockBtn" text="◴" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleClock" tooltip="Toggle clock"/>
+      <Button id="BlueHud_MinusBtn" text="-" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleMinimalist" tooltip="Minimalist UI"/>
+    </VerticalLayout>
+    <VerticalLayout id="BlueHud_RightCol" flexibleWidth="1" spacing="6" childForceExpandHeight="false" childAlignment="UpperLeft">
+    <HorizontalLayout spacing="6" preferredHeight="143" flexibleHeight="0" childForceExpandWidth="false">
+    <Panel id="BlueHud_RoundBadge" flexibleWidth="0" preferredWidth="96" color="#1A1A2AE6" outline="#2a2a4aCC" outlineSize="3" roundEdges="true">
+      <Button id="BlueHud_RoundWatchBtn" width="96" height="143" color="rgba(0,0,0,0)" onClick="738804/hudPassTurn"/>
+      <Text text="ROUND" fontSize="18" fontStyle="Bold" color="#FFFFFFAA" offsetXY="0 48" alignment="MiddleCenter"/>
+      <Text id="BlueHud_RoundWatch" text="0" fontSize="80" fontStyle="Bold" color="White" shadow="#000000AA" shadowDistance="2 -2" offsetXY="0 -8" alignment="MiddleCenter"/>
+    </Panel>
+    <VerticalLayout flexibleWidth="1" spacing="6">
+    <Panel id="BlueHud_ChsStpPanel1" color="#1A5FC8E6" outline="#5B8FDECC" outlineSize="2">
+      <HorizontalLayout spacing="4" padding="4">
+        <Panel id="BlueHud_TVWatchPanel1" color="rgba(0,0,0,0)" minWidth="120" minHeight="50">
+          <Button id="BlueHud_TVWatchBtn1" width="120" height="50" color="rgba(0,0,0,0)" onClick="738804/hudTurnWatch1" />
+          <Text id="BlueHud_TVWatch1" text="Turn 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <HorizontalLayout id="BlueHud_PhaseRow1" spacing="2">
+          <Button id="BlueHud_Ph11" text="✸" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseCmdBlue"/>
+          <Button id="BlueHud_Ph21" text="⇢" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseMovBlue"/>
+          <Button id="BlueHud_Ph31" text="◎" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseShtBlue"/>
+          <Button id="BlueHud_Ph41" text="⚡" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseChrBlue"/>
+          <Button id="BlueHud_Ph51" text="⚔" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseFgtBlue"/>
+        </HorizontalLayout>
+        <Text id="BlueHud_VPWatch1" text="VP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Text id="BlueHud_CPWatch1" text="CP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Panel id="BlueHud_ClockSubPanel1" color="#1A1A1ACC" outline="rgba(0,0,0,0)" outlineSize="4" roundEdges="true" minWidth="190" minHeight="1" margin="12 0 0 0">
+          <Button id="BlueHud_ChsStpBtn1" width="190" height="58" onClick="" color="rgba(0,0,0,0)" roundEdges="true"/>
+          <Text id="BlueHud_ChsStpWatch1" text="01:30:00" fontSize="40" color="#FFFFFF40" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <VerticalLayout spacing="2">
+          <Button id="BlueHud_ChsStpPlus1"  text="+" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+          <Button id="BlueHud_ChsStpMinus1" text="−" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+        </VerticalLayout>
+      </HorizontalLayout>
+    </Panel>
+    <Panel id="BlueHud_ChsStpPanel2" color="#B52020E6" outline="#D46060CC" outlineSize="2">
+      <HorizontalLayout spacing="4" padding="4">
+        <Panel id="BlueHud_TVWatchPanel2" color="rgba(0,0,0,0)" minWidth="120" minHeight="50">
+          <Button id="BlueHud_TVWatchBtn2" width="120" height="50" color="rgba(0,0,0,0)" onClick="738804/hudTurnWatch2" />
+          <Text id="BlueHud_TVWatch2" text="Turn 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <HorizontalLayout id="BlueHud_PhaseRow2" spacing="2">
+          <Button id="BlueHud_Ph12" text="✸" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseCmdRed"/>
+          <Button id="BlueHud_Ph22" text="⇢" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseMovRed"/>
+          <Button id="BlueHud_Ph32" text="◎" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseShtRed"/>
+          <Button id="BlueHud_Ph42" text="⚡" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseChrRed"/>
+          <Button id="BlueHud_Ph52" text="⚔" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick="738804/hudPhaseFgtRed"/>
+        </HorizontalLayout>
+        <Text id="BlueHud_VPWatch2" text="VP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Text id="BlueHud_CPWatch2" text="CP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Panel id="BlueHud_ClockSubPanel2" color="#1A1A1ACC" outline="rgba(0,0,0,0)" outlineSize="4" roundEdges="true" minWidth="190" minHeight="1" margin="12 0 0 0">
+          <Button id="BlueHud_ChsStpBtn2" width="190" height="58" onClick="" color="rgba(0,0,0,0)" roundEdges="true"/>
+          <Text id="BlueHud_ChsStpWatch2" text="01:30:00" fontSize="40" color="#FFFFFF40" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <VerticalLayout spacing="2">
+          <Button id="BlueHud_ChsStpPlus2"  text="+" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+          <Button id="BlueHud_ChsStpMinus2" text="−" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+        </VerticalLayout>
+      </HorizontalLayout>
+    </Panel>
+  </VerticalLayout>
+    </HorizontalLayout>
+    <Panel id="BlueHud_Row3" preferredHeight="67" flexibleHeight="0" color="#1A1A2AE6" outline="#2a2a4aCC" outlineSize="2" roundEdges="true">
+      <HorizontalLayout spacing="6" padding="4">
+        <Button id="BlueHud_PassTurnBtn" text="Pass Turn" fontSize="34" fontStyle="Bold" textColor="#FFFFFF" color="#5A6275" outline="#2a2a4aCC" outlineSize="2" roundEdges="true" onClick="738804/hudPassTurn"/>
+        <Button id="BlueHud_GainCPBtn" text="Gain CP" fontSize="34" fontStyle="Bold" textColor="#FFFFFF" color="#2EAD5A" outline="#2a2a4aCC" outlineSize="2" roundEdges="true" onClick="hudGainCP"/>
+        <Button id="BlueHud_UseCPBtn" text="Use CP" fontSize="34" fontStyle="Bold" textColor="#FFFFFF" color="#E38B2C" outline="#2a2a4aCC" outlineSize="2" roundEdges="true" onClick="hudUseCP"/>
+      </HorizontalLayout>
+    </Panel>
+    </VerticalLayout>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="GreyHud_VPScores" visibility="Grey" active="true" scale="0.43 0.43 0.43" width="1160" height="155" rectAlignment="UpperRight" offsetXY="-290 -72" color="#0D0D1AE6" outline="#2a2a4a" outlineSize="3" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
+  <HorizontalLayout spacing="6" padding="6" childForceExpandWidth="false">
+    <VerticalLayout id="GreyHudControls" flexibleWidth="0" preferredWidth="54" spacing="4">
+      <Button id="GreyHud_SettingsBtn" text="⚙" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleSettings" tooltip="Settings"/>
+      <Button id="GreyHud_LockBtn" text="★" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleLock" tooltip="Show scoring"/>
+      <Button id="GreyHud_ClockBtn" text="◴" fontSize="28" textColor="#000000" color="#FFFFFF" width="50" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick="hudToggleClock" tooltip="Toggle clock"/>
+    </VerticalLayout>
+    <Panel id="GreyHud_RoundBadge" flexibleWidth="0" preferredWidth="96" color="#1A1A2AE6" outline="#2a2a4aCC" outlineSize="3" roundEdges="true">
+      <Button id="GreyHud_RoundWatchBtn" width="96" height="155" color="rgba(0,0,0,0)" onClick=""/>
+      <Text text="ROUND" fontSize="18" fontStyle="Bold" color="#FFFFFFAA" offsetXY="0 48" alignment="MiddleCenter"/>
+      <Text id="GreyHud_RoundWatch" text="0" fontSize="80" fontStyle="Bold" color="White" shadow="#000000AA" shadowDistance="2 -2" offsetXY="0 -8" alignment="MiddleCenter"/>
+    </Panel>
+    <VerticalLayout flexibleWidth="1" spacing="6">
+    <Panel id="GreyHud_ChsStpPanel1" color="#1A5FC8E6" outline="#5B8FDECC" outlineSize="2">
+      <HorizontalLayout spacing="4" padding="4">
+        <Panel id="GreyHud_TVWatchPanel1" color="rgba(0,0,0,0)" minWidth="120" minHeight="50">
+          <Button id="GreyHud_TVWatchBtn1" width="120" height="50" color="rgba(0,0,0,0)" onClick="" />
+          <Text id="GreyHud_TVWatch1" text="Turn 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <HorizontalLayout spacing="2">
+          <Button id="GreyHud_Ph11" text="✸" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph21" text="⇢" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph31" text="◎" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph41" text="⚡" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph51" text="⚔" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+        </HorizontalLayout>
+        <Text id="GreyHud_VPWatch1" text="VP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Text id="GreyHud_CPWatch1" text="CP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Panel id="GreyHud_ClockSubPanel1" color="#1A1A1ACC" outline="rgba(0,0,0,0)" outlineSize="4" roundEdges="true" minWidth="190" minHeight="1" margin="12 0 0 0">
+          <Button id="GreyHud_ChsStpBtn1" width="190" height="58" onClick="" color="rgba(0,0,0,0)" roundEdges="true"/>
+          <Text id="GreyHud_ChsStpWatch1" text="01:30:00" fontSize="40" color="#FFFFFF40" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <VerticalLayout spacing="2">
+          <Button id="GreyHud_ChsStpPlus1"  text="+" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+          <Button id="GreyHud_ChsStpMinus1" text="−" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+        </VerticalLayout>
+      </HorizontalLayout>
+    </Panel>
+    <Panel id="GreyHud_ChsStpPanel2" color="#B52020E6" outline="#D46060CC" outlineSize="2">
+      <HorizontalLayout spacing="4" padding="4">
+        <Panel id="GreyHud_TVWatchPanel2" color="rgba(0,0,0,0)" minWidth="120" minHeight="50">
+          <Button id="GreyHud_TVWatchBtn2" width="120" height="50" color="rgba(0,0,0,0)" onClick="" />
+          <Text id="GreyHud_TVWatch2" text="Turn 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <HorizontalLayout spacing="2">
+          <Button id="GreyHud_Ph12" text="✸" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph22" text="⇢" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph32" text="◎" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph42" text="⚡" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+          <Button id="GreyHud_Ph52" text="⚔" fontSize="28" textColor="#FFFFFF30" color="rgba(0,0,0,0)" width="38" height="50" onClick=""/>
+        </HorizontalLayout>
+        <Text id="GreyHud_VPWatch2" text="VP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Text id="GreyHud_CPWatch2" text="CP: 0" fontSize="40" color="White" shadow="#000000AA" shadowDistance="1 -1"/>
+        <Panel id="GreyHud_ClockSubPanel2" color="#1A1A1ACC" outline="rgba(0,0,0,0)" outlineSize="4" roundEdges="true" minWidth="190" minHeight="1" margin="12 0 0 0">
+          <Button id="GreyHud_ChsStpBtn2" width="190" height="58" onClick="" color="rgba(0,0,0,0)" roundEdges="true"/>
+          <Text id="GreyHud_ChsStpWatch2" text="01:30:00" fontSize="40" color="#FFFFFF40" shadow="#000000AA" shadowDistance="1 -1"/>
+        </Panel>
+        <VerticalLayout spacing="2">
+          <Button id="GreyHud_ChsStpPlus2"  text="+" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+          <Button id="GreyHud_ChsStpMinus2" text="−" fontSize="22" color="rgba(0,0,0,0.30)" textColor="White" width="28" height="26" roundEdges="true" onClick=""/>
+        </VerticalLayout>
+      </HorizontalLayout>
+    </Panel>
+  </VerticalLayout>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="RedHud_Settings" visibility="Red" active="false" scale="0.43 0.43 0.43" width="420" height="245" rectAlignment="UpperRight" offsetXY="-270 -175" color="#0D0D1AF2" outline="#2a2a4a" outlineSize="3" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
+  <Text text="Settings" fontSize="34" fontStyle="Bold" color="#FFFFFF" offsetXY="0 88" alignment="MiddleCenter"/>
+  <Button id="RedHud_SettingsCloseBtn" text="X" fontSize="22" textColor="#FFFFFF" color="#1A1A2AE6" width="44" height="44" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" offsetXY="174 92" onClick="hudCloseSettings" tooltip="Close settings"/>
+  <Text text="UI Scale" fontSize="24" fontStyle="Bold" color="#FFFFFFCC" offsetXY="0 34" alignment="MiddleCenter"/>
+  <HorizontalLayout spacing="8" padding="18 128 18 18" childForceExpandWidth="false">
+    <Button id="RedHud_ScaleSmall" text="Small" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+    <Button id="RedHud_ScaleMedium" text="Medium" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+    <Button id="RedHud_ScaleLarge" text="Large" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="BlueHud_Settings" visibility="Blue" active="false" scale="0.43 0.43 0.43" width="420" height="245" rectAlignment="UpperRight" offsetXY="-270 -175" color="#0D0D1AF2" outline="#2a2a4a" outlineSize="3" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
+  <Text text="Settings" fontSize="34" fontStyle="Bold" color="#FFFFFF" offsetXY="0 88" alignment="MiddleCenter"/>
+  <Button id="BlueHud_SettingsCloseBtn" text="X" fontSize="22" textColor="#FFFFFF" color="#1A1A2AE6" width="44" height="44" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" offsetXY="174 92" onClick="hudCloseSettings" tooltip="Close settings"/>
+  <Text text="UI Scale" fontSize="24" fontStyle="Bold" color="#FFFFFFCC" offsetXY="0 34" alignment="MiddleCenter"/>
+  <HorizontalLayout spacing="8" padding="18 128 18 18" childForceExpandWidth="false">
+    <Button id="BlueHud_ScaleSmall" text="Small" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+    <Button id="BlueHud_ScaleMedium" text="Medium" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+    <Button id="BlueHud_ScaleLarge" text="Large" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="GreyHud_Settings" visibility="Grey" active="false" scale="0.43 0.43 0.43" width="420" height="245" rectAlignment="UpperRight" offsetXY="-270 -175" color="#0D0D1AF2" outline="#2a2a4a" outlineSize="3" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false">
+  <Text text="Settings" fontSize="34" fontStyle="Bold" color="#FFFFFF" offsetXY="0 88" alignment="MiddleCenter"/>
+  <Button id="GreyHud_SettingsCloseBtn" text="X" fontSize="22" textColor="#FFFFFF" color="#1A1A2AE6" width="44" height="44" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" offsetXY="174 92" onClick="hudCloseSettings" tooltip="Close settings"/>
+  <Text text="UI Scale" fontSize="24" fontStyle="Bold" color="#FFFFFFCC" offsetXY="0 34" alignment="MiddleCenter"/>
+  <HorizontalLayout spacing="8" padding="18 128 18 18" childForceExpandWidth="false">
+    <Button id="GreyHud_ScaleSmall" text="Small" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+    <Button id="GreyHud_ScaleMedium" text="Medium" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+    <Button id="GreyHud_ScaleLarge" text="Large" fontSize="20" textColor="#FFFFFF" color="#1A1A2AE6" width="118" height="48" roundEdges="true" outline="#2a2a4aCC" outlineSize="2" onClick=""/>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="RedHud_ScoringOverlay" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false" visibility="Red" active="false" rectAlignment="MiddleCenter" width="1600" height="1300" scale="0.55 0.55 0.55" color="#0D0D1A80" outline="#2a2a4a" outlineSize="6">
+  <Text id="RedHud_ScoringOverlay_Title" text="⚔ Round 0 ⚔" fontSize="56" fontStyle="Bold" color="#FFFFFF" offsetXY="0 590" alignment="MiddleCenter"/>
+  <Button id="RedHud_ScoringOverlay_CloseBtn" text="X" fontSize="32" textColor="#FFFFFF" color="#B52020" width="64" height="64" roundEdges="true" outline="#2a2a4aCC" outlineSize="3" offsetXY="740 590" onClick="hudCloseScoringOverlay" tooltip="Close"/>
+  <HorizontalLayout spacing="40" padding="40 40 110 60" childForceExpandWidth="true" childForceExpandHeight="true">
+    <Panel color="#B5202080" outline="#D46060CC" outlineSize="4" roundEdges="true">
+      <VerticalLayout spacing="8" padding="12 12 12 12" childForceExpandWidth="true">
+        <Text id="RedHud_ScoringOverlay_RedName" text="Red Player" fontSize="42" fontStyle="Bold" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="50"/>
+        <Text id="RedHud_ScoringOverlay_RedRounds" text="" fontSize="22" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="160" richText="true"/>
+        <Text text="ACTIVE SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="RedHud_ScoringOverlay_RedActive" color="rgba(0,0,0,0)" preferredHeight="200">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="RedHud_ScoringOverlay_RedActiveL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="RedHud_ScoringOverlay_RedActiveR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="DISCARD PILE" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="RedHud_ScoringOverlay_RedDiscard" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="RedHud_ScoringOverlay_RedDiscardL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="RedHud_ScoringOverlay_RedDiscardR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="REMAINING SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="RedHud_ScoringOverlay_RedDeck" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="RedHud_ScoringOverlay_RedDeckL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="RedHud_ScoringOverlay_RedDeckR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+      </VerticalLayout>
+    </Panel>
+    <Panel color="#1A5FC880" outline="#6DA8FFCC" outlineSize="4" roundEdges="true">
+      <VerticalLayout spacing="8" padding="12 12 12 12" childForceExpandWidth="true">
+        <Text id="RedHud_ScoringOverlay_BlueName" text="Blue Player" fontSize="42" fontStyle="Bold" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="50"/>
+        <Text id="RedHud_ScoringOverlay_BlueRounds" text="" fontSize="22" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="160" richText="true"/>
+        <Text text="ACTIVE SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="RedHud_ScoringOverlay_BlueActive" color="rgba(0,0,0,0)" preferredHeight="200">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="RedHud_ScoringOverlay_BlueActiveL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="RedHud_ScoringOverlay_BlueActiveR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="DISCARD PILE" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="RedHud_ScoringOverlay_BlueDiscard" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="RedHud_ScoringOverlay_BlueDiscardL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="RedHud_ScoringOverlay_BlueDiscardR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="REMAINING SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="RedHud_ScoringOverlay_BlueDeck" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="RedHud_ScoringOverlay_BlueDeckL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="RedHud_ScoringOverlay_BlueDeckR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+      </VerticalLayout>
+    </Panel>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="BlueHud_ScoringOverlay" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false" visibility="Blue" active="false" rectAlignment="MiddleCenter" width="1600" height="1300" scale="0.55 0.55 0.55" color="#0D0D1A80" outline="#2a2a4a" outlineSize="6">
+  <Text id="BlueHud_ScoringOverlay_Title" text="⚔ Round 0 ⚔" fontSize="56" fontStyle="Bold" color="#FFFFFF" offsetXY="0 590" alignment="MiddleCenter"/>
+  <Button id="BlueHud_ScoringOverlay_CloseBtn" text="X" fontSize="32" textColor="#FFFFFF" color="#B52020" width="64" height="64" roundEdges="true" outline="#2a2a4aCC" outlineSize="3" offsetXY="740 590" onClick="hudCloseScoringOverlay" tooltip="Close"/>
+  <HorizontalLayout spacing="40" padding="40 40 110 60" childForceExpandWidth="true" childForceExpandHeight="true">
+    <Panel color="#B5202080" outline="#D46060CC" outlineSize="4" roundEdges="true">
+      <VerticalLayout spacing="8" padding="12 12 12 12" childForceExpandWidth="true">
+        <Text id="BlueHud_ScoringOverlay_RedName" text="Red Player" fontSize="42" fontStyle="Bold" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="50"/>
+        <Text id="BlueHud_ScoringOverlay_RedRounds" text="" fontSize="22" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="160" richText="true"/>
+        <Text text="ACTIVE SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="BlueHud_ScoringOverlay_RedActive" color="rgba(0,0,0,0)" preferredHeight="200">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="BlueHud_ScoringOverlay_RedActiveL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="BlueHud_ScoringOverlay_RedActiveR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="DISCARD PILE" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="BlueHud_ScoringOverlay_RedDiscard" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="BlueHud_ScoringOverlay_RedDiscardL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="BlueHud_ScoringOverlay_RedDiscardR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="REMAINING SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="BlueHud_ScoringOverlay_RedDeck" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="BlueHud_ScoringOverlay_RedDeckL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="BlueHud_ScoringOverlay_RedDeckR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+      </VerticalLayout>
+    </Panel>
+    <Panel color="#1A5FC880" outline="#6DA8FFCC" outlineSize="4" roundEdges="true">
+      <VerticalLayout spacing="8" padding="12 12 12 12" childForceExpandWidth="true">
+        <Text id="BlueHud_ScoringOverlay_BlueName" text="Blue Player" fontSize="42" fontStyle="Bold" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="50"/>
+        <Text id="BlueHud_ScoringOverlay_BlueRounds" text="" fontSize="22" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="160" richText="true"/>
+        <Text text="ACTIVE SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="BlueHud_ScoringOverlay_BlueActive" color="rgba(0,0,0,0)" preferredHeight="200">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="BlueHud_ScoringOverlay_BlueActiveL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="BlueHud_ScoringOverlay_BlueActiveR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="DISCARD PILE" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="BlueHud_ScoringOverlay_BlueDiscard" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="BlueHud_ScoringOverlay_BlueDiscardL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="BlueHud_ScoringOverlay_BlueDiscardR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="REMAINING SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="BlueHud_ScoringOverlay_BlueDeck" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="BlueHud_ScoringOverlay_BlueDeckL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="BlueHud_ScoringOverlay_BlueDeckR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+      </VerticalLayout>
+    </Panel>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="GreyHud_ScoringOverlay" allowDragging="true" restrictDraggingToParentBounds="false" returnToOriginalPositionWhenReleased="false" visibility="Grey" active="false" rectAlignment="MiddleCenter" width="1600" height="1300" scale="0.55 0.55 0.55" color="#0D0D1A80" outline="#2a2a4a" outlineSize="6">
+  <Text id="GreyHud_ScoringOverlay_Title" text="⚔ Round 0 ⚔" fontSize="56" fontStyle="Bold" color="#FFFFFF" offsetXY="0 590" alignment="MiddleCenter"/>
+  <Button id="GreyHud_ScoringOverlay_CloseBtn" text="X" fontSize="32" textColor="#FFFFFF" color="#B52020" width="64" height="64" roundEdges="true" outline="#2a2a4aCC" outlineSize="3" offsetXY="740 590" onClick="hudCloseScoringOverlay" tooltip="Close"/>
+  <HorizontalLayout spacing="40" padding="40 40 110 60" childForceExpandWidth="true" childForceExpandHeight="true">
+    <Panel color="#B5202080" outline="#D46060CC" outlineSize="4" roundEdges="true">
+      <VerticalLayout spacing="8" padding="12 12 12 12" childForceExpandWidth="true">
+        <Text id="GreyHud_ScoringOverlay_RedName" text="Red Player" fontSize="42" fontStyle="Bold" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="50"/>
+        <Text id="GreyHud_ScoringOverlay_RedRounds" text="" fontSize="22" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="160" richText="true"/>
+        <Text text="ACTIVE SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="GreyHud_ScoringOverlay_RedActive" color="rgba(0,0,0,0)" preferredHeight="200">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="GreyHud_ScoringOverlay_RedActiveL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="GreyHud_ScoringOverlay_RedActiveR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="DISCARD PILE" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="GreyHud_ScoringOverlay_RedDiscard" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="GreyHud_ScoringOverlay_RedDiscardL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="GreyHud_ScoringOverlay_RedDiscardR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="REMAINING SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="GreyHud_ScoringOverlay_RedDeck" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="GreyHud_ScoringOverlay_RedDeckL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="GreyHud_ScoringOverlay_RedDeckR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+      </VerticalLayout>
+    </Panel>
+    <Panel color="#1A5FC880" outline="#6DA8FFCC" outlineSize="4" roundEdges="true">
+      <VerticalLayout spacing="8" padding="12 12 12 12" childForceExpandWidth="true">
+        <Text id="GreyHud_ScoringOverlay_BlueName" text="Blue Player" fontSize="42" fontStyle="Bold" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="50"/>
+        <Text id="GreyHud_ScoringOverlay_BlueRounds" text="" fontSize="22" color="#FFFFFF" alignment="MiddleCenter" preferredHeight="160" richText="true"/>
+        <Text text="ACTIVE SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="GreyHud_ScoringOverlay_BlueActive" color="rgba(0,0,0,0)" preferredHeight="200">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="GreyHud_ScoringOverlay_BlueActiveL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="GreyHud_ScoringOverlay_BlueActiveR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="DISCARD PILE" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="GreyHud_ScoringOverlay_BlueDiscard" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="GreyHud_ScoringOverlay_BlueDiscardL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="GreyHud_ScoringOverlay_BlueDiscardR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+        <Text text="REMAINING SECONDARIES" fontSize="22" fontStyle="Bold" color="#FFFFFFAA" alignment="MiddleCenter" preferredHeight="28"/>
+        <Panel id="GreyHud_ScoringOverlay_BlueDeck" color="rgba(0,0,0,0)" preferredHeight="110">
+          <HorizontalLayout spacing="18" childForceExpandWidth="true" childForceExpandHeight="true">
+            <Text id="GreyHud_ScoringOverlay_BlueDeckL" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+            <Text id="GreyHud_ScoringOverlay_BlueDeckR" text="" fontSize="18" color="#FFFFFF" alignment="UpperLeft"/>
+          </HorizontalLayout>
+        </Panel>
+      </VerticalLayout>
+    </Panel>
+  </HorizontalLayout>
 </Panel>
 
 <Panel id="feedbackPopup" active="false" width="400" height="420" rectAlignment="MiddleCenter" allowDragging="false" color="#000000EE">

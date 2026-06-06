@@ -260,6 +260,12 @@ gap2Btn={
     font_size=750, color='White', font_color={0,0,0}
 }
 
+pack9sBtn={
+    label='9s', tooltip='Pack selected models so no two are more than 9" apart, with 2" spacing', click_function='arrangeSelectedModelsWithin9Circle', function_owner=self,
+    position={-8.25, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2200, scale={0.1,0.1,0.1},
+    font_size=750, color='White', font_color={0,0,0}
+}
+
 gap1Btn={
     label='2" Gap', tooltip='Arrange models with 2" spacing', click_function='arrangeModelsWith2Inch', function_owner=self,
     position={-7.15, Yoffset ,-1.15}, rotation={0,0,0}, height=1000, width=2500, scale={0.1,0.1,0.1},
@@ -1746,6 +1752,7 @@ function onload()
     self.createInput(customBubbleInput)
     self.createButton(customBubbleBtn)
     self.createButton(clearMeasureAllBtn)
+    self.createButton(pack9sBtn)
     self.createButton(gap2Btn)
     self.createButton(gap1Btn)
     self.createInput(customDiceInput)
@@ -2616,6 +2623,197 @@ function arrangeModelsWith1Inch(a, b, c)
     end
 
     print("Arranged " .. #items .. " models with a 1-inch gap along the detected orientation.")
+end
+
+function selectedPack9sPlayerColor(a, b)
+    if type(a) == "string" then
+        return a
+    end
+    return b
+end
+
+function pack9sMessage(playerColor, message)
+    local text = "9s pack failed: " .. message
+    if playerColor and Player[playerColor] then
+        printToColor(text, playerColor, "Red")
+        broadcastToColor(text, playerColor, "Red")
+    else
+        printToAll(text, "Red")
+    end
+end
+
+function getPack9sBaseRadius(obj)
+    if obj.hasTag and obj.hasTag("rectangularMeasuring") then
+        local size = obj.getBoundsNormalized().size
+        return math.sqrt((size.x / 2) * (size.x / 2) + (size.z / 2) * (size.z / 2))
+    end
+
+    local base = determineBaseInInches(obj)
+    if base and base.x and base.z then
+        return math.max(base.x, base.z)
+    end
+
+    local size = obj.getBoundsNormalized().size
+    return math.max(size.x, size.z) / 2
+end
+
+function pack9sDistanceSq(a, b)
+    local dx = a.x - b.x
+    local dz = a.z - b.z
+    return dx * dx + dz * dz
+end
+
+function pack9sCandidatePoints(radius, step)
+    local points = {{x = 0, z = 0, score = 0}}
+    local radialStep = step or 0.35
+    local ring = radialStep
+
+    while ring <= radius + 0.0001 do
+        local circumference = 2 * math.pi * ring
+        local count = math.max(8, math.ceil(circumference / radialStep))
+        for i = 0, count - 1 do
+            local angle = (2 * math.pi * i) / count
+            table.insert(points, {
+                x = math.cos(angle) * ring,
+                z = math.sin(angle) * ring,
+                score = ring,
+            })
+        end
+        ring = ring + radialStep
+    end
+
+    table.sort(points, function(a, b)
+        if a.score == b.score then
+            if a.x == b.x then
+                return a.z < b.z
+            end
+            return a.x < b.x
+        end
+        return a.score < b.score
+    end)
+    return points
+end
+
+function pack9sCandidateFits(candidate, item, placed, searchRadius, spacing, maxPairDistance)
+    if math.sqrt(candidate.x * candidate.x + candidate.z * candidate.z) > searchRadius + 0.0001 then
+        return false
+    end
+
+    for _, other in ipairs(placed) do
+        local minDist = item.radius + other.radius + spacing
+        local distSq = pack9sDistanceSq(candidate, other)
+        if distSq < (minDist * minDist) - 0.0001 then
+            return false
+        end
+        if distSq > (maxPairDistance * maxPairDistance) + 0.0001 then
+            return false
+        end
+    end
+
+    return true
+end
+
+function pack9sPlacementIsValid(placed, spacing, maxPairDistance)
+    for i = 1, #placed do
+        for j = i + 1, #placed do
+            local a = placed[i]
+            local b = placed[j]
+            local distSq = pack9sDistanceSq(a, b)
+            local minDist = a.radius + b.radius + spacing
+            if distSq < (minDist * minDist) - 0.0001 then
+                return false
+            end
+            if distSq > (maxPairDistance * maxPairDistance) + 0.0001 then
+                return false
+            end
+        end
+    end
+    return true
+end
+
+function arrangeSelectedModelsWithin9Circle(a, b, c)
+    local playerColor = selectedPack9sPlayerColor(a, b)
+    local playerObj = playerColor and Player[playerColor] or nil
+    if not playerObj then
+        pack9sMessage(playerColor, "player could not be resolved.")
+        return
+    end
+
+    local objs = playerObj.getSelectedObjects()
+    if #objs == 0 then
+        pack9sMessage(playerColor, "select the models to pack first.")
+        return
+    end
+
+    local maxPairDistance = 9
+    local searchRadius = maxPairDistance / math.sqrt(3)
+    local spacing = 2
+    local center = {x = 0, z = 0}
+    local items = {}
+
+    for _, obj in ipairs(objs) do
+        local pos = obj.getPosition()
+        center.x = center.x + pos.x
+        center.z = center.z + pos.z
+        local radius = getPack9sBaseRadius(obj)
+        table.insert(items, {obj = obj, pos = pos, y = pos.y, radius = radius})
+    end
+
+    center.x = center.x / #items
+    center.z = center.z / #items
+
+    table.sort(items, function(a, b)
+        return a.radius > b.radius
+    end)
+
+    for i = 1, #items do
+        for j = i + 1, #items do
+            local requiredDistance = items[i].radius + items[j].radius + spacing
+            if requiredDistance > maxPairDistance then
+                pack9sMessage(playerColor, "two selected bases need " .. string.format("%.1f", requiredDistance) .. "\" between centres to keep a 2\" gap, which is more than 9\".")
+                return
+            end
+        end
+    end
+
+    local candidates = pack9sCandidatePoints(searchRadius, 0.35)
+    local placed = {}
+
+    for _, item in ipairs(items) do
+        local best = nil
+        local bestScore = nil
+        for _, candidate in ipairs(candidates) do
+            if pack9sCandidateFits(candidate, item, placed, searchRadius, spacing, maxPairDistance) then
+                local world = {x = center.x + candidate.x, z = center.z + candidate.z}
+                local dx = world.x - item.pos.x
+                local dz = world.z - item.pos.z
+                local score = (dx * dx + dz * dz) + (candidate.score * 0.05)
+                if best == nil or score < bestScore then
+                    best = candidate
+                    bestScore = score
+                end
+            end
+        end
+
+        if not best then
+            pack9sMessage(playerColor, "could not fit " .. #items .. " selected models with every pair within 9\" and at least 2\" apart.")
+            return
+        end
+
+        item.newPos = {x = center.x + best.x, y = item.y, z = center.z + best.z}
+        table.insert(placed, {x = best.x, z = best.z, radius = item.radius})
+    end
+
+    if not pack9sPlacementIsValid(placed, spacing, maxPairDistance) then
+        pack9sMessage(playerColor, "generated placement failed the 9\" pair-distance check.")
+        return
+    end
+
+    for _, item in ipairs(items) do
+        item.obj.setPositionSmooth(item.newPos)
+    end
+
+    printToColor("Packed " .. #items .. " models with every pair within 9\" and at least 2\" apart.", playerColor, "Green")
 end
 
 function determineBaseInInches(model)

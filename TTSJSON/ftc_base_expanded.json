@@ -1,6 +1,6 @@
 {
-  "SaveName": "Hutber 40k Competitive 10e Map Base\n",
-  "GameMode": "Hutber 40k Competitive 10e Map Base\n",
+  "SaveName": "Hutber 40k Competitive 11e Map Base\n",
+  "GameMode": "Hutber 40k Competitive 11e Map Base\n",
   "Date": "21/06/2024 11:00:00 AM",
   "VersionNumber": "v2.61",
   "GameType": "Game",
@@ -28478,7 +28478,7 @@
         "scaleY": 1,
         "scaleZ": 1
       },
-      "Nickname": "10e Score Sheet",
+      "Nickname": "11e Score Sheet",
       "Description": "{\n  \"P1\": \"Player 1\",\n  \"P2\": \"Player 2\"\n}",
       "GMNotes": "",
       "AltLookAngle": {

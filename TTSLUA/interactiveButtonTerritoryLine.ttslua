@@ -1,0 +1,32 @@
+-- FTC-GUID: 7e7711
+
+local noLineState = "https://steamusercontent-a.akamaihd.net/ugc/11257198619749100462/0D359C525B1F77119CA17EB4307B3882E6805C9F/"
+local lineOnState = "https://steamusercontent-a.akamaihd.net/ugc/13483922162153684809/EC47EBA4101B6D3127E3C94509BE9C01A426CC08/"
+
+function onLoad(saved_data)
+    self.createButton({
+        click_function = "toggleTerritoryLine",
+        function_owner = self,
+        label = "",
+        position = {0, 0.2, 0},
+        width = 2000,
+        height = 2000,
+        color = {0, 0, 0, 0}
+    })
+end
+
+function toggleTerritoryLine()
+    local manager = getObjectFromGUID("738804")
+    if manager then
+        manager.call("showHideTerritoryLine")
+    end
+    syncTerritoryLineButtonImage()
+end
+
+function syncTerritoryLineButtonImage()
+    local state = Global.getVar("interactiveButtonTerritoryLine")
+    self.setCustomObject({
+        image = state == 1 and noLineState or lineOnState,
+    })
+    self.reload()
+end

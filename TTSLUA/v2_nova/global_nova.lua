@@ -387,7 +387,7 @@ local function renderUi()
   addLabel(title, p(0, 8.0), 320, { 0.48, 1.0, 0.63 })
   addLabel(subtitle, p(0, 7.2), 120, { 0.68, 0.74, 0.86 })
 
-  addLabel("Edition: 10e", p(-18, 6.3), 150, { 0.76, 0.96, 0.78 })
+  addLabel("Edition: 11e", p(-18, 6.3), 150, { 0.76, 0.96, 0.78 })
   addLabel("Status: " .. statusText, p(-13, 6.3), 160, { 0.9, 0.9, 0.9 })
   addLabel("Turn: " .. STATE.turn, p(-5, 6.3), 160, { 0.9, 0.9, 0.9 })
   addLabel("Round: " .. tostring(STATE.battleRound) .. "/" .. tostring(MAX_ROUNDS), p(5, 6.3), 160, { 0.9, 0.9, 0.9 })

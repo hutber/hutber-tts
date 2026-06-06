@@ -1,0 +1,125 @@
+-- FTC-GUID: 1b3488,546598,b1625c,ca16c5
+
+-- LOS marker by kvt
+-- Based on: Ruler Plus - Inches - by Giulianno Bessa "illugion"
+-- Made for Tabletop Simulator API 03/2026
+
+function onLoad()
+  toggleMeasure = -1
+  targetObj = nil
+  playerColor = nil
+  lineColor = nil
+  pointA = nil
+  pointB = nil
+
+  self.sticky = false
+  self.setSnapPoints({
+      {
+          position = {0, 0, 0},
+          rotation = {0, 0, 0},
+          rotation_snap = false
+      },
+  })
+  self.setVectorLines({})
+end
+
+function getLosMarkerTeam(obj)
+  if obj == nil then
+      return nil
+  end
+
+  local name = obj.getName() or ""
+  if string.find(name, "Blue LOS Marker", 1, true) ~= nil then
+      return "Blue"
+  end
+  if string.find(name, "Red LOS Marker", 1, true) ~= nil then
+      return "Red"
+  end
+  return nil
+end
+
+function getLosMarkerLineColor(obj)
+  local team = getLosMarkerTeam(obj)
+  if team == "Blue" then
+      return {0.1, 0.55, 1.0}
+  end
+  if team == "Red" then
+      return {1.0, 0.0, 0.0}
+  end
+  return "White"
+end
+
+function canLinkLosMarker(pickedObj)
+  local ownTeam = getLosMarkerTeam(self)
+  local targetTeam = getLosMarkerTeam(pickedObj)
+  return ownTeam ~= nil and ownTeam == targetTeam
+end
+
+function onObjectHover(color, object)
+  if object == self and playerColor == nil then
+      playerColor = color
+      lineColor = getLosMarkerLineColor(self)
+  end
+end
+
+function onObjectPickUp(color, pickedObj)
+  if playerColor ~= nil and color == playerColor then
+      if pickedObj ~= nil and pickedObj ~= self and canLinkLosMarker(pickedObj) and toggleMeasure == -1 then
+          targetObj = pickedObj
+          pointA = self.getPosition()
+          toggleMeasure = 1
+      end
+  end
+end
+
+function onUpdate()
+  if toggleMeasure ~= 1 then
+      return
+  end
+
+  if self.resting == false then
+      pointA = self.getPosition()
+  end
+
+  if targetObj ~= nil and targetObj.isDestroyed() == false then
+      pointB = targetObj.getPosition()
+  else
+      pointB = nil
+      destroyObject(self)
+      return
+  end
+
+  if pointB == nil or targetObj.resting ~= false then
+      if pointB ~= nil and self.resting == false and targetObj.resting == true then
+          self.setVectorLines({})
+      end
+      return
+  end
+
+  local currentLineColor = getLosMarkerLineColor(self)
+  if targetObj.is_face_down == false and self.is_face_down == false then
+      self.setVectorLines({
+          {
+              points = {
+                  self.positionToLocal(pointA) + Vector(0, 0.105, 0),
+                  self.positionToLocal(pointB + Vector(0, 0.105, 0))
+              },
+              color = currentLineColor,
+              thickness = 0.1
+          },
+      })
+  else
+      local targetLocal = self.positionToLocal(pointB)
+      self.setVectorLines({
+          {
+              points = {
+                  self.positionToLocal(pointA) + Vector(0, 0.0, 0),
+                  {0, 0, Vector.distance(pointA, pointB) / self.getScale()[1]}
+              },
+              color = currentLineColor,
+              thickness = 10,
+              rotation = {0, targetLocal:heading('y'), 90}
+          },
+      })
+  end
+end

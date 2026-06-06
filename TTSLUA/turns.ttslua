@@ -1,11 +1,33 @@
 -- FTC-GUID: 7e4111,055302
 -- Description contains the guid of game turn counter
 
+local _lastValue = nil
+local _watchId   = nil
+
+function onLoad()
+    _lastValue = self.Counter.getValue()
+    _watchId   = (self.getGUID() == "7e4111") and "TVWatch1" or "TVWatch2"
+    updateHUD()
+    Wait.time(checkValue, 0.5, -1)
+end
+
+function checkValue()
+    local current = self.Counter.getValue()
+    if current ~= _lastValue then
+        _lastValue = current
+        updateHUD()
+    end
+end
+
+function updateHUD()
+    _lastValue = self.Counter.getValue()
+    Global.call("setHudAttribute", {id = _watchId, attr = "text", value = "Turn " .. _lastValue})
+end
 
 function increaseSelf()
-        self.Counter.increment()
-        gameUpdate()
-
+    self.Counter.increment()
+    updateHUD()
+    gameUpdate()
 end
 
 function gameUpdate()
@@ -19,7 +41,6 @@ function gameUpdate()
     else
         if self.Counter.getValue() > gameTurn.Counter.getValue() then
             gameTurn.Counter.setValue(self.Counter.getValue())
-            gameTurn.call("checkGameEnd")
             startMenu.call("newRoundStarted")
         end
     end
